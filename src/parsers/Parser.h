@@ -1,9 +1,7 @@
-
 #pragma once
 
 #include <algorithm>
 
-#include "Data.h"
 #include "ProblemDescription.h"
 
 namespace SEMBA {
@@ -11,9 +9,7 @@ namespace Parsers {
 
 class Parser {
 public:
-    Parser(const std::string& fn);
-    
-    virtual Data read() const = 0;
+    Parser(const std::string& fn);  
 
 protected:
     FileSystem::Project filename;
@@ -49,8 +45,6 @@ protected:
     }
 
     void postReadOperations(UnstructuredProblemDescription& res) const;
-
-    void postReadOperations(Data& res) const;
 };
 
 } /* namespace Parser */

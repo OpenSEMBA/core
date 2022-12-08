@@ -23,7 +23,6 @@
 #include "source/port/Waveguide.h"
 #include "source/port/TEM.h"
 
-#include "Data.h"
 #include "ProblemDescription.h"
 
 #include "parsers/Parser.h"
@@ -37,7 +36,6 @@ public:
     typedef nlohmann::json json;
 
     Parser(const std::string& filename);
-    Data read() const;
     UnstructuredProblemDescription readExtended() const;
     
 private:

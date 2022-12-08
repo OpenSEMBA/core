@@ -103,25 +103,6 @@ std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
     return std::make_pair(std::move(lay), eG);
 }
 
-Data Parser::read() const 
-{
-	// Stores results and returns.
-	Data res;
-	res.mesh = std::make_unique<Mesh::Geometric>(Grid3(), readAsUnstructuredMesh());
-
-	res.physicalModels.add(std::make_unique<PhysicalModel::PEC>(PhysicalModel::Id(1), "PEC"));
-	auto const* pec = res.physicalModels.getId(PhysicalModel::Id(1));
-
-	for (auto& elem : res.mesh->castTo<Mesh::Geometric>()->elems()) {
-		elem->setModel(pec);
-	}
-
-	res.sources = SourceGroup();
-	res.outputRequests = OutputRequestGroup();
-
-	return res;
-}
-
 Mesh::Unstructured Parser::readAsUnstructuredMesh() const 
 {
     CoordR3Group cG = readCoordinates(this->filename);

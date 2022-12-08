@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include <cstdio>
@@ -8,7 +6,6 @@
 #include <iostream>
 #include <string>
 
-#include "Data.h"
 #include "geometry/element/Triangle3.h"
 #include "geometry/mesh/Geometric.h"
 #include "physicalModel/Predefined.h"
@@ -22,7 +19,6 @@ namespace STL {
 class Parser : public SEMBA::Parsers::Parser {
 public:
     Parser(const std::string& fn);
-    Data read() const;
     Geometry::Mesh::Unstructured readAsUnstructuredMesh() const;
 };
 

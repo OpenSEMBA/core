@@ -33,6 +33,7 @@
 #include "string"
 
 using namespace SEMBA::Geometry;
+using json = nlohmann::json;
 
 namespace SEMBA {
 namespace Parsers {
@@ -128,49 +129,6 @@ UnstructuredProblemDescription Parser::readExtended() const {
 }
 
 Parser::Parser(const std::string& fn) : SEMBA::Parsers::Parser(fn) {}
-
-Data Parser::read() const {
-    
-    std::ifstream stream(this->filename);
-    if (!stream.is_open()) {
-        throw std::logic_error("Can not open file: " + this->filename);
-    }
-    
-    json j;
-    try {
-        stream >> j;
-    }
-    catch( const std::exception & ex ) {
-        std::cerr << ex.what() << std::endl;
-    }
-
-    std::string version = j.at("_version").get<std::string>();
-    if (!checkVersionCompatibility(version)) {
-        throw std::logic_error("File version " + version + " is not supported.");
-    }
-
-
-    Data res;
-    res.filename = this->filename;
-    res.solver = readSolverOptions(j);
-    res.grids = this->readGrids(j);
-    res.physicalModels = readPhysicalModels(j);
-    res.mesh = readUnstructuredMesh(res.physicalModels, j);
-
-    if (res.mesh != nullptr) {
-        Mesh::Unstructured* mesh = res.mesh->castTo<Mesh::Unstructured>();
-		readConnectorOnPoint(res.physicalModels, *mesh, j);
-        res.sources = readSources(*mesh, j);
-        res.outputRequests = readOutputRequests(*mesh, j);
-    } else {
-        res.sources = Source::Group<>();
-        res.outputRequests = OutputRequest::Group<>();
-    }
-
-    postReadOperations(res);
-
-    return res;
-}
 
 void Parser::readBoundary(
     const json& j, 
