@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <stdexcept>
@@ -7,9 +6,7 @@
 #include "math/vector/Cartesian.h"
 #include "math/function/Polynomial.h"
 
-namespace SEMBA {
-namespace Math {
-namespace Simplex {
+namespace SEMBA::Math::Simplex {
 
 class Simplex {
 public:
@@ -40,7 +37,4 @@ protected:
     static std::size_t factorial(std::size_t n);
 };
 
-} /* namespace Simplex */
-} /* namespace Math */
-} /* namespace SEMBA */
-
+}
