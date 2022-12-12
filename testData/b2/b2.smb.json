@@ -75,7 +75,7 @@
       "line": [],
       "fromFile":
       [
-        { "format": "STL", "layerId": 1, "materialId": 1, "file": "stl/B2.stl" }
+        { "format": "STL", "layerId": 1, "materialId": 1, "file": "B2.stl" }
       ]
   },
 

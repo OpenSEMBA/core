@@ -90,7 +90,7 @@ std::vector<const Geometry::CoordR3*> addAngGetCoordView(
     return coords;
 }
 
-UnstructuredProblemDescription Parser::readExtended() const {
+UnstructuredProblemDescription Parser::read() const {
 	std::ifstream stream(this->filename);
 	if (!stream.is_open()) {
 		throw std::logic_error("Can not open file: " + this->filename);
@@ -104,7 +104,7 @@ UnstructuredProblemDescription Parser::readExtended() const {
 		std::cerr << ex.what() << std::endl;
 	}
 
-	checkExtendedVersionCompatibility(
+	checkVersionCompatibility(
         j.at("_version").get<std::string>()
     );
 
@@ -1318,16 +1318,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> Parser::readMagnitude(const json& 
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
 }
 
-bool Parser::checkVersionCompatibility(const std::string& version) {
-    bool versionMatches = (version == std::string(OPENSEMBA_VERSION));
-    if (!versionMatches) {
-        throw std::logic_error(
-            "File version " + version + " is not supported.");
-    }
-    return versionMatches;
-}
-
-void Parser::checkExtendedVersionCompatibility(const std::string& version) {
+void Parser::checkVersionCompatibility(const std::string& version) 
+{
 	const char extended = version.back();
 
 	if (isdigit(extended)) {

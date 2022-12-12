@@ -36,7 +36,7 @@ public:
     typedef nlohmann::json json;
 
     Parser(const std::string& filename);
-    UnstructuredProblemDescription readExtended() const;
+    UnstructuredProblemDescription read() const;
     
 private:
     json readSolverOptions(const json&, const std::string& key = "solverOptions") const;
@@ -85,9 +85,8 @@ private:
     static OutputRequest::Domain readDomain(const json&);
     static Math::Axis::Local strToLocalAxes(const std::string& str);
 
-    static bool checkVersionCompatibility(const std::string& version);
-    static void checkExtendedVersionCompatibility(const std::string& version);
-
+    static void checkVersionCompatibility(const std::string& version);
+    
     static const Geometry::ElemR* boxToElemGroup(
             Geometry::Mesh::Unstructured& mesh,
             const std::string& line);

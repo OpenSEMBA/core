@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_STANDARD 17)
-
 project(opensemba_core CXX)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
@@ -16,9 +14,8 @@ add_subdirectory(source/ source/)
 
 find_package(nlohmann_json CONFIG REQUIRED)
 
-add_library(opensemba_core STATIC 
-    ${CMAKE_CURRENT_LIST_DIR}/ProblemDescription.h
-    ${CMAKE_CURRENT_LIST_DIR}/ProblemDescription.hpp
+add_library(opensemba_core 
+    "ProblemDescription.cpp"
 )
     
 target_link_libraries(opensemba_core

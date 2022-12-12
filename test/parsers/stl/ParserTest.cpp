@@ -20,17 +20,17 @@ protected:
 	}
 };
 
-TEST_F(ParserSTLParserTest, case_nofile) {
+TEST_F(ParserSTLParserTest, case_nofile) 
+{
     ASSERT_ANY_THROW(Parsers::STL::Parser("nofile"));
 }
 
-TEST_F(ParserSTLParserTest, case_single) {
-    Parsers::STL::Parser parser(getCaseName("single"));
-	Data smb = parser.read();
-    ASSERT_TRUE(smb.mesh != nullptr);
-    Geometry::Mesh::Geometric* mesh = smb.mesh->castTo<Geometry::Mesh::Geometric>();
-    if (smb.mesh != nullptr) {
-        EXPECT_EQ(3, mesh->coords().size());
-        EXPECT_EQ(1, mesh->elems().getOf<Geometry::Tri3>().size());
-    }
+TEST_F(ParserSTLParserTest, case_single) 
+{    
+    auto mesh{ 
+        Parsers::STL::Parser{getCaseName("single")}.readAsUnstructuredMesh()
+    };
+
+    EXPECT_EQ(3, mesh.coords().size());
+    EXPECT_EQ(1, mesh.elems().getOf<Geometry::Tri3>().size());
 }
