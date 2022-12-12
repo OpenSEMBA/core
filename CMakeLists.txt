@@ -53,20 +53,16 @@ project(opensemba CXX)
 
 add_definitions(-DOPENSEMBA_VERSION="0.15")
 
-add_subdirectory(external/gidpost/ obj/external/gidpost/)
-
 include_directories(src/ src/core/)
 
-add_subdirectory  (src/core      obj/src/core)
-add_subdirectory  (src/parsers   obj/src/parsers)
-add_subdirectory  (src/exporters obj/src/exporters)
-
-
+add_subdirectory(src/core)
+add_subdirectory(src/parsers)
+add_subdirectory(src/exporters)
 
 message(STATUS "Creating build system for opensemba with the following options:")
 option(OPENSEMBA_TESTS OFF)
 message(STATUS "OPEMSEMBA_TESTS: " ${OPENSEMBA_TESTS})
 if(OPENSEMBA_TESTS)
 	enable_testing()
-    add_subdirectory(test/     obj/test/)
+    add_subdirectory(test/)
 endif()

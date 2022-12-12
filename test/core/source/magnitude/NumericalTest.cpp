@@ -4,7 +4,7 @@
 using namespace SEMBA;
 
 TEST(NumericalTest, CanGetFileAttribute) {
-	const std::string filePath = "testData/dmcwf.gid/predefinedExcitation.1.exc";
+	const std::string filePath = "testData/dmcwf/predefinedExcitation.1.exc";
 
 	FileSystem::Project file(filePath);
 	Source::Magnitude::Numerical num(file);

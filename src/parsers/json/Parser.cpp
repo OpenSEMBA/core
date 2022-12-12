@@ -30,13 +30,11 @@
 #include "outputRequest/OnLine.h"
 #include "outputRequest/OnSurface.h"
 #include "outputRequest/OnLayer.h"
-#include "string"
 
 using namespace SEMBA::Geometry;
+using json = nlohmann::json;
 
-namespace SEMBA {
-namespace Parsers {
-namespace JSON {
+namespace SEMBA::Parsers::JSON {
 
 double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey) {
 	if (j.find("total" + jsonKey) != j.end()) {
@@ -89,7 +87,7 @@ std::vector<const Geometry::CoordR3*> addAngGetCoordView(
     return coords;
 }
 
-UnstructuredProblemDescription Parser::readExtended() const {
+UnstructuredProblemDescription Parser::read() const {
 	std::ifstream stream(this->filename);
 	if (!stream.is_open()) {
 		throw std::logic_error("Can not open file: " + this->filename);
@@ -103,7 +101,7 @@ UnstructuredProblemDescription Parser::readExtended() const {
 		std::cerr << ex.what() << std::endl;
 	}
 
-	checkExtendedVersionCompatibility(
+	checkVersionCompatibility(
         j.at("_version").get<std::string>()
     );
 
@@ -129,55 +127,16 @@ UnstructuredProblemDescription Parser::readExtended() const {
 
 Parser::Parser(const std::string& fn) : SEMBA::Parsers::Parser(fn) {}
 
-Data Parser::read() const {
-    
-    std::ifstream stream(this->filename);
-    if (!stream.is_open()) {
-        throw std::logic_error("Can not open file: " + this->filename);
-    }
-    
-    json j;
-    try {
-        stream >> j;
-    }
-    catch( const std::exception & ex ) {
-        std::cerr << ex.what() << std::endl;
-    }
-
-    std::string version = j.at("_version").get<std::string>();
-    if (!checkVersionCompatibility(version)) {
-        throw std::logic_error("File version " + version + " is not supported.");
-    }
-
-
-    Data res;
-    res.filename = this->filename;
-    res.solver = readSolverOptions(j);
-    res.grids = this->readGrids(j);
-    res.physicalModels = readPhysicalModels(j);
-    res.mesh = readUnstructuredMesh(res.physicalModels, j);
-
-    if (res.mesh != nullptr) {
-        Mesh::Unstructured* mesh = res.mesh->castTo<Mesh::Unstructured>();
-		readConnectorOnPoint(res.physicalModels, *mesh, j);
-        res.sources = readSources(*mesh, j);
-        res.outputRequests = readOutputRequests(*mesh, j);
-    } else {
-        res.sources = Source::Group<>();
-        res.outputRequests = OutputRequest::Group<>();
-    }
-
-    postReadOperations(res);
-
-    return res;
-}
-
 void Parser::readBoundary(
     const json& j, 
     Geometry::Mesh::Unstructured& mesh, 
     PMGroup& physicalModelGroup, 
-    const Geometry::Grid3& grid
-) const {
+    const Geometry::Grid3& grid) const 
+{
+    if (j.find("boundary") == j.end()) {
+        return;
+    }
+
     json lower = j.at("boundary").at("lower");
     json upper = j.at("boundary").at("upper");
 
@@ -1360,16 +1319,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> Parser::readMagnitude(const json& 
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
 }
 
-bool Parser::checkVersionCompatibility(const std::string& version) {
-    bool versionMatches = (version == std::string(OPENSEMBA_VERSION));
-    if (!versionMatches) {
-        throw std::logic_error(
-            "File version " + version + " is not supported.");
-    }
-    return versionMatches;
-}
-
-void Parser::checkExtendedVersionCompatibility(const std::string& version) {
+void Parser::checkVersionCompatibility(const std::string& version) 
+{
 	const char extended = version.back();
 
 	if (isdigit(extended)) {
@@ -1452,8 +1403,8 @@ ElemView Parser::readNodes(
 
 Geometry::ElemView Parser::readElemIdsAsGroupOf(
     Geometry::Mesh::Unstructured& mesh,
-    const Parser::json& j
-) {
+    const Parser::json& j) 
+{
     Geometry::ElemView geometricElements;
     for (auto it = j.begin(); it != j.end(); ++it) {
         geometricElements.push_back(mesh.elems().getId(Geometry::ElemId(it->get<int>())));
@@ -1461,6 +1412,4 @@ Geometry::ElemView Parser::readElemIdsAsGroupOf(
     return geometricElements;
 }
 
-} /* namespace JSON */
-} /* namespace Parser */
-} /* namespace SEMBA */
+}

@@ -18,40 +18,65 @@ using namespace Geometry::Mesh;
 
 class ParserJSONParserTest : public ::testing::Test {
 protected:
+    static std::string getFolder() {
+        return "testData/";
+    }
+
     static std::string getFilename(const std::string& name)
     {
-        return "testData/" + name + ".gid/" + name + ".dat";
+        return getFolder() + name + "/" + name + ".smb.json";
     }
 };
 
-TEST_F(ParserJSONParserTest, DMCWF) 
+TEST_F(ParserJSONParserTest, dmcwf) 
 {
-    ASSERT_NO_THROW(Parser(getFilename("dmcwf")).read());
+    ASSERT_NO_THROW(Parser{ getFilename("dmcwf") }.read());
 }
 
-TEST_F(ParserJSONParserTest, Sphere) 
+TEST_F(ParserJSONParserTest, sphere)
 {
-    Data data;
-    ASSERT_NO_THROW(data = Parser(getFilename("sphere")).read());
-
-    EXPECT_EQ(Math::CVecI3(20), data.grids.getNumCells());
+    ASSERT_NO_THROW(Parser{ getFilename("sphere") }.read());
 }
 
-TEST_F(ParserJSONParserTest, RectilinearGrid) 
+TEST_F(ParserJSONParserTest, antennas)
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/sphere.gid/sphere-extended-rectilinear.smb.json");
-    auto data{ jsonParser.readExtended() };
-    EXPECT_EQ(Math::CVecI3(1,2,3), data.grids.getNumCells());
-    EXPECT_EQ(std::vector<Math::Real>({0, 1}), data.grids.getPos(0));
-    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2}), data.grids.getPos(1));
-    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2, 3}), data.grids.getPos(2));
+    ASSERT_NO_THROW(Parser{ getFilename("antennas") }.read());
 }
 
-TEST_F(ParserJSONParserTest, SphereExtended)
+TEST_F(ParserJSONParserTest, wires)
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/sphere.gid/sphere-extended.smb.json");
+    ASSERT_NO_THROW(Parser{ getFilename("wires") }.read());
+}
 
-    auto data = jsonParser.readExtended();
+TEST_F(ParserJSONParserTest, bowtie)
+{
+    ASSERT_NO_THROW(Parser{ getFilename("bowtie") }.read());
+}
+
+TEST_F(ParserJSONParserTest, b2)
+{
+    ASSERT_NO_THROW(Parser{ getFilename("b2") }.read());
+}
+
+TEST_F(ParserJSONParserTest, b2_detailed)
+{
+    auto data{ Parser{getFilename("b2") }.read() };
+
+    EXPECT_EQ(353, data.model.mesh.coords().size());
+    EXPECT_EQ(652, data.model.mesh.elems().sizeOf<Geometry::Tri3>());
+}
+
+TEST_F(ParserJSONParserTest, bowtie_detailed)
+{
+    auto data{ Parser(getFilename("bowtie")).read() };
+
+    EXPECT_EQ(422, data.model.mesh.coords().size());
+    EXPECT_EQ(836, data.model.mesh.elems().size());
+}
+
+TEST_F(ParserJSONParserTest, sphere_detailed) 
+{
+    auto data{ Parser(getFilename("sphere")).read() };
 
     EXPECT_EQ(data.grids.getNumCells(), Math::CVecR3(51, 23, 15));
 
@@ -60,17 +85,17 @@ TEST_F(ParserJSONParserTest, SphereExtended)
 
     const Source::PlaneWave* source = sources.get()[0]->castTo<Source::PlaneWave>();
     EXPECT_EQ(
-        source->getPolarization(), 
+        source->getPolarization(),
         Math::CVecR3(-0.4082482904638631, 0.8164965809277261, -0.4082482904638631)
     );
     EXPECT_EQ(
-        source->getDirection(), 
+        source->getDirection(),
         Math::CVecR3(1.0, 1.0, 1.0)
     );
 
     Source::Magnitude::Magnitude magnitude = *source->getMagnitude();
     EXPECT_EQ(
-        magnitude, 
+        magnitude,
         Source::Magnitude::Magnitude(
             new Math::Function::Gaussian(
                 Math::Function::Gaussian::buildFromMaximumFrequency(
@@ -81,19 +106,6 @@ TEST_F(ParserJSONParserTest, SphereExtended)
         )
     );
 
-	auto& analysis = data.analysis;
-	EXPECT_NE(NULL, analysis);
-
-	std::ifstream input("testData/sphere.gid/sphere-extended.smb.json");
-	json j;
-	input >> j;
-
-	EXPECT_EQ(j["analysis"], analysis);
-
-	for (auto& element : j["analysis"].items()) {
-		EXPECT_EQ(element.value(), analysis[element.key()]);
-	}
-
     auto& model = data.model;
 
     // 2 predefined + 6 bounds
@@ -101,15 +113,15 @@ TEST_F(ParserJSONParserTest, SphereExtended)
     EXPECT_EQ("pec", model.physicalModels.get()[0]->getName());
     EXPECT_EQ("pmc", model.physicalModels.get()[1]->getName());
 
-	const PhysicalModel::Bound::Type boundaryLowerUpperMaterials[6] = {
-	    PhysicalModel::Bound::Type::pml,
-	    PhysicalModel::Bound::Type::pec,
-	    PhysicalModel::Bound::Type::pmc,
-		PhysicalModel::Bound::Type::mur1,
-		PhysicalModel::Bound::Type::mur2,
-		PhysicalModel::Bound::Type::periodic
+    const PhysicalModel::Bound::Type boundaryLowerUpperMaterials[6] = {
+        PhysicalModel::Bound::Type::pml,
+        PhysicalModel::Bound::Type::pec,
+        PhysicalModel::Bound::Type::pmc,
+        PhysicalModel::Bound::Type::mur1,
+        PhysicalModel::Bound::Type::mur2,
+        PhysicalModel::Bound::Type::periodic
     };
-    
+
     auto& boundaries = model.physicalModels.getOf<PhysicalModel::Bound>();
     for (auto& bound : boundaryLowerUpperMaterials) {
         EXPECT_TRUE(
@@ -148,38 +160,34 @@ TEST_F(ParserJSONParserTest, SphereExtended)
     );
 }
 
-TEST_F(ParserJSONParserTest, SphereExtendedWithWrongSubversion)
+TEST_F(ParserJSONParserTest, sphere_rectilinear) 
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/sphere.gid/sphere-extended-wrong-subversion.smb.json");
-    try {
-        jsonParser.readExtended();
-        FAIL() << "No exception was thrown";
-    }
-    catch (const std::logic_error& exception) {
-        EXPECT_STREQ(exception.what(), "File version 0.15a is not supported.");
-    }
+    auto data{ 
+        Parser(getFolder() + "sphere/sphere-rectilinear.smb.json").read() 
+    };
+
+    EXPECT_EQ(Math::CVecI3(1,2,3), data.grids.getNumCells());
+    EXPECT_EQ(std::vector<Math::Real>({0, 1}), data.grids.getPos(0));
+    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2}), data.grids.getPos(1));
+    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2, 3}), data.grids.getPos(2));
 }
 
-TEST_F(ParserJSONParserTest, SphereExtendedWithOnePlaneFarField)
+TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/sphere.gid/sphere-extended-one-plane-farfield.smb.json");
-
-    auto data = jsonParser.readExtended();
+    auto data{
+        Parser{ getFolder() + "sphere/sphere-one-plane-farfield.smb.json" }.read()
+    };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::FarField>(), 1);
-    auto farFieldProbe = data.outputRequests.getOf<OutputRequest::FarField>().front();
-
+    auto farFieldProbe{ data.outputRequests.getOf<OutputRequest::FarField>().front() };
     EXPECT_EQ(farFieldProbe->initialPhi, 0.0);
     EXPECT_EQ(farFieldProbe->finalPhi, 0.0);
     EXPECT_EQ(farFieldProbe->stepPhi, 0.1 * 2 * Math::Constants::pi / 360.0);
 }
 
-
-TEST_F(ParserJSONParserTest, Antennas)
+TEST_F(ParserJSONParserTest, antennas_detailed)
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/antennas.gid/problem.smb.json");
-
-    auto data = jsonParser.readExtended();
+    auto data{ Parser{ getFilename("antennas") }.read() };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
     EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
@@ -187,16 +195,16 @@ TEST_F(ParserJSONParserTest, Antennas)
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
-    auto& materialCableList = data.model.physicalModels.getOf<SEMBA::PhysicalModel::Wire::Wire>();
+    auto& materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
     EXPECT_EQ(materialCableList.size(), 1);
 
-    auto& materialPortList = data.model.physicalModels.getOf<SEMBA::PhysicalModel::Multiport::RLC>();
+    auto& materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
     EXPECT_EQ(materialPortList.size(), 1);
 
     auto& materialCable = materialCableList.front();
     auto& materialPort = materialPortList.front();
 
-    SEMBA::Geometry::ElemView elementsWithCableMaterial;
+    Geometry::ElemView elementsWithCableMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialCable->getId()) {
             elementsWithCableMaterial.push_back(elem.get());
@@ -205,7 +213,7 @@ TEST_F(ParserJSONParserTest, Antennas)
 
     EXPECT_EQ(elementsWithCableMaterial.size(), 2);
 
-    SEMBA::Geometry::ElemView elementsWithPortMaterial;
+    Geometry::ElemView elementsWithPortMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialPort->getId()) {
             elementsWithPortMaterial.push_back(elem.get());
@@ -215,12 +223,11 @@ TEST_F(ParserJSONParserTest, Antennas)
     EXPECT_EQ(elementsWithPortMaterial.size(), 2);
 }
 
-
-TEST_F(ParserJSONParserTest, AntennasWithProbesUsingCoordIds)
+TEST_F(ParserJSONParserTest, antennas_probesUsingCoordIds)
 {
-    SEMBA::Parsers::JSON::Parser jsonParser("testData/antennas.gid/problem-probes-with-coordIds.smb.json");
-
-    auto data = jsonParser.readExtended();
+    auto data{ 
+        Parser{getFolder() + "antennas/antennas-probes-with-coordIds.smb.json"}.read()
+    };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
     EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
@@ -228,16 +235,16 @@ TEST_F(ParserJSONParserTest, AntennasWithProbesUsingCoordIds)
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
-    auto& materialCableList = data.model.physicalModels.getOf<SEMBA::PhysicalModel::Wire::Wire>();
+    auto& materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
     EXPECT_EQ(materialCableList.size(), 1);
 
-    auto& materialPortList = data.model.physicalModels.getOf<SEMBA::PhysicalModel::Multiport::RLC>();
+    auto& materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
     EXPECT_EQ(materialPortList.size(), 1);
 
     auto& materialCable = materialCableList.front();
     auto& materialPort = materialPortList.front();
 
-    SEMBA::Geometry::ElemView elementsWithCableMaterial;
+    Geometry::ElemView elementsWithCableMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialCable->getId()) {
             elementsWithCableMaterial.push_back(elem.get());
@@ -246,7 +253,7 @@ TEST_F(ParserJSONParserTest, AntennasWithProbesUsingCoordIds)
 
     EXPECT_EQ(elementsWithCableMaterial.size(), 2);
 
-    SEMBA::Geometry::ElemView elementsWithPortMaterial;
+    Geometry::ElemView elementsWithPortMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialPort->getId()) {
             elementsWithPortMaterial.push_back(elem.get());
@@ -254,35 +261,4 @@ TEST_F(ParserJSONParserTest, AntennasWithProbesUsingCoordIds)
     }
 
     EXPECT_EQ(elementsWithPortMaterial.size(), 2);
-}
-
-
-
-TEST_F(ParserJSONParserTest, Wires) 
-{
-    ASSERT_NO_THROW(Parser(getFilename("wires")).read());
-}
-
-TEST_F(ParserJSONParserTest, Bowtie) 
-{
-    Data data;
-    ASSERT_NO_THROW(data = Parser(getFilename("bowtie")).read());
-
-    ASSERT_TRUE(data.mesh != nullptr);
-    Unstructured unstrMesh = dynamic_cast<Unstructured&>(*data.mesh);
-
-    EXPECT_EQ(422, unstrMesh.coords().size());
-    EXPECT_EQ(836, unstrMesh.elems().size());
-}
-
-TEST_F(ParserJSONParserTest, B2)
-{
-	Data data;
-	ASSERT_NO_THROW(data = Parser(getFilename("b2")).read());
-
-	ASSERT_TRUE(data.mesh != nullptr);
-	Unstructured unstrMesh = dynamic_cast<Unstructured&>(*data.mesh);
-
-	EXPECT_EQ(361, unstrMesh.coords().size());
-	EXPECT_EQ(652, unstrMesh.elems().sizeOf<Geometry::Tri3>());
 }

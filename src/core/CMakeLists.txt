@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 
-set(CMAKE_CXX_STANDARD 17)
-
 project(opensemba_core CXX)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
@@ -14,21 +12,16 @@ add_subdirectory(filesystem/ filesystem/)
 add_subdirectory(physicalModel/ physicalModel/)
 add_subdirectory(source/ source/)
 
-if(EXISTS ${CMAKE_CURRENT_LIST_DIR}/Data.h AND EXISTS
-          ${CMAKE_CURRENT_LIST_DIR}/Data.cpp)
+find_package(nlohmann_json CONFIG REQUIRED)
 
-    add_library(opensemba_core STATIC ${CMAKE_CURRENT_LIST_DIR}/Data.h
-                                           ${CMAKE_CURRENT_LIST_DIR}/Data.cpp
-                                           ${CMAKE_CURRENT_LIST_DIR}/ProblemDescription.h
-                                           ${CMAKE_CURRENT_LIST_DIR}/ProblemDescription.hpp
-    )
-
-    find_package(nlohmann_json CONFIG REQUIRED)
-
-    target_link_libraries(opensemba_core
-                                              opensemba_core_physicalmodel
-                                              opensemba_core_source
-                                              opensemba_core_outputrequest
-                                              opensemba_core_model
-                                              nlohmann_json)
-endif()
+add_library(opensemba_core 
+    "ProblemDescription.cpp"
+)
+    
+target_link_libraries(opensemba_core
+    opensemba_core_physicalmodel
+    opensemba_core_source
+    opensemba_core_outputrequest
+    opensemba_core_model
+    nlohmann_json
+)
