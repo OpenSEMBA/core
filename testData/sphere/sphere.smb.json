@@ -21,9 +21,6 @@
       "forbiddenLength": 0.25,
       "slantedWires": false,
       "vtkExport": false,
-      "postmshExport": true,
-      "postsmbExport": false,
-      "hwMeshExport": false,
       "hMesherMode": "Raw",
       "edgePoints": 0,
       "slantedThreshold": 0.25

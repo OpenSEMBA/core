@@ -30,14 +30,11 @@
 #include "outputRequest/OnLine.h"
 #include "outputRequest/OnSurface.h"
 #include "outputRequest/OnLayer.h"
-#include "string"
 
 using namespace SEMBA::Geometry;
 using json = nlohmann::json;
 
-namespace SEMBA {
-namespace Parsers {
-namespace JSON {
+namespace SEMBA::Parsers::JSON {
 
 double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey) {
 	if (j.find("total" + jsonKey) != j.end()) {
@@ -134,8 +131,12 @@ void Parser::readBoundary(
     const json& j, 
     Geometry::Mesh::Unstructured& mesh, 
     PMGroup& physicalModelGroup, 
-    const Geometry::Grid3& grid
-) const {
+    const Geometry::Grid3& grid) const 
+{
+    if (j.find("boundary") == j.end()) {
+        return;
+    }
+
     json lower = j.at("boundary").at("lower");
     json upper = j.at("boundary").at("upper");
 
@@ -1402,8 +1403,8 @@ ElemView Parser::readNodes(
 
 Geometry::ElemView Parser::readElemIdsAsGroupOf(
     Geometry::Mesh::Unstructured& mesh,
-    const Parser::json& j
-) {
+    const Parser::json& j) 
+{
     Geometry::ElemView geometricElements;
     for (auto it = j.begin(); it != j.end(); ++it) {
         geometricElements.push_back(mesh.elems().getId(Geometry::ElemId(it->get<int>())));
@@ -1411,6 +1412,4 @@ Geometry::ElemView Parser::readElemIdsAsGroupOf(
     return geometricElements;
 }
 
-} /* namespace JSON */
-} /* namespace Parser */
-} /* namespace SEMBA */
+}

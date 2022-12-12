@@ -62,7 +62,7 @@ TEST_F(ParserJSONParserTest, b2_detailed)
 {
     auto data{ Parser{getFilename("b2") }.read() };
 
-    EXPECT_EQ(361, data.model.mesh.coords().size());
+    EXPECT_EQ(353, data.model.mesh.coords().size());
     EXPECT_EQ(652, data.model.mesh.elems().sizeOf<Geometry::Tri3>());
 }
 
@@ -105,19 +105,6 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
             )
         )
     );
-
-    auto& analysis = data.analysis;
-    EXPECT_NE(NULL, analysis);
-
-    std::ifstream input("testData/sphere.gid/sphere-extended.smb.json");
-    nlohmann::json j;
-    input >> j;
-
-    EXPECT_EQ(j["analysis"], analysis);
-
-    for (auto& element : j["analysis"].items()) {
-        EXPECT_EQ(element.value(), analysis[element.key()]);
-    }
 
     auto& model = data.model;
 
@@ -176,7 +163,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
 TEST_F(ParserJSONParserTest, sphere_rectilinear) 
 {
     auto data{ 
-        Parser(getFolder() + "sphere.gid/sphere-rectilinear.smb.json").read() 
+        Parser(getFolder() + "sphere/sphere-rectilinear.smb.json").read() 
     };
 
     EXPECT_EQ(Math::CVecI3(1,2,3), data.grids.getNumCells());
@@ -185,25 +172,10 @@ TEST_F(ParserJSONParserTest, sphere_rectilinear)
     EXPECT_EQ(std::vector<Math::Real>({0, 1, 2, 3}), data.grids.getPos(2));
 }
 
-TEST_F(ParserJSONParserTest, sphere_wrongSubversion)
-{
-    Parser jsonParser{
-        getFolder() + "/sphere.gid/sphere-extended-wrong-subversion.smb.json"
-    };
-
-    try {
-        jsonParser;
-        FAIL() << "No exception was thrown";
-    }
-    catch (const std::logic_error& exception) {
-        EXPECT_STREQ(exception.what(), "File version 0.15a is not supported.");
-    }
-}
-
 TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
 {
     auto data{
-        Parser{ getFolder() + "sphere.gid/sphere-one-plane-farfield.smb.json" }.read()
+        Parser{ getFolder() + "sphere/sphere-one-plane-farfield.smb.json" }.read()
     };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::FarField>(), 1);
@@ -254,7 +226,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 TEST_F(ParserJSONParserTest, antennas_probesUsingCoordIds)
 {
     auto data{ 
-        Parser{getFolder() + "antennas.gid/antennas-probes-with-coordIds.smb.json"}.read()
+        Parser{getFolder() + "antennas/antennas-probes-with-coordIds.smb.json"}.read()
     };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
