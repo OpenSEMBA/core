@@ -22,7 +22,6 @@ using namespace Geometry;
 TEST_F(CoordinateGroupTest, CopyCtor)
 {
     auto original(buildCoordGroup());
-    auto origSize = original.size();
     auto copied(original);
 
     EXPECT_EQ(copied.size(), original.size());
@@ -46,7 +45,6 @@ TEST_F(CoordinateGroupTest, MoveCtor)
 TEST_F(CoordinateGroupTest, CopyAssignment)
 {
     auto original(buildCoordGroup());
-    auto origSize = original.size();
     auto copied = original;
 
     EXPECT_EQ(copied.size(), original.size());

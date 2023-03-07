@@ -44,8 +44,8 @@ public:
 
     Coordinate& operator=(const Coordinate& rhs);
 
-    bool operator==(const Base& rhs) const;
-    bool operator!=(const Base& rhs) const;
+    bool operator==(const Base& rhs) const override;
+    bool operator!=(const Base& rhs) const override;
 
     virtual bool isStructured(const Grid<D>&,
                               const Math::Real = Grid<D>::tolerance) const;

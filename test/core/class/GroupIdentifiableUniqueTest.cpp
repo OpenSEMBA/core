@@ -70,9 +70,8 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds)
 {
 	auto orig(buildGroupOfThreeLayers());
 
-	auto melonInGroup = orig.addAndAssignId(std::move(
-		std::make_unique<Layer::Layer>("Melon")
-	))->get();
+	orig.addAndAssignId(std::move(
+		std::make_unique<Layer::Layer>("Melon")))->get();
 
 	auto nisporaInGroup = orig.addAndAssignId(std::move(
 		std::make_unique<Layer::Layer>("Níspora")
@@ -81,9 +80,8 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds)
 	EXPECT_EQ(LayerId(5), nisporaInGroup->getId());
 
 	GroupIdentifiableUnique<Layer::Layer> another;
-	auto naranjaInGroup = another.addAndAssignId(std::move(
-		std::make_unique<Layer::Layer>("Naranja")
-	))->get();
+	another.addAndAssignId(std::move(
+		std::make_unique<Layer::Layer>("Naranja")))->get();
 
 	another.addAndAssignIds(orig);
 

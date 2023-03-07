@@ -21,7 +21,7 @@ public:
 
     Relative& operator=(const Relative& rhs);
 
-    bool operator==(const Base& rhs) const;
+    bool operator==(const Base& rhs) const override;
 
     Math::CVecR3&       rel()       { return rel_; }
     const Math::CVecR3& rel() const { return rel_; }
