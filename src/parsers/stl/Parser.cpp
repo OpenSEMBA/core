@@ -51,7 +51,7 @@ std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
     std::unique_ptr<Layer::Layer> lay;
     ElemRGroup eG;
 
-    auto& cGIndex = cG.getIndex<Math::CVecR3>();
+    auto cGIndex = cG.getIndex<Math::CVecR3>();
     
     std::ifstream stl(fn);
     stl.clear();

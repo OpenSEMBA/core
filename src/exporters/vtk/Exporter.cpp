@@ -115,13 +115,12 @@ void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
         for (std::size_t i = 0; i < 3; i++) {
             for (std::size_t j = 0; j < 2; j++) {
                 if (meshStr->bounds()(i, j) != nullptr) {
-                    //Geometry::CoordR3Group cG;
+                    Geometry::CoordR3Group cG;
                     writeFile_(
                         { getBoundary(
-                        Math::Constants::CartesianAxis(i),
-                        Math::Constants::CartesianBound(j),
-                        Geometry::CoordR3Group(), grid, meshStr
-                        ) },
+                            Math::Constants::CartesianAxis(i),
+                            Math::Constants::CartesianBound(j),
+                            cG, grid, meshStr) },
                         makeValid_(getBoundaryName(meshStr, i, j)),
                         outFile,
                         part

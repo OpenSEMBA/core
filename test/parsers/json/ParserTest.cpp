@@ -122,7 +122,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
         PhysicalModel::Bound::Type::periodic
     };
 
-    auto& boundaries = model.physicalModels.getOf<PhysicalModel::Bound>();
+    auto boundaries = model.physicalModels.getOf<PhysicalModel::Bound>();
     for (auto& bound : boundaryLowerUpperMaterials) {
         EXPECT_TRUE(
             std::find_if(
@@ -195,10 +195,10 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
-    auto& materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
+    auto materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
     EXPECT_EQ(materialCableList.size(), 1);
 
-    auto& materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
+    auto materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
     EXPECT_EQ(materialPortList.size(), 1);
 
     auto& materialCable = materialCableList.front();
@@ -235,10 +235,10 @@ TEST_F(ParserJSONParserTest, antennas_probesUsingCoordIds)
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
-    auto& materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
+    auto materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
     EXPECT_EQ(materialCableList.size(), 1);
 
-    auto& materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
+    auto materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
     EXPECT_EQ(materialPortList.size(), 1);
 
     auto& materialCable = materialCableList.front();
