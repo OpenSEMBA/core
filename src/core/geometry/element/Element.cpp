@@ -1,5 +1,3 @@
-
-
 #include "Element.h"
 
 #include <algorithm>
@@ -17,10 +15,6 @@ Base::Base(const Layer* lay,
 Base::Base(const Base& rhs) {
     lay_ = rhs.lay_;
     mat_ = rhs.mat_;
-}
-
-Base::~Base() {
-
 }
 
 bool Base::operator==(const Base& rhs) const {

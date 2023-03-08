@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include "geometry/element/Group.h"
@@ -17,8 +15,7 @@ public:
     typedef Element<ElemR,CoordR3> GraphElem;
 
     Connectivities(const std::vector<const ElemR*>& eG);
-    virtual ~Connectivities() = default;
-
+    
     std::size_t size() const;
 
     // Returns face of volume matching given face.

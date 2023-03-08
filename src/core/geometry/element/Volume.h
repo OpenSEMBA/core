@@ -15,16 +15,16 @@ namespace Element {
 
 class VolumeBase : public virtual Base {
 public:
-    VolumeBase() {};
-    virtual ~VolumeBase() {};
+    VolumeBase() = default;
+    virtual ~VolumeBase() = default;
 };
 
 template<class T>
 class Volume : public virtual Element<T>,
                public virtual VolumeBase {
 public:
-    Volume();
-    virtual ~Volume();
+    Volume() = default;
+    virtual ~Volume() = default;
 
     bool isLocalFace(const std::size_t f,
                      const Surface<T>& surf) const;
@@ -41,40 +41,59 @@ public:
     std::size_t getFaceNumber(const Surface<T>*) const;
 };
 
-namespace Error {
+template<class T>
+bool Volume<T>::isLocalFace(const std::size_t f,
+    const Surface<T>& surf) const {
+    return getSideNormal(f) == surf.getNormal();
+}
 
-class NullVolume : public Error {
-public:
-    NullVolume(const Id& elemId) : elemId_(elemId) {
-        std::stringstream aux;
-        aux << "Element (" << elemId_ << ") has null volume";
-        str_ = aux.str();
+template<class T>
+bool Volume<T>::isFaceContainedInPlane(
+    const std::size_t face,
+    const Math::Constants::CartesianPlane plane) const {
+    Box<T, 3> box = getBoundOfFace(face);
+    Math::Vector::Cartesian<T, 3> vec = box.getMax() - box.getMin();
+    return vec.isContainedInPlane(plane);
+}
+
+template<class T>
+Math::Vector::Cartesian<T, 3> Volume<T>::getSideNormal(
+    const std::size_t f) const {
+    Math::Vector::Cartesian<T, 3> vec1, vec2, res;
+    vec1 = *this->getSideVertex(f, 1) - *this->getSideVertex(f, 0);
+    vec2 = *this->getSideVertex(f, 2) - *this->getSideVertex(f, 0);
+    res = (vec1 ^ vec2).normalize();
+    return res;
+}
+
+template<class T>
+Box<T, 3> Volume<T>::getBoundOfFace(const std::size_t face) const {
+    Box<T, 3> res;
+    for (std::size_t i = 0; i < this->numberOfSideCoordinates(); i++) {
+        res << this->getSideV(face, i)->pos();
     }
-    ~NullVolume() throw() {}
+    return res;
+}
 
-    const char* what() const throw() { return str_.c_str(); }
-private:
-    Id elemId_;
-    std::string str_;
-};
-
-class SurfNotFound : public Error {
-public:
-    SurfNotFound(const Id& volId, const Id& surfId)
-    :   elemId_(volId), surfId_(surfId) {
-        std::stringstream aux;
-        aux << "Surf " << surfId_ << " is not part of Volume " << elemId_;
-        str_ = aux.str();
+template<class T>
+std::size_t Volume<T>::getFaceNumber(const Surface<T>* surf) const {
+    // Checks each face. Order is not important.
+    for (std::size_t f = 0; f < this->numberOfFaces(); f++) {
+        std::size_t vPresent = 0;
+        for (std::size_t i = 0; i < surf->numberOfVertices(); i++) {
+            for (std::size_t j = 0; j < surf->numberOfVertices(); j++) {
+                if (surf->getVertex(j) == this->getSideVertex(f, i)) {
+                    vPresent++;
+                }
+            }
+            if (vPresent == surf->numberOfVertices()) {
+                return f;
+            }
+        }
     }
-    ~SurfNotFound() throw() {}
+    throw Error::SurfNotFound(surf->getId(), this->getId());
+}
 
-    const char* what() const throw() { return str_.c_str(); }
-private:
-    Id elemId_, surfId_;
-    std::string str_;
-};
-
-} /* namespace Error */
 } /* namespace Element */
 
 typedef Element::VolumeBase         Vol;
@@ -84,5 +103,4 @@ typedef Element::Volume<Math::Int > VolI;
 } /* namespace Geometry */
 } /* namespace SEMBA */
 
-#include "Volume.hpp"
 

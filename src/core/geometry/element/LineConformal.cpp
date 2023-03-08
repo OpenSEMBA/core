@@ -50,7 +50,7 @@ void LineConformal::setV(const std::size_t i, const CoordI3* coord) {
 void LineConformal::checkCoordinates() {
     for(std::size_t i = 0; i < this->numberOfCoordinates(); i++) {
         if (!this->getV(i)->is<CoordConf>()) {
-            throw Error::Coord::NotConf(this->getV(i)->getId());
+            throw std::logic_error("Coord not conformal");
         }
     }
 }

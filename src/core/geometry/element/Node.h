@@ -12,8 +12,8 @@ class NodeBase : public virtual Base {
 public:
 	static const std::size_t sizeOfCoordinates = 1;
 
-    NodeBase() {};
-    virtual ~NodeBase() {};
+    NodeBase() = default;
+    virtual ~NodeBase() = default;
 
     inline std::size_t numberOfCoordinates() const { return 1; }
     inline std::size_t numberOfFaces   () const { return 1; }
@@ -177,6 +177,3 @@ typedef Element::Node<Math::Int > NodI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */
-
-#include "Node.hpp"
-

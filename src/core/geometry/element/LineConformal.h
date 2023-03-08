@@ -45,27 +45,6 @@ private:
     Math::CVecR3 norm_;
 };
 
-namespace Error {
-namespace Coord {
-
-class NotConf : public Error {
-public:
-    NotConf(const CoordId& coordId)
-    :   Error(coordId) {
-        std::stringstream aux;
-        aux << "Coordinate with Id (" << this->getCoordId()
-            << ") not conformal";
-        str_ = aux.str();
-    }
-    ~NotConf() throw() {}
-
-    const char* what() const throw() { return str_.c_str(); }
-private:
-    std::string str_;
-};
-
-} /* namespace Coord */
-} /* namespace Error */
 } /* namespace Element */
 
 typedef Element::LineConformal LinConf;

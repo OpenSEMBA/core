@@ -115,7 +115,7 @@ void Tetrahedron4::setV(const std::size_t i, const CoordR3* v) {
 
 void Tetrahedron4::check() const {
     if(hasZeroVolume()) {
-        throw Error::NullVolume(this->getId());
+        throw std::logic_error("Tetrahedron has zero volume");
     }
 }
 
