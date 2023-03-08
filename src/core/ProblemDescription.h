@@ -11,7 +11,7 @@
 
 namespace SEMBA {
 
-template<typename M = Model::UnstructuredModel>
+template<typename M = UnstructuredModel>
 class ProblemDescriptionBase {
 public:
 	FileSystem::Project project;
@@ -24,16 +24,42 @@ public:
 	OutputRequestGroup outputRequests;
 
 	ProblemDescriptionBase() = default;
-	ProblemDescriptionBase(const ProblemDescriptionBase& rhs);
+	ProblemDescriptionBase(const ProblemDescriptionBase&);
+    ProblemDescriptionBase(ProblemDescriptionBase&&);
 
 	ProblemDescriptionBase& operator=(const ProblemDescriptionBase& rhs);
+    ProblemDescriptionBase& operator=(ProblemDescriptionBase&&);
 };
 
 typedef ProblemDescriptionBase<> UnstructuredProblemDescription;
-typedef ProblemDescriptionBase<Model::StructuredModel> StructuredProblemDescription;
+typedef ProblemDescriptionBase<StructuredModel> StructuredProblemDescription;
 
 template<typename M>
-ProblemDescriptionBase<M>::ProblemDescriptionBase(const ProblemDescriptionBase& rhs) {
+ProblemDescriptionBase<M>::ProblemDescriptionBase(ProblemDescriptionBase&& rhs) 
+{
+    grids = std::move(rhs.grids);
+    analysis = std::move(rhs.analysis);
+    project = std::move(rhs.project);
+    model = std::move(rhs.model);
+    
+    outputRequests = std::move(rhs.outputRequests);
+    for (auto& outputRequest : outputRequests) {
+        outputRequest->setTarget(
+            model.mesh.reassign(outputRequest->getTarget())
+        );
+    }
+
+    sources = std::move(rhs.sources);
+    for (auto& source : sources) {
+        source->setTarget(
+            model.mesh.reassign(source->getTarget())
+        );
+    }
+}
+
+template<typename M>
+ProblemDescriptionBase<M>::ProblemDescriptionBase(const ProblemDescriptionBase& rhs) 
+{
     grids = rhs.grids;
     analysis = rhs.analysis;
     project = rhs.project;
@@ -56,7 +82,8 @@ ProblemDescriptionBase<M>::ProblemDescriptionBase(const ProblemDescriptionBase& 
 }
 
 template<typename M>
-ProblemDescriptionBase<M>& ProblemDescriptionBase<M>::operator=(const ProblemDescriptionBase& rhs) {
+ProblemDescriptionBase<M>& ProblemDescriptionBase<M>::operator=(const ProblemDescriptionBase& rhs) 
+{
     grids = rhs.grids;
     analysis = rhs.analysis;
     project = rhs.project;
@@ -71,6 +98,31 @@ ProblemDescriptionBase<M>& ProblemDescriptionBase<M>::operator=(const ProblemDes
     }
 
     sources = rhs.sources;
+    for (auto& source : sources) {
+        source->setTarget(
+            model.mesh.reassign(source->getTarget())
+        );
+    }
+
+    return *this;
+}
+
+template<typename M>
+ProblemDescriptionBase<M>& ProblemDescriptionBase<M>::operator=(ProblemDescriptionBase&& rhs) 
+{
+    grids = std::move(rhs.grids);
+    analysis = std::move(rhs.analysis);
+    project = std::move(rhs.project);
+    model = std::move(rhs.model);
+
+    outputRequests = std::move(rhs.outputRequests);
+    for (auto& outputRequest : outputRequests) {
+        outputRequest->setTarget(
+            model.mesh.reassign(outputRequest->getTarget())
+        );
+    }
+
+    sources = std::move(rhs.sources);
     for (auto& source : sources) {
         source->setTarget(
             model.mesh.reassign(source->getTarget())

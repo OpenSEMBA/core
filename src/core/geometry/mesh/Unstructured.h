@@ -58,6 +58,9 @@ private:
 };
 
 } /* namespace Mesh */
+
+using UnstructuredMesh = Mesh::Unstructured;
+
 } /* namespace Geometry */
 } /* namespace SEMBA */
 

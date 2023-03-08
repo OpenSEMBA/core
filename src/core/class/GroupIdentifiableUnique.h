@@ -29,7 +29,7 @@ public:
         }
     };
 
-    typedef std::set<std::unique_ptr<T>, idComparator> Container;
+    using Container = std::set<std::unique_ptr<T>, idComparator>;
     typedef typename std::set<std::unique_ptr<T>, idComparator>::iterator iterator;
     typedef typename std::set<std::unique_ptr<T>, idComparator>::const_iterator const_iterator;
 
@@ -58,8 +58,11 @@ public:
     virtual iterator add(const std::unique_ptr<T>& item);
     virtual iterator add(std::unique_ptr<T>&& item);    
 
-    virtual iterator addAndAssignId(std::unique_ptr<T>&& item);
-    virtual iterator addAndAssignIds(const GroupIdentifiableUnique<T>& items);
+    template <typename T2>
+    iterator copyAndAssignId(const T2& item);
+
+    iterator addAndAssignId(std::unique_ptr<T>&& item);
+    iterator addAndAssignIds(const GroupIdentifiableUnique<T>& items);
 
     std::vector<const T*> get() const;
 
@@ -165,6 +168,14 @@ GroupIdentifiableUnique<T>::add(std::unique_ptr<T>&& elem)
     }
 
     return it.first;
+}
+
+template<typename T> 
+template<typename T2>
+typename GroupIdentifiableUnique<T>::iterator
+GroupIdentifiableUnique<typename T>::copyAndAssignId(const T2& inputElem) 
+{
+    return addAndAssignId(std::make_unique<T2>(inputElem));    
 }
 
 template<typename T>

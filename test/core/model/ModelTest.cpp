@@ -3,10 +3,10 @@
 #include "physicalModel/Predefined.h"
 #include "model/Model.h"
 
-using ModelObject = SEMBA::Model::UnstructuredModel;
+using ModelObject = SEMBA::UnstructuredModel;
 
 using namespace SEMBA;
-using namespace Model;
+using namespace model;
 
 TEST(ModelTest, CanCreate) {
 	ModelObject model = ModelObject();
@@ -47,7 +47,7 @@ TEST(ModelTest, CanInitializeGrid) {
 		)
 	);
 
-	Mesh::Unstructured mesh = Mesh::Unstructured(coordinatesGroup, elementsGroup);
+	Mesh::Unstructured mesh(coordinatesGroup, elementsGroup);
 	model.mesh = mesh;
 
 	EXPECT_FALSE(model.mesh.coords().empty());

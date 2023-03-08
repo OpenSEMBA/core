@@ -4,7 +4,7 @@
 #include "physicalModel/Group.h"
 
 namespace SEMBA {
-namespace Model {
+namespace model {
 
 using namespace Geometry;
 
@@ -20,10 +20,35 @@ public:
 	PMGroup physicalModels;
 };
 
-typedef Model<Mesh::Unstructured> UnstructuredModel;
-typedef Model<Mesh::Structured> StructuredModel;
+template<typename M>
+Model<M>::Model(
+	const M& mesh,
+	const PMGroup& physicalModels
+) : mesh(mesh),
+physicalModels(physicalModels)
+{
+	this->mesh.reassignPointers(this->physicalModels);
+}
+
+template<typename M>
+Model<M>::Model(const Model& rhs) {
+	mesh = rhs.mesh;
+	physicalModels = rhs.physicalModels;
+
+	mesh.reassignPointers(physicalModels);
+}
+
+template<typename M>
+Model<M>& Model<M>::operator=(const Model& rhs) {
+	mesh = rhs.mesh;
+	physicalModels = rhs.physicalModels;
+
+	mesh.reassignPointers(physicalModels);
+
+	return *this;
+}
 
 }
+typedef model::Model<Geometry::Mesh::Unstructured> UnstructuredModel;
+typedef model::Model<Geometry::Mesh::Structured> StructuredModel;
 }
-
-#include "Model.hpp"

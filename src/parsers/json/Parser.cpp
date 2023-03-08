@@ -118,7 +118,7 @@ UnstructuredProblemDescription Parser::read() const {
 
 	this->readBoundary(j, *mesh, materialsGroup, res.grids);
 
-	res.model = Model::UnstructuredModel(*mesh, materialsGroup);
+    res.model = UnstructuredModel{*mesh, materialsGroup};
 
     this->postReadOperations(res);
 

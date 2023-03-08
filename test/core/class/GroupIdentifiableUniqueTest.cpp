@@ -66,6 +66,13 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignId)
     EXPECT_EQ(LayerId(4), melonInGroup->getId());
 }
 
+TEST_F(GroupIdentifiableUniqueTest, CopyAndAssignId)
+{
+    auto orig(buildGroupOfThreeLayers());
+    auto melonInGroup = orig.copyAndAssignId(Layer::Layer{"Melon"})->get();
+    EXPECT_EQ(LayerId(4), melonInGroup->getId());
+}
+
 TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds) 
 {
 	auto orig(buildGroupOfThreeLayers());
