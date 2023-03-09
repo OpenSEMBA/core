@@ -478,11 +478,11 @@ const ElemR* Parser::boxToElemGroup(Mesh::Unstructured& mesh, const std::string&
     auto posVec = box.getPos();
 
     if (box.isVolume()) {    
-        elem = std::make_unique<HexR8>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, Geometry::HexR8::sizeOfCoordinates).data());
+        elem = std::make_unique<HexR8>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, 8).data());
     } else if (box.isSurface()) {
-        elem = std::make_unique<QuaR4>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, Geometry::QuaR4::sizeOfCoordinates).data());
+        elem = std::make_unique<QuaR4>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, 4).data());
     } else if (box.isLine()) {
-		elem = std::make_unique<LinR2>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, Geometry::LinR2::sizeOfCoordinates).data());
+		elem = std::make_unique<LinR2>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, 2).data());
 	} else if (box.isPoint()) {
         elem = std::make_unique<NodR>(ElemId(), addAngGetCoordView(mesh.coords(), posVec, 1).data());
 	} else {
