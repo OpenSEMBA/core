@@ -87,14 +87,9 @@ private:
 
     static void checkVersionCompatibility(const std::string& version);
     
-    static const Geometry::ElemR* boxToElemGroup(
+    static const Geometry::ElemR* boxToElem(
             Geometry::Mesh::Unstructured& mesh,
             const std::string& line);
-
-    static Geometry::ElemView readCoordIdAsNodes(
-        Geometry::Mesh::Unstructured& mesh, 
-        const json&
-    );
 
     static Geometry::ElemView readNodes(Geometry::Mesh::Unstructured&, const json&);
 
@@ -118,8 +113,6 @@ private:
     static std::pair<Math::CVecR3, Math::CVecR3> strToBox(const std::string& str);
 
     static Geometry::ElemView readElemIdsAsGroupOf(Geometry::Mesh::Unstructured& mesh, const Parser::json& j);
-
-    static Geometry::ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured&, const Parser::json&);
 };
 
 template<typename T>

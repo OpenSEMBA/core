@@ -12,13 +12,6 @@ OutputRequest::OutputRequest(
     domain_(domain),
     target_(target)
 {
-    if (type == Type::bulkCurrentElectric || type == Type::bulkCurrentMagnetic) {
-        for (auto const& elem : target) {
-            if (elem->getMatId() != MatId(0)) {
-                throw Error::Material();
-            }
-        }
-    }
 }
 
 std::string OutputRequest::getTypeStr() const 

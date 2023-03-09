@@ -1,9 +1,6 @@
-
-
 #pragma once
 
 #include "Port.h"
-
 
 namespace SEMBA {
 namespace Source {
@@ -21,7 +18,7 @@ public:
               const ExcitationMode excMode,
               const std::pair<size_t,size_t> mode);
     Waveguide(const Waveguide& rhs);
-    virtual ~Waveguide();
+    virtual ~Waveguide() = default;
 
     //virtual std::unique_ptr<Source> clone() const override {
     //    return std::make_unique<Waveguide>(*this);

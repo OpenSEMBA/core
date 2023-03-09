@@ -53,6 +53,8 @@ public:
     T* getId(const Id& id);
     const T* getId(const Id& id) const;
 
+    std::vector<const T*> getIds(const std::vector<Id>&) const;
+
     bool existId(const Id& id) const { return items_.count(id) != 0; }
     
     virtual iterator add(const std::unique_ptr<T>& item);
@@ -114,6 +116,18 @@ const T* GroupIdentifiableUnique<T>::getId(const GroupIdentifiableUnique<T>::Id&
     else {
         return nullptr;
     }
+}
+
+
+template<typename T>
+std::vector<const T*> GroupIdentifiableUnique<T>::getIds(
+    const std::vector<GroupIdentifiableUnique<T>::Id>& ids) const
+{
+    std::vector<const T*> r;
+    for (const auto& id : ids) {
+        r.push_back(this->getId(id));
+    }
+    return r;
 }
 
 template<typename T>

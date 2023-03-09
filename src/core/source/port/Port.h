@@ -14,17 +14,11 @@ public:
     Port(const std::unique_ptr<Magnitude::Magnitude>& magnitude, 
          const Target& elem);
     virtual ~Port() = default;
-
-    //virtual std::unique_ptr<Source> clone() const override {
-    //    return std::make_unique<Port>(*this);
-    //}
-
+    
     std::string getName() const { return "Port"; };
-
-    Math::CVecR3 getNormal() const;
-
-    virtual Math::CVecR3 getOrigin() const = 0;
-    virtual Math::CVecR3 getWeight(const Math::CVecR3& pos) const = 0;
+    
+    //virtual Math::CVecR3 getOrigin() const = 0;
+    //virtual Math::CVecR3 getWeight(const Math::CVecR3& pos) const = 0;
 };
 
 } /* namespace Port */

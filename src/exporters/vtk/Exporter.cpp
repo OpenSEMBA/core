@@ -93,7 +93,7 @@ void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
     // Writes EM Sources.
     for (const auto& source : srcs) {
         writeFile_(
-            Class::Group::View::castToReal(source->getTarget()),
+            mesh->elems().getIds(source->getTarget()),
             makeValid_(preName + "EMSource_" + source->getName()),
             outFile,
             part
@@ -103,7 +103,7 @@ void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
     // Writes output requests.
     for (const auto& oRq : oRqs) {
         writeFile_(
-            Class::Group::View::castToReal(oRq->getTarget()),
+            mesh->elems().getIds(oRq->getTarget()),
             makeValid_(preName + "OutRq_" + oRq->getName()),
             outFile,
             part

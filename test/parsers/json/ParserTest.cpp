@@ -153,7 +153,8 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
 
     ASSERT_EQ(1, probes.get()[0]->getTarget().size());
 
-    auto recoveredNode = probes.get()[0]->getTarget().at(0)->castTo<Geometry::NodR>();
+    auto recoveredNodeId = probes.get()[0]->getTarget().at(0);
+    auto recoveredNode = model.mesh.elems().getId(recoveredNodeId)->castTo<Geometry::NodR>();
     EXPECT_EQ(
         Math::CVecR3(-0.8441360141053171, 12.017228978451016, 13.154724231963254),
         recoveredNode->getV(0)->pos()

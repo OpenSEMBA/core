@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include "Waveguide.h"
@@ -16,23 +14,21 @@ public:
             const Target& elem,
             const ExcitationMode excMode,
             const std::pair<size_t,size_t> mode);
-    WaveguideRectangular(const WaveguideRectangular&);
-    virtual ~WaveguideRectangular();
+    WaveguideRectangular(const WaveguideRectangular&) = default;
+    virtual ~WaveguideRectangular() = default;
 
     virtual std::unique_ptr<Source> clone() const override {
         return std::make_unique<WaveguideRectangular>(*this);
     }
 
-    void set(const Target&);
+    //void set(const Target&);
 
     std::string getName() const override;
-    Math::Real getWidth() const;
-    Math::Real getHeight() const;
+    //Math::Real getWidth() const;
+    //Math::Real getHeight() const;
 
-    Math::CVecR3 getOrigin() const override;
-    Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
-private:
-    Geometry::BoxR3 box_; // This has been included for performance.
+    //Math::CVecR3 getOrigin() const override;
+    //Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
 };
 
 } /* namespace Port */

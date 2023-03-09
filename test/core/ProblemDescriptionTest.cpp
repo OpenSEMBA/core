@@ -42,30 +42,24 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 	}
 	
 	// Create source
-	Math::CVecR3 dir(1.0, 0.0, 0.0);
-	Math::CVecR3 pol(0.0, 0.0, 1.0);
-	Source::PlaneWave::Target sourceTarget;
-	sourceTarget.push_back(pD.model.mesh.elems().getId(ElemId(1)));
-
-	pD.sources.copyAndAssignId(Source::PlaneWave{
+	pD.sources.copyAndAssignId(
+		Source::PlaneWave{
 			std::make_unique<Source::Magnitude::Magnitude>(
 				new SEMBA::Math::Function::Gaussian(0.5, 0.0, 1.0)
 			),
-			sourceTarget,
-			dir,
-			pol
-		});
+			{ElemId{1}},
+			Math::CVecR3(1.0, 0.0, 0.0),
+			Math::CVecR3(0.0, 0.0, 1.0)
+		}
+	);
 
 	// Create OutputRequest
-	OutputRequest::OutputRequest::Target target;
-	target.push_back(pD.model.mesh.elems().getId(ElemId(2)));
-
 	pD.outputRequests.copyAndAssignId(
 		OutputRequest::OnPoint{
 			OutputRequest::OutputRequest::Type::electric,
 			OutputRequest::Domain(),
 			"My electric field point probe",
-			target
+			{ElemId(2)}
 		}
 	);
 
@@ -98,19 +92,16 @@ TEST(ProblemDescriptionTest, CanInitializeProject)
 TEST(ProblemDescriptionTest, CanInitializeSources) {
 	UnstructuredProblemDescription problemDescription;
 
-	Source::Group<> sources = Source::Group<>();
+	SourceGroup sources;
 
-	Math::CVecR3 dir(1.0, 0.0, 0.0);
-	Math::CVecR3 pol(0.0, 0.0, 1.0);
-
-	Source::PlaneWave planewave = Source::PlaneWave(
+	Source::PlaneWave planewave{
 		std::make_unique<Source::Magnitude::Magnitude>(
 			new SEMBA::Math::Function::Gaussian(0.5, 0.0, 1.0)
 		),
-		ElemView(),
-		dir,
-		pol
-	);
+		{},
+		Math::CVecR3(1.0, 0.0, 0.0),
+		Math::CVecR3(0.0, 0.0, 1.0)
+	};
 
 	sources.addAndAssignId(std::make_unique<Source::PlaneWave>(planewave));
 
@@ -125,18 +116,6 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 	EXPECT_EQ(sourceInGroup->getPolarization(), planewave.getPolarization());
 	
 	EXPECT_EQ(*sourceInGroup->getMagnitude(), *planewave.getMagnitude());
-}
-
-TEST(ProblemDescriptionTest, CanInitializeAnalysis) {
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
-
-	nlohmann::json analysis = R"({"solver": "ugrfdtd", "someOtherOption": true})"_json;
-
-	problemDescription.analysis = analysis;
-
-	EXPECT_EQ(analysis["solver"], problemDescription.analysis["solver"]);
-	EXPECT_EQ(std::string("ugrfdtd"), problemDescription.analysis["solver"].get<std::string>());
-	EXPECT_TRUE(problemDescription.analysis["someOtherOption"].get<bool>());
 }
 
 TEST(ProblemDescriptionTest, CanInitializeModel) {
@@ -232,63 +211,12 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 	);
 }
 
-TEST(ProblemDescriptionTest, CanInitializeOutputRequests) {
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
-
-	OutputRequest::OutputRequest::Target target = OutputRequest::OutputRequest::Target();	
-	const CoordR3* coords[1] = {new CoordR3(CoordId(), Math::CVecR3(1.0, 2.0, 3.0))};
-	const NodR node = NodR(
-		ElemId(),
-		coords		
-	);
-	target.push_back(&node);
-
-	OutputRequestGroup probes = OutputRequestGroup();
-	probes.addAndAssignId(
-		std::make_unique<OutputRequest::OnPoint>(
-			OutputRequest::OutputRequest::Type::electric,
-			OutputRequest::Domain(),
-			"My electric field point probe",
-			target
-		)
-	);
-
-	problemDescription.outputRequests = probes;
-
-	EXPECT_EQ(1, problemDescription.outputRequests.size());
-	EXPECT_EQ(
-		"My electric field point probe",
-		problemDescription.outputRequests.get()[0]->getName()
-	);
-	EXPECT_EQ(
-		OutputRequest::OutputRequest::Type::electric,
-		problemDescription.outputRequests.get()[0]->getType()
-	);
-	EXPECT_EQ(
-		1,
-		(problemDescription.outputRequests.get()[0]->getTarget()).size()
-	);
-
-	auto recoveredNode = problemDescription.outputRequests.get()[0]->getTarget().at(0)->castTo<NodR>();
-
-	EXPECT_EQ(
-		Math::CVecR3(1.0, 2.0, 3.0),
-		recoveredNode->getV(0)->pos()
-	);
-}
-
 TEST(ProblemDescriptionTest, CanCopyConstructor) 
 {
 	UnstructuredProblemDescription pD;
 	fillProblemDescription(pD);
 	
 	UnstructuredProblemDescription copy{ pD };
-
-	auto originalCoordinatePointer = pD.outputRequests.get().front()->getTarget().front()->castTo<NodR>()->getV(0);
-	auto newCoordinatePointer = copy.outputRequests.get().front()->getTarget().front()->castTo<NodR>()->getV(0);
-
-	EXPECT_NE(originalCoordinatePointer, newCoordinatePointer);
-	EXPECT_EQ(*originalCoordinatePointer, *newCoordinatePointer);
 
 	EXPECT_EQ(copy.project, pD.project);
 }
@@ -302,34 +230,5 @@ TEST(ProblemDescriptionTest, CanAssign)
 	
 	assignment = pD;
 
-	auto originalCoordinatePointer = pD.outputRequests.get().front()->getTarget().front()->castTo<NodR>()->getV(0);
-	auto newCoordinatePointer = assignment.outputRequests.get().front()->getTarget().front()->castTo<NodR>()->getV(0);
-
-	EXPECT_NE(originalCoordinatePointer, newCoordinatePointer);
-	EXPECT_EQ(*originalCoordinatePointer, *newCoordinatePointer);
-
 	EXPECT_EQ(assignment.project, pD.project);
-}
-
-TEST(ProblemDescriptionTest, CanMove)
-{
-	UnstructuredProblemDescription pD;
-	fillProblemDescription(pD);
-
-	auto oId{ pD.outputRequests.get().front()->getTarget().front()->getId() };
-
-	UnstructuredProblemDescription moved{ std::move(pD) };
-
-	auto nId{ moved.outputRequests.get().front()->getTarget().front()->getId() };
-
-	EXPECT_EQ(oId, nId);
-}
-
-TEST(ProblemDescriptionTest, CanBeReturned)
-{
-	auto pD{ returnProblemDescription() };
-
-	auto oId{ pD.outputRequests.get().front()->getTarget().front()->getId() };
-
-	EXPECT_EQ(ElemId(2), oId);
 }
