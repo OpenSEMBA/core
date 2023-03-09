@@ -48,36 +48,32 @@ public:
         return std::make_unique<Hexahedron8>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const;
+    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override;
 
-    // Checks if edges are ortonormal.
     bool isRegular() const;
-    inline bool isCurvedFace(const std::size_t f) const { return false; }
+    inline bool isCurvedFace(const std::size_t f) const override{ return false; }
 
-    const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const;
-    const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
-                                                const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const Coordinate::Coordinate<T,3>* getSideV(
+        const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex    (
-            const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideVertex(
-            const std::size_t f,
-            const std::size_t i) const;
+        const std::size_t f, const std::size_t i) const override;
 
     std::vector<const Coordinate::Coordinate<T,3>*> getVertices() const;
     std::vector<const Coordinate::Coordinate<T,3>*> getSideVertices(
             const std::size_t face) const;
 
-    Math::Real getAreaOfFace(const std::size_t face) const;
-    Math::Real getVolume() const;
+    Math::Real getAreaOfFace(const std::size_t face) const override;
+    Math::Real getVolume() const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*);
+    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
 
-    std::unique_ptr<ElemI> toStructured(const Coordinate::Group<CoordI3>&,
-                        const Grid3&,
-                        const Math::Real = Grid3::tolerance) const;
-    std::unique_ptr<ElemR> toUnstructured(const Coordinate::Group<CoordR3>&,
-                          const Grid3&) const;
+    std::unique_ptr<ElemI> toStructured(
+        const Coordinate::Group<CoordI3>&, const Grid3&, const Math::Real = Grid3::tolerance) const override;
+    std::unique_ptr<ElemR> toUnstructured(
+        const Coordinate::Group<CoordR3>&, const Grid3&) const override;
 
 private:
     std::array<const Coordinate::Coordinate<T,3>*, 8> v_;

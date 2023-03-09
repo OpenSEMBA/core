@@ -25,12 +25,12 @@ public:
 
     void set(const Target&);
 
-    std::string getName() const;
+    std::string getName() const override;
     Math::Real getWidth() const;
     Math::Real getHeight() const;
 
-    Math::CVecR3 getOrigin() const;
-    Math::CVecR3 getWeight(const Math::CVecR3& pos) const;
+    Math::CVecR3 getOrigin() const override;
+    Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
 private:
     Geometry::BoxR3 box_; // This has been included for performance.
 };

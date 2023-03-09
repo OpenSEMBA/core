@@ -51,13 +51,17 @@ TEST_F(GroupIdentifiableUniqueTest, CopyAndMoveAssignment)
 
 TEST_F(GroupIdentifiableUniqueTest, DeepCopyAndMoveAdd) 
 {
-    auto orig = buildGroupOfThreeLayers();
+    auto orig{ buildGroupOfThreeLayers() };
+    
     orig.add(std::make_unique<Layer::Layer>(LayerId(5), "Melon"));
-    orig.add(std::move(std::make_unique<Layer::Layer>(LayerId(6), "Sandia")));
+
+    // Keep building and moving as separate operations to avoid warnings by intel compiler.
+    auto sandia{ std::make_unique<Layer::Layer>(LayerId(6), "Sandia") };
+    orig.add(std::move(sandia));
 
     EXPECT_EQ(5, orig.size());
 }
-
+ 
 TEST_F(GroupIdentifiableUniqueTest, AddAndAssignId) 
 {
     auto orig(buildGroupOfThreeLayers());
@@ -77,25 +81,25 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds)
 {
 	auto orig(buildGroupOfThreeLayers());
 
-	orig.addAndAssignId(std::move(
-		std::make_unique<Layer::Layer>("Melon")))->get();
+    // Keep building and moving as separate operations to avoid warnings by intel compiler.
+    auto melon{ std::make_unique<Layer::Layer>("Melon") };
+	orig.addAndAssignId(std::move(melon));
 
-	auto nisporaInGroup = orig.addAndAssignId(std::move(
-		std::make_unique<Layer::Layer>("Níspora")
-	))->get();
+    auto nispora{ std::make_unique<Layer::Layer>("Nispora") };
+	auto nisporaInGroup = orig.addAndAssignId(std::move(nispora))->get();
 
 	EXPECT_EQ(LayerId(5), nisporaInGroup->getId());
 
 	GroupIdentifiableUnique<Layer::Layer> another;
-	another.addAndAssignId(std::move(
-		std::make_unique<Layer::Layer>("Naranja")))->get();
+    auto naranja{ std::make_unique<Layer::Layer>("Naranja") };
+	another.addAndAssignId(std::move(naranja));
 
 	another.addAndAssignIds(orig);
 
 	EXPECT_EQ(LayerId(5), nisporaInGroup->getId());
 
 	EXPECT_EQ(6, another.size());
-	EXPECT_EQ("Níspora", another.getId(LayerId(6))->getName());
+	EXPECT_EQ("Nispora", another.getId(LayerId(6))->getName());
 }
 
 TEST_F(GroupIdentifiableUniqueTest, DuplicatedIdShouldTriggerLogicException)

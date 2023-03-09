@@ -31,7 +31,7 @@ public:
 
     Structured* getMeshStructured(const Math::Real = Grid3::tolerance) const;
 
-    void applyScalingFactor(const Math::Real factor);
+    void applyScalingFactor(const Math::Real factor) override;
 
 private:
 	Grid3 grid_;

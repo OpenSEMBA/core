@@ -23,42 +23,42 @@ public:
         return std::make_unique<Tetrahedron4>(*this);
     }
 
-    bool isInnerPoint(const Math::CVecR3& pos) const;
-    bool isCurvedFace(const std::size_t face) const;
+    bool isInnerPoint(const Math::CVecR3& pos) const override;
+    bool isCurvedFace(const std::size_t face) const override;
     bool isFaceContainedInPlane(
             const std::size_t face,
-            const Math::Constants::CartesianPlane plane) const;
+            const Math::Constants::CartesianPlane plane) const override;
 
-    std::size_t numberOfCoordinates() const { return sizeOfCoordinates; }
+    std::size_t numberOfCoordinates() const override { return sizeOfCoordinates; }
 
-    std::size_t numberOfSideCoordinates(const std::size_t f = 0) const {
+    std::size_t numberOfSideCoordinates(const std::size_t f = 0) const override {
         return 3;
     }
 
-    const CoordR3* getV(const std::size_t i) const { return v_[i]; }
-    const CoordR3* getSideV(const std::size_t f, const std::size_t i) const;
+    const CoordR3* getV(const std::size_t i) const override { return v_[i]; }
+    const CoordR3* getSideV(const std::size_t f, const std::size_t i) const override;
 
-    const CoordR3* getVertex(const std::size_t i) const {
+    const CoordR3* getVertex(const std::size_t i) const override {
         return v_[tet.vertex(i)];
     }
     const CoordR3* getSideVertex(const std::size_t f,
-                                 const std::size_t i) const;
+                                 const std::size_t i) const override;
 
-    Math::Real getVolume() const;
-    const Math::Simplex::Simplex& getTet() const { return tet; }
-    Math::Real getAreaOfFace(const std::size_t face) const;
+    Math::Real getVolume() const override;
+    const Math::Simplex::Simplex& getTet() const override { return tet; }
+    Math::Real getAreaOfFace(const std::size_t face) const override;
 
-    void setV(const std::size_t i, const CoordR3*);
+    void setV(const std::size_t i, const CoordR3*) override;
     void check() const;
 
     virtual std::unique_ptr<Element<Math::Int >> toStructured(
         const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const;
+        const Math::Real = Grid3::tolerance) const override;
 
     virtual std::unique_ptr<Element<Math::Real>> toUnstructured(
         const CoordR3Group&,
-        const Grid3&) const;
+        const Grid3&) const override;
 
 private:
     static const Math::Simplex::Tetrahedron<1> tet;

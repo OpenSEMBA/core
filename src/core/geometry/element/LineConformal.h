@@ -30,15 +30,15 @@ public:
 
     Math::CVecR3 getNorm () const { return norm_;  }
 
-    const CoordConf* getV(const std::size_t i) const;
+    const CoordConf* getV(const std::size_t i) const override;
 
-    void setV(const std::size_t i, const CoordI3* coord);
+    void setV(const std::size_t i, const CoordI3* coord) override;
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const;
+        const Math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&,
-        const Grid3&) const;
+        const Grid3&) const override;
 
 private:
     void checkCoordinates();

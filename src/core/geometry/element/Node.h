@@ -47,23 +47,21 @@ public:
         return std::make_unique<Node>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const;
+    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override;
 
-    const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const;
-    const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
-                                                const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const Coordinate::Coordinate<T,3>* getSideV(
+        const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex    (
-            const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideVertex(
-            const std::size_t f,
-            const std::size_t i) const;
+            const std::size_t f, const std::size_t i) const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord);
+    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord) override;
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&, const Grid3&,
-                        const Math::Real = Grid3::tolerance) const;
-    std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&, const Grid3&) const;
+                        const Math::Real = Grid3::tolerance) const override;
+    std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&, const Grid3&) const override;
 
 private:
     std::array<const Coordinate::Coordinate<T,3>*, 1> v_;

@@ -15,12 +15,12 @@ namespace Geometry {
         BoxR3 bound;
         
         while (first != last) {
-            if ((*first)->is<ElemR>()) {
-                bound << (*first)->castTo<ElemR>()->getBound();
+            if ((*first)->template is<ElemR>()) {
+                bound << (*first)->template castTo<ElemR>()->getBound();
             }
 
-            if ((*first)->is<ElemI>()) {
-                BoxI3 boxI = (*first)->castTo<ElemI>()->getBound();
+            if ((*first)->template is<ElemI>()) {
+                BoxI3 boxI = (*first)->template castTo<ElemI>()->getBound();
                 Math::CVecI3 minP = boxI.getMin();
                 Math::CVecI3 maxP = boxI.getMax();
                 using Math::CVecR3;

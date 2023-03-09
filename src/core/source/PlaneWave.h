@@ -11,7 +11,6 @@ namespace Source {
 
 class PlaneWave : public Source {
 public:
-    PlaneWave() = default;
     PlaneWave(const std::unique_ptr<Magnitude::Magnitude>&,
               const Target& elem,
               const Math::CVecR3& directionVector,
@@ -32,7 +31,7 @@ public:
         return std::make_unique<PlaneWave>(*this);
     }
 
-    std::string getName() const { return "PlaneWave"; };
+    std::string getName() const override { return "PlaneWave"; };
     const Math::CVecR3& getPolarization() const;
     const Math::CVecR3& getDirection() const;
     

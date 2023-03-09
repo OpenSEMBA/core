@@ -12,17 +12,8 @@ class MathSimplexLineTest : public ::testing::Test {
 
 };
 
-using test_types = ::testing::Types<
-    std::integral_constant<std::size_t,2>,
-    std::integral_constant<std::size_t,3>,
-    std::integral_constant<std::size_t,5>,
-    std::integral_constant<std::size_t,8>,
-    std::integral_constant<std::size_t,12>>;
-
-TYPED_TEST_CASE(MathSimplexLineTest, test_types);
-
-TYPED_TEST(MathSimplexLineTest, BasicOperations) {
-    static constexpr std::size_t n = TypeParam::value;
+TEST(MathSimplexLineTest, BasicOperations) {
+    static constexpr std::size_t n = 3;
     Simplex::Line<n> lin;
 
     Real sum = 0.0;

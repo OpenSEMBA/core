@@ -19,7 +19,7 @@ public:
         return std::make_unique<Dipole>(*this);
     }
 
-    std::string getName() const { return "Dipole"; }
+    std::string getName() const override { return "Dipole"; }
 private:
     Math::Real length_;
     Math::CVecR3 orientation_;

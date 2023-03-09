@@ -8,8 +8,8 @@ namespace Source {
 Source::Source(
     const std::unique_ptr<Magnitude::Magnitude>& magnitude, 
     const Target& target) :
-    target_(target),
-    magnitude_(magnitude->clone())
+    magnitude_(magnitude->clone()),
+    target_(target)
 {
 }
 

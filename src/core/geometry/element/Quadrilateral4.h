@@ -39,25 +39,22 @@ public:
         return std::make_unique<Quadrilateral4<T>>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const;
+    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override; 
 
-    const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const;
-    const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
-                                                const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const Coordinate::Coordinate<T,3>* getSideV(
+        const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex    (
-            const std::size_t i) const;
+    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideVertex(
-            const std::size_t f,
-            const std::size_t i) const;
+        const std::size_t f, const std::size_t i) const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*);
+    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
 
-    std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
-                        const Grid3&,
-                        const Math::Real = Grid3::tolerance) const;
-    std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&,
-                          const Grid3&) const;
+    std::unique_ptr<ElemI> toStructured(
+        const CoordI3Group&, const Grid3&, const Math::Real = Grid3::tolerance) const override;
+    std::unique_ptr<ElemR> toUnstructured(
+        const CoordR3Group&, const Grid3&) const override;
 
 private:
     std::array<const Coordinate::Coordinate<T,3>*, 4> v_;
@@ -67,10 +64,10 @@ template<class T>
 Quadrilateral4<T>::Quadrilateral4(const Id id,
     const Coordinate::Coordinate<T, 3>* coords[4],
     const Layer* lay,
-    const Model* mat)
-    : Identifiable<Id>(id),
-    Elem(lay, mat) {
-
+    const Model* mat): 
+    Identifiable<Id>(id),
+    Elem(lay, mat) 
+{
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         v_[i] = coords[i];
     }

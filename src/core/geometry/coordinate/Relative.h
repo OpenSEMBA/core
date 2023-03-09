@@ -26,7 +26,7 @@ public:
     Math::CVecR3&       rel()       { return rel_; }
     const Math::CVecR3& rel() const { return rel_; }
 
-    CoordR3* toUnstructured(const Grid3&) const;
+    CoordR3* toUnstructured(const Grid3&) const override;
 
 private:
     Math::CVecR3 rel_;

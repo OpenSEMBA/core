@@ -23,40 +23,39 @@ public:
         return std::make_unique<Triangle3>(*this);
     }
 
-    std::size_t numberOfCoordinates() const { return sizeOfCoordinates; }
+    std::size_t numberOfCoordinates() const override { return sizeOfCoordinates; }
 
-    std::size_t numberOfSideCoordinates(const std::size_t f = 0) const {
+    std::size_t numberOfSideCoordinates(const std::size_t f = 0) const override {
         return 2;
     }
 
-    const CoordR3* getV     (const std::size_t i) const { return v_[i]; }
-    const CoordR3* getVertex(const std::size_t i) const;
+    const CoordR3* getV     (const std::size_t i) const override { return v_[i]; }
+    const CoordR3* getVertex(const std::size_t i) const override;
 
     const CoordR3* getSideV     (const std::size_t face,
-                                 const std::size_t i) const;
+                                 const std::size_t i) const override;
     const CoordR3* getSideVertex(const std::size_t face,
-                                 const std::size_t i) const;
+                                 const std::size_t i) const override;
 
     Math::Real getArea() const;
 
-    void setV(const std::size_t i, const CoordR3*);
+    void setV(const std::size_t i, const CoordR3*) override;
 
     void check() const;
 
     virtual std::unique_ptr<Element<Math::Int >> toStructured(
         const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const;
+        const Math::Real = Grid3::tolerance) const override;
 
     virtual std::unique_ptr<Element<Math::Real>> toUnstructured(
         const CoordR3Group&,
-        const Grid3&) const;
+        const Grid3&) const override;
 
 protected:
     static const Math::Simplex::Triangle<1> geo;
 
-    // TODO: Remove plain array
-    const CoordR3* v_[3];
+    std::array<const CoordR3*,3> v_;
 };
 
 } /* namespace Element */

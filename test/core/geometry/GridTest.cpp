@@ -1,11 +1,25 @@
-
-
 #include "GridTest.h"
 
 using namespace SEMBA;
 using namespace Geometry;
 using namespace Math;
 using namespace Constants;
+
+TEST_F(GeometryGridTest, Initialization) 
+{
+	Grid3 grid{
+		BoxR3(
+			Math::CVecR3(0.0, 0.0, 0.0),
+			Math::CVecR3(1, 1, 1)
+		),
+		Math::CVecR3({0.5, 0.5, 0.5})
+	};
+
+	Grid3 init = grid;
+
+	EXPECT_EQ(init, grid);
+};
+
 
 TEST_F(GeometryGridTest, BasicOperations) {
     EXPECT_EQ(grid_.getNumCells(), CVecI3(20, 20, 20));

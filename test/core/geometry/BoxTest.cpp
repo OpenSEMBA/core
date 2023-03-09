@@ -1,18 +1,13 @@
-
-
 #include "BoxTest.h"
 
 using namespace SEMBA;
 using namespace Math;
 using namespace Geometry;
 
-typedef ::testing::Types<Int, Real> MyTypes;
-TYPED_TEST_CASE(GeometryBoxTest, MyTypes);
-
-TYPED_TEST(GeometryBoxTest, VolumeBoxBasicOperations) {
-    Vector::Cartesian<TypeParam,3> min(-0.1, -0.1, -0.1);
-    Vector::Cartesian<TypeParam,3> max(1.0, 1.0, 1.0);
-    Box<TypeParam,3> box(min, max);
+TEST(GeometryBoxTest, VolumeBoxBasicOperations) {
+    Vector::Cartesian<Real,3> min(-0.1, -0.1, -0.1);
+    Vector::Cartesian<Real,3> max(1.0, 1.0, 1.0);
+    Box<Real,3> box(min, max);
     EXPECT_EQ(box.getMin(), min);
     EXPECT_EQ(box.getMax(), max);
     EXPECT_EQ(box, box);
@@ -22,7 +17,7 @@ TYPED_TEST(GeometryBoxTest, VolumeBoxBasicOperations) {
     EXPECT_TRUE(box.isVolume());
 }
 
-TYPED_TEST(GeometryBoxTest, SurfaceBoxBasicOperations) {
+TEST(GeometryBoxTest, SurfaceBoxBasicOperations) {
     CVecR3 min(-0.1, -0.1, 1.0);
     CVecR3 max(1.0,   1.0, 1.0);
     BoxR3 box(min, max);
@@ -35,7 +30,7 @@ TYPED_TEST(GeometryBoxTest, SurfaceBoxBasicOperations) {
     EXPECT_TRUE(box <= box);
 }
 
-TYPED_TEST(GeometryBoxTest, VolumeBoxChop) {
+TEST(GeometryBoxTest, VolumeBoxChop) {
     CVecI3 min(0, 0, 0);
     CVecI3 max(4, 4, 4);
     BoxI3 box(min,max);
@@ -49,7 +44,7 @@ TYPED_TEST(GeometryBoxTest, VolumeBoxChop) {
     EXPECT_EQ(box, box.chop(5)[0]);
 }
 
-TYPED_TEST(GeometryBoxTest, SurfaceBoxChop) {
+TEST(GeometryBoxTest, SurfaceBoxChop) {
     CVecI3 min(0, 0, 0);
     CVecI3 max(0, 4, 4);
     BoxI3 box(min,max);
@@ -58,7 +53,7 @@ TYPED_TEST(GeometryBoxTest, SurfaceBoxChop) {
     EXPECT_EQ(4, box.chop(2).size());
 }
 
-TYPED_TEST(GeometryBoxTest, BoxChopGrid) {
+TEST(GeometryBoxTest, BoxChopGrid) {
     CVecR3 min(0.0);
     CVecR3 max(3.0);
     CVecR3 step(1.0);

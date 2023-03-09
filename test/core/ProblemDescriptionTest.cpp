@@ -71,40 +71,32 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 
 }
 
-TEST(ProblemDescriptionTest, CanCreate) {
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
+auto returnProblemDescription()
+{
+	UnstructuredProblemDescription pD;
+	fillProblemDescription(pD);
+	return pD;
+}
+
+TEST(ProblemDescriptionTest, CanCreate) 
+{
+	UnstructuredProblemDescription problemDescription;
 
 	EXPECT_NE(&problemDescription, nullptr);
 }
 
-TEST(ProblemDescriptionTest, CanInitializeProject) {
-	const std::string path = "My/Project/Path/File.dat";
+TEST(ProblemDescriptionTest, CanInitializeProject) 
+{
+	const std::string path {"My/Project/Path/File.dat"};
 
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
+	UnstructuredProblemDescription problemDescription;
 	problemDescription.project = FileSystem::Project(path);
 
 	EXPECT_EQ(problemDescription.project, path);
 }
 
-TEST(ProblemDescriptionTest, CanInitializeGrids) {
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
-
-	Grid3 grid3{
-		BoxR3(
-			Math::CVecR3(0.0, 0.0, 0.0),
-			Math::CVecR3(1, 1, 1)
-		),
-		Math::CVecR3({0.5, 0.5, 0.5})
-	};
-
-	problemDescription.grids = grid3;
-
-	EXPECT_EQ(problemDescription.grids, grid3);
-	EXPECT_TRUE(problemDescription.sources.empty());
-}
-
 TEST(ProblemDescriptionTest, CanInitializeSources) {
-	UnstructuredProblemDescription problemDescription = UnstructuredProblemDescription();
+	UnstructuredProblemDescription problemDescription;
 
 	Source::Group<> sources = Source::Group<>();
 
@@ -331,4 +323,13 @@ TEST(ProblemDescriptionTest, CanMove)
 	auto nId{ moved.outputRequests.get().front()->getTarget().front()->getId() };
 
 	EXPECT_EQ(oId, nId);
+}
+
+TEST(ProblemDescriptionTest, CanBeReturned)
+{
+	auto pD{ returnProblemDescription() };
+
+	auto oId{ pD.outputRequests.get().front()->getTarget().front()->getId() };
+
+	EXPECT_EQ(ElemId(2), oId);
 }

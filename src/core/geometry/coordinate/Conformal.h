@@ -26,12 +26,12 @@ public:
 
     Conformal& operator=(const Conformal& rhs);
 
-    bool operator==(const Base& rhs) const;
+    bool operator==(const Base& rhs) const override;
 
     Math::Constants::CartesianAxis getDir   () const { return dir_;    }
     Math::Real                     getLength() const { return length_; }
 
-    CoordR3* toUnstructured(const Grid3&) const;
+    CoordR3* toUnstructured(const Grid3&) const override;
 
 private:
     Math::Constants::CartesianAxis dir_;

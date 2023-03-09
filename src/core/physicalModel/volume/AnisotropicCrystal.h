@@ -27,10 +27,10 @@ public:
     const Math::CVecR3 getPrincipalAxesRelativePermittivity() const;
     Math::Real getRelativePermeability() const;
 
-    Math::MatR33 getRelPermittivityMatR() const;
-    Math::MatR33 getRelPermeabilityMatR() const;
-    Math::MatR33 getElectricConductivityMat() const;
-    Math::MatR33 getMagneticConductivityMat() const;
+    Math::MatR33 getRelPermittivityMatR() const override;
+    Math::MatR33 getRelPermeabilityMatR() const override;
+    Math::MatR33 getElectricConductivityMat() const override;
+    Math::MatR33 getMagneticConductivityMat() const override;
 private:
     Math::CVecR3 principalAxesRelativePermittivity_;
     Math::Real relativePermeability_;

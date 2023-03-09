@@ -87,10 +87,10 @@ BoxR3 Group<E>::getBound() const
         return BoxR3().setInfinity();
     }
     BoxR3 bound;
-    for (auto const& elem : this->getOf<ElemR>()) {
+    for (auto const& elem : this->template getOf<ElemR>()) {
         bound << elem->getBound();
     }
-    for (auto const& elem : this->getOf<ElemI>()) {
+    for (auto const& elem : this->template getOf<ElemI>()) {
         BoxI3 boxI = elem->getBound();
         Math::CVecI3 minP = boxI.getMin();
         Math::CVecI3 maxP = boxI.getMax();
@@ -105,8 +105,8 @@ template<typename E> template<class T>
 void Group<E>::reassignPointers(const Coordinate::Group< Coordinate::Coordinate<T, 3> >& vNew)
 {
     for (auto const& item : *this) {
-        if (item->is<Element<T>>()) {
-            Element<T>* elem = item->castTo<Element<T>>();
+        if (item->template is<Element<T>>()) {
+            Element<T>* elem = item->template castTo<Element<T>>();
             for (std::size_t j = 0; j < elem->numberOfCoordinates(); j++) {
                 CoordId vId = elem->getV(j)->getId();
                 elem->setV(j, vNew.getId(vId));

@@ -25,13 +25,13 @@ public:
         return std::make_unique<AnisotropicFerrite>(*this);
     }
 
-    Math::MatR33 getRelPermittivityMatR() const;
+    Math::MatR33 getRelPermittivityMatR() const override;
 
-    Math::MatR33 getRelPermeabilityMatR() const; // Math::Real part.
+    Math::MatR33 getRelPermeabilityMatR() const override; // Math::Real part.
     Math::MatR33 getRelPermeabilityMatI() const; // Imaginary part.
 
-    Math::MatR33 getElectricConductivityMat() const;
-    Math::MatR33 getMagneticConductivityMat() const;
+    Math::MatR33 getElectricConductivityMat() const override;
+    Math::MatR33 getMagneticConductivityMat() const override;
 private:
     Math::Real kappa_;
     Math::Real relativePermeability_;

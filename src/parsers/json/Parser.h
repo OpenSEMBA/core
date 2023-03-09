@@ -95,7 +95,7 @@ private:
         const json&
     );
 
-    static Geometry::ElemView Parser::readNodes(Geometry::Mesh::Unstructured&, const json&);
+    static Geometry::ElemView readNodes(Geometry::Mesh::Unstructured&, const json&);
 
     static OutputRequest::OutputRequest::Type strToOutputType(std::string label);
     static Source::Generator::Type strToGeneratorType(std::string label);

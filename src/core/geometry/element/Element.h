@@ -104,17 +104,14 @@ public:
                               const Math::Real = Grid3::tolerance) const;
     virtual bool isInnerPoint(const Math::Vector::Cartesian<T,3>& pos) const;
 
-    virtual const Coordinate::Coordinate<T,3>* getV    (
-            const std::size_t i) const = 0;
+    virtual const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const = 0;
     virtual const Coordinate::Coordinate<T,3>* getSideV(
-            const std::size_t f,
-            const std::size_t i) const = 0;
+            const std::size_t f, const std::size_t i) const = 0;
 
-    virtual const Coordinate::Coordinate<T,3>* getVertex    (
+    virtual const Coordinate::Coordinate<T,3>* getVertex(
             const std::size_t i) const = 0;
     virtual const Coordinate::Coordinate<T,3>* getSideVertex(
-            const std::size_t f,
-            const std::size_t i) const = 0;
+            const std::size_t f, const std::size_t i) const = 0;
 
     Box<T,3> getBound() const;
     // Returns ptr to coord with min(max) lexicographical position.

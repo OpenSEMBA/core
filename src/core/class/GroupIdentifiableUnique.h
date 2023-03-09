@@ -173,7 +173,7 @@ GroupIdentifiableUnique<T>::add(std::unique_ptr<T>&& elem)
 template<typename T> 
 template<typename T2>
 typename GroupIdentifiableUnique<T>::iterator
-GroupIdentifiableUnique<typename T>::copyAndAssignId(const T2& inputElem) 
+GroupIdentifiableUnique<T>::copyAndAssignId(const T2& inputElem) 
 {
     return addAndAssignId(std::make_unique<T2>(inputElem));    
 }

@@ -29,7 +29,7 @@ public:
         return std::make_unique<Generator>(*this);
     }
 
-    std::string getName() const;
+    std::string getName() const override;
     Type getType() const;
 
 private:

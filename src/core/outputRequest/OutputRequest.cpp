@@ -7,9 +7,9 @@ namespace OutputRequest {
 
 OutputRequest::OutputRequest(
     const Type& type, const std::string& name, const Domain& domain, const Target& target) :
-    domain_(domain),
-    type_(type),
     name_(name),
+    type_(type),
+    domain_(domain),
     target_(target)
 {
     if (type == Type::bulkCurrentElectric || type == Type::bulkCurrentMagnetic) {

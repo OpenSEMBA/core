@@ -44,12 +44,12 @@ public:
             const Grid3& grid,
             const Math::Real tol = Grid3::tolerance) const;
 
-    void applyScalingFactor(const Math::Real factor);
-    BoxR3 getBoundingBox() const;
+    void applyScalingFactor(const Math::Real factor) override;
+    BoxR3 getBoundingBox() const override;
 
-    void reassignPointers(const PMGroup& matGr = PMGroup());
+    void reassignPointers(const PMGroup& matGr = PMGroup()) override;
 
-    virtual ElemView reassign(const ElemView&);
+    virtual ElemView reassign(const ElemView&) override;
 
 private:
 	CoordR3Group coords_;

@@ -26,7 +26,7 @@ public:
         return std::make_unique<OnLine>(*this);
     }
 
-    std::string getName() const { return "OnLine"; };
+    std::string getName() const override { return "OnLine"; };
     Type getType() const { return type_; };
     Hardness getHardness() const { return hardness_; };
 
