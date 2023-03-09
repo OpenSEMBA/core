@@ -24,15 +24,16 @@ template<class T>
 class Quadrilateral4: public virtual Quadrilateral<T>,
                       public virtual Quadrilateral4Base {
 public:
-    Quadrilateral4(const Id id,
-                   const Coordinate::Coordinate<T,3>* coords[4],
-                   const Layer* lay = nullptr,
-                   const Model* mat = nullptr);
+    Quadrilateral4(
+        const Id id,
+        const Coordinate::Coordinate<T,3>* coords[4],
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
 	Quadrilateral4(const Id id,
 		std::array<const Coordinate::Coordinate<T, 3>*, 4> v,
 		const Layer* lay = nullptr,
 		const Model* mat = nullptr);
-    Quadrilateral4(const Quadrilateral4<T>& rhs);
+    Quadrilateral4(const Quadrilateral4<T>& rhs) = default;
     virtual ~Quadrilateral4() = default;
 
     virtual std::unique_ptr<Base> clone() const override {
@@ -77,25 +78,11 @@ template<class T>
 Quadrilateral4<T>::Quadrilateral4(const Id id,
     std::array<const Coordinate::Coordinate<T, 3>*, 4> v,
     const Layer* lay,
-    const Model* mat)
-    : Identifiable<Id>(id),
-    Elem(lay, mat) {
-
-    for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
-        v_[i] = v[i];
-    }
-}
-
-template<class T>
-Quadrilateral4<T>::Quadrilateral4(const Quadrilateral4<T>& rhs)
-    : Identifiable<Id>(rhs),
-    Elem(rhs) {
-
-    for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
-        v_[i] = rhs.v_[i];
-    }
-}
-
+    const Model* mat): 
+    Identifiable<Id>(id),
+    Elem(lay, mat),
+    v_{v}
+{}
 
 template<class T>
 bool Quadrilateral4<T>::isStructured(const Grid3& grid,
@@ -152,7 +139,7 @@ template<class T>
 std::unique_ptr<ElemI> Quadrilateral4<T>::toStructured(
     const CoordI3Group& cG,
     const Grid3& grid, const Math::Real tol) const {
-    return std::make_unique<QuaI4>(this->getId(),
+    return std::make_unique<Quadrilateral4<Math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -162,7 +149,7 @@ template<class T>
 std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<QuaR4>(this->getId(),
+    return std::make_unique<Quadrilateral4<Math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());

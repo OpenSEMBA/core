@@ -33,15 +33,23 @@ class Hexahedron8 : public virtual Volume<T>,
               public virtual Hexahedron8Base {
 public:
     Hexahedron8(const Id id,
-                const Coordinate::Coordinate<T,3>* v[8],
+                const std::array<const Coordinate::Coordinate<T,3>*, 8> v,
 				const Layer* lay = nullptr,
                 const Model* mat = nullptr);
+    Hexahedron8(const Id id,
+        const Coordinate::Coordinate<T, 3>* v[8],
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
     Hexahedron8(Coordinate::Group<Coordinate::Coordinate<T,3> >&,
                 const Id id,
                 const Box<T,3>& box,
                 const Layer* lay = nullptr,
                 const Model* mat = nullptr);
-    Hexahedron8(const Hexahedron8<T>& rhs);
+    
+    Hexahedron8(const Hexahedron8<T>&) = default;
+    Hexahedron8(Hexahedron8<T>&&) = default;
+    Hexahedron8& operator=(const Hexahedron8<T>&) = default;
+    Hexahedron8& operator=(Hexahedron8<T>&&) = default;
     virtual ~Hexahedron8() = default;
 
     virtual std::unique_ptr<Base> clone() const override {
@@ -86,15 +94,24 @@ const Math::Real Hexahedron8<T>::tolerance = 1e-15;
 
 template<class T>
 Hexahedron8<T>::Hexahedron8(const Id id,
+    const std::array<const Coordinate::Coordinate<T, 3>*,8> v,
+    const Layer* lay, const Model* mat): Identifiable<Id>(id),
+    Elem(lay, mat),
+    v_{v}
+{
+}
+
+
+template<class T>
+Hexahedron8<T>::Hexahedron8(
+    const Id id,
     const Coordinate::Coordinate<T, 3>* v[8],
     const Layer* lay,
     const Model* mat)
-    : Identifiable<Id>(id),
-    Elem(lay, mat) {
-
-    for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
-        v_[i] = v[i];
-    }
+{
+    std::array<const Coordinate::Coordinate<T, 3>*, 8> vArr;
+    std::copy(v, v + 8, vArr.begin());
+    *this = Hexahedron8<T>(id, vArr, lay, mat);
 }
 
 template<class T>
@@ -113,16 +130,6 @@ Hexahedron8<T>::Hexahedron8(
     std::vector<Math::Vector::Cartesian<T, 3> > pos = box.getPos();
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         v_[i] = cG.addPos(pos[i])->get();
-    }
-}
-
-template<class T>
-Hexahedron8<T>::Hexahedron8(const Hexahedron8<T>& rhs)
-    : Identifiable<Id>(rhs),
-    Elem(rhs) {
-
-    for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
-        v_[i] = rhs.v_[i];
     }
 }
 
@@ -173,8 +180,7 @@ const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getV(
 
 template<class T>
 const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideV(
-    const std::size_t f,
-    const std::size_t i) const {
+    const std::size_t f, const std::size_t i) const {
     assert(f < numberOfFaces());
     assert(i < numberOfSideCoordinates());
     static const std::array<
@@ -225,7 +231,7 @@ template<class T>
 std::unique_ptr<ElemI> Hexahedron8<T>::toStructured(const CoordI3Group& cG,
     const Grid3& grid,
     const Math::Real tol) const {
-    return std::make_unique<HexI8>(this->getId(),
+    return std::make_unique<Hexahedron8<Math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -234,7 +240,7 @@ std::unique_ptr<ElemI> Hexahedron8<T>::toStructured(const CoordI3Group& cG,
 template<class T>
 std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<HexR8>(this->getId(),
+    return std::make_unique<Hexahedron8<Math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());

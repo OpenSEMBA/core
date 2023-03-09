@@ -1,6 +1,6 @@
-
-
 #pragma once
+
+#include <memory>
 
 #include "geometry/Grid.h"
 #include "math/vector/Cartesian.h"

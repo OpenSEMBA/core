@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <type_traits>
 
 #include "geometry/mesh/Geometric.h"
 #include "physicalModel/Bound.h"

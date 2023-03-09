@@ -194,7 +194,7 @@ void Box<T, D>::operator<<(const Box<T, D>& p) {
 template<class T, std::size_t D>
 Math::Constants::CartesianAxis Box<T, D>::getDirection() const {
     if (!isLine()) {
-        throw Error::Box::NotLine();
+        throw std::logic_error("Box object is not a line");
     }
     Math::Constants::CartesianAxis res = Math::Constants::x;
     for (std::size_t d = 0; d < D; d++) {
@@ -209,7 +209,7 @@ Math::Constants::CartesianAxis Box<T, D>::getDirection() const {
 template<class T, std::size_t D>
 Math::Constants::CartesianAxis Box<T, D>::getNormal() const {
     if (!isSurface()) {
-        throw Error::Box::NotSurface();
+        throw std::logic_error("Box object is not a surface");
     }
     assert(D == 3);
     Math::Constants::CartesianAxis res = Math::Constants::x;

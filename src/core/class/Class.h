@@ -1,8 +1,7 @@
-
-
 #pragma once
 
 #include <cstddef>
+#include <memory>
 
 namespace SEMBA {
 namespace Class {

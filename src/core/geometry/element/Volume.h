@@ -91,7 +91,7 @@ std::size_t Volume<T>::getFaceNumber(const Surface<T>* surf) const {
             }
         }
     }
-    throw Error::SurfNotFound(surf->getId(), this->getId());
+    throw std::logic_error("Surface not found");;
 }
 
 } /* namespace Element */

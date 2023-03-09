@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <memory>
 
 #include "class/Class.h"
 #include "class/Identifiable.h"

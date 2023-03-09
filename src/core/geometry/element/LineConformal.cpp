@@ -1,30 +1,44 @@
-
-
 #include "LineConformal.h"
+
+#include <iterator>
+#include <algorithm>
 
 namespace SEMBA {
 namespace Geometry {
 namespace Element {
 
 LineConformal::LineConformal(const Id id,
-                             const CoordI3* v[2],
+                             std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> v,
                              const Math::CVecR3& norm,
                              const Layer* lay,
                              const Model* mat)
 :   Identifiable<Id>(id),
     Elem(lay, mat),
-    LinI2(v) {
-
+    LinI2(v) 
+{
     checkCoordinates();
-
     norm_  = norm;
 }
 
-LineConformal::LineConformal(const CoordI3* v[2],
-                             const Math::CVecR3& norm,
-                             const Layer* lay,
-                             const Model* mat)
-:   LinI2(ElemId(0), v, lay, mat) {
+LineConformal::LineConformal(
+    const Id id,
+    const Coordinate::Coordinate<Math::Int, 3>* v[2],
+    const Math::CVecR3& norm,
+    const Layer* lay,
+    const Model* mat)
+{
+    std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> vArr;
+    std::copy(v, v + 2, vArr.begin());
+    *this = LineConformal{id, vArr, norm, lay, mat};
+}
+
+LineConformal::LineConformal(
+    std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> v,
+    const Math::CVecR3& norm,
+    const Layer* lay,
+    const Model* mat):   
+    LinI2(ElemId(0), v, lay, mat) 
+{
     checkCoordinates();
     norm_  = norm;
 }
@@ -32,7 +46,8 @@ LineConformal::LineConformal(const CoordI3* v[2],
 LineConformal::LineConformal(const LineConformal& rhs)
 :   Identifiable<Id>(rhs),
     Elem(rhs),
-    LinI2(rhs) {
+    LinI2(rhs) 
+{
     norm_  = rhs.norm_;
 }
 
@@ -57,9 +72,10 @@ void LineConformal::checkCoordinates() {
 
 std::unique_ptr<ElemI> LineConformal::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const {
-
-    return std::make_unique<LineConformal>(this->getId(),
+    const Grid3& grid, const Math::Real tol) const 
+{
+    return std::make_unique<LineConformal>(
+        this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         norm_,
         this->getLayer(),

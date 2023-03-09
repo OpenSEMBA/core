@@ -32,15 +32,19 @@ class Node : public virtual Element<T>,
 public:
     Node() = default;
     Node(const Id id,
-         const Coordinate::Coordinate<T,3>* v[1],
+         const std::array<const Coordinate::Coordinate<T, 3>*, 1> v,
          const Layer* lay = nullptr,
          const Model* mat = nullptr);
-    Node(const Node<T>& rhs);
-    Node& operator=(const Node<T>& rhs);
+    Node(
+        const Id id,
+        const Coordinate::Coordinate<T, 3>* v[1],
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
 
+    Node(const Node<T>& rhs) = default;
+    Node& operator=(const Node<T>& rhs) = default;
     Node(Node<T>&&) = default;
     Node& operator=(Node&&) = default;
-
     virtual ~Node() = default;
     
     virtual std::unique_ptr<Base> clone() const override {
@@ -68,30 +72,24 @@ private:
 };
 
 template<class T>
-Node<T>::Node(const Id id,
+Node<T>::Node(
+    const Id id, std::array<const Coordinate::Coordinate<T, 3>*,1> v,
+    const Layer* lay, const Model* mat): Identifiable<Id>(id),
+    Elem(lay, mat),
+    v_{v}
+{
+}
+
+template<class T>
+Node<T>::Node(
+    const Id id,
     const Coordinate::Coordinate<T, 3>* v[1],
     const Layer* lay,
     const Model* mat)
-    : Identifiable<Id>(id),
-    Elem(lay, mat) {
-
-    v_[0] = v[0];
-}
-
-template<class T>
-Node<T>::Node(const Node<T>& rhs)
-    : Identifiable<Id>(rhs),
-      Elem(rhs) 
 {
-    v_[0] = rhs.v_[0];
-}
-
-template<class T>
-Node<T>& Node<T>::operator=(const Node<T>& rhs) :  
-    Identifiable<Id>(rhs),
-    Elem(rhs)
-{
-    v_[0] = rhs.v_[0];
+    std::array<const Coordinate::Coordinate<T, 3>*, 1> vArr;
+    std::copy(v, v+1, vArr.begin());
+    *this = Node<T>{id, vArr, lay, mat};
 }
 
 template<class T>
@@ -150,7 +148,7 @@ std::unique_ptr<ElemI> Node<T>::toStructured(
     const CoordI3Group& cG,
     const Grid3& grid,
     const Math::Real tol) const {
-    return std::make_unique<NodI>(this->getId(),
+    return std::make_unique<Node<Math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -160,12 +158,14 @@ template<class T>
 std::unique_ptr<ElemR> Node<T>::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<NodR>(this->getId(),
+    return std::make_unique<Node<Math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());
 }
 
+typedef Node<Math::Real> NodR;
+typedef Node<Math::Int > NodI;
 
 } /* namespace Element */
 

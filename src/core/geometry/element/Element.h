@@ -136,7 +136,6 @@ public:
             const Grid3&) const = 0;
 
 protected:
-
     bool vertexInCell (const Grid3& grid, const Math::Real tol) const;
     bool vertexInBound() const;
     std::vector<const CoordI3*> vertexToStructured(const CoordI3Group& cG,
@@ -326,7 +325,7 @@ std::vector<const CoordI3*> Element<T>::vertexToStructured(
     const CoordI3Group& cG,
     const Grid3& grid,
     const Math::Real tol) const {
-    if (!this->is<ElemR>() || !this->isStructured(grid, tol)) {
+    if (!this->is<Element<Math::Real>>() || !this->isStructured(grid, tol)) {
         throw std::logic_error("Element::vertexToStructured unexpected empty element");
     }
 
@@ -350,7 +349,7 @@ template<class T>
 std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    if (!this->is<ElemI>()) {
+    if (!this->is<Element<Math::Int>>()) {
         throw std::logic_error("Element::vertexToStructured unexpected empty element");
     }
 
@@ -369,12 +368,16 @@ std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
     return res;
 }
 
+typedef Element<Math::Real> ElemR;
+typedef Element<Math::Int>  ElemI;
+
 } /* namespace Element */
+
+typedef Element::Element<Math::Real> ElemR;
+typedef Element::Element<Math::Int>  ElemI;
 
 typedef Element::Id                  ElemId;
 typedef Element::Base                Elem;
-typedef Element::Element<Math::Real> ElemR;
-typedef Element::Element<Math::Int>  ElemI;
 
 typedef std::vector<const Geometry::Elem*>  ElemView;
 

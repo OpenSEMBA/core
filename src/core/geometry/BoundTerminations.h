@@ -21,7 +21,6 @@ public:
     const PhysicalModel::Bound* operator()(std::size_t d, std::size_t p) const;
 
     void setBound (std::size_t d, std::size_t p, std::unique_ptr<PhysicalModel::Bound>&&);
-    void setBounds(const std::array<std::array<std::unique_ptr<PhysicalModel::Bound>, 2>, D>&);
 
 private:
     std::array<std::array<std::unique_ptr<PhysicalModel::Bound>, 2>, D> bounds_;
@@ -82,19 +81,6 @@ void BoundTerminations<D>::setBound(
     std::unique_ptr<PhysicalModel::Bound>&& bound
 ) {
     bounds_[d][p] = std::move(bound);
-}
-
-template <std::size_t D>
-void BoundTerminations<D>::setBounds(
-    const std::array<std::array<std::unique_ptr<PhysicalModel::Bound>, 2>, D>& bounds
-) {
-    for (std::size_t d = 0; d < D; d++) {
-        for (std::size_t p = 0; p < 2; p++) {
-            if (bounds_[d][p]) {
-                bounds_[d][p] = std::move(bound);
-            }
-        }
-    }
 }
 
 } /* namespace Geometry */

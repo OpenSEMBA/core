@@ -19,13 +19,13 @@ public:
         cG_.add(std::make_unique<CoordI3>(coordId++, CVecI3(0, 1, 0)));
         cG_.add(std::make_unique<CoordI3>(coordId++, CVecI3(0, 1, 1)));
 
-        const CoordI3* vQua[4] = {
+        std::array<const CoordI3*,4> vQua = {
                 cG_.getId(CoordId(1)),
                 cG_.getId(CoordId(2)),
                 cG_.getId(CoordId(3)),
                 cG_.getId(CoordId(4))
         };
-        const CoordI3* vLin[2] = {
+        std::array<const CoordI3*,2> vLin = {
                 cG_.getId(CoordId(2)),
                 cG_.getId(CoordId(1))
         };

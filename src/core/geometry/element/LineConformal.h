@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #include "geometry/coordinate/Conformal.h"
@@ -13,11 +11,16 @@ namespace Element {
 class LineConformal : public virtual Line2<Math::Int> {
 public:
     LineConformal(const Id id,
-                  const CoordI3* v[2],
+                  std::array<const Coordinate::Coordinate<Math::Int,3>*,2>,
                   const Math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
-    LineConformal(const CoordI3* v[2],
+    LineConformal(const Id id,
+                  const Coordinate::Coordinate<Math::Int, 3>* v[2],
+                  const Math::CVecR3& norm,
+                  const Layer* lay = nullptr,
+                  const Model* mat = nullptr);
+    LineConformal(std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2>,
                   const Math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
