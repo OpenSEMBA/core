@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 namespace SEMBA {
-namespace Parsers {
+namespace parsers {
 
 Parser::Parser(const std::string& fn) :
     filename(fn)

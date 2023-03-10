@@ -22,13 +22,13 @@ protected:
 
 TEST_F(ParserSTLParserTest, case_nofile) 
 {
-    ASSERT_ANY_THROW(Parsers::STL::Parser("nofile"));
+    ASSERT_ANY_THROW(parsers::STL::Parser("nofile"));
 }
 
 TEST_F(ParserSTLParserTest, case_single) 
 {    
     auto mesh{ 
-        Parsers::STL::Parser{getCaseName("single")}.readAsUnstructuredMesh()
+        parsers::STL::Parser{getCaseName("single")}.readAsUnstructuredMesh()
     };
 
     EXPECT_EQ(3, mesh.coords().size());

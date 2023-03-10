@@ -17,11 +17,11 @@ namespace {
 }
 
 namespace SEMBA {
-namespace Exporters {
+namespace exporters {
 namespace VTK {
 
 Exporter::Exporter(const UnstructuredProblemDescription& smb, const std::string& fn) :
-    SEMBA::Exporters::Exporter(fn) 
+    SEMBA::exporters::Exporter(fn) 
 {
     initDir_(fn + ".vtk");
 
@@ -286,5 +286,5 @@ std::string Exporter::makeValid_(const std::string& allocator) {
 }
 
 } /* namespace VTK */
-} /* namespace Exporters */
+} /* namespace exporters */
 } /* namespace SEMBA */

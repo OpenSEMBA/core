@@ -13,7 +13,7 @@
 #include "physicalModel/multiport/RLC.h"
 
 using namespace SEMBA;
-using namespace SEMBA::Parsers::JSON;
+using namespace SEMBA::parsers::JSON;
 using namespace Geometry::Mesh;
 
 class ParserJSONParserTest : public ::testing::Test {

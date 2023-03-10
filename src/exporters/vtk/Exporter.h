@@ -8,10 +8,10 @@
 #include "ProblemDescription.h"
 
 namespace SEMBA {
-namespace Exporters {
+namespace exporters {
 namespace VTK {
 
-class Exporter : public SEMBA::Exporters::Exporter {
+class Exporter : public SEMBA::exporters::Exporter {
 public:
     Exporter(const UnstructuredProblemDescription&, const std::string&);
     
@@ -56,6 +56,6 @@ private:
 };
 
 } /* namespace VTK */
-} /* namespace Exporters */
+} /* namespace exporters */
 } /* namespace SEMBA */
 

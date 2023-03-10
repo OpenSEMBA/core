@@ -11,9 +11,9 @@
 #include "physicalModel/Predefined.h"
 #include "parsers/Parser.h"
 
-namespace SEMBA::Parsers::STL {
+namespace SEMBA::parsers::STL {
 
-class Parser : public SEMBA::Parsers::Parser {
+class Parser : public SEMBA::parsers::Parser {
 public:
     Parser(const std::string& fn);
     Geometry::Mesh::Unstructured readAsUnstructuredMesh() const;

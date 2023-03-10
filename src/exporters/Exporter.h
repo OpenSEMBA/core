@@ -9,7 +9,7 @@
 #include "geometry/mesh/Structured.h"
 
 namespace SEMBA {
-namespace Exporters {
+namespace exporters {
     using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
     using ElemRView = std::vector<const Geometry::ElemR*>;
 
@@ -39,6 +39,6 @@ protected:
             const std::size_t j);
 };
 
-} /* namespace Exporters */
+} /* namespace exporters */
 } /* namespace SEMBA */
 

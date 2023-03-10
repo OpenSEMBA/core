@@ -27,18 +27,19 @@
 
 #include "parsers/Parser.h"
 
-namespace SEMBA::Parsers::JSON {
+namespace SEMBA::parsers::JSON {
+
+using namespace Geometry;
+using namespace Math;
 
 using json = nlohmann::json;
 using PM = PhysicalModel::PhysicalModel;
 
-Math::CVecI3 strToCVecI3(std::string str);
-Math::CVecR3 strToCVecR3(std::string str);
-Math::Constants::CartesianAxis strToCartesianAxis(std::string);
-std::pair<Math::CVecR3, Math::CVecR3> strToBox(const std::string& str);
-Math::Axis::Local strToLocalAxes(const std::string& str);
-
-
+CVecI3 strToCVecI3(std::string str);
+CVecR3 strToCVecR3(std::string str);
+Constants::CartesianAxis strToCartesianAxis(std::string);
+std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
+Axis::Local strToLocalAxes(const std::string& str);
 
 PMGroup readPhysicalModels(const json&);
 std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);
@@ -47,66 +48,52 @@ PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
 PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
 PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
-class Parser : public SEMBA::Parsers::Parser {
-public:
-    
+class Parser : public SEMBA::parsers::Parser {
+public:  
     Parser(const std::string& filename);
     UnstructuredProblemDescription read() const;
     
 private:
     json readSolverOptions(const json&, const std::string& key = "solverOptions") const;
-    std::unique_ptr<Geometry::Mesh::Unstructured> readUnstructuredMesh(const PhysicalModel::Group<>&, const json&) const;
+    std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PhysicalModel::Group<>&, const json&) const;
 
-	void readConnectorOnPoint(PMGroup& pMG, Geometry::Mesh::Unstructured& mesh,  const json&) const;
-    SourceGroup readSources(Geometry::Mesh::Unstructured& mesh, const json&) const;
-    OutputRequestGroup readOutputRequests(Geometry::Mesh::Unstructured& mesh, const json&, const std::string& key = "outputRequests") const;
+	void readConnectorOnPoint(PMGroup& pMG, Mesh::Unstructured& mesh,  const json&) const;
+    SourceGroup readSources(Mesh::Unstructured& mesh, const json&) const;
+    OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json&, const std::string& key = "outputRequests") const;
 
-    Geometry::Grid3 readGrids(const json&) const;
-    Geometry::Grid3 buildGridFromFile(const FileSystem::Project& file) const;
+    Grid3 readGrids(const json&) const;
+    Grid3 buildGridFromFile(const FileSystem::Project& file) const;
 
-    Geometry::LayerGroup readLayers(const json&) const;
+    LayerGroup readLayers(const json&) const;
     
-    Geometry::CoordR3Group readCoordinates(const json&) const;
+    CoordR3Group readCoordinates(const json&) const;
 
-    Geometry::ElemRGroup readElements(
-        const PMGroup&, Geometry::LayerGroup&, Geometry::CoordR3Group&, const json&) const;
-    Geometry::ElemRGroup readElementsFromFile(
-        const PMGroup&, Geometry::LayerGroup&, Geometry::CoordR3Group&, const json&) const;
-    Geometry::ElemRGroup readElementsFromSTLFile(
-        const PMGroup&, Geometry::LayerGroup&, Geometry::CoordR3Group&, const json&) const;
+    ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
+    ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
+    ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
 
-    void readBoundary(
-        const json& j, 
-        Geometry::Mesh::Unstructured& mesh, 
-        PMGroup& physicalModelGroup, const Geometry::Grid3& grid
-    ) const;
+    void readBoundary(const json& j, Mesh::Unstructured& mesh, PMGroup& physicalModelGroup, const Grid3& grid) const;
 
     PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) const;
 
-    static std::unique_ptr<Source::PlaneWave> readPlanewave(Geometry::Mesh::Unstructured& mesh, const json&);
-    static std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(Geometry::Mesh::Unstructured& mesh, const json&);
-    static std::unique_ptr<Source::Port::TEM> readPortTEM(Geometry::Mesh::Unstructured& mesh, const json&);
-    static std::unique_ptr<Source::Generator> readGenerator(Geometry::Mesh::Unstructured& mesh, const json&);
-    static std::unique_ptr<Source::OnLine> readSourceOnLine(Geometry::Mesh::Unstructured& mesh, const json&);
+    static std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json&);
+    static std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(Mesh::Unstructured& mesh, const json&);
+    static std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json&);
+    static std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json&);
+    static std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json&);
     static std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
-
-    
-    static std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Geometry::Mesh::Unstructured& mesh, const json&);
+        
+    static std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json&);
 
     static OutputRequest::Domain readDomain(const json&);
     
     static void checkVersionCompatibility(const std::string& version);
     
-    static const Geometry::ElemR* boxToElemGroup(
-            Geometry::Mesh::Unstructured& mesh,
-            const std::string& line);
+    static const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
 
-    static Geometry::ElemView readCoordIdAsNodes(
-        Geometry::Mesh::Unstructured& mesh, 
-        const json&
-    );
+    static ElemView readCoordIdAsNodes(Mesh::Unstructured& mesh, const json&);
 
-    static Geometry::ElemView readNodes(Geometry::Mesh::Unstructured&, const json&);
+    static ElemView readNodes(Mesh::Unstructured&, const json&);
 
     static OutputRequest::OutputRequest::Type strToOutputType(std::string label);
 
@@ -117,27 +104,24 @@ private:
     static Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
     static Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
 
-
-
-    static Geometry::ElemView readElemIdsAsGroupOf(Geometry::Mesh::Unstructured& mesh, const json& j);
-
-    static Geometry::ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured&, const json&);
+    static ElemView readElemIdsAsGroupOf(Mesh::Unstructured& mesh, const json& j);
+    static ElemView readAndCreateCoordIdAsNodes(Mesh::Unstructured&, const json&);
 };
 
 template<typename T>
-Geometry::Element::Group<Geometry::ElemR> readElemStrAs(
+Element::Group<ElemR> readElemStrAs(
         const PhysicalModel::Group<>& mG,
-        const Geometry::Layer::Group<>& lG,
-        const Geometry::CoordR3Group& cG,
+        const Layer::Group<>& lG,
+        const CoordR3Group& cG,
         const json& e) {
-    Geometry::Element::Group<Geometry::ElemR> res;
+    Element::Group<ElemR> res;
 
     for (auto it = e.begin(); it != e.end(); ++it) {
 
-        Geometry::ElemId elemId;
+        ElemId elemId;
         MatId matId;
-        Geometry::Layer::Id layerId;
-        std::vector<Geometry::CoordId> vId;
+        Layer::Id layerId;
+        std::vector<CoordId> vId;
 
         std::stringstream ss(it->get<std::string>());
         ss >> elemId >> matId >> layerId;
@@ -146,16 +130,16 @@ Geometry::Element::Group<Geometry::ElemR> readElemStrAs(
             ss >> vId[j];
         }
 
-        const Geometry::Layer::Layer* layerPtr;
+        const Layer::Layer* layerPtr;
         const PhysicalModel::PhysicalModel* matPtr;
-        std::vector<const Geometry::CoordR3*> vPtr;
+        std::vector<const CoordR3*> vPtr;
 
         if (matId != MatId(0)) {
             matPtr = mG.getId(matId);
         } else {
             matPtr = nullptr;
         }
-        if (layerId != Geometry::LayerId(0)) {
+        if (layerId != LayerId(0)) {
             layerPtr = lG.getId(layerId);
         } else {
             layerPtr = nullptr;

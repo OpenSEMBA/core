@@ -7,7 +7,7 @@
 #include "geometry/element/Hexahedron8.h"
 
 namespace SEMBA {
-namespace Exporters {
+namespace exporters {
 
 Exporter::Exporter(const std::string& name)
 :   Project(name) {}
@@ -124,5 +124,5 @@ ElemRGroup Exporter::getGridElems(
     return elem;
 }
 
-} /* namespace Exporters */
+} /* namespace exporters */
 } /* namespace SEMBA */

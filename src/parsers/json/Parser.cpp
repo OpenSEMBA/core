@@ -34,7 +34,7 @@
 using namespace SEMBA::Geometry;
 using json = nlohmann::json;
 
-namespace SEMBA::Parsers::JSON {
+namespace SEMBA::parsers::JSON {
 
 double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey) {
 	if (j.find("total" + jsonKey) != j.end()) {
@@ -125,7 +125,7 @@ UnstructuredProblemDescription Parser::read() const {
 	return res;
 }
 
-Parser::Parser(const std::string& fn) : SEMBA::Parsers::Parser(fn) {}
+Parser::Parser(const std::string& fn) : SEMBA::parsers::Parser(fn) {}
 
 void Parser::readBoundary(
     const json& j, 
@@ -727,7 +727,7 @@ ElemRGroup Parser::readElementsFromSTLFile(
     const PMGroup& mG, LayerGroup& lG, CoordR3Group& cG, const json& f) const
 {
     std::string fn = this->filename.getFolder() + f.at("file").get<std::string>();
-    Mesh::Unstructured m = Parsers::STL::Parser(fn).readAsUnstructuredMesh();
+    Mesh::Unstructured m = parsers::STL::Parser(fn).readAsUnstructuredMesh();
 
     auto lay = lG.getId( LayerId(f.at("layerId").get<std::size_t>())  );
     auto mat = mG.getId( MatId(f.at("materialId").get<std::size_t>()) );

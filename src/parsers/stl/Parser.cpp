@@ -1,14 +1,14 @@
 #include "Parser.h"
 
 namespace SEMBA {
-namespace Parsers {
+namespace parsers {
 namespace STL {
 
 using namespace Geometry;
 using namespace Math::Constants;
 
 Parser::Parser(const std::string& fn) :
-	SEMBA::Parsers::Parser(fn)
+	SEMBA::parsers::Parser(fn)
 {}
 
 CoordR3Group readCoordinates(const std::string& fn)
