@@ -114,7 +114,7 @@ UnstructuredProblemDescription Parser::read() const {
 	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"));
 
 	res.sources = readSources(*mesh, j);
-	res.outputRequests = readOutputRequests(*mesh, j, "probes");
+	res.outputRequests = readOutputRequests(*mesh, j);
 
 	readBoundary(j, *mesh, materialsGroup, res.grids);
 
@@ -233,11 +233,11 @@ std::unique_ptr<Mesh::Unstructured> Parser::readUnstructuredMesh(const PMGroup& 
 	);
 }
 
-Source::Group<> Parser::readSources(Mesh::Unstructured& mesh, const json& j) const 
+SourceGroup readSources(Mesh::Unstructured& mesh, const json& j)
 {
     auto sources = j.find("sources");
     
-    Source::Group<> res = Source::Group<>();
+    SourceGroup res;
     if (sources == j.end()) {
         return res;
     }
@@ -428,11 +428,11 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     }
 }
 
-OutputRequest::Group<> Parser::readOutputRequests(Mesh::Unstructured& mesh, const json& j, const std::string& key) const 
+OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json& j)
 {
-    OutputRequest::Group<> res;
+    OutputRequestGroup res;
     
-    auto outs = j.find(key);
+    auto outs = j.find("probes");
     if (outs == j.end()) {
         return res;
     }
@@ -461,7 +461,7 @@ void Parser::readConnectorOnPoint(PMGroup& pMG, Mesh::Unstructured& mesh, const 
 	}
 }
 
-const ElemR* Parser::boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
+const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
 {
     BoxR3 box = strToBox(line);
     std::unique_ptr<ElemR> elem;
@@ -483,7 +483,8 @@ const ElemR* Parser::boxToElemGroup(Mesh::Unstructured& mesh, const std::string&
     return mesh.elems().addAndAssignId(std::move(elem))->get();
 }
 
-std::unique_ptr<OutputRequest::OutputRequest> Parser::readOutputRequest(Mesh::Unstructured& mesh, const json& j) {
+std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json& j) 
+{
 
     std::string name = j.at("name").get<std::string>();
     OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
@@ -597,7 +598,7 @@ std::unique_ptr<OutputRequest::OutputRequest> Parser::readOutputRequest(Mesh::Un
     throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
 }
 
-ElemView Parser::readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh, const json& j) {
+ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh, const json& j) {
 	ElemView res;
 
 	for (auto it = j.begin(); it != j.end(); ++it) {
@@ -941,7 +942,7 @@ Grid3 Parser::buildGridFromFile(const FileSystem::Project& jsonFile) const
     }
 }
 
-std::unique_ptr<Source::PlaneWave> Parser::readPlanewave(Mesh::Unstructured& mesh, const json& j) {
+std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json& j) {
     
     auto magnitude = readMagnitude(j.at("magnitude").get<json>());
     Geometry::ElemView elems = { boxToElemGroup(mesh, j.at("layerBox").get<std::string>()) };
@@ -949,7 +950,7 @@ std::unique_ptr<Source::PlaneWave> Parser::readPlanewave(Mesh::Unstructured& mes
 		throw std::logic_error("Plane wave layer must define a volume");
 	}
     
-    std::string definitionMode = j.at("definitionMode").get<std::string>();
+    auto definitionMode = j.at("definitionMode").get<std::string>();
     if (definitionMode.compare("by_vectors")==0) {
 		return std::make_unique<Source::PlaneWave>(
 			Source::PlaneWave(
@@ -989,7 +990,7 @@ std::unique_ptr<Source::PlaneWave> Parser::readPlanewave(Mesh::Unstructured& mes
     }
 }
 
-std::unique_ptr<Source::Port::Waveguide> Parser::readPortWaveguide(
+std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
     Mesh::Unstructured& mesh, 
     const json& j
 ) {
@@ -1012,10 +1013,8 @@ std::unique_ptr<Source::Port::Waveguide> Parser::readPortWaveguide(
 	}
 }
 
-std::unique_ptr<Source::Port::TEM> Parser::readPortTEM(
-	Mesh::Unstructured& mesh,
-	const json& j
-) {
+std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json& j) 
+{
 	return std::make_unique<Source::Port::TEMCoaxial>(
 		Source::Port::TEMCoaxial(
 			readMagnitude(j.at("magnitude").get<json>()),
@@ -1028,10 +1027,8 @@ std::unique_ptr<Source::Port::TEM> Parser::readPortTEM(
 	);
 }
 
-std::unique_ptr<Source::Generator> Parser::readGenerator(
-    Mesh::Unstructured& mesh, 
-    const json& j
-) {
+std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json& j) 
+{
 	return std::make_unique<Source::Generator>(
 		Source::Generator(
 			readMagnitude(j.at("magnitude").get<json>()),
@@ -1043,9 +1040,8 @@ std::unique_ptr<Source::Generator> Parser::readGenerator(
             //strToGeneratorHardness(j.at("hardness").get<std::string>()) );
 }
 
-std::unique_ptr<Source::OnLine> Parser::readSourceOnLine(
-	Mesh::Unstructured& mesh, 
-    const json& j) {
+std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json& j) 
+{
 	return std::make_unique<Source::OnLine>(
 		Source::OnLine(
 			readMagnitude(j.at("magnitude").get<json>()),
@@ -1059,7 +1055,7 @@ std::unique_ptr<Source::OnLine> Parser::readSourceOnLine(
 	);
 }
 
-OutputRequest::OutputRequest::Type Parser::strToOutputType(std::string str) {
+OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
     str = trim(str);
     if (str.compare("electricField")==0) {
         return OutputRequest::OutputRequest::Type::electric;
@@ -1092,7 +1088,8 @@ OutputRequest::OutputRequest::Type Parser::strToOutputType(std::string str) {
     }
 }
 
-Source::Generator::Type Parser::strToGeneratorType(std::string str) {
+Source::Generator::Type strToGeneratorType(std::string str) 
+{
     str = trim(str);
     if (str.compare("voltage")==0) {
         return Source::Generator::voltage;
@@ -1105,7 +1102,8 @@ Source::Generator::Type Parser::strToGeneratorType(std::string str) {
     throw std::logic_error("Unrecognized generator type: " + str);
 }
 
-Source::Generator::Hardness Parser::strToGeneratorHardness(std::string str) {
+Source::Generator::Hardness strToGeneratorHardness(std::string str) 
+{
     str = trim(str);
     if (str.compare("soft")==0) {
         return Source::Generator::soft;
@@ -1118,7 +1116,7 @@ Source::Generator::Hardness Parser::strToGeneratorHardness(std::string str) {
 
 PhysicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
 {
-    typedef SEMBA::PhysicalModel::PhysicalModel::Type Type;
+    using Type = SEMBA::PhysicalModel::PhysicalModel::Type;
 
     str = trim(str);
     if (str.compare("PEC")==0) {
@@ -1211,7 +1209,8 @@ Math::CVecR3 strToCVecR3(std::string str) {
     return res;
 }
 
-Source::OnLine::Type Parser::strToNodalType(std::string str) {
+Source::OnLine::Type strToNodalType(std::string str) 
+{
     str = trim(str);
     if (str.compare("electricField")==0) {
         return Source::OnLine::Type::electric;
@@ -1222,7 +1221,8 @@ Source::OnLine::Type Parser::strToNodalType(std::string str) {
     }
 }
 
-Source::OnLine::Hardness Parser::strToNodalHardness(std::string str) {
+Source::OnLine::Hardness strToNodalHardness(std::string str) 
+{
     str = trim(str);
     if (str.compare("soft")==0) {
         return Source::OnLine::Hardness::soft;
@@ -1233,7 +1233,8 @@ Source::OnLine::Hardness Parser::strToNodalHardness(std::string str) {
     }
 }
 
-OutputRequest::Domain Parser::readDomain(const json& j) {
+OutputRequest::Domain readDomain(const json& j) 
+{
     bool timeDomain = false;
 	Math::Real initialTime = 0.0;
 	Math::Real finalTime = 0.0;
@@ -1276,7 +1277,8 @@ OutputRequest::Domain Parser::readDomain(const json& j) {
             usingTransferFunction, transferFunctionFile);
 }
 
-std::unique_ptr<Source::Magnitude::Magnitude> Parser::readMagnitude(const json& j) {
+std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j) 
+{
     std::string type = j.at("type").get<std::string>();
     if (type.compare("File") == 0) {
 		return std::make_unique<Source::Magnitude::Numerical>(
@@ -1310,7 +1312,7 @@ std::unique_ptr<Source::Magnitude::Magnitude> Parser::readMagnitude(const json& 
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
 }
 
-void Parser::checkVersionCompatibility(const std::string& version) 
+void checkVersionCompatibility(const std::string& version) 
 {
 	const char extended = version.back();
 
@@ -1339,7 +1341,7 @@ Math::Axis::Local strToLocalAxes(const std::string& str) {
     return Math::Axis::Local(eulerAngles, origin);
 }
 
-Source::Port::TEM::ExcitationMode Parser::strToTEMMode(std::string str) {
+Source::Port::TEM::ExcitationMode strToTEMMode(std::string str) {
     if (str.compare("Voltage") == 0) {
         return Source::Port::TEM::voltage;
     } else if (str.compare("Current") == 0) {
@@ -1350,7 +1352,7 @@ Source::Port::TEM::ExcitationMode Parser::strToTEMMode(std::string str) {
 
 }
 
-Source::Port::Waveguide::ExcitationMode Parser::strToWaveguideMode(
+Source::Port::Waveguide::ExcitationMode strToWaveguideMode(
         std::string str) {
     if (str.compare("TE") == 0) {
         return Source::Port::Waveguide::ExcitationMode::TE;
@@ -1361,7 +1363,7 @@ Source::Port::Waveguide::ExcitationMode Parser::strToWaveguideMode(
     }
 }
 
-ElemView Parser::readCoordIdAsNodes(
+ElemView readCoordIdAsNodes(
     Mesh::Unstructured& mesh, 
     const json& j
 ) {
@@ -1378,7 +1380,7 @@ ElemView Parser::readCoordIdAsNodes(
 }
 
 
-ElemView Parser::readNodes(
+ElemView readNodes(
     Mesh::Unstructured& mesh,
     const json& j
 ) {
@@ -1392,7 +1394,7 @@ ElemView Parser::readNodes(
 }
 
 
-Geometry::ElemView Parser::readElemIdsAsGroupOf(
+Geometry::ElemView readElemIdsAsGroupOf(
     Geometry::Mesh::Unstructured& mesh,
     const json& j) 
 {
