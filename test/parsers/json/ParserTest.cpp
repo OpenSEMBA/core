@@ -219,3 +219,14 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 
     EXPECT_EQ(elementsWithPortMaterial.size(), 2);
 }
+
+TEST_F(ParserJSONParserTest, readMaterials) 
+{
+    std::ifstream stream(getFolder() + "materials.smb.json");
+    json j;
+    stream >> j;
+    
+    auto materials{ parsers::JSON::readMaterials(j) };
+
+    EXPECT_EQ(4, materials.size());
+}

@@ -139,7 +139,8 @@ std::vector<const CoordR3*> addAngGetCoordView(
     return coords;
 }
 
-UnstructuredProblemDescription Parser::read() const {
+UnstructuredProblemDescription Parser::read() const 
+{
 	std::ifstream stream(this->filename);
 	if (!stream.is_open()) {
 		throw std::logic_error("Can not open file: " + this->filename);
@@ -160,11 +161,11 @@ UnstructuredProblemDescription Parser::read() const {
 	res.analysis = readAnalysis(j);
 	res.grids = readGrids(j);
 
-    auto materialsGroup{ readPhysicalModels(j.at("model")) };
+    auto materialsGroup{ readMaterials(j.at("model")) };
 	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"), this->filename.getFolder());
 
 	res.sources = readSources(*mesh, j);
-	res.outputRequests = readOutputRequests(*mesh, j);
+	res.outputRequests = readProbes(*mesh, j);
 
 	readBoundary(*mesh, j, materialsGroup, res.grids);
 
@@ -205,7 +206,6 @@ PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) {
 
     throw std::logic_error("Unrecognized value in Bound ctor.");
 }
-
 
 void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)  
 {
@@ -324,7 +324,7 @@ SourceGroup readSources(Mesh::Unstructured& mesh, const json& j)
     return res;
 }
 
-PMGroup readPhysicalModels(const json& j)
+PMGroup readMaterials(const json& j)
 {
     PMGroup res;
     for (auto const& mat: j.at("materials")) {
@@ -337,7 +337,6 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
 {
     typedef PhysicalModel::PhysicalModel PM;
     
-    PM::Type type = strToMaterialType( j.at("materialType").get<std::string>() );
 	MatId id(0);
 	if (j.find("materialId") != j.end()) {
 		id = MatId(j.at("materialId").get<int>());
@@ -348,6 +347,7 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
 		name = j.at("name").get<std::string>();
 	}
 
+    auto type{ strToMaterialType( j.at("materialType").get<std::string>() ) };
     switch (type) {
     case PM::Type::PEC:
         return std::make_unique<PhysicalModel::PEC>(id, name);
@@ -511,7 +511,6 @@ OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
     }
 }
 
-
 OutputRequest::Domain readDomain(const json& j)
 {
     bool timeDomain = false;
@@ -556,9 +555,8 @@ OutputRequest::Domain readDomain(const json& j)
         usingTransferFunction, transferFunctionFile);
 }
 
-std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json& j)
+std::unique_ptr<OutputRequest::OutputRequest> readProbe(Mesh::Unstructured& mesh, const json& j)
 {
-
     std::string name = j.at("name").get<std::string>();
     OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
     std::string gidOutputType = j.at("gidOutputType").get<std::string>();
@@ -662,7 +660,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
     throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
 }
 
-OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json& j)
+OutputRequestGroup readProbes(Mesh::Unstructured& mesh, const json& j)
 {
     OutputRequestGroup res;
     
@@ -672,7 +670,7 @@ OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json& j)
     }
 
     for (auto const& out: outs->get<json>()) {
-        res.addAndAssignId(readOutputRequest(mesh, out));
+        res.addAndAssignId(readProbe(mesh, out));
     }
 
     return res;

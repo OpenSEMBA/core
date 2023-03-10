@@ -46,9 +46,9 @@ public:
 json readAnalysis(const json&);
 std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&, const std::string& folder);
 Grid3 readGrids(const json&);
-PMGroup readPhysicalModels(const json&);
+PMGroup readMaterials(const json&);
 SourceGroup readSources(Mesh::Unstructured& mesh, const json&);
-OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json&);
+OutputRequestGroup readProbes(Mesh::Unstructured& mesh, const json&);
 void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
 
 template<typename T>
