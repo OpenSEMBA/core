@@ -41,54 +41,13 @@ class Parser : public SEMBA::parsers::Parser {
 public:  
     Parser(const std::string& filename);
     UnstructuredProblemDescription read() const;
-    
-private:
-    json readSolverOptions(const json&, const std::string& key = "solverOptions") const;
-
-	void readConnectorOnPoint(PMGroup& pMG, Mesh::Unstructured& mesh,  const json&) const;
-    
-    Grid3 readGrids(const json&) const;
-    Grid3 buildGridFromFile(const FileSystem::Project& file) const;
-
-    std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&) const;
-    LayerGroup readLayers(const json&) const;    
-    CoordR3Group readCoordinates(const json&) const;
-    ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
-    ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
-    ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
-
-
 };
 
-CVecI3 strToCVecI3(std::string str);
-CVecR3 strToCVecR3(std::string str);
-Constants::CartesianAxis strToCartesianAxis(std::string);
-std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
-Axis::Local strToLocalAxes(const std::string& str);
-
-const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
-
+json readAnalysis(const json&);
+std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&, const std::string& folder);
+Grid3 readGrids(const json&);
 PMGroup readPhysicalModels(const json&);
-std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);
-std::unique_ptr<PM> readPhysicalModel(const json& material);
-PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
-PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
-PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
-
 SourceGroup readSources(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
-Source::Generator::Type strToGeneratorType(std::string label);
-Source::Generator::Hardness strToGeneratorHardness(std::string str);
-Source::OnLine::Type strToNodalType(std::string label);
-Source::OnLine::Hardness strToNodalHardness(std::string label);
-Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
-Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
-
 OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json&);
 void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
 

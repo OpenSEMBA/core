@@ -31,11 +31,46 @@
 #include "outputRequest/OnSurface.h"
 #include "outputRequest/OnLayer.h"
 
-using namespace SEMBA::Geometry;
+using namespace SEMBA;
+using namespace Geometry;
+using namespace Math;
+
 using json = nlohmann::json;
+
 
 namespace SEMBA::parsers::JSON {
 
+CVecI3 strToCVecI3(std::string str);
+CVecR3 strToCVecR3(std::string str);
+Constants::CartesianAxis strToCartesianAxis(std::string);
+std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
+Axis::Local strToLocalAxes(const std::string& str);
+const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
+
+LayerGroup readLayers(const json&);
+CoordR3Group readCoordinates(const json&);
+ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
+ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
+ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
+
+std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);
+std::unique_ptr<PM> readPhysicalModel(const json& material);
+PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
+PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
+PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
+
+std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
+Source::Generator::Type strToGeneratorType(std::string label);
+Source::Generator::Hardness strToGeneratorHardness(std::string str);
+Source::OnLine::Type strToNodalType(std::string label);
+Source::OnLine::Hardness strToNodalHardness(std::string label);
+Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
+Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
 
 void checkVersionCompatibility(const std::string& version)
 {
@@ -88,7 +123,7 @@ double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey
 
 std::vector<const CoordR3*> addAngGetCoordView(
     CoordR3Group& cG,
-    const std::vector<Math::CVecR3>& positions,
+    const std::vector<CVecR3>& positions,
     const size_t& numberOfCoordinates
 ) {
     std::vector<const CoordR3*> coords;
@@ -122,11 +157,11 @@ UnstructuredProblemDescription Parser::read() const {
 
     UnstructuredProblemDescription res;
     res.project = filename;
-	res.analysis = readSolverOptions(j, "analysis");
+	res.analysis = readAnalysis(j);
 	res.grids = readGrids(j);
 
     auto materialsGroup{ readPhysicalModels(j.at("model")) };
-	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"));
+	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"), this->filename.getFolder());
 
 	res.sources = readSources(*mesh, j);
 	res.outputRequests = readOutputRequests(*mesh, j);
@@ -187,10 +222,10 @@ void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalMode
 
     const auto& box = grid.getFullDomainBoundingBox();
 
-    for (const auto& bound : { Math::Constants::CartesianBound::L, Math::Constants::CartesianBound::U }) {
-        const auto& boundaryResource = bound == Math::Constants::CartesianBound::L ? lower : upper;
+    for (const auto& bound : { Constants::CartesianBound::L, Constants::CartesianBound::U }) {
+        const auto& boundaryResource = bound == Constants::CartesianBound::L ? lower : upper;
 
-        for (const auto& axis : { Math::Constants::CartesianAxis::x,Math::Constants::CartesianAxis::y,Math::Constants::CartesianAxis::z }) {
+        for (const auto& axis : { Constants::CartesianAxis::x,Constants::CartesianAxis::y,Constants::CartesianAxis::z }) {
             PhysicalModel::Id id(0);
 
             for (const auto& boundI : physicalModelGroup.getOf<PhysicalModel::Bound>()) {
@@ -230,18 +265,19 @@ void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalMode
     }
 }
 
-json Parser::readSolverOptions(const json& j, const std::string& key) const
+json readAnalysis(const json& j)
 {
+    const std::string key{ "analysis" };
     return j.find(key) == j.end() ? json(): j.at(key).get<json>();
 }
 
-std::unique_ptr<Mesh::Unstructured> Parser::readUnstructuredMesh(const PMGroup& physicalModels, const json& j) const
+std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup& physicalModels, const json& j, const std::string& folder)
 {
     Layer::Group<> layers = readLayers(j);
 	CoordR3Group coords = readCoordinates(j);
 	return std::make_unique<Mesh::Unstructured>(
 		coords,
-		readElements(physicalModels, layers, coords, j),
+		readElements(physicalModels, layers, coords, j, folder),
 		layers
 	);
 }
@@ -479,16 +515,16 @@ OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
 OutputRequest::Domain readDomain(const json& j)
 {
     bool timeDomain = false;
-    Math::Real initialTime = 0.0;
-    Math::Real finalTime = 0.0;
-    Math::Real samplingPeriod = 0.0;
+    Real initialTime = 0.0;
+    Real finalTime = 0.0;
+    Real samplingPeriod = 0.0;
 
     bool frequencyDomain = false;
     bool logFrequencySweep = false;
     bool usingTransferFunction = false;
-    Math::Real initialFrequency = 0.0;
-    Math::Real finalFrequency = 0.0;
-    Math::Real frequencyStep = 0.0;
+    Real initialFrequency = 0.0;
+    Real finalFrequency = 0.0;
+    Real frequencyStep = 0.0;
     std::string transferFunctionFile;
 
     if (j.find("initialTime") != j.end()) {
@@ -605,7 +641,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
     }
 
     if (gidOutputType.compare("Far_field") == 0) {
-        static const Math::Real degToRad = 2.0 * Math::Constants::pi / 360.0;
+        static const Real degToRad = 2.0 * Constants::pi / 360.0;
         return std::make_unique<OutputRequest::FarField>(
             OutputRequest::FarField(
                 domain,
@@ -642,23 +678,6 @@ OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json& j)
     return res;
 }
 
-void Parser::readConnectorOnPoint(PMGroup& pMG, Mesh::Unstructured& mesh, const json& j) const 
-{
-    auto conns = j.find("connectorOnPoint");
-    if (conns == j.end()) {
-        return;
-    }
-
-	for (auto const& it: conns->get<json>()) {
-		PhysicalModel::PhysicalModel* mat = pMG.addAndAssignId(readPhysicalModel(it))->get();
-		const CoordR3* coord[1] = { mesh.coords().getId(CoordId(it.at("coordIds").get<int>())) };
-
-		mesh.elems().addAndAssignId(
-            std::make_unique<NodR>(ElemId(0), coord, nullptr, pMG.getId(mat->getId()))
-        );
-	}
-}
-
 const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
 {
     BoxR3 box = strToBox(line);
@@ -681,19 +700,20 @@ const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
     return mesh.elems().addAndAssignId(std::move(elem))->get();
 }
 
-Math::Constants::CartesianAxis strToCartesianAxis(std::string str) {
+Constants::CartesianAxis strToCartesianAxis(std::string str) {
     if (str.compare("x") == 0) {
-        return Math::Constants::x;
+        return Constants::x;
     } else if (str.compare("y") == 0) {
-        return Math::Constants::y;
+        return Constants::y;
     } else if (str.compare("z") == 0) {
-        return Math::Constants::z;
+        return Constants::z;
     } else {
         throw std::logic_error("Unrecognized cartesian axis label: " + str);
     }
 }
 
-LayerGroup Parser::readLayers(const json& j) const {
+LayerGroup readLayers(const json& j) 
+{
     if (j.find("layers") == j.end()) {
         throw std::logic_error("layers object was not found.");
     }
@@ -710,7 +730,8 @@ LayerGroup Parser::readLayers(const json& j) const {
     return res;
 }
 
-CoordR3Group Parser::readCoordinates(const json& j) const {
+CoordR3Group readCoordinates(const json& j)
+{
 
     if (j.find("coordinates") == j.end()) {
         throw std::logic_error("Coordinates label was not found.");
@@ -720,7 +741,7 @@ CoordR3Group Parser::readCoordinates(const json& j) const {
     const json& c = j.at("coordinates").get<json>();
     for (json::const_iterator it = c.begin(); it != c.end(); ++it) {
         CoordId id;
-        Math::CVecR3 pos;
+        CVecR3 pos;
         std::stringstream ss(it->get<std::string>());
         ss >> id >> pos(0) >> pos(1) >> pos(2);
         res.add(std::make_unique<CoordR3>(id, pos));
@@ -728,13 +749,13 @@ CoordR3Group Parser::readCoordinates(const json& j) const {
     return res;
 }
 
-ElemRGroup Parser::readElements(
+ElemRGroup readElements(
 	const PMGroup& mG,
 	LayerGroup& lG,
 	CoordR3Group& cG,
-	const json& j
-) const {
-
+	const json& j,
+    const std::string& folder) 
+{
 	if (j.find("elements") == j.end()) {
 		throw std::logic_error("Elements label was not found.");
 	}
@@ -780,16 +801,17 @@ ElemRGroup Parser::readElements(
 	}
 
 	if (elems.find("fromFile") != elems.end()) {
-		res.addAndAssignIds(readElementsFromFile(mG, lG, cG, elems.at("fromFile").get<json>()));
+		res.addAndAssignIds(readElementsFromFile(mG, lG, cG, elems.at("fromFile").get<json>(), folder));
 	}
 
     return res;
 }
 
-ElemRGroup Parser::readElementsFromSTLFile(
-    const PMGroup& mG, LayerGroup& lG, CoordR3Group& cG, const json& f) const
+ElemRGroup readElementsFromSTLFile(
+    const PMGroup& mG, LayerGroup& lG, CoordR3Group& cG, 
+    const json& f, const std::string& folder)
 {
-    std::string fn = this->filename.getFolder() + f.at("file").get<std::string>();
+    std::string fn = folder + f.at("file").get<std::string>();
     Mesh::Unstructured m = parsers::STL::Parser(fn).readAsUnstructuredMesh();
 
     auto lay = lG.getId( LayerId(f.at("layerId").get<std::size_t>())  );
@@ -818,11 +840,12 @@ ElemRGroup Parser::readElementsFromSTLFile(
     return res;
 }
 
-ElemRGroup Parser::readElementsFromFile(
+ElemRGroup readElementsFromFile(
     const PMGroup& mG,
     LayerGroup& lG,
     CoordR3Group& cG,
-    const json& eFile) const
+    const json& eFile,
+    const std::string& folder) 
 {
     ElemRGroup res;
     for (auto const& f : eFile) {
@@ -832,7 +855,7 @@ ElemRGroup Parser::readElementsFromFile(
 
         std::string format = f.at("format").get<std::string>();
         if (format == "STL") {
-            res.addAndAssignIds(readElementsFromSTLFile(mG, lG, cG, f));
+            res.addAndAssignIds(readElementsFromSTLFile(mG, lG, cG, f, folder));
 
             continue;
 		}
@@ -875,7 +898,8 @@ readMultilayerSurface(const json& mat)
     }
 }
 
-Grid3 Parser::readGrids(const json& j) const {
+Grid3 readGrids(const json& j) 
+{
     if (j.find("grids") == j.end()) {
         throw std::logic_error("Grids object not found.");
     }
@@ -891,7 +915,7 @@ Grid3 Parser::readGrids(const json& j) const {
                     strToCVecI3(g.at("numberOfCells").get<std::string>()));
         } else {
             BoxR3 box = strToBox(g.at("layerBox").get<std::string>());
-            Math::CVecR3 stepSize = strToCVecR3(g.at("stepSize").get<std::string>());
+            CVecR3 stepSize = strToCVecR3(g.at("stepSize").get<std::string>());
             if (g.at("fitSizeToBox").get<bool>()) {
                 for (std::size_t i = 0; i < 3; i++) {
 					std::size_t n = std::round(box.getLength()[i] / stepSize[i]);
@@ -906,11 +930,11 @@ Grid3 Parser::readGrids(const json& j) const {
 
         // Applies boundary padding operations.
         if (g.find("lowerPaddingMeshSize") != g.end()) {
-            std::pair<Math::CVecR3, Math::CVecR3> boundaryMeshSize(
+            std::pair<CVecR3, CVecR3> boundaryMeshSize(
                     strToCVecR3(g.at("lowerPaddingMeshSize").get<std::string>()),
                     strToCVecR3(g.at("upperPaddingMeshSize").get<std::string>())
             );
-            std::pair<Math::CVecR3, Math::CVecR3> boundaryPadding(
+            std::pair<CVecR3, CVecR3> boundaryPadding(
                     strToCVecR3(g.at("lowerPadding").get<std::string>()),
                     strToCVecR3(g.at("upperPadding").get<std::string>())
             );
@@ -929,10 +953,10 @@ Grid3 Parser::readGrids(const json& j) const {
 
     } 
     if (gridType.compare("nativeGiD") == 0) {
-        Math::CVecR3 corner = strToCVecR3(g.at("corner").get<std::string>());
-        Math::CVecR3 boxSize = strToCVecR3(g.at("boxSize").get<std::string>());
-        Math::CVecI3 nGridPoints = strToCVecI3(g.at("nGridPoints").get<std::string>());
-        std::vector<Math::Real> pos[3];
+        CVecR3 corner = strToCVecR3(g.at("corner").get<std::string>());
+        CVecR3 boxSize = strToCVecR3(g.at("boxSize").get<std::string>());
+        CVecI3 nGridPoints = strToCVecI3(g.at("nGridPoints").get<std::string>());
+        std::vector<Real> pos[3];
         pos[0] = g.at("xCoordinates").get<std::vector<double>>();
         pos[1] = g.at("yCoordinates").get<std::vector<double>>();
         pos[2] = g.at("zCoordinates").get<std::vector<double>>();
@@ -940,18 +964,13 @@ Grid3 Parser::readGrids(const json& j) const {
             return Grid3(pos);
         }
         else {
-            std::pair<Math::CVecR3, Math::CVecR3> box =
+            std::pair<CVecR3, CVecR3> box =
             { corner, corner + boxSize };
             return Grid3(box, nGridPoints);
         }
     } 
-    if (gridType.compare("positionsFromFile") == 0) {
-        std::string folder = this->filename.getFolder();
-        std::string projectName = this->filename.getProjectName();
-        return buildGridFromFile(folder + projectName + ".grid.json");
-    } 
     if (gridType.compare("rectilinear") == 0) {
-        std::map<std::string, std::vector<Math::Real>> planes;
+        std::map<std::string, std::vector<Real>> planes;
         for (const auto& label: { "xs", "ys", "zs"}) {
             auto dir{ g.find(label) };
             if (dir == g.end()) {
@@ -963,45 +982,12 @@ Grid3 Parser::readGrids(const json& j) const {
             }
             planes.emplace(label, plane);
         }
-        std::vector<Math::Real> pos[3]{ planes["xs"], planes["ys"],planes["zs"]};
+        std::vector<Real> pos[3]{ planes["xs"], planes["ys"],planes["zs"]};
         return Grid3(pos);
     } 
     
     throw std::logic_error("Unrecognized grid type: " + gridType);
     
-}
-
-Grid3 Parser::buildGridFromFile(const FileSystem::Project& jsonFile) const
-{
-    if (!jsonFile.canOpen()) {
-        throw std::logic_error("ERROR @ Parser::JSON: Unable to open grid file");
-    }
-    std::ifstream fileStream(jsonFile);
-    json jsonObj;
-    try {
-        fileStream >> jsonObj;
-    }
-    catch (const std::exception& ex) {
-        std::cerr << ex.what() << std::endl;
-    }
-    
-    auto gridIt = jsonObj.find("grid");
-    if (gridIt != jsonObj.end()) {
-        std::vector<Math::Real> pos[3] = {
-            gridIt->at("xs").get<std::vector<double>>(),
-            gridIt->at("ys").get<std::vector<double>>(),
-            gridIt->at("zs").get<std::vector<double>>()
-        };
-        if (!pos[0].empty() && !pos[1].empty() && !pos[2].empty()) {
-            return Grid3(pos);
-        }
-        else {
-            throw std::logic_error("Grid file had empty positions in at least one direction");
-        }
-    }
-    else {
-        throw std::logic_error("Grid file did not contain a grid label");
-    }
 }
 
 std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json& j) {
@@ -1020,8 +1006,8 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const
 			)
 		);
     } else if (definitionMode.compare("by_angles")==0) {
-        static const Math::Real degToRad = 2.0 * Math::Constants::pi / 360.0;
-        std::pair<Math::Real,Math::Real> dirAngles, polAngles;
+        static const Real degToRad = 2.0 * Constants::pi / 360.0;
+        std::pair<Real,Real> dirAngles, polAngles;
         dirAngles.first  = j.at("directionTheta").get<double>()    * degToRad;
         dirAngles.second = j.at("directionPhi").get<double>()      * degToRad;
         polAngles.first  = j.at("polarizationAlpha").get<double>() * degToRad;
@@ -1190,13 +1176,13 @@ PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string str) {
     }
 }
 
-std::pair<Math::CVecR3, Math::CVecR3> strToBox(
+std::pair<CVecR3, CVecR3> strToBox(
         const std::string& value) {
     std::size_t begin = value.find_first_of("{");
     std::size_t end = value.find_last_of("}");
     std::string aux = value.substr(begin+1,end-1);
     std::stringstream iss(aux);
-    Math::CVecR3 max, min;
+    CVecR3 max, min;
     for (std::size_t i = 0; i < 3; i++) {
         iss >> max(i);
     }
@@ -1206,25 +1192,25 @@ std::pair<Math::CVecR3, Math::CVecR3> strToBox(
     return {min, max};
 }
 
-Math::CVecI3 strToCVecI3(std::string str) {
+CVecI3 strToCVecI3(std::string str) {
     str.erase(std::remove(str.begin(), str.end(), '{'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '}'), str.end());
     std::stringstream ss(str);
-    Math::CVecI3 res;
-    ss >> res(Math::Constants::x)
-       >> res(Math::Constants::y)
-       >> res(Math::Constants::z);
+    CVecI3 res;
+    ss >> res(Constants::x)
+       >> res(Constants::y)
+       >> res(Constants::z);
     return res;
 }
 
-Math::CVecR3 strToCVecR3(std::string str) {
+CVecR3 strToCVecR3(std::string str) {
     str.erase(std::remove(str.begin(), str.end(), '{'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '}'), str.end());
     std::stringstream ss(str);
-    Math::CVecR3 res;
-    ss >> res(Math::Constants::x)
-       >> res(Math::Constants::y)
-       >> res(Math::Constants::z);
+    CVecR3 res;
+    ss >> res(Constants::x)
+       >> res(Constants::y)
+       >> res(Constants::z);
     return res;
 }
 
@@ -1265,8 +1251,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     if (type.compare("Gaussian") == 0) {
 		return std::make_unique<Source::Magnitude::Magnitude>(
 			Source::Magnitude::Magnitude(
-				new Math::Function::Gaussian(
-					Math::Function::Gaussian::buildFromMaximumFrequency(
+				new Function::Gaussian(
+					Function::Gaussian::buildFromMaximumFrequency(
 						j.at("frequencyMaximum").get<double>(),
 						1.0
 					)
@@ -1278,7 +1264,7 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     if (type.compare("Band_limited") == 0) {
 		return std::make_unique<Source::Magnitude::Magnitude>(
 			Source::Magnitude::Magnitude(
-				new Math::Function::BandLimited(
+				new Function::BandLimited(
 					j.at("frequencyMinimum").get<double>(),
 					j.at("frequencyMaximum").get<double>()))
 		);
@@ -1287,14 +1273,14 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
 }
 
-Math::Axis::Local strToLocalAxes(const std::string& str) {
+Axis::Local strToLocalAxes(const std::string& str) {
     std::size_t begin = str.find_first_of("{");
     std::size_t end = str.find_first_of("}");
-    Math::CVecR3 eulerAngles = strToCVecR3(str.substr(begin+1,end-1));
+    CVecR3 eulerAngles = strToCVecR3(str.substr(begin+1,end-1));
     begin = str.find_last_of("{");
     end = str.find_last_of("}");
-    Math::CVecR3 origin = strToCVecR3(str.substr(begin+1,end-1));
-    return Math::Axis::Local(eulerAngles, origin);
+    CVecR3 origin = strToCVecR3(str.substr(begin+1,end-1));
+    return Axis::Local(eulerAngles, origin);
 }
 
 Source::Port::TEM::ExcitationMode strToTEMMode(std::string str) {
