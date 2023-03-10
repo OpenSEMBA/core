@@ -36,6 +36,15 @@ using json = nlohmann::json;
 
 namespace SEMBA::parsers::JSON {
 
+std::vector<ElemId> readElemIds(const json& j)
+{
+    std::vector<ElemId> r;
+    for (const auto& eId : j) {
+        r.push_back(ElemId{ std::size_t(eId.get<int>()) });
+    }
+    return r;
+}
+
 double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey) {
 	if (j.find("total" + jsonKey) != j.end()) {
 		int total = j.at("total" + jsonKey).get<int>();
@@ -498,7 +507,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				OutputRequest::BulkCurrent(
 					domain,
 					name,
-					{ boxToElemGroup(mesh, j.at("box").get<std::string>())->castTo<NodR>() },
+					{ boxToElemGroup(mesh, j.at("box").get<std::string>())->getId()},
 					strToCartesianAxis(j.at("direction").get<std::string>()),
 					j.at("skip").get<int>()
 				)
@@ -510,7 +519,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				OutputRequest::BulkCurrent(
 					domain,
 					name,
-					readCoordIdAsNodes(mesh, j.at("elemIds").get<json>()),
+					readElemIds(j.at("elemIds").get<json>()),
 					strToCartesianAxis(j.at("direction").get<std::string>()),
 					j.at("skip").get<int>()
 				)
@@ -521,7 +530,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 			OutputRequest::BulkCurrent(
 				domain,
 				name,
-				readElemIdsAsGroupOf(mesh, j.at("elemIds").get<json>()),
+				readElemIds(j.at("elemIds").get<json>()),
 				strToCartesianAxis(j.at("direction").get<std::string>()),
 				j.at("skip").get<int>()
 			)
@@ -529,18 +538,9 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
     }
 
     if (gidOutputType.compare("OutRq_on_point") == 0) {        
-        ElemView target;
-        if (j.contains("positions")) {
-            target = readAndCreateCoordIdAsNodes(mesh, j.at("positions").get<json>());
-        } else if (j.contains("coordIds")) {
-            target = readCoordIdAsNodes(mesh, j.at("coordIds").get<json>());
-        } else if (j.contains("elemIds")) {
-            target = readNodes(mesh, j.at("elemIds").get<json>());
-        } else {
-            throw std::logic_error("Unrecognized OutRq_on_point key. Available are `positions`, `coordIds` and `elemIds`");
-        }
-
-		return std::make_unique<OutputRequest::OnPoint>(type, domain, name, target);
+        return std::make_unique<OutputRequest::OnPoint>(
+            type, domain, name, readElemIds(j.at("elemIds").get<json>())
+        );
     }
     
     if (gidOutputType.compare("OutRq_on_line") == 0) {
@@ -549,7 +549,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				type,
 				domain,
 				name,
-				readElemIdsAsGroupOf(mesh, j.at("elemIds").get<json>())
+				readElemIds(j.at("elemIds").get<json>())
 			)
 		);
     }
@@ -560,7 +560,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				type,
 				domain,
 				name,
-				readElemIdsAsGroupOf(mesh, j.at("elemIds").get<json>())
+				readElemIds(j.at("elemIds").get<json>())
 			)
 		);
     }
@@ -571,7 +571,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				type,
 				domain,
 				name,
-				{ boxToElemGroup(mesh, j.at("box").get<std::string>()) }
+				{ boxToElemGroup(mesh, j.at("box").get<std::string>())->getId() }
 			)
 		);
     }
@@ -584,7 +584,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
 				name,
 				{ boxToElemGroup(mesh, j.at(
                     j.find("layerBox") == j.end() ? "box" : "layerBox"
-                ).get<std::string>()) },
+                ).get<std::string>())->getId() },
 				j.at("initialTheta").get<double>() * degToRad,
 				j.at("finalTheta").get<double>() * degToRad,
                 getProgressionStepByTotalNumber(j, "Theta") * degToRad,
@@ -596,27 +596,6 @@ std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructur
     }
 
     throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
-}
-
-ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh, const json& j) {
-	ElemView res;
-
-	for (auto it = j.begin(); it != j.end(); ++it) {
-		auto coordinates = (*it).get<std::vector<Math::Real>>();
-
-        const auto coordIt = mesh.coords().addAndAssignId(
-            std::make_unique<CoordR3>((Math::CVecR3(coordinates.data())))
-        );
-
-        const CoordR3* constCoordPointer[1] = { coordIt->get() };
-		auto itCoord = mesh.elems().addAndAssignId(
-            std::make_unique<NodR>(ElemId(), constCoordPointer)
-        );
-
-		res.push_back(itCoord->get());
-	}
-
-	return res;
 }
 
 Math::Constants::CartesianAxis strToCartesianAxis(std::string str) {
@@ -944,18 +923,15 @@ Grid3 Parser::buildGridFromFile(const FileSystem::Project& jsonFile) const
 
 std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json& j) {
     
-    auto magnitude = readMagnitude(j.at("magnitude").get<json>());
-    Geometry::ElemView elems = { boxToElemGroup(mesh, j.at("layerBox").get<std::string>()) };
-	if (elems.size() == 0) {
-		throw std::logic_error("Plane wave layer must define a volume");
-	}
+    auto magnitude{ readMagnitude(j.at("magnitude").get<json>()) };
+    auto elemId{ boxToElemGroup(mesh, j.at("layerBox").get<std::string>())->getId()};
     
     auto definitionMode = j.at("definitionMode").get<std::string>();
     if (definitionMode.compare("by_vectors")==0) {
 		return std::make_unique<Source::PlaneWave>(
 			Source::PlaneWave(
 				magnitude,
-				elems,
+                { elemId },
 				strToCVecR3(j.at("directionVector").get<std::string>()),
 				strToCVecR3(j.at("polarizationVector").get<std::string>())
 			)
@@ -970,7 +946,7 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const
 		return std::make_unique<Source::PlaneWave>(
 			Source::PlaneWave(
 				magnitude,
-				elems,
+                { elemId },
 				dirAngles,
 				polAngles
 			)
@@ -980,7 +956,7 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const
 		return std::make_unique<Source::PlaneWave>(
 			Source::PlaneWave(
 				magnitude,
-				elems,
+                { elemId },
 				j.at("numberOfRandomPlanewaves").get<int>(),
 				j.at("relativeVariationOfRandomDelay").get<double>()
 			)
@@ -999,10 +975,7 @@ std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
 		return std::make_unique<Source::Port::WaveguideRectangular>(
 			Source::Port::WaveguideRectangular(
 				readMagnitude(j.at("magnitude").get<json>()),
-				readElemIdsAsGroupOf(
-					mesh,
-					j.at("elemIds").get<json>()
-				),
+				readElemIds(j.at("elemIds").get<json>()),
 				strToWaveguideMode(j.at("excitationMode").get<std::string>()),
 				{ j.at("firstMode").get<int>(), j.at("secondMode").get<int>() }
 			)
@@ -1018,7 +991,7 @@ std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const j
 	return std::make_unique<Source::Port::TEMCoaxial>(
 		Source::Port::TEMCoaxial(
 			readMagnitude(j.at("magnitude").get<json>()),
-			readElemIdsAsGroupOf(mesh, j.at("elemIds").get<json>()),
+			readElemIds(j.at("elemIds").get<json>()),
 			strToTEMMode(j.at("excitationMode").get<std::string>()),
 			strToCVecR3(j.at("origin").get<std::string>()),
 			j.at("innerRadius").get<double>(),
@@ -1032,12 +1005,11 @@ std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const
 	return std::make_unique<Source::Generator>(
 		Source::Generator(
 			readMagnitude(j.at("magnitude").get<json>()),
-			readCoordIdAsNodes(mesh, j.at("coordIds").get<json>()),
+			readElemIds(j.at("elemIds").get<json>()),
 			strToGeneratorType(j.at("type").get<std::string>()),
 			Source::Generator::soft
         )
 	);
-            //strToGeneratorHardness(j.at("hardness").get<std::string>()) );
 }
 
 std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json& j) 
@@ -1045,10 +1017,7 @@ std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const
 	return std::make_unique<Source::OnLine>(
 		Source::OnLine(
 			readMagnitude(j.at("magnitude").get<json>()),
-			readElemIdsAsGroupOf(
-				mesh,
-				j.at("elemIds").get<json>()
-			),
+			readElemIds(j.at("elemIds").get<json>()),
 			strToNodalType(j.at("type").get<std::string>()),
 			strToNodalHardness(j.at("hardness").get<std::string>())
         )
@@ -1314,20 +1283,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
 
 void checkVersionCompatibility(const std::string& version) 
 {
-	const char extended = version.back();
-
-	if (isdigit(extended)) {
-		throw std::logic_error(
-			"File version " + version + " is not a valid extended version."
-        );
-	}
-
-	// Check for extended availability
-	if (version.substr(0, version.length() - 1) != std::string(OPENSEMBA_VERSION) || 
-        extended != 'e') {
-		throw std::logic_error(
-			"File version " + version + " is not supported."
-        );
+	if (version != std::string(VERSION)) {
+		throw std::logic_error("File version " + version + " is not supported.");
 	}
 }
 
@@ -1363,46 +1320,5 @@ Source::Port::Waveguide::ExcitationMode strToWaveguideMode(
     }
 }
 
-ElemView readCoordIdAsNodes(
-    Mesh::Unstructured& mesh, 
-    const json& j
-) {
-    ElemView res;
-    
-    for (auto it = j.begin(); it != j.end(); ++it) {
-        const CoordR3* coord = mesh.coords().getId(CoordId(it->get<int>()));
-        auto itCoord = mesh.elems().addAndAssignId(std::make_unique<NodR>(ElemId(0), &coord));
-
-        res.push_back(itCoord->get());
-    }
-
-    return res;
-}
-
-
-ElemView readNodes(
-    Mesh::Unstructured& mesh,
-    const json& j
-) {
-    ElemView res;
-
-    for (auto it = j.begin(); it != j.end(); ++it) {
-        res.push_back(mesh.elems().getId(ElemId(it->get<int>())));
-    }
-
-    return res;
-}
-
-
-Geometry::ElemView readElemIdsAsGroupOf(
-    Geometry::Mesh::Unstructured& mesh,
-    const json& j) 
-{
-    Geometry::ElemView geometricElements;
-    for (auto it = j.begin(); it != j.end(); ++it) {
-        geometricElements.push_back(mesh.elems().getId(Geometry::ElemId(it->get<int>())));
-    }
-    return geometricElements;
-}
 
 }

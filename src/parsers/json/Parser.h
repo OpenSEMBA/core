@@ -29,6 +29,8 @@
 
 namespace SEMBA::parsers::JSON {
 
+const std::string VERSION{ "0.16" };
+
 using namespace Geometry;
 using namespace Math;
 
@@ -66,10 +68,6 @@ std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
 Axis::Local strToLocalAxes(const std::string& str);
 
 const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
-ElemView readCoordIdAsNodes(Mesh::Unstructured& mesh, const json&);
-ElemView readNodes(Mesh::Unstructured&, const json&);
-ElemView readElemIdsAsGroupOf(Mesh::Unstructured& mesh, const json& j);
-ElemView readAndCreateCoordIdAsNodes(Mesh::Unstructured&, const json&);
 
 PMGroup readPhysicalModels(const json&);
 std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);

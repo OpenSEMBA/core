@@ -1,6 +1,6 @@
 {
   "_format": "Semba Data File in JSON format",
-  "_version": "0.15e",
+  "_version": "0.16",
     
   "grids": [
     {
@@ -25,38 +25,15 @@
       }
     ],
     "layers": [
-      {
-        "id": 1,
-        "name": "filter//cavity"
-      },
-      {
-        "id": 4,
-        "name": "filter//inAdapt"
-      },
-      {
-        "id": 5,
-        "name": "filter//outAdapt"
-      },
-      {
-        "id": 6,
-        "name": "pml"
-      },
-      {
-        "id": 7,
-        "name": "grid"
-      },
-      {
-        "id": 8,
-        "name": "ports"
-      },
-      {
-        "id": 9,
-        "name": "filter"
-      },
-      {
-        "id": 10,
-        "name": "ports//waveport"
-      }
+      { "id": 1, "name": "filter//cavity" },
+      { "id": 4, "name": "filter//inAdapt" },
+      { "id": 5, "name": "filter//outAdapt" },
+      { "id": 6, "name": "pml" },
+      { "id": 7, "name": "grid" },
+      { "id": 8, "name": "ports" },
+      { "id": 9, "name": "filter" },
+      { "id": 10, "name": "ports//waveport" },
+      { "id": 11, "name":  "probes"}
     ],
     "coordinates": [
       "      1  +9.52500000e-03  +0.00000000e+00  +2.22000000e-01",
@@ -1304,6 +1281,11 @@
       "   1243  -0.00000000e+00  +4.76250000e-03  -6.00000000e-02"
     ],
     "elements": {
+      "node": [
+        " 3005 0 11 1150",
+        " 3006 0 11 597",
+        " 3007 0 11 76"
+      ],
       "triangle": [
         "       1    0    5      318      256      252",
         "       2    0    5      234      285      293",
@@ -4344,7 +4326,7 @@
         "samplingPeriod": 2e-11
       },
       "elemIds": [
-        1150
+        3005
       ]
     },
     {
@@ -4357,7 +4339,7 @@
         "samplingPeriod": 2e-11
       },
       "elemIds": [
-        597
+        3006
       ]
     },
     {
@@ -4370,11 +4352,8 @@
         "samplingPeriod": 2e-11
       },
       "elemIds": [
-        76
+        3007
       ]
     }
-
-
-
   ]
 }

@@ -39,8 +39,8 @@ public:
                 Geometry::Element::Line<T>,
                 Geometry::Coordinate::Coordinate<T,3>> Graph;
 
-    Group(const Model::UnstructuredModel&);
-    Group(const Model::StructuredModel&);
+    Group(const UnstructuredModel&);
+    Group(const StructuredModel&);
     ~Group();
 
     std::size_t numberOfWires() const { return wires_.size(); }
@@ -89,7 +89,7 @@ private:
 };
 
 template<class T>
-Group<T>::Group(const Model::UnstructuredModel& model) {
+Group<T>::Group(const UnstructuredModel& model) {
     fillWiresInfo_(
         constructGraph_(
             model.mesh.elems().getOf<Geometry::Element::Line<Math::Real>>(),
@@ -100,7 +100,7 @@ Group<T>::Group(const Model::UnstructuredModel& model) {
 }
 
 template<class T>
-Group<T>::Group(const Model::StructuredModel& model) {
+Group<T>::Group(const StructuredModel& model) {
     fillWiresInfo_(
         constructGraph_(
             model.mesh.elems().getOf<Geometry::Element::Line<Math::Int>>(),
@@ -581,6 +581,3 @@ Group<T>::newWire_(
 }
 }
 }
-
-#include "Group.hpp"
-

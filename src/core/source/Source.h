@@ -19,7 +19,7 @@ class Source;
 class Source : public virtual Class::Identifiable<Id>,
                public virtual Class::Class {
 public:
-    using Target = Geometry::ElemView;
+    using Target = std::vector<Geometry::ElemId>;
 
     Source(const std::unique_ptr<Magnitude::Magnitude>&, const Target&);
     Source(const Source&);

@@ -22,12 +22,12 @@ public:
         return std::make_unique<TEMCoaxial>(*this);
     }
 
-    void set(const Target&);
+    //void set(const Target&);
 
     std::string getName() const override { return "Coaxial_TEM_port"; }
 
-    Math::CVecR3 getOrigin() const override;
-    Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
+    //Math::CVecR3 getOrigin() const override;
+    //Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
 
 private:
     Math::CVecR3 origin_;

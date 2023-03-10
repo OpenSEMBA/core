@@ -1,5 +1,5 @@
 {
-  "_version": "0.15e",
+  "_version": "0.16",
   "_format": "Semba Data File in JSON format",
   "analysis": {
     "solver": "ugrfdtd",
@@ -101,8 +101,8 @@
     {
       "sourceType": "generator",
       "type": "voltage",
-      "coordIds": [
-        1
+      "elemIds": [
+        2
       ],
       "magnitude": {
         "type": "Band_limited",

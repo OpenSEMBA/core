@@ -153,7 +153,8 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
 
     ASSERT_EQ(1, probes.get()[0]->getTarget().size());
 
-    auto recoveredNode = probes.get()[0]->getTarget().at(0)->castTo<Geometry::NodR>();
+    auto recoveredNodeId = probes.get()[0]->getTarget().at(0);
+    auto recoveredNode = model.mesh.elems().getId(recoveredNodeId)->castTo<Geometry::NodR>();
     EXPECT_EQ(
         Math::CVecR3(-0.8441360141053171, 12.017228978451016, 13.154724231963254),
         recoveredNode->getV(0)->pos()
@@ -162,9 +163,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
 
 TEST_F(ParserJSONParserTest, sphere_rectilinear) 
 {
-    auto data{ 
-        Parser(getFolder() + "sphere/sphere-rectilinear.smb.json").read() 
-    };
+    auto data{ Parser(getFolder() + "sphere/sphere-rectilinear.smb.json").read() };
 
     EXPECT_EQ(Math::CVecI3(1,2,3), data.grids.getNumCells());
     EXPECT_EQ(std::vector<Math::Real>({0, 1}), data.grids.getPos(0));
@@ -174,9 +173,7 @@ TEST_F(ParserJSONParserTest, sphere_rectilinear)
 
 TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
 {
-    auto data{
-        Parser{ getFolder() + "sphere/sphere-one-plane-farfield.smb.json" }.read()
-    };
+    auto data{ Parser{ getFolder() + "sphere/sphere-one-plane-farfield.smb.json" }.read() };
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::FarField>(), 1);
     auto farFieldProbe{ data.outputRequests.getOf<OutputRequest::FarField>().front() };
@@ -191,47 +188,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
     EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
-    EXPECT_EQ(data.model.mesh.elems().sizeOf<Geometry::NodR>(), 6);
-
-    EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
-
-    auto materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
-    EXPECT_EQ(materialCableList.size(), 1);
-
-    auto materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
-    EXPECT_EQ(materialPortList.size(), 1);
-
-    auto& materialCable = materialCableList.front();
-    auto& materialPort = materialPortList.front();
-
-    Geometry::ElemView elementsWithCableMaterial;
-    for (auto& elem : data.model.mesh.elems()) {
-        if (elem->getMatId() == materialCable->getId()) {
-            elementsWithCableMaterial.push_back(elem.get());
-        }
-    }
-
-    EXPECT_EQ(elementsWithCableMaterial.size(), 2);
-
-    Geometry::ElemView elementsWithPortMaterial;
-    for (auto& elem : data.model.mesh.elems()) {
-        if (elem->getMatId() == materialPort->getId()) {
-            elementsWithPortMaterial.push_back(elem.get());
-        }
-    }
-
-    EXPECT_EQ(elementsWithPortMaterial.size(), 2);
-}
-
-TEST_F(ParserJSONParserTest, antennas_probesUsingCoordIds)
-{
-    auto data{ 
-        Parser{getFolder() + "antennas/antennas-probes-with-coordIds.smb.json"}.read()
-    };
-
-    EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
-    EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
-    EXPECT_EQ(data.model.mesh.elems().sizeOf<Geometry::NodR>(), 9);
+    EXPECT_EQ(data.model.mesh.elems().sizeOf<Geometry::NodR>(), 5);
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 

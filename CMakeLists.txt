@@ -51,8 +51,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 project(opensemba CXX)
 
-add_definitions(-DOPENSEMBA_VERSION="0.15")
-
 include_directories(src/ src/core/)
 
 add_subdirectory(src/core)
