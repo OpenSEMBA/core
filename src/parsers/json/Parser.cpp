@@ -106,21 +106,21 @@ UnstructuredProblemDescription Parser::read() const {
     );
 
     UnstructuredProblemDescription res;
-    res.project = this->filename;
+    res.project = filename;
 	res.analysis = readSolverOptions(j, "analysis");
-	res.grids = this->readGrids(j);
+	res.grids = readGrids(j);
 
-	auto materialsGroup = this->readExtendedPhysicalModels(j);
-	auto mesh = this->readUnstructuredMesh(materialsGroup, j.at("model"));
+    auto materialsGroup{ readPhysicalModels(j.at("model")) };
+	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"));
 
-	res.sources = this->readSources(*mesh, j);
+	res.sources = readSources(*mesh, j);
 	res.outputRequests = readOutputRequests(*mesh, j, "probes");
 
-	this->readBoundary(j, *mesh, materialsGroup, res.grids);
+	readBoundary(j, *mesh, materialsGroup, res.grids);
 
     res.model = UnstructuredModel{*mesh, materialsGroup};
 
-    this->postReadOperations(res);
+    postReadOperations(res);
 
 	return res;
 }
@@ -217,7 +217,7 @@ PhysicalModel::Bound::Type Parser::strToBoundType(const std::string& boundType) 
     throw std::logic_error("Unrecognized value in Bound ctor.");
 }
 
-Parser::json Parser::readSolverOptions(const json& j, const std::string& key) const
+json Parser::readSolverOptions(const json& j, const std::string& key) const
 {
     return j.find(key) == j.end() ? json(): j.at(key).get<json>();
 }
@@ -275,7 +275,7 @@ Source::Group<> Parser::readSources(Mesh::Unstructured& mesh, const json& j) con
     return res;
 }
 
-PMGroup Parser::readPhysicalModels(const json& j) const 
+PMGroup readPhysicalModels(const json& j)
 {
     PMGroup res;
     for (auto const& mat: j.at("materials")) {
@@ -284,16 +284,7 @@ PMGroup Parser::readPhysicalModels(const json& j) const
     return res;
 }
 
-PMGroup Parser::readExtendedPhysicalModels(const json& j) const
-{
-    PMGroup res;
-    for (auto const& mat: j.at(json::json_pointer("/model/materials"))) {
-        res.add(readPhysicalModel( mat ));
-    }
-    return res;
-}
-
-std::unique_ptr<PhysicalModel::PhysicalModel> Parser::readPhysicalModel(const json& j) const 
+std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
 {
     typedef PhysicalModel::PhysicalModel PM;
     
@@ -606,7 +597,7 @@ std::unique_ptr<OutputRequest::OutputRequest> Parser::readOutputRequest(Mesh::Un
     throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
 }
 
-ElemView Parser::readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh, const Parser::json& j) {
+ElemView Parser::readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh, const json& j) {
 	ElemView res;
 
 	for (auto it = j.begin(); it != j.end(); ++it) {
@@ -627,7 +618,7 @@ ElemView Parser::readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured& mesh,
 	return res;
 }
 
-Math::Constants::CartesianAxis Parser::strToCartesianAxis(std::string str) {
+Math::Constants::CartesianAxis strToCartesianAxis(std::string str) {
     if (str.compare("x") == 0) {
         return Math::Constants::x;
     } else if (str.compare("y") == 0) {
@@ -794,7 +785,7 @@ ElemRGroup Parser::readElementsFromFile(
 }
 
 std::unique_ptr<PhysicalModel::Surface::Multilayer> 
-Parser::readMultilayerSurface(const json& mat) const 
+readMultilayerSurface(const json& mat)
 {
     MatId id = MatId(mat.at("materialId").get<int>());
     std::string name = mat.at("name").get<std::string>();
@@ -1125,7 +1116,7 @@ Source::Generator::Hardness Parser::strToGeneratorHardness(std::string str) {
     }
 }
 
-PhysicalModel::PhysicalModel::Type Parser::strToMaterialType(std::string str) 
+PhysicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
 {
     typedef SEMBA::PhysicalModel::PhysicalModel::Type Type;
 
@@ -1159,7 +1150,7 @@ PhysicalModel::PhysicalModel::Type Parser::strToMaterialType(std::string str)
     }
 }
 
-PhysicalModel::Multiport::Multiport::Type Parser::strToMultiportType(std::string str) {
+PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string str) {
     using namespace PhysicalModel::Multiport;
 
     str = trim(str);
@@ -1182,7 +1173,7 @@ PhysicalModel::Multiport::Multiport::Type Parser::strToMultiportType(std::string
     }
 }
 
-std::pair<Math::CVecR3, Math::CVecR3> Parser::strToBox(
+std::pair<Math::CVecR3, Math::CVecR3> strToBox(
         const std::string& value) {
     std::size_t begin = value.find_first_of("{");
     std::size_t end = value.find_last_of("}");
@@ -1198,7 +1189,7 @@ std::pair<Math::CVecR3, Math::CVecR3> Parser::strToBox(
     return {min, max};
 }
 
-Math::CVecI3 Parser::strToCVecI3(std::string str) {
+Math::CVecI3 strToCVecI3(std::string str) {
     str.erase(std::remove(str.begin(), str.end(), '{'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '}'), str.end());
     std::stringstream ss(str);
@@ -1209,7 +1200,7 @@ Math::CVecI3 Parser::strToCVecI3(std::string str) {
     return res;
 }
 
-Math::CVecR3 Parser::strToCVecR3(std::string str) {
+Math::CVecR3 strToCVecR3(std::string str) {
     str.erase(std::remove(str.begin(), str.end(), '{'), str.end());
     str.erase(std::remove(str.begin(), str.end(), '}'), str.end());
     std::stringstream ss(str);
@@ -1338,7 +1329,7 @@ void Parser::checkVersionCompatibility(const std::string& version)
 	}
 }
 
-Math::Axis::Local Parser::strToLocalAxes(const std::string& str) {
+Math::Axis::Local strToLocalAxes(const std::string& str) {
     std::size_t begin = str.find_first_of("{");
     std::size_t end = str.find_first_of("}");
     Math::CVecR3 eulerAngles = strToCVecR3(str.substr(begin+1,end-1));
@@ -1403,7 +1394,7 @@ ElemView Parser::readNodes(
 
 Geometry::ElemView Parser::readElemIdsAsGroupOf(
     Geometry::Mesh::Unstructured& mesh,
-    const Parser::json& j) 
+    const json& j) 
 {
     Geometry::ElemView geometricElements;
     for (auto it = j.begin(); it != j.end(); ++it) {

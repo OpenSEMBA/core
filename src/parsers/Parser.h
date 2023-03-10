@@ -4,8 +4,13 @@
 
 #include "ProblemDescription.h"
 
-namespace SEMBA {
-namespace Parsers {
+namespace SEMBA::Parsers {
+    bool strToBool(const std::string& value);
+    bool toBool(const std::size_t param);
+
+    std::string& trim(std::string& s);
+    std::string& ltrim(std::string& s);
+    std::string& rtrim(std::string& s);
 
 class Parser {
 public:
@@ -13,39 +18,7 @@ public:
 
 protected:
     FileSystem::Project filename;
-
-    static inline std::string& trim(std::string &s) {
-        return ltrim(rtrim(s));
-    }
-
-    static Math::CVecR3 strToCartesianVector(const std::string& str);
-    static bool strToBool(const std::string& value);
-
-    static inline std::string& ltrim(std::string &s) {
-        s.erase(s.begin(),
-                std::find_if(s.begin(), s.end(),
-                             [](int c) {return !std::isspace(c); })
-        );
-        return s;
-    }
-    static inline std::string& rtrim(std::string &s) {
-        s.erase(find_if(s.rbegin(), s.rend(),
-                        [](int c) {return !std::isspace(c); }).base(),
-                        s.end());
-        return s;
-    }
-
-    static inline bool toBool(const std::size_t param) {
-        assert(param == 0 || param == 1);
-        if (param == 1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    void postReadOperations(UnstructuredProblemDescription& res) const;
+    static void postReadOperations(UnstructuredProblemDescription& res);
 };
 
-} /* namespace Parser */
-} /* namespace SEMBA */
+}

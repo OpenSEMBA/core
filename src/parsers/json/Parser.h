@@ -27,27 +27,39 @@
 
 #include "parsers/Parser.h"
 
-namespace SEMBA {
-namespace Parsers {
-namespace JSON {
+namespace SEMBA::Parsers::JSON {
+
+using json = nlohmann::json;
+using PM = PhysicalModel::PhysicalModel;
+
+Math::CVecI3 strToCVecI3(std::string str);
+Math::CVecR3 strToCVecR3(std::string str);
+Math::Constants::CartesianAxis strToCartesianAxis(std::string);
+std::pair<Math::CVecR3, Math::CVecR3> strToBox(const std::string& str);
+Math::Axis::Local strToLocalAxes(const std::string& str);
+
+
+
+PMGroup readPhysicalModels(const json&);
+std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);
+std::unique_ptr<PM> readPhysicalModel(const json& material);
+PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
+PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
+PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
 class Parser : public SEMBA::Parsers::Parser {
 public:
-    typedef nlohmann::json json;
-
+    
     Parser(const std::string& filename);
     UnstructuredProblemDescription read() const;
     
 private:
     json readSolverOptions(const json&, const std::string& key = "solverOptions") const;
-    PMGroup readPhysicalModels(const json&) const;
-    PMGroup readExtendedPhysicalModels(const json& j) const;
     std::unique_ptr<Geometry::Mesh::Unstructured> readUnstructuredMesh(const PhysicalModel::Group<>&, const json&) const;
-	void readConnectorOnPoint(PMGroup& pMG, Geometry::Mesh::Unstructured& mesh,  const json&) const;
-    Source::Group<> readSources(Geometry::Mesh::Unstructured& mesh, const json&) const;
-    OutputRequest::Group<> readOutputRequests(Geometry::Mesh::Unstructured& mesh, const json&, const std::string& key = "outputRequests") const;
 
-    std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers) const;
+	void readConnectorOnPoint(PMGroup& pMG, Geometry::Mesh::Unstructured& mesh,  const json&) const;
+    SourceGroup readSources(Geometry::Mesh::Unstructured& mesh, const json&) const;
+    OutputRequestGroup readOutputRequests(Geometry::Mesh::Unstructured& mesh, const json&, const std::string& key = "outputRequests") const;
 
     Geometry::Grid3 readGrids(const json&) const;
     Geometry::Grid3 buildGridFromFile(const FileSystem::Project& file) const;
@@ -78,13 +90,11 @@ private:
     static std::unique_ptr<Source::OnLine> readSourceOnLine(Geometry::Mesh::Unstructured& mesh, const json&);
     static std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
 
-    std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& material) const;
-
+    
     static std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Geometry::Mesh::Unstructured& mesh, const json&);
 
     static OutputRequest::Domain readDomain(const json&);
-    static Math::Axis::Local strToLocalAxes(const std::string& str);
-
+    
     static void checkVersionCompatibility(const std::string& version);
     
     static const Geometry::ElemR* boxToElemGroup(
@@ -99,27 +109,19 @@ private:
     static Geometry::ElemView readNodes(Geometry::Mesh::Unstructured&, const json&);
 
     static OutputRequest::OutputRequest::Type strToOutputType(std::string label);
+
     static Source::Generator::Type strToGeneratorType(std::string label);
     static Source::Generator::Hardness strToGeneratorHardness(std::string str);
     static Source::OnLine::Type strToNodalType(std::string label);
-
     static Source::OnLine::Hardness strToNodalHardness(std::string label);
     static Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
     static Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
 
-    static PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
-    static PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
-    static PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
-    static Math::CVecI3 strToCVecI3(std::string str);
-    static Math::CVecR3 strToCVecR3(std::string str);
-    static Math::Constants::CartesianAxis strToCartesianAxis(std::string);
 
-    static std::pair<Math::CVecR3, Math::CVecR3> strToBox(const std::string& str);
+    static Geometry::ElemView readElemIdsAsGroupOf(Geometry::Mesh::Unstructured& mesh, const json& j);
 
-    static Geometry::ElemView readElemIdsAsGroupOf(Geometry::Mesh::Unstructured& mesh, const Parser::json& j);
-
-    static Geometry::ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured&, const Parser::json&);
+    static Geometry::ElemView readAndCreateCoordIdAsNodes(Geometry::Mesh::Unstructured&, const json&);
 };
 
 template<typename T>
@@ -127,7 +129,7 @@ Geometry::Element::Group<Geometry::ElemR> readElemStrAs(
         const PhysicalModel::Group<>& mG,
         const Geometry::Layer::Group<>& lG,
         const Geometry::CoordR3Group& cG,
-        const Parser::json& e) {
+        const json& e) {
     Geometry::Element::Group<Geometry::ElemR> res;
 
     for (auto it = e.begin(); it != e.end(); ++it) {
@@ -169,6 +171,4 @@ Geometry::Element::Group<Geometry::ElemR> readElemStrAs(
     return res;
 }
 
-} /* namespace JSON */
-} /* namespace Parser */
-} /* namespace SEMBA */
+} 

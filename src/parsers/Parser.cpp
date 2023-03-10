@@ -12,18 +12,7 @@ Parser::Parser(const std::string& fn) :
     }
 };
 
-Math::CVecR3 Parser::strToCartesianVector(const std::string& str) {
-    std::stringstream iss(str);
-    std::string sub;
-    Math::CVecR3 res;
-    for (std::size_t i = 0; i < 3; i++) {
-        iss >> sub;
-        res(i) = atof(sub.c_str());
-    }
-    return res;
-}
-
-bool Parser::strToBool(const std::string& value) {
+bool strToBool(const std::string& value) {
     if (atoi(value.c_str()) == 1) {
         return true;
     } else {
@@ -31,7 +20,37 @@ bool Parser::strToBool(const std::string& value) {
     }
 }
 
-void Parser::postReadOperations(UnstructuredProblemDescription& res) const 
+std::string& trim(std::string& s) {
+    return ltrim(rtrim(s));
+}
+
+std::string& ltrim(std::string& s) {
+    s.erase(s.begin(),
+        std::find_if(s.begin(), s.end(),
+            [](int c) {return !std::isspace(c); })
+    );
+    return s;
+}
+
+std::string& rtrim(std::string& s) {
+    s.erase(find_if(s.rbegin(), s.rend(),
+        [](int c) {return !std::isspace(c); }).base(),
+        s.end());
+    return s;
+}
+
+
+bool toBool(const std::size_t param) {
+    assert(param == 0 || param == 1);
+    if (param == 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Parser::postReadOperations(UnstructuredProblemDescription& res)
 {
     if (res.analysis.find("geometryScalingFactor") != res.analysis.end()) {
         Math::Real scalingFactor{ 
