@@ -44,21 +44,20 @@ public:
     
 private:
     json readSolverOptions(const json&, const std::string& key = "solverOptions") const;
-    std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&) const;
 
 	void readConnectorOnPoint(PMGroup& pMG, Mesh::Unstructured& mesh,  const json&) const;
     
     Grid3 readGrids(const json&) const;
     Grid3 buildGridFromFile(const FileSystem::Project& file) const;
 
+    std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&) const;
     LayerGroup readLayers(const json&) const;    
     CoordR3Group readCoordinates(const json&) const;
     ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
     ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
     ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&) const;
 
-    void readBoundary(const json& j, Mesh::Unstructured& mesh, PMGroup& physicalModelGroup, const Grid3& grid) const;
-    PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) const;
+
 };
 
 CVecI3 strToCVecI3(std::string str);
@@ -91,10 +90,7 @@ Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
 Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
 
 OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json&);
-OutputRequest::Domain readDomain(const json&);
-OutputRequest::OutputRequest::Type strToOutputType(std::string label);
-void checkVersionCompatibility(const std::string& version);
+void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
 
 template<typename T>
 Element::Group<ElemR> readElemStrAs(

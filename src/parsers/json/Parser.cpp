@@ -36,6 +36,14 @@ using json = nlohmann::json;
 
 namespace SEMBA::parsers::JSON {
 
+
+void checkVersionCompatibility(const std::string& version)
+{
+    if (version != std::string(VERSION)) {
+        throw std::logic_error("File version " + version + " is not supported.");
+    }
+}
+
 std::vector<ElemId> readElemIds(const json& j)
 {
     std::vector<ElemId> r;
@@ -78,17 +86,17 @@ double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey
 	return j.at(toLower + "Step").get<double>();
 }
 
-std::vector<const Geometry::CoordR3*> addAngGetCoordView(
+std::vector<const CoordR3*> addAngGetCoordView(
     CoordR3Group& cG,
     const std::vector<Math::CVecR3>& positions,
     const size_t& numberOfCoordinates
 ) {
-    std::vector<const Geometry::CoordR3*> coords;
+    std::vector<const CoordR3*> coords;
 
     for (std::size_t i = 0; i < numberOfCoordinates; i++) {
         coords.push_back(
             cG.addAndAssignId(
-                std::make_unique<Geometry::CoordR3>(Geometry::CoordId(), positions[i])
+                std::make_unique<CoordR3>(CoordId(), positions[i])
             )->get()
         );
     }
@@ -110,9 +118,7 @@ UnstructuredProblemDescription Parser::read() const {
 		std::cerr << ex.what() << std::endl;
 	}
 
-	checkVersionCompatibility(
-        j.at("_version").get<std::string>()
-    );
+	checkVersionCompatibility(j.at("_version").get<std::string>());
 
     UnstructuredProblemDescription res;
     res.project = filename;
@@ -125,7 +131,7 @@ UnstructuredProblemDescription Parser::read() const {
 	res.sources = readSources(*mesh, j);
 	res.outputRequests = readOutputRequests(*mesh, j);
 
-	readBoundary(j, *mesh, materialsGroup, res.grids);
+	readBoundary(*mesh, j, materialsGroup, res.grids);
 
     res.model = UnstructuredModel{*mesh, materialsGroup};
 
@@ -134,13 +140,39 @@ UnstructuredProblemDescription Parser::read() const {
 	return res;
 }
 
-Parser::Parser(const std::string& fn) : SEMBA::parsers::Parser(fn) {}
+Parser::Parser(const std::string& fn) : SEMBA::parsers::Parser(fn) 
+{}
 
-void Parser::readBoundary(
-    const json& j, 
-    Geometry::Mesh::Unstructured& mesh, 
-    PMGroup& physicalModelGroup, 
-    const Geometry::Grid3& grid) const 
+PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) {
+    if (boundType == "PEC") {
+        return PhysicalModel::Bound::Type::pec;
+    }
+
+    if (boundType == "PMC") {
+        return PhysicalModel::Bound::Type::pmc;
+    }
+
+    if (boundType == "PML") {
+        return PhysicalModel::Bound::Type::pml;
+    }
+
+    if (boundType == "Periodic") {
+        return PhysicalModel::Bound::Type::periodic;
+    }
+
+    if (boundType == "MUR1") {
+        return PhysicalModel::Bound::Type::mur1;
+    }
+
+    if (boundType == "MUR2") {
+        return PhysicalModel::Bound::Type::mur2;
+    }
+
+    throw std::logic_error("Unrecognized value in Bound ctor.");
+}
+
+
+void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)  
 {
     if (j.find("boundary") == j.end()) {
         return;
@@ -162,7 +194,7 @@ void Parser::readBoundary(
             PhysicalModel::Id id(0);
 
             for (const auto& boundI : physicalModelGroup.getOf<PhysicalModel::Bound>()) {
-                if (boundI->getType() == this->strToBoundType(boundaryResource[axis].get<std::string>())) {
+                if (boundI->getType() == strToBoundType(boundaryResource[axis].get<std::string>())) {
                     id = boundI->getId();
                     break;
                 }
@@ -170,7 +202,7 @@ void Parser::readBoundary(
 
             if (id == PhysicalModel::Id(0)) {
                 auto it = physicalModelGroup.addAndAssignId(
-                    std::make_unique<PhysicalModel::Bound>(PhysicalModel::Id(), this->strToBoundType(boundaryResource[axis].get<std::string>()))
+                    std::make_unique<PhysicalModel::Bound>(PhysicalModel::Id(), strToBoundType(boundaryResource[axis].get<std::string>()))
                 );
 
                 id = (*it)->getId();
@@ -196,34 +228,6 @@ void Parser::readBoundary(
             );
         }
     }
-}
-
-PhysicalModel::Bound::Type Parser::strToBoundType(const std::string& boundType) const {
-    if (boundType == "PEC") {
-        return PhysicalModel::Bound::Type::pec;
-    }
-
-    if (boundType == "PMC") {
-        return PhysicalModel::Bound::Type::pmc;
-    }
-    
-    if (boundType == "PML") {
-        return PhysicalModel::Bound::Type::pml;
-    }
-    
-    if (boundType == "Periodic") {
-        return PhysicalModel::Bound::Type::periodic;
-    }
-    
-    if (boundType == "MUR1") {
-        return PhysicalModel::Bound::Type::mur1;
-    }
-    
-    if (boundType == "MUR2") {
-        return PhysicalModel::Bound::Type::mur2;
-    }
-    
-    throw std::logic_error("Unrecognized value in Bound ctor.");
 }
 
 json Parser::readSolverOptions(const json& j, const std::string& key) const
@@ -437,6 +441,191 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     }
 }
 
+OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
+    str = trim(str);
+    if (str.compare("electricField") == 0) {
+        return OutputRequest::OutputRequest::Type::electric;
+    }
+    else if (str.compare("magneticField") == 0) {
+        return OutputRequest::OutputRequest::Type::magnetic;
+    }
+    else if (str.compare("electricFieldNormals") == 0) {
+        return OutputRequest::OutputRequest::Type::electricFieldNormals;
+    }
+    else if (str.compare("magneticFieldNormals") == 0) {
+        return OutputRequest::OutputRequest::Type::magneticFieldNormals;
+    }
+    else if (str.compare("current") == 0) {
+        return OutputRequest::OutputRequest::Type::current;;
+    }
+    else if (str.compare("bulkCurrentElectric") == 0) {
+        return OutputRequest::OutputRequest::Type::bulkCurrentElectric;
+    }
+    else if (str.compare("bulkCurrentMagnetic") == 0) {
+        return OutputRequest::OutputRequest::Type::bulkCurrentMagnetic;
+    }
+    else if (str.compare("surfaceCurrentDensity") == 0) {
+        return OutputRequest::OutputRequest::Type::surfaceCurrentDensity;
+    }
+    else if (str.compare("farField") == 0) {
+        return OutputRequest::OutputRequest::Type::electric;
+    }
+    else {
+        throw std::logic_error("Unrecognized output type: " + str);
+    }
+}
+
+
+OutputRequest::Domain readDomain(const json& j)
+{
+    bool timeDomain = false;
+    Math::Real initialTime = 0.0;
+    Math::Real finalTime = 0.0;
+    Math::Real samplingPeriod = 0.0;
+
+    bool frequencyDomain = false;
+    bool logFrequencySweep = false;
+    bool usingTransferFunction = false;
+    Math::Real initialFrequency = 0.0;
+    Math::Real finalFrequency = 0.0;
+    Math::Real frequencyStep = 0.0;
+    std::string transferFunctionFile;
+
+    if (j.find("initialTime") != j.end()) {
+        timeDomain = true;
+        initialTime = j.at("initialTime").get<double>();
+        finalTime = j.at("finalTime").get<double>();
+        samplingPeriod = j.at("samplingPeriod").get<double>();
+    }
+
+    if (j.find("initialFrequency") != j.end()) {
+        frequencyDomain = true;
+        initialFrequency = j.at("initialFrequency").get<double>();
+        finalFrequency = j.at("finalFrequency").get<double>();
+        frequencyStep = getProgressionStepByTotalNumber(j, "Frequency");
+
+        logFrequencySweep = j.at("logFrequencySweep").get<bool>();
+        if (j.find("transferFunctionFile") != j.end()) {
+            usingTransferFunction = true;
+            transferFunctionFile = j.at(
+                "transferFunctionFile"
+            ).get<std::string>();
+        }
+    }
+
+    return OutputRequest::Domain(
+        timeDomain, initialTime, finalTime, samplingPeriod,
+        frequencyDomain, initialFrequency, finalFrequency,
+        frequencyStep, logFrequencySweep,
+        usingTransferFunction, transferFunctionFile);
+}
+
+std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json& j)
+{
+
+    std::string name = j.at("name").get<std::string>();
+    OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
+    std::string gidOutputType = j.at("gidOutputType").get<std::string>();
+    OutputRequest::Domain domain = readDomain(j.at("domain").get<json>());
+
+    if (type == OutputRequest::OutputRequest::Type::bulkCurrentElectric ||
+        type == OutputRequest::OutputRequest::Type::bulkCurrentMagnetic) {
+        if (gidOutputType.compare("OutRq_on_layer") == 0) {
+            return std::make_unique<OutputRequest::BulkCurrent>(
+                OutputRequest::BulkCurrent(
+                    domain,
+                    name,
+                    { boxToElemGroup(mesh, j.at("box").get<std::string>())->getId() },
+                    strToCartesianAxis(j.at("direction").get<std::string>()),
+                    j.at("skip").get<int>()
+                )
+            );
+        }
+
+        if (gidOutputType.compare("OutRq_on_point") == 0) {
+            return std::make_unique<OutputRequest::BulkCurrent>(
+                OutputRequest::BulkCurrent(
+                    domain,
+                    name,
+                    readElemIds(j.at("elemIds").get<json>()),
+                    strToCartesianAxis(j.at("direction").get<std::string>()),
+                    j.at("skip").get<int>()
+                )
+            );
+        }
+
+        return std::make_unique<OutputRequest::BulkCurrent>(
+            OutputRequest::BulkCurrent(
+                domain,
+                name,
+                readElemIds(j.at("elemIds").get<json>()),
+                strToCartesianAxis(j.at("direction").get<std::string>()),
+                j.at("skip").get<int>()
+            )
+        );
+    }
+
+    if (gidOutputType.compare("OutRq_on_point") == 0) {
+        return std::make_unique<OutputRequest::OnPoint>(
+            type, domain, name, readElemIds(j.at("elemIds").get<json>())
+        );
+    }
+
+    if (gidOutputType.compare("OutRq_on_line") == 0) {
+        return std::make_unique<OutputRequest::OnLine>(
+            OutputRequest::OnLine(
+                type,
+                domain,
+                name,
+                readElemIds(j.at("elemIds").get<json>())
+            )
+        );
+    }
+
+    if (gidOutputType.compare("OutRq_on_surface") == 0) {
+        return std::make_unique<OutputRequest::OnSurface>(
+            OutputRequest::OnSurface(
+                type,
+                domain,
+                name,
+                readElemIds(j.at("elemIds").get<json>())
+            )
+        );
+    }
+
+    if (gidOutputType.compare("OutRq_on_layer") == 0) {
+        return std::make_unique<OutputRequest::OnLayer>(
+            OutputRequest::OnLayer(
+                type,
+                domain,
+                name,
+                { boxToElemGroup(mesh, j.at("box").get<std::string>())->getId() }
+            )
+        );
+    }
+
+    if (gidOutputType.compare("Far_field") == 0) {
+        static const Math::Real degToRad = 2.0 * Math::Constants::pi / 360.0;
+        return std::make_unique<OutputRequest::FarField>(
+            OutputRequest::FarField(
+                domain,
+                name,
+                { boxToElemGroup(mesh, j.at(
+                    j.find("layerBox") == j.end() ? "box" : "layerBox"
+                ).get<std::string>())->getId() },
+                j.at("initialTheta").get<double>() * degToRad,
+                j.at("finalTheta").get<double>() * degToRad,
+                getProgressionStepByTotalNumber(j, "Theta") * degToRad,
+                j.at("initialPhi").get<double>() * degToRad,
+                j.at("finalPhi").get<double>() * degToRad,
+                getProgressionStepByTotalNumber(j, "Phi") * degToRad
+            )
+        );
+    }
+
+    throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
+}
+
 OutputRequestGroup readOutputRequests(Mesh::Unstructured& mesh, const json& j)
 {
     OutputRequestGroup res;
@@ -490,112 +679,6 @@ const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
     }
 
     return mesh.elems().addAndAssignId(std::move(elem))->get();
-}
-
-std::unique_ptr<OutputRequest::OutputRequest> readOutputRequest(Mesh::Unstructured& mesh, const json& j) 
-{
-
-    std::string name = j.at("name").get<std::string>();
-    OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
-    std::string gidOutputType = j.at("gidOutputType").get<std::string>();
-    OutputRequest::Domain domain = readDomain(j.at("domain").get<json>());
-
-	if (type == OutputRequest::OutputRequest::Type::bulkCurrentElectric ||
-		type == OutputRequest::OutputRequest::Type::bulkCurrentMagnetic) {
-		if (gidOutputType.compare("OutRq_on_layer") == 0) {
-			return std::make_unique<OutputRequest::BulkCurrent>(
-				OutputRequest::BulkCurrent(
-					domain,
-					name,
-					{ boxToElemGroup(mesh, j.at("box").get<std::string>())->getId()},
-					strToCartesianAxis(j.at("direction").get<std::string>()),
-					j.at("skip").get<int>()
-				)
-			);
-        }
-
-        if (gidOutputType.compare("OutRq_on_point") == 0) {
-			return std::make_unique<OutputRequest::BulkCurrent>(
-				OutputRequest::BulkCurrent(
-					domain,
-					name,
-					readElemIds(j.at("elemIds").get<json>()),
-					strToCartesianAxis(j.at("direction").get<std::string>()),
-					j.at("skip").get<int>()
-				)
-			);
-        }
-
-		return std::make_unique<OutputRequest::BulkCurrent>(
-			OutputRequest::BulkCurrent(
-				domain,
-				name,
-				readElemIds(j.at("elemIds").get<json>()),
-				strToCartesianAxis(j.at("direction").get<std::string>()),
-				j.at("skip").get<int>()
-			)
-		);
-    }
-
-    if (gidOutputType.compare("OutRq_on_point") == 0) {        
-        return std::make_unique<OutputRequest::OnPoint>(
-            type, domain, name, readElemIds(j.at("elemIds").get<json>())
-        );
-    }
-    
-    if (gidOutputType.compare("OutRq_on_line") == 0) {
-		return std::make_unique<OutputRequest::OnLine>(
-			OutputRequest::OnLine(
-				type,
-				domain,
-				name,
-				readElemIds(j.at("elemIds").get<json>())
-			)
-		);
-    }
-
-    if (gidOutputType.compare("OutRq_on_surface") == 0) {
-		return std::make_unique<OutputRequest::OnSurface>(
-			OutputRequest::OnSurface(
-				type,
-				domain,
-				name,
-				readElemIds(j.at("elemIds").get<json>())
-			)
-		);
-    }
-
-    if (gidOutputType.compare("OutRq_on_layer") == 0) {
-		return std::make_unique<OutputRequest::OnLayer>(
-			OutputRequest::OnLayer(
-				type,
-				domain,
-				name,
-				{ boxToElemGroup(mesh, j.at("box").get<std::string>())->getId() }
-			)
-		);
-    }
-
-    if (gidOutputType.compare("Far_field") == 0) {
-		static const Math::Real degToRad = 2.0 * Math::Constants::pi / 360.0;
-		return std::make_unique<OutputRequest::FarField>(
-			OutputRequest::FarField(
-				domain,
-				name,
-				{ boxToElemGroup(mesh, j.at(
-                    j.find("layerBox") == j.end() ? "box" : "layerBox"
-                ).get<std::string>())->getId() },
-				j.at("initialTheta").get<double>() * degToRad,
-				j.at("finalTheta").get<double>() * degToRad,
-                getProgressionStepByTotalNumber(j, "Theta") * degToRad,
-				j.at("initialPhi").get<double>() * degToRad,
-				j.at("finalPhi").get<double>() * degToRad,
-                getProgressionStepByTotalNumber(j, "Phi") * degToRad
-            )
-		);
-    }
-
-    throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
 }
 
 Math::Constants::CartesianAxis strToCartesianAxis(std::string str) {
@@ -1024,39 +1107,6 @@ std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const
 	);
 }
 
-OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
-    str = trim(str);
-    if (str.compare("electricField")==0) {
-        return OutputRequest::OutputRequest::Type::electric;
-    }
-    else if (str.compare("magneticField") == 0) {
-        return OutputRequest::OutputRequest::Type::magnetic;
-    }
-    else if (str.compare("electricFieldNormals") == 0) {
-        return OutputRequest::OutputRequest::Type::electricFieldNormals;
-    }
-    else if (str.compare("magneticFieldNormals") == 0) {
-        return OutputRequest::OutputRequest::Type::magneticFieldNormals;
-    }
-    else if (str.compare("current") == 0) {
-        return OutputRequest::OutputRequest::Type::current;;
-    }
-    else if (str.compare("bulkCurrentElectric") == 0) {
-        return OutputRequest::OutputRequest::Type::bulkCurrentElectric;
-    }
-    else if (str.compare("bulkCurrentMagnetic") == 0) {
-        return OutputRequest::OutputRequest::Type::bulkCurrentMagnetic;
-    }
-    else if (str.compare("surfaceCurrentDensity") == 0) {
-        return OutputRequest::OutputRequest::Type::surfaceCurrentDensity;
-    }
-    else if (str.compare("farField") == 0) {
-        return OutputRequest::OutputRequest::Type::electric;
-    } else {
-        throw std::logic_error("Unrecognized output type: " + str);
-    }
-}
-
 Source::Generator::Type strToGeneratorType(std::string str) 
 {
     str = trim(str);
@@ -1202,50 +1252,6 @@ Source::OnLine::Hardness strToNodalHardness(std::string str)
     }
 }
 
-OutputRequest::Domain readDomain(const json& j) 
-{
-    bool timeDomain = false;
-	Math::Real initialTime = 0.0;
-	Math::Real finalTime = 0.0;
-	Math::Real samplingPeriod = 0.0;
-
-	bool frequencyDomain = false;
-	bool logFrequencySweep = false;
-	bool usingTransferFunction = false;
-	Math::Real initialFrequency = 0.0;
-	Math::Real finalFrequency = 0.0;
-	Math::Real frequencyStep = 0.0;
-    std::string transferFunctionFile;
-
-    if (j.find("initialTime") != j.end()) {
-        timeDomain     = true;
-        initialTime    = j.at("initialTime").get<double>();
-        finalTime      = j.at("finalTime").get<double>();
-        samplingPeriod = j.at("samplingPeriod").get<double>();
-    }
-
-    if (j.find("initialFrequency") != j.end()) {
-        frequencyDomain   = true;
-        initialFrequency  = j.at("initialFrequency").get<double>();
-        finalFrequency    = j.at("finalFrequency").get<double>();
-        frequencyStep = getProgressionStepByTotalNumber(j, "Frequency");
-
-        logFrequencySweep = j.at("logFrequencySweep").get<bool>();
-        if (j.find("transferFunctionFile") != j.end()) {
-            usingTransferFunction = true;
-            transferFunctionFile = j.at(
-                "transferFunctionFile"
-            ).get<std::string>();
-        }
-    }
-
-    return OutputRequest::Domain(
-            timeDomain, initialTime, finalTime, samplingPeriod,
-            frequencyDomain, initialFrequency, finalFrequency,
-            frequencyStep, logFrequencySweep,
-            usingTransferFunction, transferFunctionFile);
-}
-
 std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j) 
 {
     std::string type = j.at("type").get<std::string>();
@@ -1279,13 +1285,6 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     }
 
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
-}
-
-void checkVersionCompatibility(const std::string& version) 
-{
-	if (version != std::string(VERSION)) {
-		throw std::logic_error("File version " + version + " is not supported.");
-	}
 }
 
 Math::Axis::Local strToLocalAxes(const std::string& str) {
