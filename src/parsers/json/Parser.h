@@ -9,6 +9,7 @@
 #include <type_traits>
 
 #include "core/geometry/mesh/Geometric.h"
+#include "core/junction/Junction.h"
 #include "core/ProblemDescription.h"
 #include "parsers/Parser.h"
 
