@@ -8,9 +8,10 @@
         "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.35.32215/bin/Hostx64/x64/"
     ],
     "cmake.configureSettings": {
-
+        "gtest_build_samples": "ON",
         "CMAKE_TOOLCHAIN_FILE": "C:/Users/lm/workspace/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     "cmake.configureOnEdit": false,
     "cmake.sourceDirectory": "C:/Users/lm/workspace/opensemba-org/opensemba-core/"
+    
 }

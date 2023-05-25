@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.0)
 
 set(CMAKE_CXX_STANDARD 17)
 
-message(STATUS "Configuring build system for opensemba tests.")
+message(STATUS "Configuring build system for opensemba_core_tests.")
 
 find_package(GTest CONFIG REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-add_library(opensemba_core_tests 
+add_executable(opensemba_core_tests
     "class/GroupIdentifiableUniqueTest.cpp"
     "filesystem/ProjectTest.cpp"
     "geometry/coordinate/CoordinateGroupTest.cpp"
@@ -35,7 +35,6 @@ add_library(opensemba_core_tests
     "physicalModel/wire/WireTest.cpp"
     "physicalModel/BoundTest.cpp"
     "physicalModel/GroupTest.cpp"
-    "physicalModel/PriorityMaterialTest.cpp"
     "source/magnitude/NumericalTest.cpp"
     "source/port/TEMCoaxialTest.cpp"
     "source/port/WaveguideRectangularTest.cpp"
@@ -43,8 +42,12 @@ add_library(opensemba_core_tests
 )
 
 target_link_libraries(opensemba_core_tests 
-    opensemba_core    
+    opensemba_core
     GTest::gtest 
+    GTest::gtest_main
 )
 
+add_test(opensemba_core_tests ${CMAKE_BINARY_DIR}/bin/opensemba_core_tests)
 
+include(GoogleTest)
+gtest_discover_tests(opensemba_core_tests)

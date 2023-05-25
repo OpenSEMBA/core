@@ -21,7 +21,6 @@
 #include "physicalModel/volume/PML.h"
 #include "physicalModel/wire/Wire.h"
 #include "physicalModel/Gap.h"
-#include "physicalModel/PriorityMaterial.h"
 #include "source/port/WaveguideRectangular.h"
 #include "source/port/TEMCoaxial.h"
 #include "outputRequest/BulkCurrent.h"
@@ -455,21 +454,6 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
                     j.at("inductance").get<double>(),
                     j.at("capacitance").get<double>());
         }
-    }
-
-    case PM::Type::priorityMaterial:
-    {
-        bool treatAsVolume{ false };
-        if (j.find("treatAsVolume") != j.end()) {
-            treatAsVolume = j.at("treatAsVolume").get<bool>();
-        }
-        
-        return std::make_unique<PhysicalModel::PriorityMaterial>(
-            id,
-            name,
-            j.at("priority").get<int>(),
-            treatAsVolume
-        );
     }
 
     default:

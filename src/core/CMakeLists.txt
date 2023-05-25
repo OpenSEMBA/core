@@ -14,11 +14,13 @@ add_subdirectory(source/ source/)
 
 find_package(nlohmann_json CONFIG REQUIRED)
 
-add_library(opensemba_core 
+add_library(opensemba_core STATIC
     "ProblemDescription.cpp"
 )
     
 target_link_libraries(opensemba_core
+    opensemba_core_geometry
+    opensemba_core_math
     opensemba_core_physicalmodel
     opensemba_core_source
     opensemba_core_outputrequest
