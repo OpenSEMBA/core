@@ -7,5 +7,10 @@ project(opensemba_core_math CXX)
 
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
-add_sources(. SRCS)
-add_library(opensemba_core_math STATIC ${SRCS})
+add_library(opensemba_core_math 
+    "axis/Local.cpp"
+    "function/BandLimited.cpp"
+    "function/Gaussian.cpp"
+    "function/Waveform.cpp"
+    "simplex/Simplex.cpp"
+)

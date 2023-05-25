@@ -4,6 +4,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(opensemba_core_geometry CXX)
 
-add_sources(. SRCS)
-add_library(opensemba_core_geometry STATIC ${SRCS})
+add_library(opensemba_core_geometry 
+    "coordinate/Conformal.cpp"
+    "coordinate/Coordinate.cpp"
+    "coordinate/Relative.cpp"
+    "element/Element.cpp"
+    "element/LineConformal.cpp"
+    "element/Tetrahedron.cpp"
+    "element/Tetrahedron4.cpp"
+    "element/Triangle3.cpp"
+)
+
+
 target_link_libraries(opensemba_core_geometry opensemba_core_math)
