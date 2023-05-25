@@ -4,14 +4,20 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(opensemba_core_physicalmodel CXX)
 
-add_library(opensemba_core_physicalmodel
+add_library(opensemba_core_physicalmodel STATIC
     "PhysicalModel.cpp"
-    "PriorityMaterial.cpp"
     "Bound.cpp"
+    "Gap.cpp"
     "multiport/Multiport.cpp"
     "multiport/Predefined.cpp"
     "multiport/Dispersive.cpp"
     "multiport/RLC.cpp"
+    "volume/Anisotropic.cpp"
+    "volume/AnisotropicCrystal.cpp"
+    "volume/AnisotropicFerrite.cpp"
+    "volume/Classic.cpp"
+    "volume/Dispersive.cpp"
+    "volume/PML.cpp"
     "surface/Multilayer.cpp"
     "surface/SIBC.cpp"
     "surface/SIBCFile.cpp"

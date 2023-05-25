@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(opensemba_core_outputrequest CXX)
 
-add_library(opensemba_core_outputrequest
+add_library(opensemba_core_outputrequest STATIC
     "BulkCurrent.cpp"
     "Domain.cpp"
     "FarField.cpp"
