@@ -12,16 +12,23 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 project(opensemba CXX)
 
+message(STATUS "Creating build system for opensemba with the following options:")
+option(OPENSEMBA_ENABLE_TESTS OFF)
+
+message(STATUS "OPEMSEMBA_ENABLE_TESTS: " ${OPENSEMBA_ENABLE_TESTS})
+
 include_directories(src/ src/core/)
 
 add_subdirectory(src/core)
 add_subdirectory(src/parsers)
 add_subdirectory(src/exporters)
 
-message(STATUS "Creating build system for opensemba with the following options:")
-option(OPENSEMBA_TESTS OFF)
-message(STATUS "OPEMSEMBA_TESTS: " ${OPENSEMBA_TESTS})
-if(OPENSEMBA_TESTS)
+add_library(opensemba "src/opensemba.cpp")
+target_link_libraries(opensemba opensemba_core opensemba_parsers opensemba_exporters)
+
+include(cmakePackage/opensembaPackageInstall.cmake)
+
+if(OPENSEMBA_ENABLE_TESTS)
 	enable_testing()
     add_subdirectory(test/)
 endif()
