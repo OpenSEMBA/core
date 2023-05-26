@@ -1,11 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
-
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.10)
 
 message(STATUS "Configuring build system for opensemba_parsers_tests.")
 
 find_package(GTest CONFIG REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
+include(GoogleTest)
 
 add_executable(opensemba_parsers_tests 
     "json/ParserTest.cpp"
@@ -18,7 +17,12 @@ target_link_libraries(opensemba_parsers_tests
     GTest::gtest_main
 )
 
-add_test(opensemba_parsers_tests ${CMAKE_BINARY_DIR}/bin/opensemba_parsers_tests)
 
-include(GoogleTest)
-gtest_discover_tests(opensemba_parsers_tests)
+gtest_add_tests(
+    TARGET opensemba_parsers_tests
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+gtest_discover_tests(
+    opensemba_parsers_tests
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)

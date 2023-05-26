@@ -1,11 +1,10 @@
-cmake_minimum_required(VERSION 3.0)
-
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.10)
 
 message(STATUS "Configuring build system for opensemba_core_tests.")
 
 find_package(GTest CONFIG REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
+include(GoogleTest)
 
 add_executable(opensemba_core_tests
     "class/GroupIdentifiableUniqueTest.cpp"
@@ -47,7 +46,11 @@ target_link_libraries(opensemba_core_tests
     GTest::gtest_main
 )
 
-add_test(opensemba_core_tests ${CMAKE_BINARY_DIR}/bin/opensemba_core_tests)
-
-include(GoogleTest)
-gtest_discover_tests(opensemba_core_tests)
+gtest_add_tests(
+    TARGET opensemba_core_tests
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+gtest_discover_tests(
+    opensemba_core_tests
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
