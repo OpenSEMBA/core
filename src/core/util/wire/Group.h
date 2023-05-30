@@ -7,12 +7,12 @@
 #include <type_traits>
 
 #include "ProblemDescription.h"
-#include "geometry/element/Polyline.h"
-#include "geometry/element/Line2.h"
-#include "geometry/graph/Vertices.h"
-#include "geometry/mesh/Structured.h"
-#include "geometry/mesh/Unstructured.h"
-#include "physicalModel/wire/Extremes.h"
+#include "core/geometry/element/Polyline.h"
+#include "core/geometry/element/Line2.h"
+#include "core/geometry/graph/Vertices.h"
+#include "core/geometry/mesh/Structured.h"
+#include "core/geometry/mesh/Unstructured.h"
+#include "core/physicalModel/wire/Extremes.h"
 
 namespace SEMBA {
 namespace Util {

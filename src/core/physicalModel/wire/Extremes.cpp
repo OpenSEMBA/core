@@ -1,4 +1,4 @@
-#include "physicalModel/wire/Extremes.h"
+#include "core/physicalModel/wire/Extremes.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

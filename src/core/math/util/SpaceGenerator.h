@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-#include "math/Types.h"
+#include "core/math/Types.h"
 
 namespace SEMBA {
 namespace Math {

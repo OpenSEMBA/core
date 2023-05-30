@@ -4,7 +4,7 @@
 
 #include <string>
 
-#include "math/Types.h"
+#include "core/math/Types.h"
 
 namespace SEMBA {
 namespace OutputRequest {

@@ -1,11 +1,11 @@
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "source/port/WaveguideRectangular.h"
-#include "geometry/element/Quadrilateral4.h"
-#include "physicalModel/Group.h"
-#include "physicalModel/Bound.h"
-#include "math/function/Gaussian.h"
+#include "core/source/port/WaveguideRectangular.h"
+#include "core/geometry/element/Quadrilateral4.h"
+#include "core/physicalModel/Group.h"
+#include "core/physicalModel/Bound.h"
+#include "core/math/function/Gaussian.h"
 
 using namespace SEMBA;
 using namespace Source;

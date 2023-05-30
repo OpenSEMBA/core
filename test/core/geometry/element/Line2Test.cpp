@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "geometry/element/Line2.h"
+#include "core/geometry/element/Line2.h"
 
 using namespace SEMBA;
 

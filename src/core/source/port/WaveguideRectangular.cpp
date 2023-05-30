@@ -1,5 +1,5 @@
 #include "WaveguideRectangular.h"
-#include "geometry/Bound.h"
+#include "core/geometry/Bound.h"
 
 namespace SEMBA {
 namespace Source {

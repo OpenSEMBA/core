@@ -1,6 +1,6 @@
 
-#include "gtest/gtest.h"
-#include "math/simplex/Line.h"
+#include <gtest/gtest.h>
+#include "core/math/simplex/Line.h"
 
 #include <type_traits>
 

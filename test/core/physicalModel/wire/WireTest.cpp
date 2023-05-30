@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "physicalModel/wire/Wire.h"
+#include <gtest/gtest.h>
+#include "core/physicalModel/wire/Wire.h"
 
 using namespace SEMBA;
 using namespace PhysicalModel;

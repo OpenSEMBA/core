@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "physicalModel/wire/Extremes.h"
-#include "physicalModel/multiport/Predefined.h"
+#include "core/physicalModel/wire/Extremes.h"
+#include "core/physicalModel/multiport/Predefined.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

@@ -1,7 +1,7 @@
 
-#include "gtest/gtest.h"
-#include "math/axis/Local.h"
-#include "math/Constants.h"
+#include <gtest/gtest.h>
+#include "core/math/axis/Local.h"
+#include "core/math/Constants.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>

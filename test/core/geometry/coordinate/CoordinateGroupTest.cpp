@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "geometry/coordinate/Group.h"
+#include <gtest/gtest.h>
+#include "core/geometry/coordinate/Group.h"
 
 class CoordinateGroupTest : public ::testing::Test {
 

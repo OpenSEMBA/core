@@ -1,5 +1,5 @@
 #include "MeshTest.h"
-#include "geometry/mesh/Geometric.h"
+#include "core/geometry/mesh/Geometric.h"
 
 class MeshGeometricTest : public ::testing::Test,
     public MeshTest {

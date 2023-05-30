@@ -1,8 +1,8 @@
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "math/function/Gaussian.h"
-#include "math/util/SpaceGenerator.h"
+#include "core/math/function/Gaussian.h"
+#include "core/math/util/SpaceGenerator.h"
 
 using namespace std;
 

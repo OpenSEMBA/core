@@ -1,6 +1,6 @@
 
-#include "gtest/gtest.h"
-#include "math/matrix/Static.h"
+#include <gtest/gtest.h>
+#include "core/math/matrix/Static.h"
 
 using namespace SEMBA;
 using namespace Math;

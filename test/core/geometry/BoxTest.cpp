@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "geometry/Box.h"
+#include <gtest/gtest.h>
+#include "core/geometry/Box.h"
 
 using namespace SEMBA;
 using namespace Math;
