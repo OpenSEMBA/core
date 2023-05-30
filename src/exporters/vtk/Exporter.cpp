@@ -28,7 +28,7 @@ Exporter::Exporter(const UnstructuredProblemDescription& smb, const std::string&
     UnstructuredProblemDescription unstructuredProblemDescription(smb);
     auto& gSFactor = unstructuredProblemDescription.analysis.at("geometryScalingFactor");
     if (gSFactor != nullptr) {
-        Math::Real scalingFactor = gSFactor.get<double>();
+        math::Real scalingFactor = gSFactor.get<double>();
         if (scalingFactor != 0.0) {
             unstructuredProblemDescription.model.mesh.applyScalingFactor(1.0 / scalingFactor);
             unstructuredProblemDescription.grids.applyScalingFactor(1.0 / scalingFactor);
@@ -118,8 +118,8 @@ void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
                     Geometry::CoordR3Group cG;
                     writeFile_(
                         { getBoundary(
-                            Math::Constants::CartesianAxis(i),
-                            Math::Constants::CartesianBound(j),
+                            math::Constants::CartesianAxis(i),
+                            math::Constants::CartesianBound(j),
                             cG, grid, meshStr) },
                         makeValid_(getBoundaryName(meshStr, i, j)),
                         outFile,
@@ -167,7 +167,7 @@ void Exporter::writeFile_(const ElemRView& elems,
             << "version=\"0.1\" "
             << "byte_order=\"LittleEndian\""
             << ">" << std::endl;
-    std::pair<std::vector<Math::CVecR3>,
+    std::pair<std::vector<math::CVecR3>,
               std::map<Geometry::CoordId, std::size_t>> aux =
         getPoints_(elems);
     outFile << "  " << "<UnstructuredGrid "
@@ -181,11 +181,11 @@ void Exporter::writeFile_(const ElemRView& elems,
     outFile.close();
 }
 
-std::pair<std::vector<Math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
+std::pair<std::vector<math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
     Exporter::getPoints_(
         const ElemRView& elems) {
     std::map<Geometry::CoordId, std::size_t> mapCoords;
-    std::vector<Math::CVecR3> pos;
+    std::vector<math::CVecR3> pos;
     for (const auto& elem: elems) {
         for (std::size_t j = 0; j < elem->numberOfVertices(); j++) {
             if (mapCoords.count(elem->getVertex(j)->getId()) == 0) {
@@ -198,7 +198,7 @@ std::pair<std::vector<Math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
 }
 
 void Exporter::writePoints_(std::ofstream &outFile,
-                            const std::vector<Math::CVecR3>& pos) {
+                            const std::vector<math::CVecR3>& pos) {
     outFile << "      " << "<Points>" << std::endl;
     outFile << "        " << "<DataArray "
             << "type=\"Float32\" "
@@ -207,9 +207,9 @@ void Exporter::writePoints_(std::ofstream &outFile,
             << ">" << std::endl;
     outFile << "         ";
     for (std::size_t i = 0; i < pos.size(); i++) {
-        outFile << " " << pos[i](Math::Constants::x)
-                << " " << pos[i](Math::Constants::y)
-                << " " << pos[i](Math::Constants::z);
+        outFile << " " << pos[i](math::Constants::x)
+                << " " << pos[i](math::Constants::y)
+                << " " << pos[i](math::Constants::z);
     }
     outFile << std::endl;
     outFile << "        " << "</DataArray>" << std::endl;

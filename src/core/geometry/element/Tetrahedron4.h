@@ -21,11 +21,11 @@ public:
         return std::make_unique<Tetrahedron4>(*this);
     }
 
-    bool isInnerPoint(const Math::CVecR3& pos) const override;
+    bool isInnerPoint(const math::CVecR3& pos) const override;
     bool isCurvedFace(const std::size_t face) const override;
     bool isFaceContainedInPlane(
             const std::size_t face,
-            const Math::Constants::CartesianPlane plane) const override;
+            const math::Constants::CartesianPlane plane) const override;
 
     std::size_t numberOfCoordinates() const override { return sizeOfCoordinates; }
 
@@ -42,24 +42,24 @@ public:
     const CoordR3* getSideVertex(const std::size_t f,
                                  const std::size_t i) const override;
 
-    Math::Real getVolume() const override;
-    const Math::Simplex::Simplex& getTet() const override { return tet; }
-    Math::Real getAreaOfFace(const std::size_t face) const override;
+    math::Real getVolume() const override;
+    const math::simplex::Simplex& getTet() const override { return tet; }
+    math::Real getAreaOfFace(const std::size_t face) const override;
 
     void setV(const std::size_t i, const CoordR3*) override;
     void check() const;
 
-    virtual std::unique_ptr<Element<Math::Int >> toStructured(
+    virtual std::unique_ptr<Element<math::Int >> toStructured(
         const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const override;
+        const math::Real = Grid3::tolerance) const override;
 
-    virtual std::unique_ptr<Element<Math::Real>> toUnstructured(
+    virtual std::unique_ptr<Element<math::Real>> toUnstructured(
         const CoordR3Group&,
         const Grid3&) const override;
 
 private:
-    static const Math::Simplex::Tetrahedron<1> tet;
+    static const math::simplex::Tetrahedron<1> tet;
 
     // TODO: Remove plain array
     const CoordR3* v_[4];

@@ -12,9 +12,9 @@ public:
             const std::unique_ptr<Magnitude::Magnitude>& magnitude,
             const Target& elem,
             const ExcitationMode excMode,
-            const Math::CVecR3& origin,
-            const Math::Real innerRadius,
-            const Math::Real outerRadius);
+            const math::CVecR3& origin,
+            const math::Real innerRadius,
+            const math::Real outerRadius);
     TEMCoaxial(const TEMCoaxial& rhs);
     virtual ~TEMCoaxial() = default;
 
@@ -30,8 +30,8 @@ public:
     //Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
 
 private:
-    Math::CVecR3 origin_;
-    Math::Real innerRadius_, outerRadius_;
+    math::CVecR3 origin_;
+    math::Real innerRadius_, outerRadius_;
 };
 
 } /* namespace Port */

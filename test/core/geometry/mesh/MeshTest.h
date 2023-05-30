@@ -8,7 +8,7 @@
 
 using namespace SEMBA;
 using namespace Geometry;
-using namespace Math;
+using namespace math;
 
 class MeshTest {
 public:

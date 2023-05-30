@@ -14,7 +14,7 @@ template<std::size_t D> class Grid;
 
 template <class T, std::size_t D>
 class Box {
-    typedef Math::CartesianVector<T,D> CVecTD;
+    typedef math::CartesianVector<T,D> CVecTD;
 public:
     Box();
     Box(const std::pair<CVecTD,CVecTD>& boundsMinMax);
@@ -58,8 +58,8 @@ public:
     bool isSurface() const { return (numberOfDifferentCoords() == 2); }
     bool isVolume () const { return (numberOfDifferentCoords() == 3); }
 
-    Math::Constants::CartesianAxis getDirection() const;
-    Math::Constants::CartesianAxis getNormal   () const;
+    math::Constants::CartesianAxis getDirection() const;
+    math::Constants::CartesianAxis getNormal   () const;
 
     Box<T,D> intersect(const Box<T,D>& rhs) const;
     bool isIntersected (const Box<T,D>& lBox) const;
@@ -70,17 +70,17 @@ public:
     inline CVecTD getLength() const;
 
     std::vector<CVecTD> getPos() const;
-    std::vector<CVecTD> getPosOfBound(Math::Constants::CartesianAxis  d,
-                                      Math::Constants::CartesianBound p) const;
-    Box<T,D> getBoundAsBox(Math::Constants::CartesianAxis  d,
-                           Math::Constants::CartesianBound p) const;
-    CVecTD getBound(Math::Constants::CartesianBound p) const;
+    std::vector<CVecTD> getPosOfBound(math::Constants::CartesianAxis  d,
+                                      math::Constants::CartesianBound p) const;
+    Box<T,D> getBoundAsBox(math::Constants::CartesianAxis  d,
+                           math::Constants::CartesianBound p) const;
+    CVecTD getBound(math::Constants::CartesianBound p) const;
     std::vector<Box<T,D>> chop(const CVecTD step = CVecTD(1,1,1)) const;
     std::vector<Box<T,D>> chop(const Grid<D>& grid) const;
 
     void set(const std::pair<CVecTD,CVecTD>& boundsMinMax);
     Box<T,D>& setInfinity();
-    void scale(const Math::Real factor);
+    void scale(const math::Real factor);
 
 private:
     CVecTD min_, max_;
@@ -192,14 +192,14 @@ void Box<T, D>::operator<<(const Box<T, D>& p) {
 }
 
 template<class T, std::size_t D>
-Math::Constants::CartesianAxis Box<T, D>::getDirection() const {
+math::Constants::CartesianAxis Box<T, D>::getDirection() const {
     if (!isLine()) {
         throw std::logic_error("Box object is not a line");
     }
-    Math::Constants::CartesianAxis res = Math::Constants::x;
+    math::Constants::CartesianAxis res = math::Constants::x;
     for (std::size_t d = 0; d < D; d++) {
-        if (Math::Util::notEqual(max_(d), min_(d))) {
-            res = Math::Constants::CartesianAxis(d);
+        if (math::Util::notEqual(max_(d), min_(d))) {
+            res = math::Constants::CartesianAxis(d);
             break;
         }
     }
@@ -207,15 +207,15 @@ Math::Constants::CartesianAxis Box<T, D>::getDirection() const {
 }
 
 template<class T, std::size_t D>
-Math::Constants::CartesianAxis Box<T, D>::getNormal() const {
+math::Constants::CartesianAxis Box<T, D>::getNormal() const {
     if (!isSurface()) {
         throw std::logic_error("Box object is not a surface");
     }
     assert(D == 3);
-    Math::Constants::CartesianAxis res = Math::Constants::x;
+    math::Constants::CartesianAxis res = math::Constants::x;
     for (std::size_t d = 0; d < D; d++) {
-        if (Math::Util::equal(max_(d), min_(d))) {
-            res = Math::Constants::CartesianAxis(d);
+        if (math::Util::equal(max_(d), min_(d))) {
+            res = math::Constants::CartesianAxis(d);
             break;
         }
     }
@@ -266,22 +266,22 @@ bool Box<T, D>::isInnerPoint(const CVecTD& point) const {
 }
 
 template<class T, std::size_t D>
-inline Math::CartesianVector<T, D> Box<T, D>::getMin() const {
+inline math::CartesianVector<T, D> Box<T, D>::getMin() const {
     return min_;
 }
 
 template<class T, std::size_t D>
-inline Math::CartesianVector<T, D> Box<T, D>::getMax() const {
+inline math::CartesianVector<T, D> Box<T, D>::getMax() const {
     return max_;
 }
 
 template<class T, std::size_t D>
-inline Math::CartesianVector<T, D> Box<T, D>::getLength() const {
+inline math::CartesianVector<T, D> Box<T, D>::getLength() const {
     return (max_ - min_);
 }
 
 template<class T, std::size_t D>
-inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPos() const {
+inline std::vector<math::CartesianVector<T, D> > Box<T, D>::getPos() const {
     assert(D == 3);
     std::vector<CVecTD> res;
     // TODO: Generalize this...
@@ -294,7 +294,7 @@ inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPos() const {
         res[0] = min_;
         res[1] = min_;
         for (std::size_t d = 0; d < D; d++) {
-            if (Math::Util::notEqual(max_(d), min_(d))) {
+            if (math::Util::notEqual(max_(d), min_(d))) {
                 res[0](d) = min_(d);
                 res[1](d) = max_(d);
             }
@@ -303,84 +303,84 @@ inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPos() const {
     else if (isSurface()) {
         res.resize(4);
         switch (getNormal()) {
-        case Math::Constants::x:
-            res[0] = CVecTD(min_(Math::Constants::x),
-                min_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[1] = CVecTD(min_(Math::Constants::x),
-                max_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[2] = CVecTD(min_(Math::Constants::x),
-                max_(Math::Constants::y),
-                max_(Math::Constants::z));
-            res[3] = CVecTD(min_(Math::Constants::x),
-                min_(Math::Constants::y),
-                max_(Math::Constants::z));
+        case math::Constants::x:
+            res[0] = CVecTD(min_(math::Constants::x),
+                min_(math::Constants::y),
+                min_(math::Constants::z));
+            res[1] = CVecTD(min_(math::Constants::x),
+                max_(math::Constants::y),
+                min_(math::Constants::z));
+            res[2] = CVecTD(min_(math::Constants::x),
+                max_(math::Constants::y),
+                max_(math::Constants::z));
+            res[3] = CVecTD(min_(math::Constants::x),
+                min_(math::Constants::y),
+                max_(math::Constants::z));
             break;
-        case Math::Constants::y:
-            res[0] = CVecTD(min_(Math::Constants::x),
-                min_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[1] = CVecTD(min_(Math::Constants::x),
-                min_(Math::Constants::y),
-                max_(Math::Constants::z));
-            res[2] = CVecTD(max_(Math::Constants::x),
-                min_(Math::Constants::y),
-                max_(Math::Constants::z));
-            res[3] = CVecTD(max_(Math::Constants::x),
-                min_(Math::Constants::y),
-                min_(Math::Constants::z));
+        case math::Constants::y:
+            res[0] = CVecTD(min_(math::Constants::x),
+                min_(math::Constants::y),
+                min_(math::Constants::z));
+            res[1] = CVecTD(min_(math::Constants::x),
+                min_(math::Constants::y),
+                max_(math::Constants::z));
+            res[2] = CVecTD(max_(math::Constants::x),
+                min_(math::Constants::y),
+                max_(math::Constants::z));
+            res[3] = CVecTD(max_(math::Constants::x),
+                min_(math::Constants::y),
+                min_(math::Constants::z));
             break;
-        case Math::Constants::z:
-            res[0] = CVecTD(min_(Math::Constants::x),
-                min_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[1] = CVecTD(max_(Math::Constants::x),
-                min_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[2] = CVecTD(max_(Math::Constants::x),
-                max_(Math::Constants::y),
-                min_(Math::Constants::z));
-            res[3] = CVecTD(min_(Math::Constants::x),
-                max_(Math::Constants::y),
-                min_(Math::Constants::z));
+        case math::Constants::z:
+            res[0] = CVecTD(min_(math::Constants::x),
+                min_(math::Constants::y),
+                min_(math::Constants::z));
+            res[1] = CVecTD(max_(math::Constants::x),
+                min_(math::Constants::y),
+                min_(math::Constants::z));
+            res[2] = CVecTD(max_(math::Constants::x),
+                max_(math::Constants::y),
+                min_(math::Constants::z));
+            res[3] = CVecTD(min_(math::Constants::x),
+                max_(math::Constants::y),
+                min_(math::Constants::z));
             break;
         }
     }
     else if (isVolume()) {
         res.resize(8);
-        res[0] = CVecTD(min_(Math::Constants::x),
-            min_(Math::Constants::y),
-            min_(Math::Constants::z));
-        res[1] = CVecTD(max_(Math::Constants::x),
-            min_(Math::Constants::y),
-            min_(Math::Constants::z));
-        res[2] = CVecTD(max_(Math::Constants::x),
-            max_(Math::Constants::y),
-            min_(Math::Constants::z));
-        res[3] = CVecTD(min_(Math::Constants::x),
-            max_(Math::Constants::y),
-            min_(Math::Constants::z));
-        res[4] = CVecTD(min_(Math::Constants::x),
-            min_(Math::Constants::y),
-            max_(Math::Constants::z));
-        res[5] = CVecTD(max_(Math::Constants::x),
-            min_(Math::Constants::y),
-            max_(Math::Constants::z));
-        res[6] = CVecTD(max_(Math::Constants::x),
-            max_(Math::Constants::y),
-            max_(Math::Constants::z));
-        res[7] = CVecTD(min_(Math::Constants::x),
-            max_(Math::Constants::y),
-            max_(Math::Constants::z));
+        res[0] = CVecTD(min_(math::Constants::x),
+            min_(math::Constants::y),
+            min_(math::Constants::z));
+        res[1] = CVecTD(max_(math::Constants::x),
+            min_(math::Constants::y),
+            min_(math::Constants::z));
+        res[2] = CVecTD(max_(math::Constants::x),
+            max_(math::Constants::y),
+            min_(math::Constants::z));
+        res[3] = CVecTD(min_(math::Constants::x),
+            max_(math::Constants::y),
+            min_(math::Constants::z));
+        res[4] = CVecTD(min_(math::Constants::x),
+            min_(math::Constants::y),
+            max_(math::Constants::z));
+        res[5] = CVecTD(max_(math::Constants::x),
+            min_(math::Constants::y),
+            max_(math::Constants::z));
+        res[6] = CVecTD(max_(math::Constants::x),
+            max_(math::Constants::y),
+            max_(math::Constants::z));
+        res[7] = CVecTD(min_(math::Constants::x),
+            max_(math::Constants::y),
+            max_(math::Constants::z));
     }
     return res;
 }
 
 template<class T, std::size_t D>
-inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPosOfBound(
-    Math::Constants::CartesianAxis d,
-    Math::Constants::CartesianBound p) const {
+inline std::vector<math::CartesianVector<T, D> > Box<T, D>::getPosOfBound(
+    math::Constants::CartesianAxis d,
+    math::Constants::CartesianBound p) const {
 
     assert(D == 3);
     std::size_t rX = d;
@@ -391,38 +391,38 @@ inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPosOfBound(
     {
         CVecTD aux;
         aux(rX) = getBound(p)(rX);
-        aux(rY) = getBound(Math::Constants::L)(rY);
-        aux(rZ) = getBound(Math::Constants::L)(rZ);
+        aux(rY) = getBound(math::Constants::L)(rY);
+        aux(rZ) = getBound(math::Constants::L)(rZ);
         res.push_back(aux);
     }
     {
         CVecTD aux;
         aux(rX) = getBound(p)(rX);
-        aux(rY) = getBound(Math::Constants::L)(rY);
-        aux(rZ) = getBound(Math::Constants::U)(rZ);
+        aux(rY) = getBound(math::Constants::L)(rY);
+        aux(rZ) = getBound(math::Constants::U)(rZ);
         res.push_back(aux);
     }
     {
         CVecTD aux;
         aux(rX) = getBound(p)(rX);
-        aux(rY) = getBound(Math::Constants::U)(rY);
-        aux(rZ) = getBound(Math::Constants::U)(rZ);
+        aux(rY) = getBound(math::Constants::U)(rY);
+        aux(rZ) = getBound(math::Constants::U)(rZ);
         res.push_back(aux);
     }
     {
         CVecTD aux;
         aux(rX) = getBound(p)(rX);
-        aux(rY) = getBound(Math::Constants::U)(rY);
-        aux(rZ) = getBound(Math::Constants::L)(rZ);
+        aux(rY) = getBound(math::Constants::U)(rY);
+        aux(rZ) = getBound(math::Constants::L)(rZ);
         res.push_back(aux);
     }
     return res;
 }
 
 template<class T, std::size_t D>
-Box<T, D> Box<T, D>::getBoundAsBox(Math::Constants::CartesianAxis d,
-    Math::Constants::CartesianBound p) const {
-    std::vector<Math::CartesianVector<T, D>> pos = getPosOfBound(d, p);
+Box<T, D> Box<T, D>::getBoundAsBox(math::Constants::CartesianAxis d,
+    math::Constants::CartesianBound p) const {
+    std::vector<math::CartesianVector<T, D>> pos = getPosOfBound(d, p);
     assert(pos.size() == 4);
     Box<T, D> res(pos[0], pos[1]);
     for (std::size_t i = 2; i < pos.size(); i++) {
@@ -433,9 +433,9 @@ Box<T, D> Box<T, D>::getBoundAsBox(Math::Constants::CartesianAxis d,
 }
 
 template<class T, std::size_t D>
-inline Math::CartesianVector<T, D> Box<T, D>::getBound(
-    Math::Constants::CartesianBound p) const {
-    if (p == Math::Constants::L) {
+inline math::CartesianVector<T, D> Box<T, D>::getBound(
+    math::Constants::CartesianBound p) const {
+    if (p == math::Constants::L) {
         return getMin();
     }
     else {
@@ -456,7 +456,7 @@ std::vector<Box<T, D>> Box<T, D>::chop(const CVecTD origStep) const {
             step(d) = length(d);
         }
     }
-    Math::CartesianVector<Math::Real, 3> minR, maxR, stepR;
+    math::CartesianVector<math::Real, 3> minR, maxR, stepR;
     for (std::size_t d = 0; d < D; d++) {
         stepR(d) = step(d);
         if (stepR(d) == 0.0) {
@@ -470,7 +470,7 @@ std::vector<Box<T, D>> Box<T, D>::chop(const CVecTD origStep) const {
             maxR(d) = floor(maxR(d) / stepR(d)) * stepR(d);
         }
     }
-    Grid<D> grid(Box<Math::Real, 3>(minR, maxR), stepR);
+    Grid<D> grid(Box<math::Real, 3>(minR, maxR), stepR);
     return chop(grid);
 }
 
@@ -478,11 +478,11 @@ template<class T, std::size_t D>
 std::vector<Box<T, D>> Box<T, D>::chop(const Grid<D>& grid) const {
     static_assert(D == 3, "Chop can't be used for Boxes with D != 3");
     // Prepares subgrid with the size of the box preserving grid positions.
-    std::vector<Math::Real> pos[D];
+    std::vector<math::Real> pos[D];
     for (std::size_t d = 0; d < D; d++) {
         pos[d] = grid.getPosInRange(d, min_(d), max_(d));
         if (min_(d) != pos[d].front()) {
-            std::vector<Math::Real> aux(1, min_(d));
+            std::vector<math::Real> aux(1, min_(d));
             aux.insert(aux.end(), pos[d].begin(), pos[d].end());
             pos[d] = aux;
         }
@@ -493,14 +493,14 @@ std::vector<Box<T, D>> Box<T, D>::chop(const Grid<D>& grid) const {
     Grid<D> subGrid;
     subGrid.setPos(pos);
     //
-    Math::CartesianVector<Math::Int, D> numBoxes = subGrid.getNumCells();
+    math::CartesianVector<math::Int, D> numBoxes = subGrid.getNumCells();
     std::vector<Box<T, D>> res;
-    res.reserve(numBoxes(Math::Constants::x) *
-        numBoxes(Math::Constants::y) *
-        numBoxes(Math::Constants::z));
-    for (Math::Int i = 0; i < numBoxes(Math::Constants::x); i++) {
-        for (Math::Int j = 0; j < numBoxes(Math::Constants::y); j++) {
-            for (Math::Int k = 0; k < numBoxes(Math::Constants::z); k++) {
+    res.reserve(numBoxes(math::Constants::x) *
+        numBoxes(math::Constants::y) *
+        numBoxes(math::Constants::z));
+    for (math::Int i = 0; i < numBoxes(math::Constants::x); i++) {
+        for (math::Int j = 0; j < numBoxes(math::Constants::y); j++) {
+            for (math::Int k = 0; k < numBoxes(math::Constants::z); k++) {
                 CVecTD minP = subGrid.getPos(CVecTD(i, j, k));
                 CVecTD maxP = subGrid.getPos(CVecTD(i + 1, j + 1, k + 1));
                 CVecTD minT, maxT;
@@ -543,7 +543,7 @@ inline Box<T, D>& Box<T, D>::setInfinity() {
 }
 
 template<class T, std::size_t D>
-void Box<T, D>::scale(const Math::Real factor) {
+void Box<T, D>::scale(const math::Real factor) {
     if (std::is_floating_point<T>::value) {
         min_ *= factor;
         max_ *= factor;
@@ -554,7 +554,7 @@ template<class T, std::size_t D>
 std::size_t Box<T, D>::numberOfDifferentCoords() const {
     std::size_t res = 0;
     for (std::size_t d = 0; d < D; d++) {
-        if (Math::Util::notEqual(max_(d), min_(d))) {
+        if (math::Util::notEqual(max_(d), min_(d))) {
             res++;
         }
     }
@@ -606,9 +606,9 @@ public:
 } /* namespace Box */
 } /* namespace Error */
 
-typedef Box<Math::Real,3> BoxR3;
-typedef Box<Math::Int ,2> BoxI2;
-typedef Box<Math::Int, 3> BoxI3;
+typedef Box<math::Real,3> BoxR3;
+typedef Box<math::Int ,2> BoxI2;
+typedef Box<math::Int, 3> BoxI3;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

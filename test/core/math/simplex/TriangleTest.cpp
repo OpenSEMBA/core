@@ -2,7 +2,7 @@
 #include "core/math/simplex/Triangle.h"
 
 using namespace SEMBA;
-using namespace Math;
+using namespace math;
 
 template <typename T>
 class MathSimplexTriangleTest : public ::testing::Test {
@@ -11,7 +11,7 @@ class MathSimplexTriangleTest : public ::testing::Test {
 
 TEST(MathSimplexTriangleTest, BasicOperations) {
     static constexpr std::size_t n = 3;
-    Simplex::Triangle<n> tri;
+    simplex::Triangle<n> tri;
 
     Real sum = 0.0;
     std::vector<Real> weights = tri.getWeights();

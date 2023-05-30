@@ -8,8 +8,8 @@ namespace Surface {
 
 SIBC::SIBC(const Id id,
         const std::string& name,
-        const Math::MatC22& Zinfinite,
-        const Math::MatC22& ZLinear,
+        const math::MatC22& Zinfinite,
+        const math::MatC22& ZLinear,
         const std::vector<PoleResidue>& poleImpedance)
 :   Identifiable<Id>(id),
     PhysicalModel(name),

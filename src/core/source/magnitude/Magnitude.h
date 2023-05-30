@@ -10,7 +10,7 @@ namespace Magnitude {
 class Magnitude : public virtual Class::Class {
 public:
     Magnitude() = default;
-    Magnitude(Math::FunctionRR* mathFunction);
+    Magnitude(math::FunctionRR* mathFunction);
     Magnitude(const Magnitude& rhs);
     virtual ~Magnitude() = default;
 
@@ -22,10 +22,10 @@ public:
 
     virtual bool operator==(const Magnitude&) const;
 
-    Math::Real evaluate(const Math::Real time) const;
+    math::Real evaluate(const math::Real time) const;
 
 private:
-    Math::FunctionRR* mathFunction_;
+    math::FunctionRR* mathFunction_;
 };
 
 } /* namespace Magnitude */

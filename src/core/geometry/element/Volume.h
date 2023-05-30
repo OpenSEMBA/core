@@ -28,12 +28,12 @@ public:
     virtual bool isCurvedFace(const std::size_t face) const = 0;
     virtual bool isFaceContainedInPlane(
             const std::size_t face,
-            const Math::Constants::CartesianPlane plane) const;
+            const math::Constants::CartesianPlane plane) const;
 
-    Math::CartesianVector<T,3> getSideNormal(const std::size_t f) const;
+    math::CartesianVector<T,3> getSideNormal(const std::size_t f) const;
 
-    virtual Math::Real getAreaOfFace(const std::size_t face) const = 0;
-    virtual Math::Real getVolume() const = 0;
+    virtual math::Real getAreaOfFace(const std::size_t face) const = 0;
+    virtual math::Real getVolume() const = 0;
     Box<T,3> getBoundOfFace(const std::size_t face) const;
     std::size_t getFaceNumber(const Surface<T>*) const;
 };
@@ -47,16 +47,16 @@ bool Volume<T>::isLocalFace(const std::size_t f,
 template<class T>
 bool Volume<T>::isFaceContainedInPlane(
     const std::size_t face,
-    const Math::Constants::CartesianPlane plane) const {
+    const math::Constants::CartesianPlane plane) const {
     Box<T, 3> box = getBoundOfFace(face);
-    Math::CartesianVector<T, 3> vec = box.getMax() - box.getMin();
+    math::CartesianVector<T, 3> vec = box.getMax() - box.getMin();
     return vec.isContainedInPlane(plane);
 }
 
 template<class T>
-Math::CartesianVector<T, 3> Volume<T>::getSideNormal(
+math::CartesianVector<T, 3> Volume<T>::getSideNormal(
     const std::size_t f) const {
-    Math::CartesianVector<T, 3> vec1, vec2, res;
+    math::CartesianVector<T, 3> vec1, vec2, res;
     vec1 = *this->getSideVertex(f, 1) - *this->getSideVertex(f, 0);
     vec2 = *this->getSideVertex(f, 2) - *this->getSideVertex(f, 0);
     res = (vec1 ^ vec2).normalize();
@@ -94,8 +94,8 @@ std::size_t Volume<T>::getFaceNumber(const Surface<T>* surf) const {
 } /* namespace Element */
 
 typedef Element::VolumeBase         Vol;
-typedef Element::Volume<Math::Real> VolR;
-typedef Element::Volume<Math::Int > VolI;
+typedef Element::Volume<math::Real> VolR;
+typedef Element::Volume<math::Int > VolI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

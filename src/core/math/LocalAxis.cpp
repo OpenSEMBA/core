@@ -1,7 +1,7 @@
 #include "LocalAxis.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 
 LocalAxis::LocalAxis(CVecR3 eulerAngles, CVecR3 origin) {
     eulerAngles_ = eulerAngles;

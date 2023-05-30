@@ -9,9 +9,9 @@ TEMCoaxial::TEMCoaxial(
         const std::unique_ptr<Magnitude::Magnitude>& magnitude,
         const Target& elem,
         const ExcitationMode excMode,
-        const Math::CVecR3& origin,
-        const Math::Real innerRadius,
-        const Math::Real outerRadius) :
+        const math::CVecR3& origin,
+        const math::Real innerRadius,
+        const math::Real outerRadius) :
         TEM(magnitude, elem, excMode) 
 {
     origin_ = origin;

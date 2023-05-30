@@ -8,7 +8,7 @@ namespace Volume {
 
 PML::PML(const Id id,
          const std::string& name,
-         const Math::LocalAxis orientation)
+         const math::LocalAxis orientation)
 :   Identifiable<Id>(id),
     PhysicalModel(name),
     orientation_(orientation) {
@@ -20,13 +20,13 @@ PML::PML(const PML& rhs)
     orientation_(rhs.orientation_) {
 }
 
-const Math::LocalAxis PML::getOrientation() const {
+const math::LocalAxis PML::getOrientation() const {
     return orientation_;
 }
 
-const Math::CVecR3 PML::getGlobalZAxis() const {
-    Math::CVecR3 localZ(0.0,0.0,1.0);
-    Math::CVecR3 res = getOrientation().convertToGlobal(localZ)
+const math::CVecR3 PML::getGlobalZAxis() const {
+    math::CVecR3 localZ(0.0,0.0,1.0);
+    math::CVecR3 res = getOrientation().convertToGlobal(localZ)
             - getOrientation().getOrigin();
     return res;
 }

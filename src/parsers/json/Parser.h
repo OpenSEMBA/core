@@ -17,7 +17,7 @@ namespace SEMBA::parsers::JSON {
 const std::string VERSION{ "0.16" };
 
 using namespace Geometry;
-using namespace Math;
+using namespace math;
 
 using json = nlohmann::json;
 using PM = PhysicalModel::PhysicalModel;

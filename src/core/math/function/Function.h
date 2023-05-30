@@ -7,8 +7,8 @@
 #include "core/math/Types.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Function {
+namespace math {
+namespace function {
 
 class Base {
 public:
@@ -37,7 +37,7 @@ inline T Function<S, T>::eval(const S& arg) const {
 
 } /* namespace Function */
 
-typedef Function::Function<Real, Real> FunctionRR;
+typedef function::Function<Real, Real> FunctionRR;
 
 } /* namespace Math */
 } /* namespace SEMBA */

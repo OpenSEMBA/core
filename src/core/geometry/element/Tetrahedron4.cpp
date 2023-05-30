@@ -4,7 +4,7 @@ namespace SEMBA {
 namespace Geometry {
 namespace Element {
 
-const Math::Simplex::Tetrahedron<1> Tetrahedron4::tet;
+const math::simplex::Tetrahedron<1> Tetrahedron4::tet;
 
 Tetrahedron4::Tetrahedron4(const Id id,
            const CoordR3* v[4],
@@ -28,23 +28,23 @@ Tetrahedron4::Tetrahedron4(const Tetrahedron4& rhs)
     }
 }
 
-bool Tetrahedron4::isInnerPoint(const Math::CVecR3& pos) const {
+bool Tetrahedron4::isInnerPoint(const math::CVecR3& pos) const {
     if (!getBound().isInnerPoint(pos)) {
         return false;
     }
     // Checks if point is inside a tetrahedron using the following algorithm:
     // http://steve.hollasch.net/cgindex/geometry/ptintet.html
-    Math::Matrix::Static<Math::Real,4,4> mat;
+    math::matrix::Static<math::Real,4,4> mat;
     // Builds matrix D0.
     for (std::size_t i = 0; i < 4; i++) {
         for (std::size_t j = 0; j < 3; j++) {
             mat(i,j) = getVertex(i)->pos()(j);
         }
-        mat(i,3) = (Math::Real) 1.0;
+        mat(i,3) = (math::Real) 1.0;
     }
-    Math::Real det = mat.getDeterminant4x4();
+    math::Real det = mat.getDeterminant4x4();
     assert(det != 0);
-    bool isPositive = (det > (Math::Real) 0.0);
+    bool isPositive = (det > (math::Real) 0.0);
     // Checks rest of matrices. Last column is always 1.0.
     for (std::size_t k = 0; k < 4; k++) {
         // Copies pos in row k.
@@ -59,8 +59,8 @@ bool Tetrahedron4::isInnerPoint(const Math::CVecR3& pos) const {
                 }
             }
         }
-        Math::Real det = mat.getDeterminant4x4();
-        if ((det > (Math::Real) 0.0) != isPositive) {
+        math::Real det = mat.getDeterminant4x4();
+        if ((det > (math::Real) 0.0) != isPositive) {
             return false;
         }
     }
@@ -73,7 +73,7 @@ bool Tetrahedron4::isCurvedFace(const std::size_t face) const {
 
 bool Tetrahedron4::isFaceContainedInPlane(
         const std::size_t face,
-        const Math::Constants::CartesianPlane plane) const {
+        const math::Constants::CartesianPlane plane) const {
     return getTri3Face(face)->isContainedInPlane(plane);
 }
 
@@ -87,24 +87,24 @@ const CoordR3* Tetrahedron4::getSideVertex(const std::size_t f,
     return v_[tet.sideVertex(f,i)];
 }
 
-Math::Real Tetrahedron4::getVolume() const {
-    Math::Matrix::Static<Math::Real,3,3> mat;
-    Math::CVecR3 aux;
+math::Real Tetrahedron4::getVolume() const {
+    math::matrix::Static<math::Real,3,3> mat;
+    math::CVecR3 aux;
     for (std::size_t i = 1; i < 4; i++) {
         aux = getV(0)->pos() - getV(i)->pos();
         for (std::size_t j = 0; j < 3; j++) {
             mat(i-1,j) = aux(j);
         }
     }
-    Math::Real det = mat.getDeterminant3x3();
-    return (det / ((Math::Real) 6.0));
+    math::Real det = mat.getDeterminant3x3();
+    return (det / ((math::Real) 6.0));
 }
 
-Math::Real Tetrahedron4::getAreaOfFace(const std::size_t f) const {
-    Math::CVecR3 v1, v2;
+math::Real Tetrahedron4::getAreaOfFace(const std::size_t f) const {
+    math::CVecR3 v1, v2;
     v1 = getSideV(f,1)->pos() - getSideV(f,0)->pos();
     v2 = getSideV(f,2)->pos() - getSideV(f,0)->pos();
-    return ((Math::Real) 0.5 * (v1 ^ v2).norm());
+    return ((math::Real) 0.5 * (v1 ^ v2).norm());
 }
 
 void Tetrahedron4::setV(const std::size_t i, const CoordR3* v) {
@@ -119,7 +119,7 @@ void Tetrahedron4::check() const {
 
 bool Tetrahedron4::hasZeroVolume() const {
     bool zeroVolume;
-    Math::CVecR3 initialVCoord, otherVCoord;
+    math::CVecR3 initialVCoord, otherVCoord;
 
     // TODO: Remove plain array
     initialVCoord = *v_[0];
@@ -138,7 +138,7 @@ bool Tetrahedron4::hasZeroVolume() const {
 
 std::unique_ptr<ElemI> Tetrahedron4::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const {
+    const Grid3& grid, const math::Real tol) const {
 
     throw std::logic_error("Tetrahedron4::toStructured operation not permitted");
 }

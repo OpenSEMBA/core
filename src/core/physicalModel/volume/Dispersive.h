@@ -11,17 +11,17 @@ namespace SEMBA {
 namespace PhysicalModel {
 namespace Volume {
 
-typedef std::pair<std::complex<Math::Real>,
-                  std::complex<Math::Real>> PoleResidue;
+typedef std::pair<std::complex<math::Real>,
+                  std::complex<math::Real>> PoleResidue;
 
 class Dispersive : public virtual Volume {
 public:
     Dispersive(const Id id,
                      const std::string& name,
-                     const Math::Real rEps,
-                     const Math::Real rMu,
-                     const Math::Real elecCond,
-                     const Math::Real magnCond,
+                     const math::Real rEps,
+                     const math::Real rMu,
+                     const math::Real elecCond,
+                     const math::Real magnCond,
                      const std::vector<PoleResidue>& poleResidue =
                         std::vector<PoleResidue>());
     Dispersive(const Id id,
@@ -35,9 +35,9 @@ public:
     }
 
     std::size_t getPoleNumber() const;
-    std::complex<Math::Real> getPole(std::size_t p) const;
-    std::complex<Math::Real> getResidue(std::size_t p) const;
-    virtual Math::Real getElectricConductivity() const;
+    std::complex<math::Real> getPole(std::size_t p) const;
+    std::complex<math::Real> getResidue(std::size_t p) const;
+    virtual math::Real getElectricConductivity() const;
 
     bool isClassic() const;
     bool isSimplyConductive() const;
@@ -46,11 +46,11 @@ public:
     const FileSystem::Project getFile() const;
 
 protected:
-    Math::Real rEpsInfty_, rMuInfty_; // @ InftyFreq.
+    math::Real rEpsInfty_, rMuInfty_; // @ InftyFreq.
     std::vector<PoleResidue> poleResidue_; // Residues for dispers model. c_p.
     FileSystem::Project file_;
-    void addPole(const std::complex<Math::Real>& pole_,
-                 const std::complex<Math::Real>& res_);
+    void addPole(const std::complex<math::Real>& pole_,
+                 const std::complex<math::Real>& res_);
 };
 
 } /* namespace Volume */

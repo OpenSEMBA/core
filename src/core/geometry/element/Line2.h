@@ -38,7 +38,7 @@ public:
         return std::make_unique<Line2>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override;
+    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
     const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
@@ -53,14 +53,14 @@ public:
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const override;
+        const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&,
                           const Grid3&) const override;
 
     std::vector<std::unique_ptr<const Line2<T>>> splitByMiddle() const;
 
 private:
-    static const Math::Simplex::Line<1> lin;
+    static const math::simplex::Line<1> lin;
     
     std::array<const Coordinate::Coordinate<T,3>*,2> v_;
 
@@ -71,7 +71,7 @@ private:
 
 
 template<class T>
-const Math::Simplex::Line<1> Line2<T>::lin;
+const math::simplex::Line<1> Line2<T>::lin;
 
 template<class T>
 Line2<T>::Line2(const Id id,
@@ -108,7 +108,7 @@ Line2<T>::Line2(Coordinate::Group<Coordinate::Coordinate<T, 3> >& cG,
 }
 
 template<class T>
-bool Line2<T>::isStructured(const Grid3& grid, const Math::Real tol) const {
+bool Line2<T>::isStructured(const Grid3& grid, const math::Real tol) const {
     if (!this->vertexInCell(grid, tol)) {
         return false;
     }
@@ -162,9 +162,9 @@ void Line2<T>::setCoordinates(std::array<const Coordinate::Coordinate<T, 3>*, 2>
 template<class T>
 std::unique_ptr<ElemI> Line2<T>::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const 
+    const Grid3& grid, const math::Real tol) const 
 {
-    return std::make_unique<Line2<Math::Int>>(this->getId(),
+    return std::make_unique<Line2<math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel()
@@ -175,7 +175,7 @@ template<class T>
 std::unique_ptr<ElemR> Line2<T>::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<Line2<Math::Real>>(
+    return std::make_unique<Line2<math::Real>>(
         this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
@@ -217,8 +217,8 @@ std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
 } /* namespace Element */
 
 typedef Element::Line2Base         Lin2;
-typedef Element::Line2<Math::Real> LinR2;
-typedef Element::Line2<Math::Int> LinI2;
+typedef Element::Line2<math::Real> LinR2;
+typedef Element::Line2<math::Int> LinI2;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

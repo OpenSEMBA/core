@@ -14,40 +14,40 @@ template<class T, std::size_t D> class Box;
 
 template<std::size_t D>
 class Grid {
-    typedef Box<Math::Real,D> BoxRD;
-    typedef Box<Math::Int ,D> BoxID;
-    typedef Math::CartesianVector<Math::Real,D> CVecRD;
-    typedef Math::CartesianVector<Math::Int, D> CVecID;
+    typedef Box<math::Real,D> BoxRD;
+    typedef Box<math::Int ,D> BoxID;
+    typedef math::CartesianVector<math::Real,D> CVecRD;
+    typedef math::CartesianVector<math::Int, D> CVecID;
 public:
-    static const Math::Real tolerance;
+    static const math::Real tolerance;
 
     Grid() = default;
     Grid(const BoxRD&  boundingBox,
          const CVecRD& dxyz);
     Grid(const BoxRD&  boundingBox,
          const CVecID& dims);
-    Grid(const std::vector<Math::Real> positions[D]);
+    Grid(const std::vector<math::Real> positions[D]);
     Grid(const Grid& grid);
     virtual ~Grid () = default;
 
 
     bool operator==(const Grid& rhs) const;
-    void setPos(const std::vector<Math::Real> pos[D]);
-    void setAdditionalSteps(const Math::Constants::CartesianAxis d,
-                            const Math::Constants::CartesianBound b,
-                            const std::vector<Math::Real>& step);
+    void setPos(const std::vector<math::Real> pos[D]);
+    void setAdditionalSteps(const math::Constants::CartesianAxis d,
+                            const math::Constants::CartesianBound b,
+                            const std::vector<math::Real>& step);
 
     bool hasZeroSize() const;
 
     bool isInto(const CVecRD& pos) const;
-    bool isInto(const std::size_t dir, const Math::Real pos) const;
+    bool isInto(const std::size_t dir, const math::Real pos) const;
     bool isRegular() const;
     bool isRegular(const std::size_t d) const;
     bool isCartesian() const;
     bool isCell(const CVecRD& position,
-                const Math::Real tol = tolerance) const;
+                const math::Real tol = tolerance) const;
     bool isCell(const std::vector<CVecRD>& positions,
-                const Math::Real tol = tolerance) const;
+                const math::Real tol = tolerance) const;
 
     CVecID getNumCells() const;
 
@@ -55,16 +55,16 @@ public:
 
     CVecRD getOrigin()   const;
     bool getNaturalCell(
-            const Math::Constants::CartesianAxis dir,
-            const Math::Real& x,
+            const math::Constants::CartesianAxis dir,
+            const math::Real& x,
             long int& i,
-            Math::Real& relativeLen) const;
+            math::Real& relativeLen) const;
 
-    std::vector<Math::Real> getStep(const std::size_t dir) const;
-    Math::Real              getStep(const std::size_t dir,
-                                    const Math::Int& n) const;
+    std::vector<math::Real> getStep(const std::size_t dir) const;
+    math::Real              getStep(const std::size_t dir,
+                                    const math::Int& n) const;
 
-    Math::Real getMinimumSpaceStep() const;
+    math::Real getMinimumSpaceStep() const;
 
     BoxRD getFullDomainBoundingBox() const;
     BoxID getFullDomainBoundingCellBox() const;
@@ -73,71 +73,71 @@ public:
     BoxID getBoxIContaining(const CVecRD& point) const;
 
     std::vector<CVecRD> getCenterOfCellsInside(const BoxRD& bound) const;
-    std::vector<Math::Real> getPosInRange(const std::size_t dir,
-                                          const Math::Real min,
-                                          const Math::Real max) const;
+    std::vector<math::Real> getPosInRange(const std::size_t dir,
+                                          const math::Real min,
+                                          const math::Real max) const;
 
     std::vector<CVecRD>     getPos() const;
-    std::vector<Math::Real> getPos(const std::size_t dir) const;
-    Math::Real              getPos(const std::size_t dir,
-                                   const Math::Int i) const;
+    std::vector<math::Real> getPos(const std::size_t dir) const;
+    math::Real              getPos(const std::size_t dir,
+                                   const math::Int i) const;
     CVecRD                  getPos(const CVecID& ijk) const;
     CVecRD                  getPos(const CVecRD& ijk) const { return ijk; }
 
-    std::pair<Math::Int, Math::Real> getCellPair(
+    std::pair<math::Int, math::Real> getCellPair(
             const std::size_t       dir,
-            const Math::Real x,
+            const math::Real x,
             const bool approx = true,
-            const Math::Real tol = tolerance,
+            const math::Real tol = tolerance,
             bool* err = nullptr) const;
     std::pair<CVecID, CVecRD>        getCellPair(
             const CVecRD& pos,
             const bool approx = true,
-            const Math::Real tol = tolerance,
+            const math::Real tol = tolerance,
             bool* err = nullptr) const;
 
-    Math::Int getCell(const std::size_t dir,
-                      const Math::Real  x,
+    math::Int getCell(const std::size_t dir,
+                      const math::Real  x,
                       const bool  approx = true,
-                      const Math::Real  tol = tolerance,
+                      const math::Real  tol = tolerance,
                       bool* err = nullptr) const;
     CVecID    getCell(const CVecRD& pos,
                       const bool  approx = true,
-                      const Math::Real tol = tolerance,
+                      const math::Real tol = tolerance,
                       bool* err = nullptr) const;
     CVecID    getCell(const CVecID& pos,
                       const bool approx = true,
-                      const Math::Real tol = tolerance) const { return pos; }
+                      const math::Real tol = tolerance) const { return pos; }
 
-    void applyScalingFactor(const Math::Real factor);
+    void applyScalingFactor(const math::Real factor);
 
     void enlarge(const std::pair<CVecRD,CVecRD>& additionalCells,
                  const std::pair<CVecRD,CVecRD>& sizesOfNewCells);
-    void enlargeBound(Math::Constants::CartesianAxis d,
-                      Math::Constants::CartesianBound b,
-                      Math::Real pad, Math::Real siz);
+    void enlargeBound(math::Constants::CartesianAxis d,
+                      math::Constants::CartesianBound b,
+                      math::Real pad, math::Real siz);
 
 private:
-    std::array<std::vector<Math::Real>,D> pos_;
+    std::array<std::vector<math::Real>,D> pos_;
 };
 
 
 template<std::size_t D>
-const Math::Real Grid<D>::tolerance = 1e-2;
+const math::Real Grid<D>::tolerance = 1e-2;
 
 template<std::size_t D>
 Grid<D>::Grid(const BoxRD& box,
     const CVecRD& dxyz) {
     CVecRD origin = box.getMin();
     for (std::size_t i = 0; i < D; i++) {
-        Math::Real boxLength = box.getMax()(i) - box.getMin()(i);
+        math::Real boxLength = box.getMax()(i) - box.getMin()(i);
         std::size_t nCells;
-        if (dxyz(i) == (Math::Real)0.0) {
+        if (dxyz(i) == (math::Real)0.0) {
             nCells = 1;
         }
         else {
             nCells = ceil(boxLength / dxyz(i));
-            if (Math::Util::greater(boxLength, nCells * dxyz(i),
+            if (math::Util::greater(boxLength, nCells * dxyz(i),
                 dxyz(i), tolerance)) {
                 nCells++;
             }
@@ -154,7 +154,7 @@ Grid<D>::Grid(const BoxRD& boundingBox,
     const CVecID& dims) {
     CVecRD origin = boundingBox.getMin();
     for (std::size_t i = 0; i < D; i++) {
-        Math::Real step =
+        math::Real step =
             (boundingBox.getMax()(i) - boundingBox.getMin()(i)) / dims(i);
         std::size_t nCells = dims(i);
         pos_[i].resize(nCells + 1);
@@ -165,7 +165,7 @@ Grid<D>::Grid(const BoxRD& boundingBox,
 }
 
 template<std::size_t D>
-Grid<D>::Grid(const std::vector<Math::Real> pos[D]) {
+Grid<D>::Grid(const std::vector<math::Real> pos[D]) {
     for (std::size_t d = 0; d < D; d++) {
         pos_[d] = pos[d];
     }
@@ -185,7 +185,7 @@ bool Grid<D>::operator==(const Grid& rhs) const {
 }
 
 template<std::size_t D>
-void Grid<D>::setPos(const std::vector<Math::Real> pos[D]) {
+void Grid<D>::setPos(const std::vector<math::Real> pos[D]) {
     for (std::size_t d = 0; d < D; d++) {
         if (pos[d].size() == 0) {
             throw std::out_of_range(
@@ -200,12 +200,12 @@ void Grid<D>::setPos(const std::vector<Math::Real> pos[D]) {
 
 template<std::size_t D>
 void Grid<D>::setAdditionalSteps(
-    const Math::Constants::CartesianAxis d,
-    const Math::Constants::CartesianBound b,
-    const std::vector<Math::Real>& step) {
+    const math::Constants::CartesianAxis d,
+    const math::Constants::CartesianBound b,
+    const std::vector<math::Real>& step) {
     const std::size_t nCells = step.size();
-    std::vector<Math::Real> newPos(nCells);
-    if (b == Math::Constants::U) {
+    std::vector<math::Real> newPos(nCells);
+    if (b == math::Constants::U) {
         newPos[0] = pos_[d].back() + step[0];
         for (std::size_t i = 1; i < nCells; i++) {
             newPos[i] = newPos[i - 1] + step[i];
@@ -233,16 +233,16 @@ bool Grid<D>::hasZeroSize() const {
 }
 
 template<std::size_t D>
-bool Grid<D>::isInto(const std::size_t dir, const Math::Real pos) const {
+bool Grid<D>::isInto(const std::size_t dir, const math::Real pos) const {
     return pos >= getPos(dir)[0] && pos <= getPos(dir).back();
 }
 
 template<std::size_t D>
 bool Grid<D>::getNaturalCell(
-    const Math::Constants::CartesianAxis dir,
-    const Math::Real& x,
+    const math::Constants::CartesianAxis dir,
+    const math::Real& x,
     long int& i,
-    Math::Real& relativeLen) const {
+    math::Real& relativeLen) const {
     size_t n = 0;
     relativeLen = -1.0;
     if (x < getPos(dir, 0)) {
@@ -284,9 +284,9 @@ bool Grid<D>::isRegular() const {
 
 template<std::size_t D>
 bool Grid<D>::isRegular(const std::size_t d) const {
-    std::vector<Math::Real> step = getStep(d);
+    std::vector<math::Real> step = getStep(d);
     for (std::size_t n = 1; n < step.size(); n++) {
-        if (Math::Util::notEqual(step[n], step[0], step[0], tolerance)) {
+        if (math::Util::notEqual(step[n], step[0], step[0], tolerance)) {
             return false;
         }
     }
@@ -295,11 +295,11 @@ bool Grid<D>::isRegular(const std::size_t d) const {
 
 template<std::size_t D>
 bool Grid<D>::isCartesian() const {
-    Math::Real canon = getStep(Math::Constants::x)[0];
+    math::Real canon = getStep(math::Constants::x)[0];
     for (std::size_t i = 0; i < D; i++) {
-        std::vector<Math::Real> step = getStep(i);
+        std::vector<math::Real> step = getStep(i);
         for (std::size_t n = 1; n < step.size(); n++) {
-            if (Math::Util::notEqual(step[n], canon, canon, tolerance)) {
+            if (math::Util::notEqual(step[n], canon, canon, tolerance)) {
                 return false;
             }
         }
@@ -308,14 +308,14 @@ bool Grid<D>::isCartesian() const {
 }
 
 template<std::size_t D>
-bool Grid<D>::isCell(const CVecRD& position, const Math::Real tol) const {
+bool Grid<D>::isCell(const CVecRD& position, const math::Real tol) const {
     std::pair<CVecID, CVecRD> natCell = getCellPair(position, true, tol);
     return natCell.second == CVecRD(0.0);
 }
 
 template<std::size_t D>
 bool Grid<D>::isCell(const std::vector<CVecRD>& pos,
-    const Math::Real tol) const {
+    const math::Real tol) const {
     for (std::size_t i = 0; i < pos.size(); i++) {
         if (!isCell(pos[i], tol)) {
             return false;
@@ -325,7 +325,7 @@ bool Grid<D>::isCell(const std::vector<CVecRD>& pos,
 }
 
 template<std::size_t D>
-Math::CartesianVector<Math::Int, D> Grid<D>::getNumCells() const {
+math::CartesianVector<math::Int, D> Grid<D>::getNumCells() const {
     CVecID res;
     for (std::size_t d = 0; d < D; d++) {
         res(d) = getPos(d).size() - 1; // Minimum size of pos is 2.
@@ -334,12 +334,12 @@ Math::CartesianVector<Math::Int, D> Grid<D>::getNumCells() const {
 }
 
 template<std::size_t D>
-Math::CartesianVector<Math::Int, D> Grid<D>::getOffset() const {
+math::CartesianVector<math::Int, D> Grid<D>::getOffset() const {
     return CVecID(0, 0, 0);
 }
 
 template<std::size_t D>
-Math::CartesianVector<Math::Real, D> Grid<D>::getOrigin() const {
+math::CartesianVector<math::Real, D> Grid<D>::getOrigin() const {
     CVecRD res;
     for (std::size_t d = 0; d < D; d++) {
         if (pos_[d].size() == 0) {
@@ -351,12 +351,12 @@ Math::CartesianVector<Math::Real, D> Grid<D>::getOrigin() const {
 }
 
 template<std::size_t D>
-std::vector<Math::Real> Grid<D>::getStep(const std::size_t dir) const {
+std::vector<math::Real> Grid<D>::getStep(const std::size_t dir) const {
     assert(dir >= 0 && dir < D);
     if (pos_[dir].size() == 0) {
-        return std::vector<Math::Real>();
+        return std::vector<math::Real>();
     }
-    std::vector<Math::Real> res(pos_[dir].size() - 1);
+    std::vector<math::Real> res(pos_[dir].size() - 1);
     for (std::size_t i = 0; i < pos_[dir].size() - 1; i++) {
         res[i] = pos_[dir][i + 1] - pos_[dir][i];
     }
@@ -365,9 +365,9 @@ std::vector<Math::Real> Grid<D>::getStep(const std::size_t dir) const {
 
 
 template<std::size_t D>
-Math::Real Grid<D>::getStep(const std::size_t dir, const Math::Int& n) const {
+math::Real Grid<D>::getStep(const std::size_t dir, const math::Int& n) const {
     assert(dir >= 0 && dir < D);
-    assert(n >= 0 && n < (Math::Int(pos_[dir].size()) - 1));
+    assert(n >= 0 && n < (math::Int(pos_[dir].size()) - 1));
 
     if (pos_[dir].empty()) {
         return 0.0;
@@ -378,10 +378,10 @@ Math::Real Grid<D>::getStep(const std::size_t dir, const Math::Int& n) const {
 
 
 template<std::size_t D>
-Math::Real Grid<D>::getMinimumSpaceStep() const {
-    Math::Real minStep = std::numeric_limits<Math::Real>::infinity();
+math::Real Grid<D>::getMinimumSpaceStep() const {
+    math::Real minStep = std::numeric_limits<math::Real>::infinity();
     for (std::size_t i = 0; i < D; i++) {
-        std::vector<Math::Real> step = getStep(i);
+        std::vector<math::Real> step = getStep(i);
         for (std::size_t n = 0; n < step.size(); n++) {
             if (step[n] < minStep) {
                 minStep = step[n];
@@ -392,13 +392,13 @@ Math::Real Grid<D>::getMinimumSpaceStep() const {
 }
 
 template<std::size_t D>
-Box<Math::Real, D> Grid<D>::getFullDomainBoundingBox() const {
+Box<math::Real, D> Grid<D>::getFullDomainBoundingBox() const {
     return getBoundingBox(
         std::pair<CVecID, CVecID>(CVecID(0, 0, 0), getNumCells()));
 }
 
 template<std::size_t D>
-Box<Math::Int, D> Grid<D>::getFullDomainBoundingCellBox() const {
+Box<math::Int, D> Grid<D>::getFullDomainBoundingCellBox() const {
     CVecID min, max, dims;
     for (std::size_t n = 0; n < D; n++) {
         dims[n] = pos_[n].size();
@@ -408,54 +408,54 @@ Box<Math::Int, D> Grid<D>::getFullDomainBoundingCellBox() const {
 }
 
 template<std::size_t D>
-Box<Math::Real, D> Grid<D>::getBoundingBox(const BoxID& bound) const {
+Box<math::Real, D> Grid<D>::getBoundingBox(const BoxID& bound) const {
     BoxRD res(getPos(bound.getMin()), getPos(bound.getMax()));
     return res;
 }
 
 template<std::size_t D>
-Box<Math::Real, D> Grid<D>::getBoxRContaining(const CVecRD& point) const {
+Box<math::Real, D> Grid<D>::getBoxRContaining(const CVecRD& point) const {
     BoxID boxI = getBoxIContaining(point);
     return getBoundingBox(boxI);
 }
 
 
 template<std::size_t D>
-Box<Math::Int, D> Grid<D>::getBoxIContaining(const CVecRD& point) const {
+Box<math::Int, D> Grid<D>::getBoxIContaining(const CVecRD& point) const {
     CVecID min = getCell(point, false);
     CVecID max = min + 1;
     return BoxID(min, max);
 }
 
 template<std::size_t D>
-std::vector< Math::CartesianVector<Math::Real, D> >
+std::vector< math::CartesianVector<math::Real, D> >
 Grid<D>::getCenterOfCellsInside(const BoxRD& bound) const {
     // Determines centers of cells.
-    std::vector<Math::Real> center[D];
+    std::vector<math::Real> center[D];
     for (std::size_t dir = 0; dir < D; dir++) {
-        std::vector<Math::Real> pos = getPosInRange(dir,
+        std::vector<math::Real> pos = getPosInRange(dir,
             bound.getMin()(dir),
             bound.getMax()(dir));
         if (pos.size() > 0) {
             center[dir].reserve(pos.size() - 1);
         }
         for (std::size_t i = 1; i < pos.size(); i++) {
-            Math::Real auxCenter = (pos[i - 1] + pos[i]) / 2.0;
+            math::Real auxCenter = (pos[i - 1] + pos[i]) / 2.0;
             center[dir].push_back(auxCenter);
         }
     }
     // Combines centers in a std::vector of CVecRD positions.
     std::vector<CVecRD> res;
-    res.reserve(center[Math::Constants::x].size() *
-        center[Math::Constants::y].size() *
-        center[Math::Constants::z].size());
-    for (std::size_t i = 0; i < center[Math::Constants::x].size(); i++) {
-        for (std::size_t j = 0; j < center[Math::Constants::y].size(); j++) {
-            for (std::size_t k = 0; k < center[Math::Constants::z].size();
+    res.reserve(center[math::Constants::x].size() *
+        center[math::Constants::y].size() *
+        center[math::Constants::z].size());
+    for (std::size_t i = 0; i < center[math::Constants::x].size(); i++) {
+        for (std::size_t j = 0; j < center[math::Constants::y].size(); j++) {
+            for (std::size_t k = 0; k < center[math::Constants::z].size();
                 k++) {
-                res.push_back(CVecRD(center[Math::Constants::x][i],
-                    center[Math::Constants::y][j],
-                    center[Math::Constants::z][k]));
+                res.push_back(CVecRD(center[math::Constants::x][i],
+                    center[math::Constants::y][j],
+                    center[math::Constants::z][k]));
             }
         }
     }
@@ -463,23 +463,23 @@ Grid<D>::getCenterOfCellsInside(const BoxRD& bound) const {
 }
 
 template<std::size_t D>
-std::vector<Math::Real> Grid<D>::getPosInRange(const std::size_t dir,
-    const Math::Real min,
-    const Math::Real max) const {
-    std::vector<Math::Real> pos = getPos(dir);
-    std::vector<Math::Real> steps = getStep(dir);
-    std::vector<Math::Real> res;
+std::vector<math::Real> Grid<D>::getPosInRange(const std::size_t dir,
+    const math::Real min,
+    const math::Real max) const {
+    std::vector<math::Real> pos = getPos(dir);
+    std::vector<math::Real> steps = getStep(dir);
+    std::vector<math::Real> res;
     res.reserve(pos.size());
     for (std::size_t i = 0; i < pos.size(); i++) {
-        Math::Real step;
+        math::Real step;
         if (i < steps.size()) {
             step = steps[i];
         }
         else {
             step = steps.back();
         }
-        const bool inMin = Math::Util::equal(pos[i], min, step, tolerance);
-        const bool inMax = Math::Util::equal(pos[i], max, step, tolerance);
+        const bool inMin = math::Util::equal(pos[i], min, step, tolerance);
+        const bool inMax = math::Util::equal(pos[i], max, step, tolerance);
         const bool inRange = (pos[i] >= min && pos[i] <= max);
         if (inMin || inMax || inRange) {
             res.push_back(pos[i]);
@@ -489,18 +489,18 @@ std::vector<Math::Real> Grid<D>::getPosInRange(const std::size_t dir,
 }
 
 template<std::size_t D>
-std::vector< Math::CartesianVector<Math::Real, D> > Grid<D>::getPos() const {
+std::vector< math::CartesianVector<math::Real, D> > Grid<D>::getPos() const {
     // Combines positions in a std::vector of CVecRD positions.
     std::vector<CVecRD> res;
-    res.reserve(pos_[Math::Constants::x].size() *
-        pos_[Math::Constants::y].size() *
-        pos_[Math::Constants::z].size());
-    for (std::size_t i = 0; i < pos_[Math::Constants::x].size(); i++) {
-        for (std::size_t j = 0; j < pos_[Math::Constants::y].size(); j++) {
-            for (std::size_t k = 0; k < pos_[Math::Constants::z].size(); k++) {
-                res.push_back(CVecRD(pos_[Math::Constants::x][i],
-                    pos_[Math::Constants::y][j],
-                    pos_[Math::Constants::z][k]));
+    res.reserve(pos_[math::Constants::x].size() *
+        pos_[math::Constants::y].size() *
+        pos_[math::Constants::z].size());
+    for (std::size_t i = 0; i < pos_[math::Constants::x].size(); i++) {
+        for (std::size_t j = 0; j < pos_[math::Constants::y].size(); j++) {
+            for (std::size_t k = 0; k < pos_[math::Constants::z].size(); k++) {
+                res.push_back(CVecRD(pos_[math::Constants::x][i],
+                    pos_[math::Constants::y][j],
+                    pos_[math::Constants::z][k]));
             }
         }
     }
@@ -508,13 +508,13 @@ std::vector< Math::CartesianVector<Math::Real, D> > Grid<D>::getPos() const {
 }
 
 template<std::size_t D>
-std::vector<Math::Real> Grid<D>::getPos(const std::size_t direction) const {
+std::vector<math::Real> Grid<D>::getPos(const std::size_t direction) const {
     assert(direction >= 0 && direction < D);
     return pos_[direction];
 };
 
 template<std::size_t D>
-Math::CartesianVector<Math::Real, D> Grid<D>::getPos(
+math::CartesianVector<math::Real, D> Grid<D>::getPos(
     const CVecID& ijk) const {
     CVecRD res;
     for (std::size_t i = 0; i < D; i++) {
@@ -524,27 +524,27 @@ Math::CartesianVector<Math::Real, D> Grid<D>::getPos(
 };
 
 template<std::size_t D>
-Math::Real Grid<D>::getPos(const std::size_t dir, const Math::Int i) const {
+math::Real Grid<D>::getPos(const std::size_t dir, const math::Int i) const {
     return  pos_[dir][i];
 }
 
 template<std::size_t D>
-std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
-    const Math::Real x,
+std::pair<math::Int, math::Real> Grid<D>::getCellPair(const std::size_t dir,
+    const math::Real x,
     const bool approx,
-    const Math::Real tol,
+    const math::Real tol,
     bool* err) const {
     if (err != nullptr) {
         *err = false;
     }
 
-    Math::Int  cell;
-    Math::Real dist;
-    std::vector<Math::Real> pos = getPos(dir);
-    std::vector<Math::Real> steps = getStep(dir);
+    math::Int  cell;
+    math::Real dist;
+    std::vector<math::Real> pos = getPos(dir);
+    std::vector<math::Real> steps = getStep(dir);
     assert(pos_[dir].size() >= 1);
     // Checks if it is below the grid.
-    if (Math::Util::lower(x, pos[0], steps[0], tol)) {
+    if (math::Util::lower(x, pos[0], steps[0], tol)) {
         cell = 0;
         dist = (x - pos[0]) / steps[0];
         if (err != nullptr) {
@@ -553,7 +553,7 @@ std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
         return std::make_pair(cell, dist);
     }
     for (std::size_t i = 0; i < pos.size(); i++) {
-        Math::Real step;
+        math::Real step;
         if (i == 0) {
             step = steps.front();
         }
@@ -563,7 +563,7 @@ std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
         else {
             step = steps.back();
         }
-        if (Math::Util::equal(x, pos[i], step, tol)) {
+        if (math::Util::equal(x, pos[i], step, tol)) {
             cell = i;
             dist = 0.0;
             if (err != nullptr) {
@@ -571,10 +571,10 @@ std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
             }
             return std::make_pair(cell, dist);
         }
-        else if (Math::Util::lower(x, pos[i], step, tol)) {
+        else if (math::Util::lower(x, pos[i], step, tol)) {
             cell = i - 1;
             dist = (x - pos[i - 1]) / step;
-            if (Math::Util::equal(Math::Util::round(dist), 1.0) && approx) {
+            if (math::Util::equal(math::Util::round(dist), 1.0) && approx) {
                 cell++;
                 dist -= 1.0;
             }
@@ -593,11 +593,11 @@ std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
 }
 
 template<std::size_t D>
-std::pair<Math::CartesianVector<Math::Int, D>,
-    Math::CartesianVector<Math::Real, D>>
+std::pair<math::CartesianVector<math::Int, D>,
+    math::CartesianVector<math::Real, D>>
     Grid<D>::getCellPair(const CVecRD& xyz,
         const bool approx,
-        const Math::Real tol,
+        const math::Real tol,
         bool* err) const {
     if (err != nullptr) {
         *err = false;
@@ -607,7 +607,7 @@ std::pair<Math::CartesianVector<Math::Int, D>,
     CVecID cell;
     CVecRD dist;
     for (std::size_t dir = 0; dir < D; dir++) {
-        std::pair<Math::Int, Math::Real> res =
+        std::pair<math::Int, math::Real> res =
             getCellPair(dir, xyz(dir), approx, tol, &stepErr);
         cell(dir) = res.first;
         dist(dir) = res.second;
@@ -619,24 +619,24 @@ std::pair<Math::CartesianVector<Math::Int, D>,
 }
 
 template<std::size_t D>
-Math::Int Grid<D>::getCell(const std::size_t dir,
-    const Math::Real x,
+math::Int Grid<D>::getCell(const std::size_t dir,
+    const math::Real x,
     const bool approx,
-    const Math::Real tol,
+    const math::Real tol,
     bool* err) const {
     return getCellPair(dir, x, approx, tol, err).first;
 }
 
 template<std::size_t D>
-Math::CartesianVector<Math::Int, D> Grid<D>::getCell(const CVecRD& coords,
+math::CartesianVector<math::Int, D> Grid<D>::getCell(const CVecRD& coords,
     const bool approx,
-    const Math::Real tol,
+    const math::Real tol,
     bool* err) const {
     return getCellPair(coords, approx, tol, err).first;
 }
 
 template<std::size_t D>
-void Grid<D>::applyScalingFactor(const Math::Real factor) {
+void Grid<D>::applyScalingFactor(const math::Real factor) {
     for (std::size_t d = 0; d < D; d++) {
         for (std::size_t i = 0; i < pos_[d].size(); i++) {
             pos_[d][i] *= factor;
@@ -649,14 +649,14 @@ void Grid<D>::enlarge(const std::pair<CVecRD, CVecRD>& pad,
     const std::pair<CVecRD, CVecRD>& sizes) {
     for (std::size_t d = 0; d < D; d++) {
         for (std::size_t b = 0; b < 2; b++) {
-            if (b == Math::Constants::L) {
-                enlargeBound(Math::Constants::CartesianAxis(d),
-                    Math::Constants::CartesianBound(b),
+            if (b == math::Constants::L) {
+                enlargeBound(math::Constants::CartesianAxis(d),
+                    math::Constants::CartesianBound(b),
                     pad.first(d), sizes.first(d));
             }
             else {
-                enlargeBound(Math::Constants::CartesianAxis(d),
-                    Math::Constants::CartesianBound(b),
+                enlargeBound(math::Constants::CartesianAxis(d),
+                    math::Constants::CartesianBound(b),
                     pad.second(d), sizes.second(d));
             }
         }
@@ -664,9 +664,9 @@ void Grid<D>::enlarge(const std::pair<CVecRD, CVecRD>& pad,
 }
 
 template<std::size_t D>
-void Grid<D>::enlargeBound(Math::Constants::CartesianAxis d,
-    Math::Constants::CartesianBound b,
-    Math::Real pad, Math::Real siz) {
+void Grid<D>::enlargeBound(math::Constants::CartesianAxis d,
+    math::Constants::CartesianBound b,
+    math::Real pad, math::Real siz) {
     assert(getNumCells()(d) > 0);
     if (std::abs(siz) > std::abs(pad)) {
         std::cerr << "WARNING @ Grid enlarge bound: "
@@ -677,47 +677,47 @@ void Grid<D>::enlargeBound(Math::Constants::CartesianAxis d,
     if (pad == 0.0) {
         return;
     }
-    Math::Int boundCell;
-    if (b == Math::Constants::L) {
+    math::Int boundCell;
+    if (b == math::Constants::L) {
         boundCell = 0;
     }
     else {
         boundCell = this->getNumCells()(d) - 1;
     }
-    std::vector<Math::Real> newSteps;
-    if (Math::Util::greaterEqual(getStep(d, b), siz) || siz == 0.0) {
+    std::vector<math::Real> newSteps;
+    if (math::Util::greaterEqual(getStep(d, b), siz) || siz == 0.0) {
         siz = getStep(d, boundCell);
         // Computes enlargement for a padding with same size.
-        Math::Real nCellsFrac = std::abs(pad / siz);
-        const Math::Real tol = 0.01;
-        std::size_t nCells = (std::size_t)Math::Util::ceil(nCellsFrac, tol);
+        math::Real nCellsFrac = std::abs(pad / siz);
+        const math::Real tol = 0.01;
+        std::size_t nCells = (std::size_t)math::Util::ceil(nCellsFrac, tol);
         newSteps.resize(nCells, siz);
     }
     else {
         // Computes enlargement for padding with different size.
         // Taken from AutoCAD interface programmed in LISP (2001).
-        Math::Real d12 = getStep(d, boundCell);
-        Math::Real d14 = std::abs(pad) + d12 + std::abs(siz);
-        Math::Real d34 = std::abs(siz);
-        Math::Real d13 = d14 - d34;
-        Math::Real t0 = d12;
-        Math::Real r0 = (d14 - d12) / (d14 - d34);
-        Math::Real r = r0;
-        Math::Int n = Math::Util::ceil(log(d34 / d12) / log(r0),
-            (Math::Real)0.01) - 1;
+        math::Real d12 = getStep(d, boundCell);
+        math::Real d14 = std::abs(pad) + d12 + std::abs(siz);
+        math::Real d34 = std::abs(siz);
+        math::Real d13 = d14 - d34;
+        math::Real t0 = d12;
+        math::Real r0 = (d14 - d12) / (d14 - d34);
+        math::Real r = r0;
+        math::Int n = math::Util::ceil(log(d34 / d12) / log(r0),
+            (math::Real)0.01) - 1;
         if (n > 1) {
             // Newton method to adjust the sum of available space.
-            Math::Real f = 1;
-            const Math::Real threshold =
-                std::numeric_limits<Math::Real>::epsilon() * 1.0e6;
+            math::Real f = 1;
+            const math::Real threshold =
+                std::numeric_limits<math::Real>::epsilon() * 1.0e6;
             while (std::abs(f) >= threshold) {
                 f = t0 * (1 - pow(r, n)) / (1 - r) - d13;
-                Math::Real df = t0 * (1 - pow(r, n)) / pow(1 - r, 2) -
+                math::Real df = t0 * (1 - pow(r, n)) / pow(1 - r, 2) -
                     t0 * n * pow(r, n - 1) / (1 - r);
                 r = r - f / df;
             }
             newSteps.resize(n - 1);
-            for (Math::Int i = 0; i < n - 2; i++) {
+            for (math::Int i = 0; i < n - 2; i++) {
                 newSteps[i] = t0 * pow(r, (i + 1));
             }
             newSteps[n - 2] = d34;

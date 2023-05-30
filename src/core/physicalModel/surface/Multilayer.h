@@ -16,8 +16,8 @@ class Multilayer : public virtual Surface {
 public:
     class Layer {
     public:
-        Layer(Math::Real thickness, Math::Real relPermittivity,
-                Math::Real relPermeability, Math::Real elecCond) :
+        Layer(math::Real thickness, math::Real relPermittivity,
+                math::Real relPermeability, math::Real elecCond) :
                 thickness_(thickness), relPermittivity_(relPermittivity),
                 relPermeability_(relPermeability), elecCond_(elecCond) {
 			if (relPermittivity_ == 0.0) {
@@ -30,31 +30,31 @@ public:
 			}
 		}
 
-        Math::Real getThickness() const {return thickness_;}
-        Math::Real getRelPermittivity() const {return relPermittivity_;}
-        Math::Real getPermittivity() const {
-            return relPermittivity_ * Math::Constants::eps0;
+        math::Real getThickness() const {return thickness_;}
+        math::Real getRelPermittivity() const {return relPermittivity_;}
+        math::Real getPermittivity() const {
+            return relPermittivity_ * math::Constants::eps0;
         }
-        Math::Real getRelPermeability() const {return relPermeability_;}
-        Math::Real getPermeability() const {
-            return relPermeability_ * Math::Constants::mu0;
+        math::Real getRelPermeability() const {return relPermeability_;}
+        math::Real getPermeability() const {
+            return relPermeability_ * math::Constants::mu0;
         }
-        Math::Real getElecCond() const {return elecCond_;}
+        math::Real getElecCond() const {return elecCond_;}
     private:
-        Math::Real thickness_;
-        Math::Real relPermittivity_;
-        Math::Real relPermeability_;
-        Math::Real elecCond_;
+        math::Real thickness_;
+        math::Real relPermittivity_;
+        math::Real relPermeability_;
+        math::Real elecCond_;
     };
 
     class FittingOptions {
     public:
         FittingOptions(
-                std::pair<Math::Real, Math::Real> minMaxFreq,
+                std::pair<math::Real, math::Real> minMaxFreq,
                 size_t numberOfPoles ) :
                     minMaxFreq_(minMaxFreq), numberOfPoles_(numberOfPoles) { }
 
-        std::pair<Math::Real, Math::Real> getMinMaxFreq() const {
+        std::pair<math::Real, math::Real> getMinMaxFreq() const {
             return minMaxFreq_;
         }
 
@@ -63,7 +63,7 @@ public:
         }
 
     private:
-        std::pair<Math::Real, Math::Real> minMaxFreq_;
+        std::pair<math::Real, math::Real> minMaxFreq_;
         std::size_t numberOfPoles_;
     };
 
@@ -84,11 +84,11 @@ public:
         return layers_.size();
     }
 
-    Math::Real getThickness   (const std::size_t i) const;
-    Math::Real getPermittivity(const std::size_t i) const;
-    Math::Real getPermeability(const std::size_t i) const;
-    Math::Real getElecCond    (const std::size_t i) const;
-    Math::Real getMagnCond    (const std::size_t i) const;
+    math::Real getThickness   (const std::size_t i) const;
+    math::Real getPermittivity(const std::size_t i) const;
+    math::Real getPermeability(const std::size_t i) const;
+    math::Real getElecCond    (const std::size_t i) const;
+    math::Real getMagnCond    (const std::size_t i) const;
 
     bool hasFittingOptions() const;
     FittingOptions getFittingOptions() const;

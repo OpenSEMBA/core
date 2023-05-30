@@ -7,7 +7,7 @@ namespace parsers {
 namespace STL {
 
 using namespace Geometry;
-using namespace Math::Constants;
+using namespace math::Constants;
 
 Parser::Parser(const std::string& fn) :
 	SEMBA::parsers::Parser(fn)
@@ -17,7 +17,7 @@ CoordR3Group readCoordinates(const std::string& fn)
 {
 	CoordR3Group cG;
 
-    std::map<Math::CVecR3, const CoordR3*> index;
+    std::map<math::CVecR3, const CoordR3*> index;
 
 
 	std::ifstream stl(fn);
@@ -29,7 +29,7 @@ CoordR3Group readCoordinates(const std::string& fn)
 			continue;
 		}
 
-		Math::CVecR3 pos;
+		math::CVecR3 pos;
 		stl >> pos(x) >> pos(y) >> pos(z);
 
         auto it = index.find(pos);
@@ -53,7 +53,7 @@ std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
     std::unique_ptr<Layer::Layer> lay;
     ElemRGroup eG;
 
-    auto cGIndex = cG.getIndex<Math::CVecR3>();
+    auto cGIndex = cG.getIndex<math::CVecR3>();
     
     std::ifstream stl(fn);
     stl.clear();
@@ -82,7 +82,7 @@ std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
                     continue;
                 }
 
-                Math::CVecR3 pos;
+                math::CVecR3 pos;
                 stl >> pos(x) >> pos(y) >> pos(z);
 
                 auto cIt = cGIndex.find(pos);

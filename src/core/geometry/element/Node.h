@@ -51,7 +51,7 @@ public:
         return std::make_unique<Node>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override;
+    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
     const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideV(
@@ -64,7 +64,7 @@ public:
     void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord) override;
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&, const Grid3&,
-                        const Math::Real = Grid3::tolerance) const override;
+                        const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&, const Grid3&) const override;
 
 private:
@@ -93,7 +93,7 @@ Node<T>::Node(
 }
 
 template<class T>
-bool Node<T>::isStructured(const Grid3& grid, const Math::Real tol) const 
+bool Node<T>::isStructured(const Grid3& grid, const math::Real tol) const 
 {
     if (!this->vertexInCell(grid, tol)) {
         return false;
@@ -147,8 +147,8 @@ template<class T>
 std::unique_ptr<ElemI> Node<T>::toStructured(
     const CoordI3Group& cG,
     const Grid3& grid,
-    const Math::Real tol) const {
-    return std::make_unique<Node<Math::Int>>(this->getId(),
+    const math::Real tol) const {
+    return std::make_unique<Node<math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -158,20 +158,20 @@ template<class T>
 std::unique_ptr<ElemR> Node<T>::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<Node<Math::Real>>(this->getId(),
+    return std::make_unique<Node<math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());
 }
 
-typedef Node<Math::Real> NodR;
-typedef Node<Math::Int > NodI;
+typedef Node<math::Real> NodR;
+typedef Node<math::Int > NodI;
 
 } /* namespace Element */
 
 typedef Element::NodeBase         Nod;
-typedef Element::Node<Math::Real> NodR;
-typedef Element::Node<Math::Int > NodI;
+typedef Element::Node<math::Real> NodR;
+typedef Element::Node<math::Int > NodI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

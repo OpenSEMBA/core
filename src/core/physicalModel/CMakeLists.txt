@@ -13,8 +13,6 @@ add_library(opensemba_core_physicalmodel STATIC
     "multiport/Dispersive.cpp"
     "multiport/RLC.cpp"
     "volume/Anisotropic.cpp"
-    "volume/AnisotropicCrystal.cpp"
-    "volume/AnisotropicFerrite.cpp"
     "volume/Classic.cpp"
     "volume/Dispersive.cpp"
     "volume/PML.cpp"

@@ -29,11 +29,11 @@ public:
 
 template <class T, std::size_t D>
 class Coordinate : public virtual Base,
-                   public virtual Math::CartesianVector<T,D> {
+                   public virtual math::CartesianVector<T,D> {
 public:
     Coordinate() = default;
-    Coordinate(const Id id_, const Math::CartesianVector<T,D>& pos);
-    explicit Coordinate(const Math::CartesianVector<T,D>& pos);
+    Coordinate(const Id id_, const math::CartesianVector<T,D>& pos);
+    explicit Coordinate(const math::CartesianVector<T,D>& pos);
     Coordinate(const Coordinate& rhs);
     virtual ~Coordinate() = default;
 
@@ -47,35 +47,35 @@ public:
     bool operator!=(const Base& rhs) const override;
 
     virtual bool isStructured(const Grid<D>&,
-                              const Math::Real = Grid<D>::tolerance) const;
+                              const math::Real = Grid<D>::tolerance) const;
 
-    Math::CartesianVector<T,D>&       pos()       { return *this; }
-    const Math::CartesianVector<T,D>& pos() const { return *this; }
+    math::CartesianVector<T,D>&       pos()       { return *this; }
+    const math::CartesianVector<T,D>& pos() const { return *this; }
 
-    virtual Coordinate<Math::Int ,D>* toStructured  (const Grid<D>&) const;
-    virtual Coordinate<Math::Real,D>* toUnstructured(const Grid<D>&) const;
+    virtual Coordinate<math::Int ,D>* toStructured  (const Grid<D>&) const;
+    virtual Coordinate<math::Real,D>* toUnstructured(const Grid<D>&) const;
 
 };
 
 
 template<class T, std::size_t D>
 Coordinate<T, D>::Coordinate(const Id id,
-    const Math::CartesianVector<T, D>& pos)
+    const math::CartesianVector<T, D>& pos)
     : Identifiable<Id>(id),
-    Math::CartesianVector<T, D>(pos) {
+    math::CartesianVector<T, D>(pos) {
 
 }
 
 template<class T, std::size_t D>
-Coordinate<T, D>::Coordinate(const Math::CartesianVector<T, D>& pos)
-    : Math::CartesianVector<T, D>(pos) {
+Coordinate<T, D>::Coordinate(const math::CartesianVector<T, D>& pos)
+    : math::CartesianVector<T, D>(pos) {
 
 }
 
 template<class T, std::size_t D>
 Coordinate<T, D>::Coordinate(const Coordinate& rhs)
     : Identifiable<Id>(rhs),
-    Math::CartesianVector<T, D>(rhs) {
+    math::CartesianVector<T, D>(rhs) {
 
 }
 
@@ -83,7 +83,7 @@ template<class T, std::size_t D>
 Coordinate<T, D>& Coordinate<T, D>::operator=(const Coordinate& rhs)
 {
     setId(rhs.getId());
-    Math::CartesianVector<T, D>::operator=(rhs);
+    math::CartesianVector<T, D>::operator=(rhs);
     return *this;
 }
 
@@ -106,7 +106,7 @@ bool Coordinate<T, D>::operator!=(const Base& rhs) const {
 
 template<class T, std::size_t D>
 bool Coordinate<T, D>::isStructured(const Grid<D>& grid,
-    const Math::Real tol) const {
+    const math::Real tol) const {
     if (!grid.isCell(*this, tol)) {
         return false;
     }
@@ -114,15 +114,15 @@ bool Coordinate<T, D>::isStructured(const Grid<D>& grid,
 }
 
 template<class T, std::size_t D>
-Coordinate<Math::Int, D>* Coordinate<T, D>::toStructured(
+Coordinate<math::Int, D>* Coordinate<T, D>::toStructured(
     const Grid<D>& grid) const {
-    return new Coordinate<Math::Int, D>(this->getId(), grid.getCell(*this));
+    return new Coordinate<math::Int, D>(this->getId(), grid.getCell(*this));
 }
 
 template<class T, std::size_t D>
-Coordinate<Math::Real, D>* Coordinate<T, D>::toUnstructured(
+Coordinate<math::Real, D>* Coordinate<T, D>::toUnstructured(
     const Grid<D>& grid) const {
-    return new Coordinate<Math::Real, D>(this->getId(), grid.getPos(*this));
+    return new Coordinate<math::Real, D>(this->getId(), grid.getPos(*this));
 }
 
 
@@ -130,8 +130,8 @@ Coordinate<Math::Real, D>* Coordinate<T, D>::toUnstructured(
 
 typedef Coordinate::Id                       CoordId;
 typedef Coordinate::Base                     Coord;
-typedef Coordinate::Coordinate<Math::Real,3> CoordR3;
-typedef Coordinate::Coordinate<Math::Int ,3> CoordI3;
+typedef Coordinate::Coordinate<math::Real,3> CoordR3;
+typedef Coordinate::Coordinate<math::Int ,3> CoordI3;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

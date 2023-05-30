@@ -53,7 +53,7 @@ bool toBool(const std::size_t param) {
 void Parser::postReadOperations(UnstructuredProblemDescription& res)
 {
     if (res.analysis.find("geometryScalingFactor") != res.analysis.end()) {
-        Math::Real scalingFactor{ 
+        math::Real scalingFactor{ 
             res.analysis.at("geometryScalingFactor").get<double>() };
         res.model.mesh.applyScalingFactor(scalingFactor);
         res.grids.applyScalingFactor(scalingFactor);

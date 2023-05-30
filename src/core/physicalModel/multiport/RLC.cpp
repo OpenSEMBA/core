@@ -9,9 +9,9 @@ namespace Multiport {
 RLC::RLC(const Id id,
                            const std::string name,
                            const Multiport::Type type,
-                           const Math::Real resistance,
-                           const Math::Real inductance,
-                           const Math::Real capacitance)
+                           const math::Real resistance,
+                           const math::Real inductance,
+                           const math::Real capacitance)
 :   Identifiable<Id>(id),
     PhysicalModel(name) {
     type_ = type;
@@ -33,15 +33,15 @@ RLC::~RLC() {
 
 }
 
-Math::Real RLC::getR() const {
+math::Real RLC::getR() const {
     return R_;
 }
 
-Math::Real RLC::getL() const {
+math::Real RLC::getL() const {
     return L_;
 }
 
-Math::Real RLC::getC() const {
+math::Real RLC::getC() const {
     return C_;
 }
 

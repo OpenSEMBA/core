@@ -13,9 +13,9 @@ public:
     RLC(const Id idIn,
                  const std::string nameIn,
                  const Multiport::Type typeIn,
-                 const Math::Real resistance,
-                 const Math::Real inductance,
-                 const Math::Real capacitance);
+                 const math::Real resistance,
+                 const math::Real inductance,
+                 const math::Real capacitance);
     RLC(const RLC&);
     virtual ~RLC();
 
@@ -23,11 +23,11 @@ public:
         return std::make_unique<RLC>(*this);
     }
 
-    virtual Math::Real getR() const;
-    virtual Math::Real getL() const;
-    virtual Math::Real getC() const;
+    virtual math::Real getR() const;
+    virtual math::Real getL() const;
+    virtual math::Real getC() const;
 private:
-    Math::Real R_, L_, C_;
+    math::Real R_, L_, C_;
 };
 
 } /* namespace Multiport */

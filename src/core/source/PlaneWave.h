@@ -11,17 +11,17 @@ class PlaneWave : public Source {
 public:
     PlaneWave(const std::unique_ptr<Magnitude::Magnitude>&,
               const Target& elem,
-              const Math::CVecR3& directionVector,
-              const Math::CVecR3& polarizationVector);
+              const math::CVecR3& directionVector,
+              const math::CVecR3& polarizationVector);
     PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
               const Target& elem,
-              std::pair<Math::Real, Math::Real> directionAngles,
-              std::pair<Math::Real, Math::Real> polarizationAngles);
+              std::pair<math::Real, math::Real> directionAngles,
+              std::pair<math::Real, math::Real> polarizationAngles);
     // TODO: Probably would have sense as another source type
     PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
               const Target& elem,
-              Math::Int numberOfRandomPlanewaves,
-              Math::Real relativeVariationOfRandomDelay);
+              math::Int numberOfRandomPlanewaves,
+              math::Real relativeVariationOfRandomDelay);
     
     virtual ~PlaneWave() = default;
 
@@ -30,33 +30,33 @@ public:
     }
 
     std::string getName() const override { return "PlaneWave"; };
-    const Math::CVecR3& getPolarization() const;
-    const Math::CVecR3& getDirection() const;
+    const math::CVecR3& getPolarization() const;
+    const math::CVecR3& getDirection() const;
     
-    Math::Real getTheta() const;
-    Math::Real getPhi() const;
-    Math::Real getAlpha() const;
-    Math::Real getBeta() const;
+    math::Real getTheta() const;
+    math::Real getPhi() const;
+    math::Real getAlpha() const;
+    math::Real getBeta() const;
     
     bool isRandomic() const;
-    Math::Int getNumberOfRandomPlanewaves() const;
-    Math::Real getRelativeVariationOfRandomDelay() const;
+    math::Int getNumberOfRandomPlanewaves() const;
+    math::Real getRelativeVariationOfRandomDelay() const;
 
-    Math::CVecR3 getElectricField(const Math::Real time) const;
-    std::pair<Math::CVecR3,Math::CVecR3> getElectromagneticField(const Math::Real time) const;
+    math::CVecR3 getElectricField(const math::Real time) const;
+    std::pair<math::CVecR3,math::CVecR3> getElectromagneticField(const math::Real time) const;
 
 private:
-    Math::CVecR3 direction_;
-    Math::CVecR3 polarization_;
+    math::CVecR3 direction_;
+    math::CVecR3 polarization_;
 
     bool randomic_ = false;
-    Math::Int numberOfRandomPlanewaves_ = 0;
-    Math::Real relativeVariationOfRandomDelay_ = 0.0;
+    math::Int numberOfRandomPlanewaves_ = 0;
+    math::Real relativeVariationOfRandomDelay_ = 0.0;
 
-    void init_(Math::CVecR3 direction, Math::CVecR3 polarization);
-    static std::pair<Math::Real,Math::Real> cartesianToPolar(const Math::CVecR3& vec);
-    static Math::CVecR3 polarToCartesian(Math::Real theta, Math::Real phi);
-    static Math::Real reduceRadians(const Math::Real radianIn);
+    void init_(math::CVecR3 direction, math::CVecR3 polarization);
+    static std::pair<math::Real,math::Real> cartesianToPolar(const math::CVecR3& vec);
+    static math::CVecR3 polarToCartesian(math::Real theta, math::Real phi);
+    static math::Real reduceRadians(const math::Real radianIn);
 };
 
 // TODO: Borrar namespace de error y refactor usos

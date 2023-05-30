@@ -3,29 +3,29 @@
 
 using namespace SEMBA;
 using namespace Geometry;
-using namespace Math;
+using namespace math;
 using namespace Constants;
 
 class GeometryGridTest : public ::testing::Test {
 
 protected:
 	virtual void SetUp() {
-		min_ = SEMBA::Math::CVecR3(0.0, 0.0, 0.0);
-		max_ = SEMBA::Math::CVecR3(1.0, 1.0, 1.0);
-		step_ = SEMBA::Math::CVecR3(0.05, 0.05, 0.05);
+		min_ = SEMBA::math::CVecR3(0.0, 0.0, 0.0);
+		max_ = SEMBA::math::CVecR3(1.0, 1.0, 1.0);
+		step_ = SEMBA::math::CVecR3(0.05, 0.05, 0.05);
 		grid_ = SEMBA::Geometry::Grid3(SEMBA::Geometry::BoxR3(min_, max_), step_);
 
 		std::vector<double> offset_;
 		std::vector<double> off_;
 		off_.resize(3);
-		SEMBA::Math::CVecR3 offsetIni;
+		SEMBA::math::CVecR3 offsetIni;
 
 		offsetIni = grid_.getOrigin();
 
 	}
 
 	SEMBA::Geometry::Grid3 grid_;
-	SEMBA::Math::CVecR3 min_, max_, step_;
+	SEMBA::math::CVecR3 min_, max_, step_;
 };
 
 
@@ -33,10 +33,10 @@ TEST_F(GeometryGridTest, Initialization)
 {
 	Grid3 grid{
 		BoxR3(
-			Math::CVecR3(0.0, 0.0, 0.0),
-			Math::CVecR3(1, 1, 1)
+			math::CVecR3(0.0, 0.0, 0.0),
+			math::CVecR3(1, 1, 1)
 		),
-		Math::CVecR3({0.5, 0.5, 0.5})
+		math::CVecR3({0.5, 0.5, 0.5})
 	};
 
 	Grid3 init = grid;
@@ -96,9 +96,9 @@ TEST_F(GeometryGridTest, EnlargeBound2) {
 }
 
 TEST_F(GeometryGridTest, GetSteps) {
-    EXPECT_NEAR(0.05, grid_.getStep(0,2), Math::Util::tolerance);
-    EXPECT_NEAR(0.05, grid_.getStep(1,5), Math::Util::tolerance);
-    EXPECT_NEAR(0.05, grid_.getStep(2,5), Math::Util::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(0,2), math::Util::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(1,5), math::Util::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(2,5), math::Util::tolerance);
 }
 
 TEST_F(GeometryGridTest, Equality) {

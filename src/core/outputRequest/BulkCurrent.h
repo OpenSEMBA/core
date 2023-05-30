@@ -10,20 +10,20 @@ public:
     BulkCurrent(const Domain& domain,
                 const std::string& name,
                 const Target& box,
-                const Math::Constants::CartesianAxis& dir,
-                const Math::UInt& skip);
+                const math::Constants::CartesianAxis& dir,
+                const math::UInt& skip);
     virtual ~BulkCurrent() = default;
 
     std::unique_ptr<OutputRequest> clone() const override {
         return std::make_unique<BulkCurrent>(*this);
     }
 
-    Math::Constants::CartesianAxis getDir() const;
-    Math::UInt                     getSkip() const;
+    math::Constants::CartesianAxis getDir() const;
+    math::UInt                     getSkip() const;
 
 private:
-    Math::Constants::CartesianAxis dir_;
-    Math::UInt                     skip_;
+    math::Constants::CartesianAxis dir_;
+    math::UInt                     skip_;
 };
 
 } /* namespace OutputRequest */

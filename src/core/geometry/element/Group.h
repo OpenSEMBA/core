@@ -92,10 +92,10 @@ BoxR3 Group<E>::getBound() const
     }
     for (auto const& elem : this->template getOf<ElemI>()) {
         BoxI3 boxI = elem->getBound();
-        Math::CVecI3 minP = boxI.getMin();
-        Math::CVecI3 maxP = boxI.getMax();
-        using Math::CVecR3;
-        using namespace Math::Constants;
+        math::CVecI3 minP = boxI.getMin();
+        math::CVecI3 maxP = boxI.getMax();
+        using math::CVecR3;
+        using namespace math::Constants;
         bound << BoxR3(CVecR3(minP(x), minP(y), minP(z)), CVecR3(maxP(x), maxP(y), maxP(z)));
     }
     return bound;

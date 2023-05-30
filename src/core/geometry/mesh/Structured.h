@@ -50,8 +50,8 @@ public:
 
     Unstructured* getMeshUnstructured() const;
 
-    Math::Real getMinimumSpaceStep() const;
-    void applyScalingFactor(const Math::Real factor) override;
+    math::Real getMinimumSpaceStep() const;
+    void applyScalingFactor(const math::Real factor) override;
     BoxR3 getBoundingBox() const override;
 
     void reassignPointers(const PMGroup& matGr = PMGroup()) override;

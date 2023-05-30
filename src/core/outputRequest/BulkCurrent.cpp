@@ -9,18 +9,18 @@ BulkCurrent::BulkCurrent(
         const Domain& domain,
         const std::string& name,
         const Target& elem,
-        const Math::Constants::CartesianAxis& dir,
-        const Math::UInt& skip) :
+        const math::Constants::CartesianAxis& dir,
+        const math::UInt& skip) :
     OutputRequest(Type::bulkCurrentElectric, name, domain, elem),
     dir_(dir),
     skip_(skip)
 {}
 
-Math::Constants::CartesianAxis BulkCurrent::getDir() const {
+math::Constants::CartesianAxis BulkCurrent::getDir() const {
     return dir_;
 }
 
-Math::UInt BulkCurrent::getSkip() const {
+math::UInt BulkCurrent::getSkip() const {
     return skip_;
 }
 

@@ -51,7 +51,7 @@ Structured& Structured::operator=(const Structured& rhs)
     return *this;
 }
 
-void Structured::applyScalingFactor(const Math::Real factor) {
+void Structured::applyScalingFactor(const math::Real factor) {
     grid_.applyScalingFactor(factor);
 }
 
@@ -86,7 +86,7 @@ void Structured::reassignPointers(const PMGroup& matGr)
 }
 
 
-Math::Real Structured::getMinimumSpaceStep() const {
+math::Real Structured::getMinimumSpaceStep() const {
     return grid_.getMinimumSpaceStep();
 }
 

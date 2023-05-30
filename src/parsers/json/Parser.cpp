@@ -20,8 +20,7 @@
 #include "core/physicalModel/surface/Multilayer.h"
 #include "core/physicalModel/surface/SIBC.h"
 #include "core/physicalModel/surface/SIBCFile.h"
-#include "core/physicalModel/volume/AnisotropicCrystal.h"
-#include "core/physicalModel/volume/AnisotropicFerrite.h"
+#include "core/physicalModel/volume/Anisotropic.h"
 #include "core/physicalModel/volume/Classic.h"
 #include "core/physicalModel/volume/PML.h"
 #include "core/physicalModel/volume/Dispersive.h"
@@ -39,7 +38,7 @@
 
 using namespace SEMBA;
 using namespace Geometry;
-using namespace Math;
+using namespace math;
 
 using json = nlohmann::json;
 
@@ -1240,8 +1239,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     if (type.compare("Gaussian") == 0) {
 		return std::make_unique<Source::Magnitude::Magnitude>(
 			Source::Magnitude::Magnitude(
-				new Function::Gaussian(
-					Function::Gaussian::buildFromMaximumFrequency(
+				new function::Gaussian(
+					function::Gaussian::buildFromMaximumFrequency(
 						j.at("frequencyMaximum").get<double>(),
 						1.0
 					)
@@ -1253,7 +1252,7 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     if (type.compare("Band_limited") == 0) {
 		return std::make_unique<Source::Magnitude::Magnitude>(
 			Source::Magnitude::Magnitude(
-				new Function::BandLimited(
+				new function::BandLimited(
 					j.at("frequencyMinimum").get<double>(),
 					j.at("frequencyMaximum").get<double>()))
 		);

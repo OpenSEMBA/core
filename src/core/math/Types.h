@@ -10,7 +10,7 @@
 #include <cstdlib>
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 
 #if   defined CompileWithInt1
 typedef   int8_t  Int;

@@ -8,20 +8,20 @@ namespace SEMBA {
 namespace Geometry {
 namespace Element {
 
-class LineConformal : public virtual Line2<Math::Int> {
+class LineConformal : public virtual Line2<math::Int> {
 public:
     LineConformal(const Id id,
-                  std::array<const Coordinate::Coordinate<Math::Int,3>*,2>,
-                  const Math::CVecR3& norm,
+                  std::array<const Coordinate::Coordinate<math::Int,3>*,2>,
+                  const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
     LineConformal(const Id id,
-                  const Coordinate::Coordinate<Math::Int, 3>* v[2],
-                  const Math::CVecR3& norm,
+                  const Coordinate::Coordinate<math::Int, 3>* v[2],
+                  const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
-    LineConformal(std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2>,
-                  const Math::CVecR3& norm,
+    LineConformal(std::array<const Coordinate::Coordinate<math::Int, 3>*, 2>,
+                  const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
     LineConformal(const LineConformal& rhs);
@@ -31,7 +31,7 @@ public:
         return std::make_unique<LineConformal>(*this);
     }
 
-    Math::CVecR3 getNorm () const { return norm_;  }
+    math::CVecR3 getNorm () const { return norm_;  }
 
     const CoordConf* getV(const std::size_t i) const override;
 
@@ -39,13 +39,13 @@ public:
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const override;
+        const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&,
         const Grid3&) const override;
 
 private:
     void checkCoordinates();
-    Math::CVecR3 norm_;
+    math::CVecR3 norm_;
 };
 
 } /* namespace Element */

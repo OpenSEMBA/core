@@ -6,7 +6,7 @@ namespace SEMBA {
 namespace Geometry {
 namespace Element {
 
-const Math::Simplex::Triangle<1> Triangle3::geo;
+const math::simplex::Triangle<1> Triangle3::geo;
 
 Triangle3::Triangle3(const Id id,
            const CoordR3* v[3],
@@ -47,11 +47,11 @@ const CoordR3* Triangle3::getSideVertex(const std::size_t f,
     return v_[geo.sideVertex(f, i)];
 }
 
-Math::Real Triangle3::getArea() const {
-    Math::CVecR3 v1, v2;
+math::Real Triangle3::getArea() const {
+    math::CVecR3 v1, v2;
     v1 = getVertex(1)->pos() - getVertex(0)->pos();
     v2 = getVertex(2)->pos() - getVertex(0)->pos();
-    return ((Math::Real) 0.5 * (v1 ^ v2).norm());
+    return ((math::Real) 0.5 * (v1 ^ v2).norm());
 }
 
 void Triangle3::setV(const std::size_t i, const CoordR3* vNew) {
@@ -64,7 +64,7 @@ void Triangle3::check() const {
 
 std::unique_ptr<ElemI> Triangle3::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const {
+    const Grid3& grid, const math::Real tol) const {
 
     throw std::logic_error("Triangle3::toStructured operation not permitted");
 }

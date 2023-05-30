@@ -8,8 +8,8 @@
 #include "Function.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Function {
+namespace math {
+namespace function {
 
 template<class T>
 class Polynomial : public Function<T,T>{
@@ -53,8 +53,8 @@ public:
     void derive(std::size_t coord);
 
     Polynomial<T> vectorToPolynomial(T *v, std::size_t sv, std::size_t nvar);
-    Polynomial<T> matrixToPolynomial(const Matrix::Dynamic<T> &param) const;
-    Matrix::Dynamic<T> polynomialToMatrix() const;
+    Polynomial<T> matrixToPolynomial(const matrix::Dynamic<T> &param) const;
+    matrix::Dynamic<T> polynomialToMatrix() const;
     void removeZeros();
 
 private:
@@ -194,7 +194,7 @@ Polynomial<T> Polynomial<T>::operator*(const Polynomial<T>& param) const {
     // Performs polynomial product.
     // Algebraically, convolution is the same operation as multiplying
     assert(nv_ == 1 && param.nv_ == 1);
-    Matrix::Dynamic<T> a, b, c;
+    matrix::Dynamic<T> a, b, c;
     Polynomial<T> res(1);
     // Converts polynomials to vectors.
     a = polynomialToMatrix();
@@ -210,7 +210,7 @@ Polynomial<T> Polynomial<T>::operator*(const Polynomial<T>& param) const {
 template<class T>
 Polynomial<T>& Polynomial<T>::operator*=(const Polynomial<T>& param) {
     assert(nv_ == 1 && param.nv_ == 1);
-    Matrix::Dynamic<T> a, b, c;
+    matrix::Dynamic<T> a, b, c;
     // Converts polynomials to vectors.
     a = polynomialToMatrix();
     b = param.polynomialToMatrix();
@@ -277,7 +277,7 @@ Polynomial<T> Polynomial<T>::vectorToPolynomial(T* v,
 
 template<class T>
 Polynomial<T> Polynomial<T>::matrixToPolynomial(
-    const Matrix::Dynamic<T>& param) const {
+    const matrix::Dynamic<T>& param) const {
     assert(nv_ <= 2);
     Polynomial<T> res;
     if (param.nCols() == 1) {
@@ -301,9 +301,9 @@ Polynomial<T> Polynomial<T>::matrixToPolynomial(
 }
 
 template<class T>
-Matrix::Dynamic<T> Polynomial<T>::polynomialToMatrix() const {
+matrix::Dynamic<T> Polynomial<T>::polynomialToMatrix() const {
     assert(nv_ == 1);
-    Matrix::Dynamic<T>  res(maxPower() + 1, 1);
+    matrix::Dynamic<T>  res(maxPower() + 1, 1);
     // Copies monomials to vector positions.
     for (std::size_t i = 0; i < nm_; i++)
         res(mp_[i][0], 0) = mv_[i];

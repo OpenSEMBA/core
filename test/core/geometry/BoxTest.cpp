@@ -2,7 +2,7 @@
 #include "core/geometry/Box.h"
 
 using namespace SEMBA;
-using namespace Math;
+using namespace math;
 using namespace Geometry;
 
 TEST(GeometryBoxTest, VolumeBoxBasicOperations) {

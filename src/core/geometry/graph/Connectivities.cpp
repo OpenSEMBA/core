@@ -47,7 +47,7 @@ Face Connectivities::getInnerFace(const SurfR* surf) const {
     const GraphElem* local = index_.find(surf->getId())->second;
     std::vector<const CoordR3*> localV = local->elem()->getCoordinates();
     Face face = getMatchingFace_(local, localV);
-    Math::CVecR3 faceNormal = face.first->getSideNormal(face.second);
+    math::CVecR3 faceNormal = face.first->getSideNormal(face.second);
     if ((surf->getNormal() == faceNormal) || isDomainBoundary(face)) {
         return face;
     } else {

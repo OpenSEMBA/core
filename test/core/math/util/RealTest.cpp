@@ -4,7 +4,7 @@
 #include "core/math/CartesianVector.h"
 
 using namespace SEMBA;
-using namespace Math;
+using namespace math;
 
 TEST(MathRealTest, equal) {
     std::vector<Real> num;

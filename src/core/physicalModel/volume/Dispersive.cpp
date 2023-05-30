@@ -8,10 +8,10 @@ namespace Volume {
 
 Dispersive::Dispersive(const Id id,
                                    const std::string& name,
-                                   const Math::Real rEps,
-                                   const Math::Real rMu,
-                                   const Math::Real elecCond,
-                                   const Math::Real magnCond,
+                                   const math::Real rEps,
+                                   const math::Real rMu,
+                                   const math::Real elecCond,
+                                   const math::Real magnCond,
                                    const std::vector<PoleResidue>& poleResidue)
 :   Identifiable<Id>(id),
     PhysicalModel(name) {
@@ -19,9 +19,9 @@ Dispersive::Dispersive(const Id id,
     rMuInfty_ = rMu;
     // Adds conductivity as a permittivity pole.
     if (elecCond != 0.0) {
-        std::complex<Math::Real> pole(0.0);
-        std::complex<Math::Real> residue(elecCond / Math::Real(2.0) /
-                                         Math::Constants::eps0, 0);
+        std::complex<math::Real> pole(0.0);
+        std::complex<math::Real> residue(elecCond / math::Real(2.0) /
+                                         math::Constants::eps0, 0);
         poleResidue_.push_back(PoleResidue(pole, residue));
     }
     //
@@ -62,11 +62,11 @@ std::size_t Dispersive::getPoleNumber() const {
     return poleResidue_.size();
 }
 
-std::complex<Math::Real> Dispersive::getPole(std::size_t p) const {
+std::complex<math::Real> Dispersive::getPole(std::size_t p) const {
     return poleResidue_[p].first;
 }
 
-std::complex<Math::Real> Dispersive::getResidue(std::size_t p) const {
+std::complex<math::Real> Dispersive::getResidue(std::size_t p) const {
     return poleResidue_[p].second;
 }
 
@@ -88,7 +88,7 @@ bool Dispersive::isSimplyConductive() const {
     return (poleResidue_.size() <= 1 && std::abs(getPole(0)) == 0);
 }
 
-Math::Real Dispersive::getElectricConductivity() const {
+math::Real Dispersive::getElectricConductivity() const {
     if (getPoleNumber() > 1) {
         std::cout << std::endl << "WARNING @ getElectricConductivity: "
                   << "This material is dispersive and its effective "
@@ -97,15 +97,15 @@ Math::Real Dispersive::getElectricConductivity() const {
     }
     for (std::size_t i = 0; i < getPoleNumber(); i++) {
         if (std::abs(getPole(i)) == 0) {
-            return getResidue(i).real() * 2.0 * Math::Constants::eps0;
+            return getResidue(i).real() * 2.0 * math::Constants::eps0;
         }
     }
     return 0.0;
 }
 
 void Dispersive::addPole(
-        const std::complex<Math::Real>& pole,
-        const std::complex<Math::Real>& res) {
+        const std::complex<math::Real>& pole,
+        const std::complex<math::Real>& res) {
     poleResidue_.push_back(PoleResidue(pole,res));
     return;
 }

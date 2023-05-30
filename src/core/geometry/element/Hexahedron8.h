@@ -56,7 +56,7 @@ public:
         return std::make_unique<Hexahedron8>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override;
+    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
     bool isRegular() const;
     inline bool isCurvedFace(const std::size_t f) const override{ return false; }
@@ -73,24 +73,24 @@ public:
     std::vector<const Coordinate::Coordinate<T,3>*> getSideVertices(
             const std::size_t face) const;
 
-    Math::Real getAreaOfFace(const std::size_t face) const override;
-    Math::Real getVolume() const override;
+    math::Real getAreaOfFace(const std::size_t face) const override;
+    math::Real getVolume() const override;
 
     void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
 
     std::unique_ptr<ElemI> toStructured(
-        const Coordinate::Group<CoordI3>&, const Grid3&, const Math::Real = Grid3::tolerance) const override;
+        const Coordinate::Group<CoordI3>&, const Grid3&, const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(
         const Coordinate::Group<CoordR3>&, const Grid3&) const override;
 
 private:
     std::array<const Coordinate::Coordinate<T,3>*, 8> v_;
 
-    const static Math::Real tolerance;
+    const static math::Real tolerance;
 };
 
 template<class T>
-const Math::Real Hexahedron8<T>::tolerance = 1e-15;
+const math::Real Hexahedron8<T>::tolerance = 1e-15;
 
 template<class T>
 Hexahedron8<T>::Hexahedron8(const Id id,
@@ -127,7 +127,7 @@ Hexahedron8<T>::Hexahedron8(
     if (!box.isVolume()) {
         throw Geometry::Error::Box::NotVolume();
     }
-    std::vector<Math::CartesianVector<T, 3> > pos = box.getPos();
+    std::vector<math::CartesianVector<T, 3> > pos = box.getPos();
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         v_[i] = cG.addPos(pos[i])->get();
     }
@@ -135,7 +135,7 @@ Hexahedron8<T>::Hexahedron8(
 
 template<class T>
 bool Hexahedron8<T>::isStructured(const Grid3& grid,
-    const Math::Real tol) const {
+    const math::Real tol) const {
     if (!this->vertexInCell(grid, tol)) {
         return false;
     }
@@ -151,12 +151,12 @@ bool Hexahedron8<T>::isStructured(const Grid3& grid,
 template<class T>
 bool Hexahedron8<T>::isRegular() const {
     // Checks that all edges are aligned with one of the axis.
-    static const Math::CartesianVector<T, 3> xAxe(1.0, 0.0, 0.0);
-    static const Math::CartesianVector<T, 3> yAxe(0.0, 1.0, 0.0);
-    static const Math::CartesianVector<T, 3> zAxe(1.0, 0.0, 1.0);
+    static const math::CartesianVector<T, 3> xAxe(1.0, 0.0, 0.0);
+    static const math::CartesianVector<T, 3> yAxe(0.0, 1.0, 0.0);
+    static const math::CartesianVector<T, 3> zAxe(1.0, 0.0, 1.0);
     for (std::size_t f = 0; f < numberOfFaces(); f++) {
-        Math::CartesianVector<T, 3> first, second;
-        Math::CartesianVector<T, 3> inc;
+        math::CartesianVector<T, 3> first, second;
+        math::CartesianVector<T, 3> inc;
         for (std::size_t i = 0; i < numberOfSideVertices(); i++) {
             first = *getSideV(f, i);
             second = *getSideV(f, (i + 1) % numberOfSideVertices());
@@ -208,15 +208,15 @@ const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideVertex(
 }
 
 template<class T>
-Math::Real Hexahedron8<T>::getAreaOfFace(const std::size_t f) const {
-    Math::CartesianVector<T, 3> v1, v2;
+math::Real Hexahedron8<T>::getAreaOfFace(const std::size_t f) const {
+    math::CartesianVector<T, 3> v1, v2;
     v1 = getSideV(f, 1)->pos() - getSideV(f, 0)->pos();
     v2 = getSideV(f, 2)->pos() - getSideV(f, 0)->pos();
-    return ((Math::Real)0.5 * (v1 ^ v2).norm());
+    return ((math::Real)0.5 * (v1 ^ v2).norm());
 }
 
 template<class T>
-Math::Real Hexahedron8<T>::getVolume() const {
+math::Real Hexahedron8<T>::getVolume() const {
     throw std::logic_error("Hexahedron8::getVolume() not implemented");
 }
 
@@ -230,8 +230,8 @@ void Hexahedron8<T>::setV(const std::size_t i,
 template<class T>
 std::unique_ptr<ElemI> Hexahedron8<T>::toStructured(const CoordI3Group& cG,
     const Grid3& grid,
-    const Math::Real tol) const {
-    return std::make_unique<Hexahedron8<Math::Int>>(this->getId(),
+    const math::Real tol) const {
+    return std::make_unique<Hexahedron8<math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -240,7 +240,7 @@ std::unique_ptr<ElemI> Hexahedron8<T>::toStructured(const CoordI3Group& cG,
 template<class T>
 std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<Hexahedron8<Math::Real>>(this->getId(),
+    return std::make_unique<Hexahedron8<math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());
@@ -250,8 +250,8 @@ std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
 } /* namespace Element */
 
 typedef Element::Hexahedron8Base         Hex8;
-typedef Element::Hexahedron8<Math::Real> HexR8;
-typedef Element::Hexahedron8<Math::Int > HexI8;
+typedef Element::Hexahedron8<math::Real> HexR8;
+typedef Element::Hexahedron8<math::Int > HexI8;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

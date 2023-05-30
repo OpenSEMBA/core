@@ -11,7 +11,7 @@ namespace Volume {
 
 class PML : public virtual Volume {
 public:
-    PML(const Id id, const std::string& name, const Math::LocalAxis orientation);
+    PML(const Id id, const std::string& name, const math::LocalAxis orientation);
     PML(const PML& rhs);
     virtual ~PML() = default;
   
@@ -19,11 +19,11 @@ public:
         return std::make_unique<PML>(*this);
     }
 
-    const Math::LocalAxis getOrientation() const;
-    const Math::CVecR3 getGlobalZAxis() const;
+    const math::LocalAxis getOrientation() const;
+    const math::CVecR3 getGlobalZAxis() const;
 
 private:
-    const Math::LocalAxis orientation_;
+    const math::LocalAxis orientation_;
 };
 
 } /* namespace Volume */

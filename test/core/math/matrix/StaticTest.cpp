@@ -3,8 +3,8 @@
 #include "core/math/matrix/Static.h"
 
 using namespace SEMBA;
-using namespace Math;
-using namespace Matrix;
+using namespace math;
+using namespace matrix;
 
 class MathMatrixStaticTest : public ::testing::Test {
 

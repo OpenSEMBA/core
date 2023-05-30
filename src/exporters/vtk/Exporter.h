@@ -42,11 +42,11 @@ private:
                     const std::string& name,
                     std::ofstream& outMain,
                     std::size_t& part);
-    std::pair<std::vector<Math::CVecR3>, 
+    std::pair<std::vector<math::CVecR3>, 
               std::map<Geometry::CoordId, std::size_t>> getPoints_(
               const ElemRView& elems);
     void writePoints_(std::ofstream& outFile,
-                      const std::vector<Math::CVecR3>& pos);
+                      const std::vector<math::CVecR3>& pos);
     void writeCells_(
             std::ofstream& outFile,
             const ElemRView& elems,

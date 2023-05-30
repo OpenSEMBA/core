@@ -44,11 +44,11 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 	pD.sources.copyAndAssignId(
 		Source::PlaneWave{
 			std::make_unique<Source::Magnitude::Magnitude>(
-				new SEMBA::Math::Function::Gaussian(0.5, 0.0, 1.0)
+				new SEMBA::math::function::Gaussian(0.5, 0.0, 1.0)
 			),
 			{ElemId{1}},
-			Math::CVecR3(1.0, 0.0, 0.0),
-			Math::CVecR3(0.0, 0.0, 1.0)
+			math::CVecR3(1.0, 0.0, 0.0),
+			math::CVecR3(0.0, 0.0, 1.0)
 		}
 	);
 
@@ -95,11 +95,11 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 
 	Source::PlaneWave planewave{
 		std::make_unique<Source::Magnitude::Magnitude>(
-			new SEMBA::Math::Function::Gaussian(0.5, 0.0, 1.0)
+			new SEMBA::math::function::Gaussian(0.5, 0.0, 1.0)
 		),
 		{},
-		Math::CVecR3(1.0, 0.0, 0.0),
-		Math::CVecR3(0.0, 0.0, 1.0)
+		math::CVecR3(1.0, 0.0, 0.0),
+		math::CVecR3(0.0, 0.0, 1.0)
 	};
 
 	sources.addAndAssignId(std::make_unique<Source::PlaneWave>(planewave));
@@ -136,20 +136,20 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			CoordId(),
-			Math::CVecR3(0.0, 0.0, 0.0)
+			math::CVecR3(0.0, 0.0, 0.0)
 		)
 	);
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			CoordId(),
-			Math::CVecR3(1.0, 2.0, 3.0)
+			math::CVecR3(1.0, 2.0, 3.0)
 		)
 	);
 
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			CoordId(),
-			Math::CVecR3(5.0, 5.0, 5.0)
+			math::CVecR3(5.0, 5.0, 5.0)
 			)
 	);
 
@@ -193,7 +193,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 
 	EXPECT_FALSE(problemDescription.model.mesh.coords().empty());
 	EXPECT_EQ(
-		Math::CVecR3(1.0, 2.0, 3.0),
+		math::CVecR3(1.0, 2.0, 3.0),
 		(problemDescription.model.mesh.coords().get()[1])->pos()
 	);
 
@@ -206,7 +206,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 
 	EXPECT_EQ(
 		element->getCoordinates()[0]->pos(),
-		Math::CVecR3(5.0, 5.0, 5.0)
+		math::CVecR3(5.0, 5.0, 5.0)
 	);
 }
 

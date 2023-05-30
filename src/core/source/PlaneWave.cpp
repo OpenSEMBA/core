@@ -5,8 +5,8 @@ namespace Source {
 
 PlaneWave::PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                      const Target& elem,
-                     const Math::CVecR3& direction,
-                     const Math::CVecR3& polarization) :   
+                     const math::CVecR3& direction,
+                     const math::CVecR3& polarization) :   
     Source(magnitude, elem)
 {
     init_(direction, polarization);
@@ -15,26 +15,26 @@ PlaneWave::PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
 PlaneWave::PlaneWave(
         const std::unique_ptr<Magnitude::Magnitude>& magnitude,
         const Target& elem,
-        std::pair<Math::Real, Math::Real> directionAngles,
-        std::pair<Math::Real, Math::Real> polarizationAngles) :   
+        std::pair<math::Real, math::Real> directionAngles,
+        std::pair<math::Real, math::Real> polarizationAngles) :   
     Source(magnitude, elem) 
 {
 
-    Math::Real theta = directionAngles.first;
-    Math::Real phi   = directionAngles.second;
-    Math::Real alpha_ = polarizationAngles.first;
-    Math::Real beta_  = polarizationAngles.second;
+    math::Real theta = directionAngles.first;
+    math::Real phi   = directionAngles.second;
+    math::Real alpha_ = polarizationAngles.first;
+    math::Real beta_  = polarizationAngles.second;
 
-    Math::CVecR3 dirVec = polarToCartesian(theta, phi);
-    Math::CVecR3 polVec = polarToCartesian(alpha_, beta_);
+    math::CVecR3 dirVec = polarToCartesian(theta, phi);
+    math::CVecR3 polVec = polarToCartesian(alpha_, beta_);
     init_(dirVec, polVec);
 }
 
 PlaneWave::PlaneWave(
         const std::unique_ptr<Magnitude::Magnitude>& magnitude,
         const Target& elem,
-        Math::Int numberOfRandomPlanewaves,
-        Math::Real relativeVariationOfRandomDelay) :   
+        math::Int numberOfRandomPlanewaves,
+        math::Real relativeVariationOfRandomDelay) :   
     Source(magnitude, elem) 
 {
     randomic_ = true;
@@ -42,27 +42,27 @@ PlaneWave::PlaneWave(
     relativeVariationOfRandomDelay_ = relativeVariationOfRandomDelay;
 }
 
-const Math::CVecR3& PlaneWave::getPolarization() const {
+const math::CVecR3& PlaneWave::getPolarization() const {
     return polarization_;
 }
 
-const Math::CVecR3& PlaneWave::getDirection() const {
+const math::CVecR3& PlaneWave::getDirection() const {
     return direction_;
 }
 
-Math::Real PlaneWave::getTheta() const {
+math::Real PlaneWave::getTheta() const {
     return cartesianToPolar (direction_).first;
 }
 
-Math::Real PlaneWave::getPhi() const {
+math::Real PlaneWave::getPhi() const {
     return cartesianToPolar (direction_).second;
 }
 
-Math::Real PlaneWave::getAlpha() const {
+math::Real PlaneWave::getAlpha() const {
     return cartesianToPolar (polarization_).first;
 }
 
-Math::Real PlaneWave::getBeta() const {
+math::Real PlaneWave::getBeta() const {
     return cartesianToPolar (polarization_).second;
 }
 
@@ -70,49 +70,49 @@ bool PlaneWave::isRandomic() const {
     return randomic_;
 }
 
-Math::Int PlaneWave::getNumberOfRandomPlanewaves() const {
+math::Int PlaneWave::getNumberOfRandomPlanewaves() const {
     return numberOfRandomPlanewaves_;
 }
 
-Math::Real PlaneWave::getRelativeVariationOfRandomDelay() const {
+math::Real PlaneWave::getRelativeVariationOfRandomDelay() const {
     return relativeVariationOfRandomDelay_;
 }
 
-Math::CVecR3 PlaneWave::getElectricField(const Math::Real time) const {
-    Math::CVecR3 res = polarization_ * getMagnitude()->evaluate(time);
+math::CVecR3 PlaneWave::getElectricField(const math::Real time) const {
+    math::CVecR3 res = polarization_ * getMagnitude()->evaluate(time);
     return res;
 }
 
-std::pair<Math::CVecR3, Math::CVecR3>
-PlaneWave::getElectromagneticField(const Math::Real time) const {
-    Math::CVecR3 electric = getElectricField(time);
-    Math::CVecR3 magnetic = (direction_ ^ electric) *
-                            Math::Constants::VACUUM_ADMITANCE;
-    return std::pair<Math::CVecR3,Math::CVecR3>(electric, magnetic);
+std::pair<math::CVecR3, math::CVecR3>
+PlaneWave::getElectromagneticField(const math::Real time) const {
+    math::CVecR3 electric = getElectricField(time);
+    math::CVecR3 magnetic = (direction_ ^ electric) *
+                            math::Constants::VACUUM_ADMITANCE;
+    return std::pair<math::CVecR3,math::CVecR3>(electric, magnetic);
 }
 
-std::pair<Math::Real,Math::Real> PlaneWave::cartesianToPolar(
-        const Math::CVecR3& v) {
+std::pair<math::Real,math::Real> PlaneWave::cartesianToPolar(
+        const math::CVecR3& v) {
     if (v.norm() == 0.0) {
-        return std::pair<Math::Real,Math::Real>(0.0, 0.0);
+        return std::pair<math::Real,math::Real>(0.0, 0.0);
     }
-    Math::Real theta, phi;
-    theta = std::acos(v(Math::Constants::z) / v.norm());
-    if (v(Math::Constants::x) == 0.0) {
-        if (v(Math::Constants::y) == 0.0) {
+    math::Real theta, phi;
+    theta = std::acos(v(math::Constants::z) / v.norm());
+    if (v(math::Constants::x) == 0.0) {
+        if (v(math::Constants::y) == 0.0) {
             phi = 0.0;
-        } else if (v(Math::Constants::y) > 0.0) {
-            phi = Math::Constants::pi_2;
+        } else if (v(math::Constants::y) > 0.0) {
+            phi = math::Constants::pi_2;
         } else {
-            phi = 3.0 * Math::Constants::pi_2;
+            phi = 3.0 * math::Constants::pi_2;
         }
     } else {
-        phi = std::atan2(v(Math::Constants::y), v(Math::Constants::x));
+        phi = std::atan2(v(math::Constants::y), v(math::Constants::x));
     }
-    return std::pair<Math::Real,Math::Real>(theta,phi);
+    return std::pair<math::Real,math::Real>(theta,phi);
 }
 
-void PlaneWave::init_(Math::CVecR3 direction, Math::CVecR3 polarization) {
+void PlaneWave::init_(math::CVecR3 direction, math::CVecR3 polarization) {
     direction_ = direction;
     polarization_ = polarization;
 
@@ -126,24 +126,24 @@ void PlaneWave::init_(Math::CVecR3 direction, Math::CVecR3 polarization) {
     if (direction_.norm() == 0) {
         throw Error::PlaneWave::ZeroMagnitude();
     }
-    Math::Real dotProd = direction.dot(polarization);
-    if (Math::Util::notEqual(dotProd, 0.0)) {
+    math::Real dotProd = direction.dot(polarization);
+    if (math::Util::notEqual(dotProd, 0.0)) {
         throw Error::PlaneWave::NotPerpendicular();
     }
 }
 
-Math::CVecR3 PlaneWave::polarToCartesian(Math::Real theta, Math::Real phi) {
-    return Math::CVecR3(
+math::CVecR3 PlaneWave::polarToCartesian(math::Real theta, math::Real phi) {
+    return math::CVecR3(
             std::sin(theta)*std::cos(phi),
             std::sin(theta)*std::sin(phi),
             std::cos(theta));
 }
 
-Math::Real PlaneWave::reduceRadians(const Math::Real radianIn) {
-    Math::Real nVueltas, nVueltasComp, radianOut, Val2Pi;
-    Val2Pi = (Math::Real) 2.0 * (Math::Real) acos((Math::Real) 0.0);
+math::Real PlaneWave::reduceRadians(const math::Real radianIn) {
+    math::Real nVueltas, nVueltasComp, radianOut, Val2Pi;
+    Val2Pi = (math::Real) 2.0 * (math::Real) acos((math::Real) 0.0);
     nVueltas = radianIn/(Val2Pi);
-    nVueltasComp = (Math::Real) floor(nVueltas);
+    nVueltasComp = (math::Real) floor(nVueltas);
     radianOut = radianIn - nVueltasComp*Val2Pi;
     return  radianOut;
 }

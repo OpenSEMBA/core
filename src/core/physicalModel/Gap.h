@@ -7,7 +7,7 @@ namespace PhysicalModel {
 
 class Gap : public virtual PhysicalModel {
 public:
-    Gap(const Id id, const std::string name, const Math::Real width);
+    Gap(const Id id, const std::string name, const math::Real width);
     Gap(const Gap&);
     virtual ~Gap() = default;
 
@@ -15,10 +15,10 @@ public:
         return std::make_unique<Gap>(*this);
     }
 
-    Math::Real getWidth() const;
+    math::Real getWidth() const;
 
 private:
-    Math::Real width_;
+    math::Real width_;
 };
 
 } /* namespace PhysicalModel */

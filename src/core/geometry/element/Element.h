@@ -100,8 +100,8 @@ public:
     bool isCoordinate(const Coordinate::Coordinate<T,3>* coord) const;
 
     virtual bool isStructured(const Grid3&,
-                              const Math::Real = Grid3::tolerance) const;
-    virtual bool isInnerPoint(const Math::CartesianVector<T,3>& pos) const;
+                              const math::Real = Grid3::tolerance) const;
+    virtual bool isInnerPoint(const math::CartesianVector<T,3>& pos) const;
 
     virtual const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const = 0;
     virtual const Coordinate::Coordinate<T,3>* getSideV(
@@ -126,20 +126,20 @@ public:
 
     virtual void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*);
 
-    virtual std::unique_ptr<Element<Math::Int >> toStructured(
+    virtual std::unique_ptr<Element<math::Int >> toStructured(
             const CoordI3Group&,
             const Grid3&,
-            const Math::Real = Grid3::tolerance) const = 0;
-    virtual std::unique_ptr<Element<Math::Real>> toUnstructured(
+            const math::Real = Grid3::tolerance) const = 0;
+    virtual std::unique_ptr<Element<math::Real>> toUnstructured(
             const CoordR3Group&,
             const Grid3&) const = 0;
 
 protected:
-    bool vertexInCell (const Grid3& grid, const Math::Real tol) const;
+    bool vertexInCell (const Grid3& grid, const math::Real tol) const;
     bool vertexInBound() const;
     std::vector<const CoordI3*> vertexToStructured(const CoordI3Group& cG,
                                        const Grid3& grid,
-                                       const Math::Real tol) const;
+                                       const math::Real tol) const;
     std::vector<const CoordR3*> vertexToUnstructured(const CoordR3Group& cG,
                                          const Grid3& grid) const;
 
@@ -173,12 +173,12 @@ bool Element<T>::isCoordinate(const Coordinate::Coordinate<T, 3>* coord) const {
 }
 
 template<class T>
-bool Element<T>::isStructured(const Grid3& grid, const Math::Real tol) const {
+bool Element<T>::isStructured(const Grid3& grid, const math::Real tol) const {
     return false;
 }
 
 template<class T>
-bool Element<T>::isInnerPoint(const Math::CartesianVector<T, 3>& pos) const {
+bool Element<T>::isInnerPoint(const math::CartesianVector<T, 3>& pos) const {
     throw std::logic_error("Element::isInnerPoint not implemented");
     return false;
 }
@@ -201,9 +201,9 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMinV() const {
             continue;
         }
         for (std::size_t j = 0; j < 3; j++) {
-            Math::Real val1 = getVertex(i)->pos()(j);
-            Math::Real val2 = res->pos()(j);
-            if (Math::Util::lower(val1, val2, res->pos().norm())) {
+            math::Real val1 = getVertex(i)->pos()(j);
+            math::Real val2 = res->pos()(j);
+            if (math::Util::lower(val1, val2, res->pos().norm())) {
                 res = getVertex(i);
                 break;
             }
@@ -221,9 +221,9 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMaxV() const {
             continue;
         }
         for (std::size_t j = 0; j < 3; j++) {
-            Math::Real val1 = getVertex(i)->pos()(j);
-            Math::Real val2 = res->pos()(j);
-            if (Math::Util::greater(val1, val2, res->pos().norm())) {
+            math::Real val1 = getVertex(i)->pos()(j);
+            math::Real val2 = res->pos()(j);
+            if (math::Util::greater(val1, val2, res->pos().norm())) {
                 res = getVertex(i);
                 break;
             }
@@ -282,7 +282,7 @@ void Element<T>::setV(const std::size_t i,
 }
 
 template<class T>
-bool Element<T>::vertexInCell(const Grid3& grid, const Math::Real tol) const {
+bool Element<T>::vertexInCell(const Grid3& grid, const math::Real tol) const {
     for (std::size_t i = 0; i < this->numberOfCoordinates(); i++) {
         if (!grid.isCell(*this->getV(i), tol)) {
             return false;
@@ -294,7 +294,7 @@ bool Element<T>::vertexInCell(const Grid3& grid, const Math::Real tol) const {
 template<class T>
 bool Element<T>::vertexInBound() const {
     Box<T, 3> bound = this->getBound();
-    std::vector< Math::CartesianVector<T, 3> > pos = bound.getPos();
+    std::vector< math::CartesianVector<T, 3> > pos = bound.getPos();
     if (pos.size() != this->numberOfCoordinates()) {
         return false;
     }
@@ -323,14 +323,14 @@ template<class T>
 std::vector<const CoordI3*> Element<T>::vertexToStructured(
     const CoordI3Group& cG,
     const Grid3& grid,
-    const Math::Real tol) const {
-    if (!this->is<Element<Math::Real>>() || !this->isStructured(grid, tol)) {
+    const math::Real tol) const {
+    if (!this->is<Element<math::Real>>() || !this->isStructured(grid, tol)) {
         throw std::logic_error("Element::vertexToStructured unexpected empty element");
     }
 
     std::vector<const CoordI3*> res(this->numberOfCoordinates());
     for (std::size_t i = 0; i < this->numberOfCoordinates(); i++) {
-        Math::CVecI3 cell = grid.getCell(*this->getV(i), true, tol);
+        math::CVecI3 cell = grid.getCell(*this->getV(i), true, tol);
         CoordId coordId = this->getV(i)->getId();
         if (!cG.existId(coordId)) {
             throw std::logic_error("Coord not found.");
@@ -348,7 +348,7 @@ template<class T>
 std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    if (!this->is<Element<Math::Int>>()) {
+    if (!this->is<Element<math::Int>>()) {
         throw std::logic_error("Element::vertexToStructured unexpected empty element");
     }
 
@@ -367,13 +367,13 @@ std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
     return res;
 }
 
-typedef Element<Math::Real> ElemR;
-typedef Element<Math::Int>  ElemI;
+typedef Element<math::Real> ElemR;
+typedef Element<math::Int>  ElemI;
 
 } /* namespace Element */
 
-typedef Element::Element<Math::Real> ElemR;
-typedef Element::Element<Math::Int>  ElemI;
+typedef Element::Element<math::Real> ElemR;
+typedef Element::Element<math::Int>  ElemI;
 
 typedef Element::Id                  ElemId;
 typedef Element::Base                Elem;

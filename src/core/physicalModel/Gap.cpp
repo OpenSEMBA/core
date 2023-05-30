@@ -3,7 +3,7 @@
 namespace SEMBA {
 namespace PhysicalModel {
 
-Gap::Gap(const Id id, const std::string name, const Math::Real width) :   
+Gap::Gap(const Id id, const std::string name, const math::Real width) :   
     Identifiable<Id>(id),
     PhysicalModel(name) 
 {
@@ -17,7 +17,7 @@ Gap::Gap(const Gap& rhs) :
     width_ = rhs.width_;
 }
 
-Math::Real Gap::getWidth() const 
+math::Real Gap::getWidth() const 
 {
     return width_;
 }

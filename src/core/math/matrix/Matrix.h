@@ -13,8 +13,8 @@
 #include "core/math/CartesianVector.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Matrix {
+namespace math {
+namespace matrix {
 
 template<class T>
 class Matrix {

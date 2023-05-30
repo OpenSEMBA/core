@@ -9,8 +9,8 @@
 #include "Dynamic.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Matrix {
+namespace math {
+namespace matrix {
 
 // Static Matrix class. It can't change its size in run time.
 template<class T,std::size_t ROWS,std::size_t COLS>
@@ -366,14 +366,14 @@ Dynamic<T> operator*(
 } /* namespace SEMBA */
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 
-typedef Matrix::Static<Real,2,2> MatR22;
-typedef Matrix::Static<Real,3,3> MatR33;
-typedef Matrix::Static<Real,4,3> MatR43;
-typedef Matrix::Static<Real,4,4> MatR44;
-typedef Matrix::Static<std::complex<Real>,2,2> MatC22;
-typedef Matrix::Static<std::complex<Real>,3,3> MatC33;
+typedef matrix::Static<Real,2,2> MatR22;
+typedef matrix::Static<Real,3,3> MatR33;
+typedef matrix::Static<Real,4,3> MatR43;
+typedef matrix::Static<Real,4,4> MatR44;
+typedef matrix::Static<std::complex<Real>,2,2> MatC22;
+typedef matrix::Static<std::complex<Real>,3,3> MatC33;
 
 } /* namespace Math */
 } /* namespace SEMBA */

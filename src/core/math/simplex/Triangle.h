@@ -9,7 +9,7 @@
 #include "Line.h"
 
 
-namespace SEMBA::Math::Simplex {
+namespace SEMBA::math::simplex {
 
 template <size_t N>
 class Triangle : public Simplex {
@@ -21,8 +21,8 @@ public:
     static const std::size_t nfp = Line<N>::np;
     static constexpr Real sizeFactor{ 1.0 / 2.0 };
 
-    using MatIntNpNp = Matrix::Static<Int, np, np>;
-    using MatIntNfpNp = Matrix::Static<Int, nfp, np>;
+    using MatIntNpNp = matrix::Static<Int, np, np>;
+    using MatIntNfpNp = matrix::Static<Int, nfp, np>;
 
     static const std::size_t nsc = 3;
     using Index = CartesianVector<size_t, nsc>;
@@ -35,22 +35,22 @@ public:
 
     std::size_t nodeIndex(const std::size_t i, const std::size_t j) const;
 
-    Math::CVecR3 coordinate(const std::size_t i) const;
+    math::CVecR3 coordinate(const std::size_t i) const;
 
-    const Function::Polynomial<Real>& getLagr(const std::size_t i) const;
-    const Function::Polynomial<Real>& getDLagr(const std::size_t i,
+    const function::Polynomial<Real>& getLagr(const std::size_t i) const;
+    const function::Polynomial<Real>& getDLagr(const std::size_t i,
                                                const std::size_t f) const;
     std::vector<Real> getWeights() const;
 
-    static Matrix::Dynamic<Int> PMatrix(const std::size_t n,
+    static matrix::Dynamic<Int> PMatrix(const std::size_t n,
                                         const std::size_t s);
 
 private:
     Index indices[np];
-    Matrix::Static<Int,faces,nfp> sideNodes;
+    matrix::Static<Int,faces,nfp> sideNodes;
 
-    Function::Polynomial<Real> lagr[np];
-    Function::Polynomial<Real> dLagr[np][faces];
+    function::Polynomial<Real> lagr[np];
+    function::Polynomial<Real> dLagr[np][faces];
 
     CartesianVector<Real,nsc> nodePositions[np];
     std::array<Real,np>         weights;
@@ -63,14 +63,14 @@ private:
 
 template <size_t N>
 Triangle<N>::Triangle() {
-    Matrix::Dynamic<Int> ini(np, nsc);
+    matrix::Dynamic<Int> ini(np, nsc);
     for (std::size_t i = 0; i <= N; i++) {
         for (std::size_t j = numberOfNodes(std::size_t(i - 1)); j < np; j++) {
             ini(j, 0) = N - i;
         }
     }
 
-    Matrix::Dynamic<Int> ord(np, nsc);
+    matrix::Dynamic<Int> ord(np, nsc);
     for (std::size_t i = 0; i < nsc; i++) {
         ord = PMatrix(N, i) * ini;
         for (std::size_t j = 0; j < np; j++) {
@@ -78,13 +78,13 @@ Triangle<N>::Triangle() {
         }
     }
 
-    Matrix::Static<Int, np, 1> nList;
+    matrix::Static<Int, np, 1> nList;
     for (std::size_t i = 0; i < np; i++) {
         nList(i, 0) = i;
     }
 
     for (std::size_t f = 0; f < faces; f++) {
-        Matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
+        matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
         for (std::size_t i = 0; i < nfp; i++) {
             sideNodes(f, i) = aux(i, 0);
         }
@@ -121,13 +121,13 @@ inline std::size_t Triangle<N>::nodeIndex(const std::size_t i,
 }
 
 template <size_t N>
-const Function::Polynomial<Real>& Triangle<N>::getLagr(
+const function::Polynomial<Real>& Triangle<N>::getLagr(
     const std::size_t i) const {
     return lagr[i];
 }
 
 template <size_t N>
-const Function::Polynomial<Real>& Triangle<N>::getDLagr(
+const function::Polynomial<Real>& Triangle<N>::getDLagr(
     const std::size_t i,
     const std::size_t f) const {
     return dLagr[i][f];
@@ -170,12 +170,12 @@ std::size_t Triangle<N>::numberOfNodes(const std::size_t order) {
 }
 
 template <size_t N>
-Matrix::Dynamic<Int> Triangle<N>::PMatrix(std::size_t order,
+matrix::Dynamic<Int> Triangle<N>::PMatrix(std::size_t order,
     std::size_t s) {
     std::size_t np = numberOfNodes(order);
     std::size_t nfp = order + 1;
-    Matrix::Dynamic<Int> res(np, np);
-    Matrix::Dynamic<Int> original(nfp, nfp), rotated(nfp, nfp);
+    matrix::Dynamic<Int> res(np, np);
+    matrix::Dynamic<Int> original(nfp, nfp), rotated(nfp, nfp);
     std::size_t originalNum = 1;
     for (std::size_t i = 0; i < nfp; i++) {
         for (std::size_t j = 0; j <= i; j++) {
@@ -213,22 +213,22 @@ template <size_t N>
 typename Triangle<N>::MatIntNfpNp Triangle<N>::RMatrix(
     const std::size_t s) const {
 
-    Matrix::Static<Int, nfp, 1> nodeVec;
+    matrix::Static<Int, nfp, 1> nodeVec;
     std::size_t last = 0;
     for (std::size_t i = 0; i < N + 1; i++) {
         last += i;
         nodeVec(i, 0) = last;
     }
 
-    Matrix::Static<Int, nfp, np> Raux;
+    matrix::Static<Int, nfp, np> Raux;
     for (std::size_t i = 0; i < nfp; i++) {
         Raux(i, nodeVec(i, 0)) = 1;
     }
 
-    Matrix::Dynamic<Int> P = PMatrix(N, s);
-    Matrix::Static<Int, np, np> Ps;
+    matrix::Dynamic<Int> P = PMatrix(N, s);
+    matrix::Static<Int, np, np> Ps;
     Ps = P;
-    Matrix::Static<Int, nfp, np> res = Raux * Ps * Ps;
+    matrix::Static<Int, nfp, np> res = Raux * Ps * Ps;
     return res;
 }
 

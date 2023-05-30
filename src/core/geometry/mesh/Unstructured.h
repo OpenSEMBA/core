@@ -39,9 +39,9 @@ public:
 
     Structured* getMeshStructured(
             const Grid3& grid,
-            const Math::Real tol = Grid3::tolerance) const;
+            const math::Real tol = Grid3::tolerance) const;
 
-    void applyScalingFactor(const Math::Real factor) override;
+    void applyScalingFactor(const math::Real factor) override;
     BoxR3 getBoundingBox() const override;
 
     void reassignPointers(const PMGroup& matGr = PMGroup()) override;

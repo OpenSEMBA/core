@@ -28,13 +28,13 @@ TEST(ModelTest, CanInitializeGrid) {
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(),
-			Math::CVecR3(0.0, 0.0, 0.0)
+			math::CVecR3(0.0, 0.0, 0.0)
 		)
 	);
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(), 
-			Math::CVecR3(1.0, 2.0, 3.0)
+			math::CVecR3(1.0, 2.0, 3.0)
 		)
 	);
 
@@ -54,7 +54,7 @@ TEST(ModelTest, CanInitializeGrid) {
 	EXPECT_EQ(2, model.mesh.coords().size());
 
 	EXPECT_EQ(
-		Math::CVecR3(1.0, 2.0, 3.0), 
+		math::CVecR3(1.0, 2.0, 3.0), 
 		(model.mesh.coords()).getId(Coordinate::Id(2))->pos()
 	);
 
@@ -89,13 +89,13 @@ TEST(ModelTest, CanCopyConstructor) {
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(),
-			Math::CVecR3(0.0, 0.0, 0.0)
+			math::CVecR3(0.0, 0.0, 0.0)
 		)
 	);
 	coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(),
-			Math::CVecR3(1.0, 2.0, 3.0)
+			math::CVecR3(1.0, 2.0, 3.0)
 		)
 	);
 
@@ -164,7 +164,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 	auto it = coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(),
-			Math::CVecR3(0.0, 0.0, 0.0)
+			math::CVecR3(0.0, 0.0, 0.0)
 		)
 	);
 
@@ -210,7 +210,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	auto it = coordinatesGroup.addAndAssignId(
 		std::make_unique<CoordR3>(
 			Coordinate::Id(),
-			Math::CVecR3(0.0, 0.0, 0.0)
+			math::CVecR3(0.0, 0.0, 0.0)
 		)
 	);
 

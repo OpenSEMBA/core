@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-namespace SEMBA::Math::Simplex {
+namespace SEMBA::math::simplex {
 
 template <size_t N>
 class Line : public Simplex {
@@ -27,25 +27,25 @@ public:
 
     std::size_t nodeIndex(const std::size_t i, const std::size_t j) const;
 
-    const Function::Polynomial<Real>& getLagr(
+    const function::Polynomial<Real>& getLagr(
             const std::size_t node) const;
-    const Function::Polynomial<Real>& getDLagr(
+    const function::Polynomial<Real>& getDLagr(
             const std::size_t node, const std::size_t simplex) const;
 
     std::vector<Real> getWeights() const;
 
 private:
     std::array<Index,np> indices;
-    Matrix::Static<Int,faces,nfp> sideNodes;
+    matrix::Static<Int,faces,nfp> sideNodes;
 
-    Function::Polynomial<Real> lagr[np];
-    Function::Polynomial<Real> dLagr[np][faces];
+    function::Polynomial<Real> lagr[np];
+    function::Polynomial<Real> dLagr[np][faces];
 
     std::array<CartesianVector<Real,nsc>, np> nodePositions;
     std::array<Real,np>                         weights;
 
-    Matrix::Static<Int, 1, (N+1)> RMatrix(const std::size_t s) const;
-    Matrix::Static<Int, (N+1), (N+1)> PMatrix(const std::size_t s) const;
+    matrix::Static<Int, 1, (N+1)> RMatrix(const std::size_t s) const;
+    matrix::Static<Int, (N+1), (N+1)> PMatrix(const std::size_t s) const;
 };
 
 
@@ -57,13 +57,13 @@ Line<N>::Line() {
         indices[i](1) = i;
     }
 
-    Matrix::Static<Int, np, 1> nList;
+    matrix::Static<Int, np, 1> nList;
     for (std::size_t i = 0; i < np; i++) {
         nList(i, 0) = i;
     }
 
     for (std::size_t f = 0; f < faces; f++) {
-        Matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
+        matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
         for (std::size_t i = 0; i < nfp; i++) {
             sideNodes(f, i) = aux(i, 0);
         }
@@ -105,13 +105,13 @@ inline std::size_t Line<N>::sideNode(const std::size_t face,
 }
 
 template <size_t N>
-inline const Function::Polynomial<Real>& Line<N>::getLagr(
+inline const function::Polynomial<Real>& Line<N>::getLagr(
     const std::size_t i) const {
     return lagr[i];
 }
 
 template <size_t N>
-inline const Function::Polynomial<Real>& Line<N>::getDLagr(
+inline const function::Polynomial<Real>& Line<N>::getDLagr(
     const std::size_t i,
     const std::size_t f) const {
     return dLagr[i][f];
@@ -125,8 +125,8 @@ inline std::vector<Real> Line<N>::getWeights() const {
 }
 
 template <std::size_t N>
-Matrix::Static<Int, (N + 1), (N + 1)> Line<N>::PMatrix(const std::size_t s) const {
-    Matrix::Static<Int, np, np> res;
+matrix::Static<Int, (N + 1), (N + 1)> Line<N>::PMatrix(const std::size_t s) const {
+    matrix::Static<Int, np, np> res;
     if (s == 0) {
         res.eye();
     }
@@ -140,13 +140,13 @@ Matrix::Static<Int, (N + 1), (N + 1)> Line<N>::PMatrix(const std::size_t s) cons
 }
 
 template <size_t N>
-Matrix::Static<Int, 1, (N + 1)> Line<N>::RMatrix(const std::size_t s) const {
-    Matrix::Static<Int, nfp, np> Raux;
+matrix::Static<Int, 1, (N + 1)> Line<N>::RMatrix(const std::size_t s) const {
+    matrix::Static<Int, nfp, np> Raux;
     Raux.zeros();
     Raux(0, 0) = (Int)1;
-    Matrix::Static<Int, np, np> P;
+    matrix::Static<Int, np, np> P;
     P = PMatrix(s);
-    Matrix::Static<Int, nfp, np> res = Raux * P;
+    matrix::Static<Int, nfp, np> res = Raux * P;
     return res;
 }
 

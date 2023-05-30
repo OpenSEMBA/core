@@ -5,9 +5,9 @@ namespace Source {
 
 Dipole::Dipole(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                const Target& elem,
-               Math::Real length,
-               Math::CVecR3 orientation,
-               Math::CVecR3 position)
+               math::Real length,
+               math::CVecR3 orientation,
+               math::CVecR3 position)
 :   Source(magnitude, elem)
 {
     length_ = length;

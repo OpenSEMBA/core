@@ -7,7 +7,7 @@
 #include <math.h>
 
 using namespace SEMBA;
-using namespace Math;
+using namespace math;
 
 class MathAxisLocalTest : public ::testing::Test {
 

@@ -10,7 +10,7 @@
 #include "Real.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 
 template <class T, std::size_t D>
 class CartesianVector {
