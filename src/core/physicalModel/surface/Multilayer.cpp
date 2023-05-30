@@ -36,23 +36,23 @@ std::string Multilayer::printLayer(const std::size_t i) const {
     return std::string(ss.str());
 }
 
-Math::Real Multilayer::getThickness(const std::size_t i) const {
+math::Real Multilayer::getThickness(const std::size_t i) const {
     return layers_[i].getThickness();
 }
 
-Math::Real Multilayer::getPermittivity(const std::size_t i) const {
-    return layers_[i].getRelPermittivity() * Math::Constants::eps0;
+math::Real Multilayer::getPermittivity(const std::size_t i) const {
+    return layers_[i].getRelPermittivity() * math::Constants::eps0;
 }
 
-Math::Real Multilayer::getPermeability(const std::size_t i) const {
-    return layers_[i].getRelPermeability() * Math::Constants::mu0;
+math::Real Multilayer::getPermeability(const std::size_t i) const {
+    return layers_[i].getRelPermeability() * math::Constants::mu0;
 }
 
-Math::Real Multilayer::getElecCond(const std::size_t i) const {
+math::Real Multilayer::getElecCond(const std::size_t i) const {
     return layers_[i].getElecCond();
 }
 
-Math::Real Multilayer::getMagnCond(const std::size_t i) const {
+math::Real Multilayer::getMagnCond(const std::size_t i) const {
     return 0.0;
 }
 

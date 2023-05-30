@@ -79,7 +79,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
 {
     auto data{ Parser(getFilename("sphere")).read() };
 
-    EXPECT_EQ(data.grids.getNumCells(), Math::CVecR3(51, 23, 15));
+    EXPECT_EQ(data.grids.getNumCells(), math::CVecR3(51, 23, 15));
 
     auto& sources = data.sources;
     EXPECT_EQ(sources.size(), 1);
@@ -87,19 +87,19 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     const Source::PlaneWave* source = sources.get()[0]->castTo<Source::PlaneWave>();
     EXPECT_EQ(
         source->getPolarization(),
-        Math::CVecR3(-0.4082482904638631, 0.8164965809277261, -0.4082482904638631)
+        math::CVecR3(-0.4082482904638631, 0.8164965809277261, -0.4082482904638631)
     );
     EXPECT_EQ(
         source->getDirection(),
-        Math::CVecR3(1.0, 1.0, 1.0)
+        math::CVecR3(1.0, 1.0, 1.0)
     );
 
     Source::Magnitude::Magnitude magnitude = *source->getMagnitude();
     EXPECT_EQ(
         magnitude,
         Source::Magnitude::Magnitude(
-            new Math::Function::Gaussian(
-                Math::Function::Gaussian::buildFromMaximumFrequency(
+            new math::function::Gaussian(
+                math::function::Gaussian::buildFromMaximumFrequency(
                     1000000000.0,
                     1.0
                 )
@@ -138,11 +138,11 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     // New elements added as part of Boundaries: 6 faces * 4 points/face
     ASSERT_EQ(384 + 8 + 1 + 8 + 24, model.mesh.coords().size());
     EXPECT_EQ(
-        Math::CVecR3(2.33333325, -5.71501865e-16, 1.66666663),
+        math::CVecR3(2.33333325, -5.71501865e-16, 1.66666663),
         model.mesh.coords().get()[0]->pos()
     );
     EXPECT_EQ(
-        Math::CVecR3(1.28204191, -1.31762123e+01, -1.70370862e-01),
+        math::CVecR3(1.28204191, -1.31762123e+01, -1.70370862e-01),
         model.mesh.coords().get()[383]->pos()
     );
 
@@ -157,7 +157,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     auto recoveredNodeId = probes.get()[0]->getTarget().at(0);
     auto recoveredNode = model.mesh.elems().getId(recoveredNodeId)->castTo<Geometry::NodR>();
     EXPECT_EQ(
-        Math::CVecR3(-0.8441360141053171, 12.017228978451016, 13.154724231963254),
+        math::CVecR3(-0.8441360141053171, 12.017228978451016, 13.154724231963254),
         recoveredNode->getV(0)->pos()
     );
 }
@@ -166,10 +166,10 @@ TEST_F(ParserJSONParserTest, sphere_rectilinear)
 {
     auto data{ Parser(getFolder() + "sphere/sphere-rectilinear.smb.json").read() };
 
-    EXPECT_EQ(Math::CVecI3(1,2,3), data.grids.getNumCells());
-    EXPECT_EQ(std::vector<Math::Real>({0, 1}), data.grids.getPos(0));
-    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2}), data.grids.getPos(1));
-    EXPECT_EQ(std::vector<Math::Real>({0, 1, 2, 3}), data.grids.getPos(2));
+    EXPECT_EQ(math::CVecI3(1,2,3), data.grids.getNumCells());
+    EXPECT_EQ(std::vector<math::Real>({0, 1}), data.grids.getPos(0));
+    EXPECT_EQ(std::vector<math::Real>({0, 1, 2}), data.grids.getPos(1));
+    EXPECT_EQ(std::vector<math::Real>({0, 1, 2, 3}), data.grids.getPos(2));
 }
 
 TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
@@ -180,7 +180,7 @@ TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
     auto farFieldProbe{ data.outputRequests.getOf<OutputRequest::FarField>().front() };
     EXPECT_EQ(farFieldProbe->initialPhi, 0.0);
     EXPECT_EQ(farFieldProbe->finalPhi, 0.0);
-    EXPECT_EQ(farFieldProbe->stepPhi, 0.1 * 2 * Math::Constants::pi / 360.0);
+    EXPECT_EQ(farFieldProbe->stepPhi, 0.1 * 2 * math::Constants::pi / 360.0);
 }
 
 TEST_F(ParserJSONParserTest, antennas_detailed)

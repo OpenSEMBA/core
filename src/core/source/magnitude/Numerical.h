@@ -14,15 +14,15 @@ public:
     Numerical(const FileSystem::Project& filename);
     Numerical(const FileSystem::Project& filename,
               const Magnitude& mag,
-              const Math::Real timeStep,
-              const Math::Real finalTime);
+              const math::Real timeStep,
+              const math::Real finalTime);
     
     std::unique_ptr<Magnitude> clone() const override {
         return std::make_unique<Numerical>(*this);
     }
 
     bool operator==(const Numerical&) const;
-    Math::Real evaluate(const Math::Real time) const;
+    math::Real evaluate(const math::Real time) const;
 
     FileSystem::Project getFile() const { return file; };
 

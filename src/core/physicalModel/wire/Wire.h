@@ -10,21 +10,21 @@ class Wire : public virtual PhysicalModel {
 public:
     Wire(const Id id,
          const std::string name,
-         const Math::Real radius,
-         const Math::Real resistance,
-         const Math::Real inductance);
+         const math::Real radius,
+         const math::Real resistance,
+         const math::Real inductance);
     Wire(const Id id,
          const std::string name,
-         const Math::Real radius,
-         const Math::Real resistance,
-         const Math::Real inductance,
-         const Math::Real capacitance,
-         const Math::Real pResistance,
-         const Math::Real pInductance,
-         const Math::Real pCapacitance);
+         const math::Real radius,
+         const math::Real resistance,
+         const math::Real inductance,
+         const math::Real capacitance,
+         const math::Real pResistance,
+         const math::Real pInductance,
+         const math::Real pCapacitance);
     Wire(const Id id,
          const std::string name,
-         const Math::Real radius,
+         const math::Real radius,
          const std::string filename);
     
     Wire(const Wire&);
@@ -34,30 +34,30 @@ public:
         return std::make_unique<Wire>(*this);
     }
 
-    Math::Real getRadius() const;
+    math::Real getRadius() const;
 
     bool isSeriesParallel() const;
     bool isDispersive() const;
 
-    Math::Real getSeriesResistance() const;
-    Math::Real getSeriesInductance() const;
-    Math::Real getSeriesCapacitance() const;
-    Math::Real getParallelResistance() const;
-    Math::Real getParallelInductance() const;
-    Math::Real getParallelCapacitance() const;
+    math::Real getSeriesResistance() const;
+    math::Real getSeriesInductance() const;
+    math::Real getSeriesCapacitance() const;
+    math::Real getParallelResistance() const;
+    math::Real getParallelInductance() const;
+    math::Real getParallelCapacitance() const;
 
     std::string getFilename() const;
 
 private:
-    Math::Real radius_ = 0.0;
+    math::Real radius_ = 0.0;
     bool isSeriesParallel_ = false;
     bool isDispersive_     = false;
-    Math::Real seriesResistance_   = 0.0;    // Resistance per meter.
-    Math::Real seriesInductance_   = 0.0;    // Inductance per meter.
-    Math::Real seriesCapacitance_  = 0.0;   // Capacitance per meter.
-    Math::Real parallelResistance_ = 0.0;  // Resistance per meter.
-    Math::Real parallelInductance_ = 0.0;  // Inductance per meter.
-    Math::Real parallelCapacitance_= 0.0; // Capacitance per meter.
+    math::Real seriesResistance_   = 0.0;    // Resistance per meter.
+    math::Real seriesInductance_   = 0.0;    // Inductance per meter.
+    math::Real seriesCapacitance_  = 0.0;   // Capacitance per meter.
+    math::Real parallelResistance_ = 0.0;  // Resistance per meter.
+    math::Real parallelInductance_ = 0.0;  // Inductance per meter.
+    math::Real parallelCapacitance_= 0.0; // Capacitance per meter.
     std::string filename_ = "";
 };
 

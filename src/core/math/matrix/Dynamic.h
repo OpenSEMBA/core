@@ -5,8 +5,8 @@
 #include "Matrix.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Matrix {
+namespace math {
+namespace matrix {
 
 template<class T>
 class Dynamic : public Matrix<T> {

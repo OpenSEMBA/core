@@ -20,12 +20,12 @@ public:
     
 protected:
     void deleteExistentOutputFiles() const;
-    std::size_t determineStepsSaved(const Math::Real savingPeriod, const Math::Real dt) const;
+    std::size_t determineStepsSaved(const math::Real savingPeriod, const math::Real dt) const;
     
     std::string getOutputfilename() const;
 	Geometry::ElemR* getBoundary(
-            const Math::Constants::CartesianAxis dir,
-            const Math::Constants::CartesianBound bound,
+            const math::Constants::CartesianAxis dir,
+            const math::Constants::CartesianBound bound,
             Geometry::CoordR3Group& cG,
             const Geometry::Grid3* grid,
             const Geometry::Mesh::Mesh* mesh) const;

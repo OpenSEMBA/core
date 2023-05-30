@@ -6,9 +6,9 @@ namespace Wire {
 
 Wire::Wire(const Id id,
            const std::string name,
-           const Math::Real radius,
-           const Math::Real resistance,
-           const Math::Real inductance) :   
+           const math::Real radius,
+           const math::Real resistance,
+           const math::Real inductance) :   
     Identifiable<Id>(id),
     PhysicalModel(name)
 {
@@ -19,13 +19,13 @@ Wire::Wire(const Id id,
 
 Wire::Wire(const Id id,
            const std::string name,
-           const Math::Real radius,
-           const Math::Real resistance,
-           const Math::Real inductance,
-           const Math::Real capacitance,
-           const Math::Real pResistance,
-           const Math::Real pInductance,
-           const Math::Real pCapacitance) : 
+           const math::Real radius,
+           const math::Real resistance,
+           const math::Real inductance,
+           const math::Real capacitance,
+           const math::Real pResistance,
+           const math::Real pInductance,
+           const math::Real pCapacitance) : 
     Identifiable<Id>(id),
     PhysicalModel(name)
 {
@@ -42,7 +42,7 @@ Wire::Wire(const Id id,
 
 Wire::Wire(const Id id,
            const std::string name,
-           const Math::Real radius,
+           const math::Real radius,
            const std::string filename) :
     Identifiable<Id>(id),
     PhysicalModel(name)
@@ -77,37 +77,37 @@ bool Wire::isDispersive() const
     return isDispersive_;
 }
 
-Math::Real Wire::getRadius() const 
+math::Real Wire::getRadius() const 
 {
     return radius_;
 }
 
-Math::Real Wire::getSeriesResistance() const 
+math::Real Wire::getSeriesResistance() const 
 {
     return seriesResistance_;
 }
 
-Math::Real Wire::getSeriesInductance() const 
+math::Real Wire::getSeriesInductance() const 
 {
     return seriesInductance_;
 }
 
-Math::Real Wire::getSeriesCapacitance() const 
+math::Real Wire::getSeriesCapacitance() const 
 {
     return seriesCapacitance_;
 }
 
-Math::Real Wire::getParallelResistance() const 
+math::Real Wire::getParallelResistance() const 
 {
     return parallelResistance_;
 }
 
-Math::Real Wire::getParallelInductance() const 
+math::Real Wire::getParallelInductance() const 
 {
     return parallelInductance_;
 }
 
-Math::Real Wire::getParallelCapacitance() const 
+math::Real Wire::getParallelCapacitance() const 
 {
     return parallelCapacitance_;
 }

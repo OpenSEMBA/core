@@ -37,7 +37,7 @@ Unstructured& Unstructured::operator=(const Unstructured& rhs)
     return *this;
 }
 
-Structured* Unstructured::getMeshStructured(const Grid3& grid, const Math::Real tol) const 
+Structured* Unstructured::getMeshStructured(const Grid3& grid, const math::Real tol) const 
 {
     Structured* res = new Structured(grid);
 
@@ -55,7 +55,7 @@ Structured* Unstructured::getMeshStructured(const Grid3& grid, const Math::Real 
     return res;
 }
 
-void Unstructured::applyScalingFactor(const Math::Real factor) {
+void Unstructured::applyScalingFactor(const math::Real factor) {
     coords_.applyScalingFactor(factor);
 }
 

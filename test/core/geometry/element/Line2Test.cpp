@@ -5,8 +5,8 @@
 using namespace SEMBA;
 
 TEST(Line2Test, CanCreate) {
-	Geometry::CoordR3 vertexLeft{ Geometry::CoordId(), Math::CVecR3({0.0, 0.0, 0.0}) };
-	Geometry::CoordR3 vertexRight{ Geometry::CoordId(), Math::CVecR3({1.0, 0.0, 0.0}) };
+	Geometry::CoordR3 vertexLeft{ Geometry::CoordId(), math::CVecR3({0.0, 0.0, 0.0}) };
+	Geometry::CoordR3 vertexRight{ Geometry::CoordId(), math::CVecR3({1.0, 0.0, 0.0}) };
 
 	Geometry::Layer::Layer lay{Geometry::LayerId(), "My layer"};
 	Geometry::Element::Model model{MatId()};
@@ -21,14 +21,14 @@ TEST(Line2Test, CanCreate) {
 	);
 	EXPECT_EQ(
 		*(newLines[0]->getVertices()[1]),
-		Geometry::CoordR3(Geometry::CoordId(), Math::CVecR3(0.5, 0.0, 0.0))
+		Geometry::CoordR3(Geometry::CoordId(), math::CVecR3(0.5, 0.0, 0.0))
 	);
 	EXPECT_EQ(&lay, newLines[0]->getLayer());
 	EXPECT_EQ(&model, newLines[0]->getModel());
 
 	EXPECT_EQ(
 		*(newLines[1]->getVertices()[0]),
-		Geometry::CoordR3(Geometry::CoordId(), Math::CVecR3(0.5, 0.0, 0.0))
+		Geometry::CoordR3(Geometry::CoordId(), math::CVecR3(0.5, 0.0, 0.0))
 	);
 	EXPECT_EQ(
 		*(newLines[1]->getVertices()[1]),

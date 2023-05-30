@@ -7,23 +7,23 @@ namespace Geometry {
 namespace Coordinate {
 
 Conformal::Conformal() {
-    dir_ = Math::Constants::CartesianAxis::x;
+    dir_ = math::Constants::CartesianAxis::x;
     length_ = 0.0;
 }
 
 Conformal::Conformal(const Id id,
-                     const Math::CVecI3& pos,
-                     const Math::Constants::CartesianAxis dir,
-                     const Math::Real length)
+                     const math::CVecI3& pos,
+                     const math::Constants::CartesianAxis dir,
+                     const math::Real length)
 :   Identifiable<Id>(id),
-    Math::CVecI3(pos) {
+    math::CVecI3(pos) {
 
     dir_    = dir;
     length_ = length;
 }
 
-Conformal::Conformal(const Math::Constants::CartesianAxis dir,
-                     const Math::Real length) {
+Conformal::Conformal(const math::Constants::CartesianAxis dir,
+                     const math::Real length) {
 
     dir_    = dir;
     length_ = length;
@@ -31,7 +31,7 @@ Conformal::Conformal(const Math::Constants::CartesianAxis dir,
 
 Conformal::Conformal(const Conformal& rhs)
 :   Identifiable<Id>(rhs),
-    Math::CVecI3(rhs) {
+    math::CVecI3(rhs) {
 
     dir_    = rhs.dir_;
     length_ = rhs.length_;
@@ -53,7 +53,7 @@ Conformal& Conformal::operator=(const Conformal& rhs) {
 }
 
 bool Conformal::operator==(const Base& rhs) const {
-    if (!Coordinate<Math::Int,3>::operator==(rhs)) {
+    if (!Coordinate<math::Int,3>::operator==(rhs)) {
         return false;
     }
     const Conformal* rhsPtr = rhs.castTo<Conformal>();
@@ -64,14 +64,14 @@ bool Conformal::operator==(const Base& rhs) const {
 }
 
 CoordR3* Conformal::toUnstructured(const Grid3& grid) const {
-    Math::CVecR3 pos = grid.getPos(*this);
-    if (Math::Util::greater(getLength(), 0.0)) {
-        Math::Int dir = getDir();
-        Math::Real length = getLength();
-        Math::CVecI3 cellAux = *this;
+    math::CVecR3 pos = grid.getPos(*this);
+    if (math::Util::greater(getLength(), 0.0)) {
+        math::Int dir = getDir();
+        math::Real length = getLength();
+        math::CVecI3 cellAux = *this;
         cellAux(dir)++;
-        Math::CVecR3 posAux = grid.getPos(cellAux);
-        Math::Real step = posAux(dir)-pos(dir);
+        math::CVecR3 posAux = grid.getPos(cellAux);
+        math::Real step = posAux(dir)-pos(dir);
         pos(dir) += step*length;
     }
     return new CoordR3(this->getId(), pos);

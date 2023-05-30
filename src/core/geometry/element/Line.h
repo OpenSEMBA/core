@@ -33,8 +33,8 @@ public:
 } /* namespace Element */
 
 typedef Element::LineBase         Lin;
-typedef Element::Line<Math::Real> LinR;
-typedef Element::Line<Math::Int > LinI;
+typedef Element::Line<math::Real> LinR;
+typedef Element::Line<math::Int > LinI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

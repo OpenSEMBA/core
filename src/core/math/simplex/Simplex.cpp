@@ -2,8 +2,8 @@
 #include "Simplex.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Simplex {
+namespace math {
+namespace simplex {
 
 Simplex::Simplex() {
 
@@ -17,7 +17,7 @@ std::size_t Simplex::factorial(std::size_t n) {
     return (n == 1 || n == 0) ? 1 : factorial(n - 1) * n;
 }
 
-Function::Polynomial<Real> Simplex::silvesterPol(const std::size_t m,
+function::Polynomial<Real> Simplex::silvesterPol(const std::size_t m,
                                                  const std::size_t n) const {
     // Purpose: Generates coefficients of the R polynomial as are defined in
     // Sylvester's book page 130. These polynomials have m equispace zeros to
@@ -25,12 +25,12 @@ Function::Polynomial<Real> Simplex::silvesterPol(const std::size_t m,
     // Lagrange's polynomial.
     // Inputs:  Through arguments: Family member Int number "m". From Simplex
     // class: Simplex order "N".
-    Function::Polynomial<Real> res(1);
+    function::Polynomial<Real> res(1);
     res.addMonomial(1.0, 0);
     if (m != 0) {
         // Computes polynomial product.
         for (Int k = 0 ; k < Int(m); k++) {
-            Function::Polynomial<Real> aux(1);
+            function::Polynomial<Real> aux(1);
             aux.addMonomial(Real(-k), 0);
             aux.addMonomial(Real(n), 1);
             aux.removeZeros();
@@ -46,12 +46,12 @@ Function::Polynomial<Real> Simplex::silvesterPol(const std::size_t m,
     return res;
 }
 
-void Simplex::lagrangePolynomials(Function::Polynomial<Real>* res,
+void Simplex::lagrangePolynomials(function::Polynomial<Real>* res,
                                   const std::size_t n,
                                   const std::size_t np,
                                   const std::size_t nsc) const {
     // Computes Sylvester's polynomials.
-    std::vector<Function::Polynomial<Real>> pol(n+1);
+    std::vector<function::Polynomial<Real>> pol(n+1);
     for (std::size_t i = 0; i < (n + 1); i++) {
         pol[i] = silvesterPol(i,n);
     }
@@ -67,7 +67,7 @@ void Simplex::lagrangePolynomials(Function::Polynomial<Real>* res,
     }
 }
 
-Real Simplex::integrate(const Function::Polynomial<Real> pol,
+Real Simplex::integrate(const function::Polynomial<Real> pol,
                         const std::size_t dim,
                         const Real sizeFactor) const {
     assert(pol.numberOfVariables() == dim + 1);

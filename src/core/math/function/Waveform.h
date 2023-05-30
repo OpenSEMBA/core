@@ -1,7 +1,7 @@
 // OpenSEMBA
 // Copyright (C) 2019 Salvador Gonzalez Garcia        (salva@ugr.es)
 //                    Luis Manuel Diaz Angulo         (lmdiazangulo@semba.guru)
-//                    Miguel David Ruiz-Cabello Nuñez (miguel@semba.guru)
+//                    Miguel David Ruiz-Cabello Nuï¿½ez (miguel@semba.guru)
 //
 // This file is part of OpenSEMBA.
 //
@@ -26,8 +26,8 @@
 #include "Function.h"
 
 namespace SEMBA {
-    namespace Math {
-        namespace Function {
+    namespace math {
+        namespace function {
 
             class Waveform : public Function<Real, Real> {
             public:

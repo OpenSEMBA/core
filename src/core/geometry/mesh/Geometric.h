@@ -31,9 +31,9 @@ public:
     Grid3&       grid()       { return grid_; }
     const Grid3& grid() const { return grid_; }
 
-    Structured* getMeshStructured(const Math::Real = Grid3::tolerance) const;
+    Structured* getMeshStructured(const math::Real = Grid3::tolerance) const;
 
-    void applyScalingFactor(const Math::Real factor) override;
+    void applyScalingFactor(const math::Real factor) override;
 
 private:
 	Grid3 grid_;

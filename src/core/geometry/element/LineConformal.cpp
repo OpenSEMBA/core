@@ -8,8 +8,8 @@ namespace Geometry {
 namespace Element {
 
 LineConformal::LineConformal(const Id id,
-                             std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> v,
-                             const Math::CVecR3& norm,
+                             std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> v,
+                             const math::CVecR3& norm,
                              const Layer* lay,
                              const Model* mat)
 :   Identifiable<Id>(id),
@@ -22,19 +22,19 @@ LineConformal::LineConformal(const Id id,
 
 LineConformal::LineConformal(
     const Id id,
-    const Coordinate::Coordinate<Math::Int, 3>* v[2],
-    const Math::CVecR3& norm,
+    const Coordinate::Coordinate<math::Int, 3>* v[2],
+    const math::CVecR3& norm,
     const Layer* lay,
     const Model* mat)
 {
-    std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> vArr;
+    std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> vArr;
     std::copy(v, v + 2, vArr.begin());
     *this = LineConformal{id, vArr, norm, lay, mat};
 }
 
 LineConformal::LineConformal(
-    std::array<const Coordinate::Coordinate<Math::Int, 3>*, 2> v,
-    const Math::CVecR3& norm,
+    std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> v,
+    const math::CVecR3& norm,
     const Layer* lay,
     const Model* mat):   
     LinI2(ElemId(0), v, lay, mat) 
@@ -52,8 +52,8 @@ LineConformal::LineConformal(const LineConformal& rhs)
 }
 
 const CoordConf* LineConformal::getV(const std::size_t i) const {
-	const Coordinate::Coordinate<Math::Int,3>* coord;
-	coord = Line2<Math::Int>::getV(i);
+	const Coordinate::Coordinate<math::Int,3>* coord;
+	coord = Line2<math::Int>::getV(i);
     return coord->castTo<CoordConf>();
 }
 
@@ -72,7 +72,7 @@ void LineConformal::checkCoordinates() {
 
 std::unique_ptr<ElemI> LineConformal::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const 
+    const Grid3& grid, const math::Real tol) const 
 {
     return std::make_unique<LineConformal>(
         this->getId(),

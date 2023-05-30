@@ -25,8 +25,8 @@ std::string Exporter::getOutputfilename() const {
 }
 
 Geometry::ElemR* Exporter::getBoundary(
-        const Math::Constants::CartesianAxis dir,
-        const Math::Constants::CartesianBound pos,
+        const math::Constants::CartesianAxis dir,
+        const math::Constants::CartesianBound pos,
         Geometry::CoordR3Group& cG,
         const Geometry::Grid3* grid,
         const Geometry::Mesh::Mesh* mesh) const {
@@ -85,10 +85,10 @@ ElemRGroup Exporter::getGridElems(
     for (std::size_t d = 0; d < 3; d++) {
         // Generates grid as lines.
         for (std::size_t i = 0; i < 2; i++) {
-            std::vector<Math::Real> pos = grid->getPos((d+i+1)%3);
+            std::vector<math::Real> pos = grid->getPos((d+i+1)%3);
             for (std::size_t j = 0; j < pos.size(); j++) {
-                Math::CVecR3 pMin, pMax;
-                pMin(d) = grid->getPos(d,Math::Constants::L);
+                math::CVecR3 pMin, pMax;
+                pMin(d) = grid->getPos(d,math::Constants::L);
                 pMin((d+i+1)%3) = pos[j];
                 pMax = pMin;
                 pMin((d-i+2)%3) = grid->getPos((d-i+2)%3).front();

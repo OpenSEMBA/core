@@ -34,8 +34,8 @@ Source& Source::operator=(const Source& rhs)
 
 void Source::convertToNumerical(
     const FileSystem::Project& file,
-    const Math::Real step,
-    const Math::Real finalTime) 
+    const math::Real step,
+    const math::Real finalTime) 
 {
     if(magnitude_->is<Magnitude::Numerical>()) {
         return;
@@ -45,8 +45,8 @@ void Source::convertToNumerical(
 }
 
 Magnitude::Numerical Source::exportToFile(const FileSystem::Project& file,
-                                         const Math::Real step,
-                                         const Math::Real finalTime) const {
+                                         const math::Real step,
+                                         const math::Real finalTime) const {
     if(magnitude_->is<Magnitude::Numerical>()) {
         return Magnitude::Numerical(*magnitude_->castTo<Magnitude::Numerical>());
     }

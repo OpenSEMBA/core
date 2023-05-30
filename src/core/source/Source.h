@@ -30,12 +30,12 @@ public:
     virtual std::string getName() const = 0;
 
     void convertToNumerical(const FileSystem::Project& file,
-                            const Math::Real step,
-                            const Math::Real finalTime);
+                            const math::Real step,
+                            const math::Real finalTime);
     
     Magnitude::Numerical exportToFile(const FileSystem::Project& file,
-                                       const Math::Real step,
-                                       const Math::Real finalTime) const;
+                                       const math::Real step,
+                                       const math::Real finalTime) const;
     const Magnitude::Magnitude* getMagnitude() const { return magnitude_.get(); }
 
     Target getTarget() const { return target_; }

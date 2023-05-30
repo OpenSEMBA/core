@@ -40,7 +40,7 @@ public:
         return std::make_unique<Quadrilateral4<T>>(*this);
     }
 
-    bool isStructured(const Grid3&, const Math::Real = Grid3::tolerance) const override; 
+    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override; 
 
     const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
     const Coordinate::Coordinate<T,3>* getSideV(
@@ -53,7 +53,7 @@ public:
     void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
 
     std::unique_ptr<ElemI> toStructured(
-        const CoordI3Group&, const Grid3&, const Math::Real = Grid3::tolerance) const override;
+        const CoordI3Group&, const Grid3&, const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(
         const CoordR3Group&, const Grid3&) const override;
 
@@ -86,7 +86,7 @@ Quadrilateral4<T>::Quadrilateral4(const Id id,
 
 template<class T>
 bool Quadrilateral4<T>::isStructured(const Grid3& grid,
-    const Math::Real tol) const {
+    const math::Real tol) const {
     if (!this->vertexInCell(grid, tol)) {
         return false;
     }
@@ -138,8 +138,8 @@ void Quadrilateral4<T>::setV(const std::size_t i,
 template<class T>
 std::unique_ptr<ElemI> Quadrilateral4<T>::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const {
-    return std::make_unique<Quadrilateral4<Math::Int>>(this->getId(),
+    const Grid3& grid, const math::Real tol) const {
+    return std::make_unique<Quadrilateral4<math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
         this->getLayer(),
         this->getModel());
@@ -149,7 +149,7 @@ template<class T>
 std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    return std::make_unique<Quadrilateral4<Math::Real>>(this->getId(),
+    return std::make_unique<Quadrilateral4<math::Real>>(this->getId(),
         this->vertexToUnstructured(cG, grid).data(),
         this->getLayer(),
         this->getModel());
@@ -158,8 +158,8 @@ std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
 } /* namespace Element */
 
 typedef Element::Quadrilateral4Base         Qua4;
-typedef Element::Quadrilateral4<Math::Real> QuaR4;
-typedef Element::Quadrilateral4<Math::Int > QuaI4;
+typedef Element::Quadrilateral4<math::Real> QuaR4;
+typedef Element::Quadrilateral4<math::Int > QuaI4;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

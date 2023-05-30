@@ -38,11 +38,11 @@ Geometric& Geometric::operator=(const Geometric& rhs) {
     return *this;
 }
 
-Structured* Geometric::getMeshStructured(const Math::Real tol) const {
+Structured* Geometric::getMeshStructured(const math::Real tol) const {
     return Unstructured::getMeshStructured(grid_, tol);
 }
 
-void Geometric::applyScalingFactor(const Math::Real factor) {
+void Geometric::applyScalingFactor(const math::Real factor) {
     Unstructured::applyScalingFactor(factor);
     grid_.applyScalingFactor(factor);
 }

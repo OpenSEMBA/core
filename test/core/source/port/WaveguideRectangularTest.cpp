@@ -14,7 +14,7 @@ using namespace std;
 
 class SourcePortWaveguideRectangularTest : public ::testing::Test {
     void SetUp() {
-        Geometry::BoxI3 plane(Math::CVecI3(0,0,0), Math::CVecI3(30,10,0));
+        Geometry::BoxI3 plane(math::CVecI3(0,0,0), math::CVecI3(30,10,0));
         vector<Geometry::BoxI3> quadBoxes = plane.chop();
         Geometry::ElemId id(0);
         for (size_t i = 0; i < quadBoxes.size(); i++) {
@@ -60,8 +60,8 @@ protected:
 
     static const std::unique_ptr<Magnitude::Magnitude> buildMagnitude() {
         return std::make_unique<Magnitude::Magnitude>(Magnitude::Magnitude(
-            new Math::Function::Gaussian(
-                Math::Function::Gaussian::buildFromMaximumFrequency(
+            new math::function::Gaussian(
+                math::function::Gaussian::buildFromMaximumFrequency(
                     1e9,
                     1.0
                 )

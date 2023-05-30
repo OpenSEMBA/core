@@ -27,8 +27,8 @@ public:
 } /* namespace Element */
 
 typedef Element::QuadrilateralBase         Qua;
-typedef Element::Quadrilateral<Math::Real> QuaR;
-typedef Element::Quadrilateral<Math::Int > QuaI;
+typedef Element::Quadrilateral<math::Real> QuaR;
+typedef Element::Quadrilateral<math::Int > QuaI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

@@ -8,8 +8,8 @@
 #include "Function.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Function {
+namespace math {
+namespace function {
 
 template<class S, class T>
 class LinearInterpolation : public Function<S,T> {

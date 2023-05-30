@@ -6,12 +6,12 @@ namespace SEMBA {
 namespace Geometry {
 namespace Coordinate {
 
-class Relative : public virtual Coordinate<Math::Int,3> {
+class Relative : public virtual Coordinate<math::Int,3> {
 public:
     Relative() = default;
-    Relative(const Id, const Math::CVecR3&);
-    Relative(const Id, const Math::CVecI3&, const Math::CVecR3&);
-    Relative(const Math::CVecR3&);
+    Relative(const Id, const math::CVecR3&);
+    Relative(const Id, const math::CVecI3&, const math::CVecR3&);
+    Relative(const math::CVecR3&);
     Relative(const Relative&);
     virtual ~Relative() = default;
 
@@ -23,13 +23,13 @@ public:
 
     bool operator==(const Base& rhs) const override;
 
-    Math::CVecR3&       rel()       { return rel_; }
-    const Math::CVecR3& rel() const { return rel_; }
+    math::CVecR3&       rel()       { return rel_; }
+    const math::CVecR3& rel() const { return rel_; }
 
     CoordR3* toUnstructured(const Grid3&) const override;
 
 private:
-    Math::CVecR3 rel_;
+    math::CVecR3 rel_;
 };
 
 } /* namespace Coordinate */

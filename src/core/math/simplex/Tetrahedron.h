@@ -3,7 +3,7 @@
 #include "Simplex.h"
 #include "Triangle.h"
 
-namespace SEMBA::Math::Simplex {
+namespace SEMBA::math::simplex {
 
 template <size_t N>
 class Tetrahedron : public Simplex {
@@ -15,8 +15,8 @@ public:
 	static const std::size_t np = ((N + 1) * (N + 2) * (N + 3) / 6);
 	static const std::size_t nfp = Triangle<N>::np;
 
-    using MatIntNpNp = Matrix::Static<Int, np, np>;
-    using MatIntNfpNp = Matrix::Static<Int, nfp, np>;
+    using MatIntNpNp = matrix::Static<Int, np, np>;
+    using MatIntNfpNp = matrix::Static<Int, nfp, np>;
     
     static const std::size_t nsc = 4;
     using Index = CartesianVector<size_t,nsc>;
@@ -32,8 +32,8 @@ public:
     std::size_t nodeIndex(const std::size_t node,
                           const std::size_t coordinate) const;
 
-    const Function::Polynomial<Real>& getLagr(const std::size_t i) const;
-    const Function::Polynomial<Real>& getDLagr(const std::size_t i, 
+    const function::Polynomial<Real>& getLagr(const std::size_t i) const;
+    const function::Polynomial<Real>& getDLagr(const std::size_t i, 
                                                const std::size_t f) const;
     std::vector<Real> getWeights() const;
 
@@ -47,10 +47,10 @@ private:
     CartesianVector<Real,nsc> nodePositions[np];
     std::array<Real,np> weights;
 
-    Function::Polynomial<Real> lagr[np];
-    Function::Polynomial<Real> dLagr[np][faces];
+    function::Polynomial<Real> lagr[np];
+    function::Polynomial<Real> dLagr[np][faces];
 
-    Matrix::Static<Int, faces, nfp> sNId;
+    matrix::Static<Int, faces, nfp> sNId;
     MatIntNfpNp RMatrix(const std::size_t s) const;
     MatIntNpNp PMatrix(const std::size_t s) const;
 
@@ -61,14 +61,14 @@ private:
 template <size_t N>
 Tetrahedron<N>::Tetrahedron() 
 {
-    Matrix::Static<Int, np, nsc> ini;
+    matrix::Static<Int, np, nsc> ini;
     for (std::size_t i = 0; i <= N; i++) {
         for (std::size_t j = numberOfNodes(i - 1); j < np; j++) {
             ini(j, 0) = N - i;
         }
     }
 
-    Matrix::Static<Int, np, nsc> ord;
+    matrix::Static<Int, np, nsc> ord;
     for (std::size_t i = 0; i < nsc; i++) {
         ord = PMatrix(i) * ini;
         for (std::size_t j = 0; j < np; j++) {
@@ -76,13 +76,13 @@ Tetrahedron<N>::Tetrahedron()
         }
     }
 
-    Matrix::Static<Int, np, 1> nList;
+    matrix::Static<Int, np, 1> nList;
     for (std::size_t i = 0; i < np; i++) {
         nList(i, 0) = i;
     }
 
     for (std::size_t f = 0; f < faces; f++) {
-        Matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
+        matrix::Static<Int, nfp, 1> aux = RMatrix(f) * nList;
         for (std::size_t i = 0; i < nfp; i++) {
             sNId(f, i) = aux(i, 0);
         }
@@ -114,14 +114,14 @@ inline std::vector<Real> Tetrahedron<N>::getWeights() const
 }
 
 template <size_t N>
-inline const Function::Polynomial<Real>& Tetrahedron<N>::getLagr(
+inline const function::Polynomial<Real>& Tetrahedron<N>::getLagr(
     const std::size_t i) const 
 {
     return lagr[i];
 }
 
 template <size_t N>
-inline const Function::Polynomial<Real>& Tetrahedron<N>::getDLagr(
+inline const function::Polynomial<Real>& Tetrahedron<N>::getDLagr(
     const std::size_t i,
     const std::size_t f) const 
 {
@@ -189,18 +189,18 @@ size_t Tetrahedron<N>::numberOfNodes(size_t order)
 template <size_t N>
 typename Tetrahedron<N>::MatIntNpNp
 Tetrahedron<N>::PMatrix(std::size_t s) const {
-    Matrix::Static<Int, np, np> res;
+    matrix::Static<Int, np, np> res;
     if (s == 0) {
         res.eye();
     }
     else if (s >= 1 && s <= 3) {
         // P2Dall will store the rotation matrix for all the indices slices.
-        Matrix::Dynamic<Int> P2Dall(np, np);
+        matrix::Dynamic<Int> P2Dall(np, np);
         std::size_t nodesSet = 0;
         for (std::size_t i = 0; i <= n; i++) {
             std::size_t sliceNP = (i + 1) * (i + 2) / 2;
             // Assign P2D to P2Dall matrix.
-            Matrix::Dynamic<Int> auxP = tri.PMatrix(i, 2);
+            matrix::Dynamic<Int> auxP = tri.PMatrix(i, 2);
             for (std::size_t j = 0; j < sliceNP; j++) {
                 for (std::size_t k = 0; k < sliceNP; k++) {
                     P2Dall(j + nodesSet, k + nodesSet) = auxP.val(j, k);
@@ -209,15 +209,15 @@ Tetrahedron<N>::PMatrix(std::size_t s) const {
             nodesSet += sliceNP;
         }
         // Allocates and initializes ordered and final indices vectors.
-        Matrix::Dynamic<Int> orVec(np, 1), fiVec(np, 1), temp(np, 1);
+        matrix::Dynamic<Int> orVec(np, 1), fiVec(np, 1), temp(np, 1);
         for (std::size_t i = 0; i < np; i++) {
             orVec(i, 0) = i;
         }
         // Computes final indices positions.
         fiVec = P2Dall * orVec;
         // Assigns ones to the Q1 matrix.
-        Matrix::Dynamic<Int> Q[faces];
-        Matrix::Dynamic<Int> QInit(np, np);
+        matrix::Dynamic<Int> Q[faces];
+        matrix::Dynamic<Int> QInit(np, np);
         for (std::size_t i = 0; i < faces; i++) {
             Q[i] = QInit;
         }
@@ -253,7 +253,7 @@ Tetrahedron<N>::PMatrix(std::size_t s) const {
         for (std::size_t i = 0; i < np; i++) {
             Q[1](orVec(i, 0) - 1, fiVec(i, 0) - 1) = 1;
         }
-        Matrix::Dynamic<Int> Q0Sq, Q1Sq;
+        matrix::Dynamic<Int> Q0Sq, Q1Sq;
         Q0Sq = Q[0] * Q[0];
         Q1Sq = Q[1] * Q[1];
         switch (s) {
@@ -280,7 +280,7 @@ typename Tetrahedron<N>::MatIntNfpNp
 Tetrahedron<N>::RMatrix(const std::size_t s) const 
 {
     std::size_t last = 0;
-    Matrix::Static<Int, nfp, 1> nodeVec;
+    matrix::Static<Int, nfp, 1> nodeVec;
     for (std::size_t i = 1; i <= n + 1; i++) {
         std::size_t nsp = (i - 1) * (i) * (i + 1) / 6;
         for (std::size_t j = 0; j < i; j++) {
@@ -289,7 +289,7 @@ Tetrahedron<N>::RMatrix(const std::size_t s) const
         last += i;
     }
 
-    Matrix::Static<Int, nfp, np> Raux;
+    matrix::Static<Int, nfp, np> Raux;
     for (std::size_t i = 0; i < nfp; i++) {
         Raux(i, nodeVec(i, 0) - 1) = 1;
     }

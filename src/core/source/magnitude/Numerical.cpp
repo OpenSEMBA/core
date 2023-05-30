@@ -10,14 +10,14 @@ namespace Source {
 namespace Magnitude {
 
 Numerical::Numerical(const FileSystem::Project& fileIn) :   
-    Magnitude(new Math::Function::LinearInterpolation<Math::Real, Math::Real>(fileIn)),
+    Magnitude(new math::function::LinearInterpolation<math::Real, math::Real>(fileIn)),
     file(fileIn)
 {}
 
 Numerical::Numerical(const FileSystem::Project& fileIn,
                      const Magnitude& mag,
-                     const Math::Real timeStep,
-                     const Math::Real finalTime) 
+                     const math::Real timeStep,
+                     const math::Real finalTime) 
 {
     file = fileIn;
     if(mag.is<Numerical>()) {
@@ -40,20 +40,20 @@ Numerical::Numerical(const FileSystem::Project& fileIn,
     out.precision(10);
     out.open(file.c_str());
 
-    Math::Real time = 0.0;
+    math::Real time = 0.0;
     for (std::size_t i = 0; i < nSteps; i++) {
         // Determines if neigh values are aligned with current.
-        std::vector<std::pair<Math::Real,Math::Real>> preAndPost;
-        const Math::Real tPre = time - timeStep;
-        const Math::Real tPost = time + timeStep;
-        preAndPost.push_back(std::pair<Math::Real,Math::Real>(tPre, mag.evaluate(tPre)));
-        preAndPost.push_back(std::pair<Math::Real,Math::Real>(tPost, mag.evaluate(tPost)));
-        const Math::Real interpolated =
-            Math::Function::LinearInterpolation<Math::Real,Math::Real>(
+        std::vector<std::pair<math::Real,math::Real>> preAndPost;
+        const math::Real tPre = time - timeStep;
+        const math::Real tPost = time + timeStep;
+        preAndPost.push_back(std::pair<math::Real,math::Real>(tPre, mag.evaluate(tPre)));
+        preAndPost.push_back(std::pair<math::Real,math::Real>(tPost, mag.evaluate(tPost)));
+        const math::Real interpolated =
+            math::function::LinearInterpolation<math::Real,math::Real>(
                 preAndPost)(time);
-        const Math::Real current = mag.evaluate(time);
-        bool isAligned = Math::Util::equal(current, interpolated,
-                0.0, std::numeric_limits<Math::Real>::epsilon());
+        const math::Real current = mag.evaluate(time);
+        bool isAligned = math::Util::equal(current, interpolated,
+                0.0, std::numeric_limits<math::Real>::epsilon());
         if (!isAligned) {
             out << std::setw(16) << std::setfill(' ') << time 
                 << std::setw(18) << std::setfill(' ') << current 
@@ -66,7 +66,7 @@ Numerical::Numerical(const FileSystem::Project& fileIn,
 
     Magnitude::operator=(
         Magnitude(
-            new Math::Function::LinearInterpolation<Math::Real,Math::Real>(
+            new math::function::LinearInterpolation<math::Real,math::Real>(
                 file)));
 }
 
@@ -77,7 +77,7 @@ bool Numerical::operator==(const Numerical& rhs) const {
     return areEqual;
 }
 
-Math::Real Numerical::evaluate(const Math::Real time) const {
+math::Real Numerical::evaluate(const math::Real time) const {
     throw std::logic_error("Numerical::evaluate not implemented");
 }
 

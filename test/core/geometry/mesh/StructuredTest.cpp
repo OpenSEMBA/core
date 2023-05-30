@@ -5,7 +5,7 @@
 
 using namespace SEMBA;
 using namespace Geometry;
-using namespace Math;
+using namespace math;
 
 class MeshStructuredTest : public ::testing::Test {
 public:

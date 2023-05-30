@@ -4,7 +4,7 @@
 #include "CartesianVector.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 
 class LocalAxis {
 public:

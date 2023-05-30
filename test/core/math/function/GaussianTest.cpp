@@ -7,8 +7,8 @@
 using namespace std;
 
 using namespace SEMBA;
-using namespace Math;
-using namespace Function;
+using namespace math;
+using namespace function;
 
 TEST(MathFunctionGaussianTest, fourierDC) {
     const Real spread = 0.5;

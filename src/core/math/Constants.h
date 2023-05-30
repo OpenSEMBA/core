@@ -5,7 +5,7 @@
 #include "Types.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 namespace Constants {
 
 const Real SPEED_OF_LIGHT_SQ = 8.98755179E+16;

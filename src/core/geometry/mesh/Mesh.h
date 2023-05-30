@@ -22,7 +22,7 @@ public:
     Mesh() = default;
     virtual ~Mesh() = default;
 
-    virtual void applyScalingFactor(const Math::Real factor) = 0;
+    virtual void applyScalingFactor(const math::Real factor) = 0;
     virtual BoxR3 getBoundingBox() const = 0;
     virtual void reassignPointers(const PMGroup& matGr = PMGroup()) = 0;
 

@@ -37,23 +37,23 @@ public:
     const CoordR3* getSideVertex(const std::size_t face,
                                  const std::size_t i) const override;
 
-    Math::Real getArea() const;
+    math::Real getArea() const;
 
     void setV(const std::size_t i, const CoordR3*) override;
 
     void check() const;
 
-    virtual std::unique_ptr<Element<Math::Int >> toStructured(
+    virtual std::unique_ptr<Element<math::Int >> toStructured(
         const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const override;
+        const math::Real = Grid3::tolerance) const override;
 
-    virtual std::unique_ptr<Element<Math::Real>> toUnstructured(
+    virtual std::unique_ptr<Element<math::Real>> toUnstructured(
         const CoordR3Group&,
         const Grid3&) const override;
 
 protected:
-    static const Math::Simplex::Triangle<1> geo;
+    static const math::simplex::Triangle<1> geo;
 
     std::array<const CoordR3*,3> v_;
 };

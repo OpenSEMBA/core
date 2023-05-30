@@ -28,10 +28,10 @@ class Group final : public Class::Group::GroupIdentifiableUnique<C> {
 public:
     Group() = default;
     
-    Group(const std::vector<Math::CVecR3>&);
-    Group(const std::vector<Math::CVecI3>&);
+    Group(const std::vector<math::CVecR3>&);
+    Group(const std::vector<math::CVecI3>&);
 
-    void applyScalingFactor(const Math::Real factor);
+    void applyScalingFactor(const math::Real factor);
 
     template<typename VEC>
     std::map<VEC, std::vector<const C*>> getIndex() const;
@@ -43,13 +43,13 @@ private:
 
 
 template<typename C>
-Group<C>::Group(const std::vector<Math::CVecR3>& pos)
+Group<C>::Group(const std::vector<math::CVecR3>& pos)
 {
     addPos(pos);
 }
 
 template<typename C>
-Group<C>::Group(const std::vector<Math::CVecI3>& pos)
+Group<C>::Group(const std::vector<math::CVecI3>& pos)
 {
     addPos(pos);
 }
@@ -70,7 +70,7 @@ Group<C>::addPos(VEC newPosition)
 }
 
 template<typename C>
-void Group<C>::applyScalingFactor(const Math::Real factor)
+void Group<C>::applyScalingFactor(const math::Real factor)
 {
     for (auto& c : *this) {
         if (c->template is<CoordR3>()) {

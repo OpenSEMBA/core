@@ -8,15 +8,15 @@ namespace SEMBA {
 namespace Geometry {
 namespace Coordinate {
 
-class Conformal : public virtual Coordinate<Math::Int,3> {
+class Conformal : public virtual Coordinate<math::Int,3> {
 public:
     Conformal();
     Conformal(const Id id_,
-              const Math::CVecI3& pos,
-              const Math::Constants::CartesianAxis dir,
-              const Math::Real length);
-    Conformal(const Math::Constants::CartesianAxis dir,
-              const Math::Real length);
+              const math::CVecI3& pos,
+              const math::Constants::CartesianAxis dir,
+              const math::Real length);
+    Conformal(const math::Constants::CartesianAxis dir,
+              const math::Real length);
     Conformal(const Conformal& rhs);
     virtual ~Conformal();
 
@@ -28,14 +28,14 @@ public:
 
     bool operator==(const Base& rhs) const override;
 
-    Math::Constants::CartesianAxis getDir   () const { return dir_;    }
-    Math::Real                     getLength() const { return length_; }
+    math::Constants::CartesianAxis getDir   () const { return dir_;    }
+    math::Real                     getLength() const { return length_; }
 
     CoordR3* toUnstructured(const Grid3&) const override;
 
 private:
-    Math::Constants::CartesianAxis dir_;
-    Math::Real                     length_;
+    math::Constants::CartesianAxis dir_;
+    math::Real                     length_;
 };
 
 } /* namespace Coordinate */

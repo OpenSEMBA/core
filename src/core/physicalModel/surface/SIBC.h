@@ -11,12 +11,12 @@ namespace Surface {
 
 class SIBC : public virtual Surface {
 public:
-    typedef std::pair<std::complex<Math::Real>, Math::MatC22> PoleResidue;
+    typedef std::pair<std::complex<math::Real>, math::MatC22> PoleResidue;
 
     SIBC(const Id id,
             const std::string& name,
-            const Math::MatC22& Zinfinite,
-            const Math::MatC22& Zstatic,
+            const math::MatC22& Zinfinite,
+            const math::MatC22& Zstatic,
             const std::vector<PoleResidue>& poleImpedance);
     virtual ~SIBC();
 
@@ -27,11 +27,11 @@ public:
     virtual std::size_t getNumberOfPoles() const;
 
     std::vector<PoleResidue> getPoleZ() const {return poleZ_;}
-    Math::MatC22 getZInfinity() const {return ZInfinity_;}
-    Math::MatC22 getZLinear() const {return ZLinear_;}
+    math::MatC22 getZInfinity() const {return ZInfinity_;}
+    math::MatC22 getZLinear() const {return ZLinear_;}
 
 private:
-    Math::MatC22 ZInfinity_, ZLinear_;
+    math::MatC22 ZInfinity_, ZLinear_;
     std::vector<PoleResidue> poleZ_;
 };
 

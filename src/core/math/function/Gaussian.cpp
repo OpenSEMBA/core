@@ -1,13 +1,11 @@
-
-
 #include "Gaussian.h"
 
 #include <cmath>
 #include <iostream>
 
 namespace SEMBA {
-namespace Math {
-namespace Function {
+namespace math {
+namespace function {
 
 Real Gaussian::operator ()(const Real& time) const {
     static const Real pi    = Constants::pi;

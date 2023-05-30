@@ -6,7 +6,7 @@
 #include "core/math/Types.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 namespace Util {
 
 const Real epsilon = std::numeric_limits<Real>::epsilon()*1.0e2;

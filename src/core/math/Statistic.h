@@ -7,7 +7,7 @@
 #include "core/math/Types.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 namespace Util {
 
 template<class T>

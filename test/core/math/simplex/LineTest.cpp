@@ -5,7 +5,7 @@
 #include <type_traits>
 
 using namespace SEMBA;
-using namespace Math;
+using namespace math;
 
 template <typename T>
 class MathSimplexLineTest : public ::testing::Test {
@@ -14,7 +14,7 @@ class MathSimplexLineTest : public ::testing::Test {
 
 TEST(MathSimplexLineTest, BasicOperations) {
     static constexpr std::size_t n = 3;
-    Simplex::Line<n> lin;
+    simplex::Line<n> lin;
 
     Real sum = 0.0;
     std::vector<Real> weights = lin.getWeights();

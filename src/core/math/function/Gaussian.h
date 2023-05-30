@@ -7,8 +7,8 @@
 #include "Function.h"
 
 namespace SEMBA {
-namespace Math {
-namespace Function {
+namespace math {
+namespace function {
 
 class Gaussian : public Function<Real,Real> {
 public:

@@ -9,8 +9,8 @@
 
 
 using namespace SEMBA;
-using namespace Math;
-using namespace Matrix;
+using namespace math;
+using namespace matrix;
 
 class MathMatrixDynamicTest : public ::testing::Test {
 

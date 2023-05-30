@@ -8,7 +8,7 @@ namespace SEMBA {
 namespace Geometry {
 namespace Element {
 
-class Triangle : public Surface<Math::Real> {
+class Triangle : public Surface<math::Real> {
 public:
     virtual ~Triangle() = default;
 

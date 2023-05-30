@@ -1,7 +1,7 @@
 #include "Real.h"
 
 namespace SEMBA {
-namespace Math {
+namespace math {
 namespace Util {
 
 bool equal(const Real lhs, const Real rhs,

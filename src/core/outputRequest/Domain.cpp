@@ -21,13 +21,13 @@ Domain::Domain() {
 }
 
 Domain::Domain(bool timeDomain,
-               Math::Real initialTime,
-               Math::Real finalTime,
-               Math::Real samplingPeriod,
+               math::Real initialTime,
+               math::Real finalTime,
+               math::Real samplingPeriod,
                bool frequencyDomain,
-               Math::Real initialFrequency,
-               Math::Real finalFrequency,
-               Math::Real frequencyStep,
+               math::Real initialFrequency,
+               math::Real finalFrequency,
+               math::Real frequencyStep,
                bool logFrequencySweep,
                bool usingTransferFunction,
                std::string transferFunctionFile) {
@@ -103,11 +103,11 @@ bool Domain::isTimeDomain() const {
     return timeDomain_;
 }
 
-Math::Real Domain::getInitialTime() const {
+math::Real Domain::getInitialTime() const {
     return initialTime_;
 }
 
-Math::Real Domain::getFinalTime() const {
+math::Real Domain::getFinalTime() const {
     return finalTime_;
 }
 
@@ -115,19 +115,19 @@ bool Domain::isFrequencyDomain() const {
     return frequencyDomain_;
 }
 
-Math::Real Domain::getInitialFrequency() const {
+math::Real Domain::getInitialFrequency() const {
     return initialFrequency_;
 }
 
-Math::Real Domain::getFinalFrequency() const {
+math::Real Domain::getFinalFrequency() const {
     return finalFrequency_;
 }
 
-Math::Real Domain::getSamplingPeriod() const {
+math::Real Domain::getSamplingPeriod() const {
     return samplingPeriod_;
 }
 
-Math::Real Domain::getFrequencyStep() const {
+math::Real Domain::getFrequencyStep() const {
     return frequencyStep_;
 }
 
@@ -163,11 +163,11 @@ Domain::Type Domain::getDomainType() const {
     }
 }
 
-void Domain::setFinalTime(const Math::Real finalTime) {
+void Domain::setFinalTime(const math::Real finalTime) {
     finalTime_ = finalTime;
 }
 
-void Domain::setSamplingPeriod(const Math::Real samplingPeriod) {
+void Domain::setSamplingPeriod(const math::Real samplingPeriod) {
     samplingPeriod_ = samplingPeriod;
 }
 

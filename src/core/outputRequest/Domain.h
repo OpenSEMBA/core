@@ -17,13 +17,13 @@ public:
 
     Domain();
     Domain(bool timeDomain,
-           Math::Real initialTime,
-           Math::Real finalTime,
-           Math::Real samplingPeriod,
+           math::Real initialTime,
+           math::Real finalTime,
+           math::Real samplingPeriod,
            bool frequencyDomain,
-           Math::Real initialFrequency,
-           Math::Real finalFrequency,
-           Math::Real frequencyStep,
+           math::Real initialFrequency,
+           math::Real finalFrequency,
+           math::Real frequencyStep,
            bool logFrequencySweep,
            bool usingTransferFunction,
            std::string transferFunctionFile);
@@ -31,20 +31,20 @@ public:
     virtual ~Domain();
 
     Domain& operator=(const Domain& rhs);
-    void setFinalTime(const Math::Real finalTime);
-    void setSamplingPeriod(const Math::Real samplingPeriod);
+    void setFinalTime(const math::Real finalTime);
+    void setSamplingPeriod(const math::Real samplingPeriod);
 
 
     bool operator==(const Domain& rhs) const;
 
     bool       isTimeDomain() const;
-    Math::Real getInitialTime() const;
-    Math::Real getFinalTime() const;
-    Math::Real getSamplingPeriod() const;
+    math::Real getInitialTime() const;
+    math::Real getFinalTime() const;
+    math::Real getSamplingPeriod() const;
     bool       isFrequencyDomain() const;
-    Math::Real getInitialFrequency() const;
-    Math::Real getFinalFrequency() const;
-    Math::Real getFrequencyStep() const;
+    math::Real getInitialFrequency() const;
+    math::Real getFinalFrequency() const;
+    math::Real getFrequencyStep() const;
     bool       isLogFrequencySweep() const;
 
     bool isUsingTransferFunction() const;
@@ -54,13 +54,13 @@ public:
 
 private:
     bool        timeDomain_;
-    Math::Real  initialTime_;
-    Math::Real  finalTime_;
-    Math::Real  samplingPeriod_;
+    math::Real  initialTime_;
+    math::Real  finalTime_;
+    math::Real  samplingPeriod_;
     bool        frequencyDomain_;
-    Math::Real  initialFrequency_;
-    Math::Real  finalFrequency_;
-    Math::Real  frequencyStep_;
+    math::Real  initialFrequency_;
+    math::Real  finalFrequency_;
+    math::Real  frequencyStep_;
     bool        logFrequencySweep_;
     bool        usingTransferFunction_;
     std::string transferFunctionFile_;

@@ -7,10 +7,10 @@ namespace Volume {
 
 Classic::Classic(const Id matId,
                  const std::string& name,
-                 const Math::Real relativePermittivity,
-                 const Math::Real relativePermeability,
-                 const Math::Real electricConductivity,
-                 const Math::Real magneticConductivity)
+                 const math::Real relativePermittivity,
+                 const math::Real relativePermeability,
+                 const math::Real electricConductivity,
+                 const math::Real magneticConductivity)
 :   Identifiable<Id>(matId), 
     PhysicalModel(name) {
     rEps_ = relativePermittivity;
@@ -41,42 +41,42 @@ Classic::~Classic() {
 
 }
 
-Math::Real Classic::getImpedance() const {
+math::Real Classic::getImpedance() const {
     if (rEps_ <= 0.0) {
-        return std::numeric_limits<Math::Real>::infinity();
+        return std::numeric_limits<math::Real>::infinity();
     }
-    return std::sqrt((rMu_ * Math::Constants::mu0) /
-                     (rEps_ * Math::Constants::eps0));
+    return std::sqrt((rMu_ * math::Constants::mu0) /
+                     (rEps_ * math::Constants::eps0));
 }
 
-Math::Real Classic::getAdmitance() const {
+math::Real Classic::getAdmitance() const {
     if (rMu_ <= 0.0) {
-        return std::numeric_limits<Math::Real>::infinity();
+        return std::numeric_limits<math::Real>::infinity();
     }
     return (1.0 / getImpedance());
 }
 
-Math::Real Classic::getRelativePermittivity() const {
+math::Real Classic::getRelativePermittivity() const {
     return rEps_;
 }
 
-Math::Real Classic::getRelativePermeability() const {
+math::Real Classic::getRelativePermeability() const {
     return rMu_;
 }
 
-Math::Real Classic::getPermittivity() const {
-    return (rEps_ * Math::Constants::eps0);
+math::Real Classic::getPermittivity() const {
+    return (rEps_ * math::Constants::eps0);
 }
 
-Math::Real Classic::getPermeability() const {
-    return (rMu_ * Math::Constants::mu0);
+math::Real Classic::getPermeability() const {
+    return (rMu_ * math::Constants::mu0);
 }
 
-Math::Real Classic::getElectricConductivity() const {
+math::Real Classic::getElectricConductivity() const {
     return electricConductivity_;
 }
 
-Math::Real Classic::getMagneticConductivity() const {
+math::Real Classic::getMagneticConductivity() const {
     return magneticConudctivity_;
 }
 
