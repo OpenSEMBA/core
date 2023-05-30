@@ -1,13 +1,13 @@
 #pragma once
 
 #include "core/math/function/Function.h"
-#include "core/class/Class.h"
+#include "core/util/Class.h"
 
 namespace SEMBA {
 namespace Source {
 namespace Magnitude {
 
-class Magnitude : public virtual Class::Class {
+class Magnitude : public virtual util::Class {
 public:
     Magnitude() = default;
     Magnitude(math::FunctionRR* mathFunction);

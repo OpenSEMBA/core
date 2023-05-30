@@ -8,7 +8,6 @@
 
 namespace SEMBA {
 namespace math {
-namespace Util {
 
 template<class T>
 T meanDifference(const std::vector<T>& vec);
@@ -49,7 +48,6 @@ T sum(const std::vector<T>& vec) {
     return res;
 }
 
-} /* namespace Util */
 } /* namespace Math */
 } /* namespace SEMBA */
 

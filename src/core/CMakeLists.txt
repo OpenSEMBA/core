@@ -19,6 +19,7 @@ add_library(opensemba_core STATIC
 )
     
 target_link_libraries(opensemba_core
+    opensemba_core_filesystem
     opensemba_core_geometry
     opensemba_core_math
     opensemba_core_physicalmodel

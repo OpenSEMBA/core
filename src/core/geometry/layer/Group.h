@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Layer.h"
-#include "core/class/GroupIdentifiableUnique.h"
+#include "core/util/GroupIdentifiableUnique.h"
 
 namespace SEMBA {
 namespace Geometry {
 namespace Layer {
 
 template<typename L = Layer>
-class Group final : public Class::Group::GroupIdentifiableUnique<L>  {
+class Group final : public util::GroupIdentifiableUnique<L>  {
 public:
     const L* getName(const std::string name) const;
 

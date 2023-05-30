@@ -6,9 +6,9 @@
 #include "core/geometry/Grid.h"
 #include "core/geometry/coordinate/Group.h"
 #include "core/geometry/layer/Group.h"
-#include "core/class/Class.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Class.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 
 #include <algorithm>
 
@@ -20,13 +20,13 @@ namespace Geometry {
 namespace Element {
 
 typedef Geometry::Layer::Layer     Layer;
-typedef Class::Identifiable<MatId> Model;
+typedef util::Identifiable<MatId> Model;
 
 class Base;
-typedef Class::Identification<Base> Id;
+typedef util::Identification<Base> Id;
 
-class Base : public virtual Class::Identifiable<Id>,
-             public virtual Class::Class {
+class Base : public virtual util::Identifiable<Id>,
+             public virtual util::Class {
 public:
     Base(const Layer* lay = nullptr,
          const Model* mat = nullptr);

@@ -4,7 +4,7 @@
 #include <memory>
 
 namespace SEMBA {
-namespace Class {
+namespace util {
 
 class Class {
 public:

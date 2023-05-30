@@ -4,19 +4,19 @@
 
 #include "core/geometry/Grid.h"
 #include "core/math/CartesianVector.h"
-#include "core/class/Class.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Class.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 
 namespace SEMBA {
 namespace Geometry {
 namespace Coordinate {
 
 class Base;
-typedef Class::Identification<Base> Id;
+typedef util::Identification<Base> Id;
 
-class Base : public virtual Class::Class,
-             public virtual Class::Identifiable<Id> {
+class Base : public virtual util::Class,
+             public virtual util::Identifiable<Id> {
 public:
     Base() = default;
     virtual ~Base() = default;

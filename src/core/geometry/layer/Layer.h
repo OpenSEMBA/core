@@ -3,18 +3,18 @@
 #include <string>
 #include <memory>
 
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 
 namespace SEMBA {
 namespace Geometry {
 namespace Layer {
 
 class Layer;
-typedef Class::Identification<Layer> Id;
+typedef util::Identification<Layer> Id;
 
-class Layer final : public virtual Class::Class,
-              public virtual Class::Identifiable<Id> {
+class Layer final : public virtual util::Class,
+              public virtual util::Identifiable<Id> {
 public:
     Layer() = default;
     Layer(const Id id, const std::string& name);

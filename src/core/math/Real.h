@@ -7,7 +7,6 @@
 
 namespace SEMBA {
 namespace math {
-namespace Util {
 
 const Real epsilon = std::numeric_limits<Real>::epsilon()*1.0e2;
 const Real tolerance = 1e-10;
@@ -29,7 +28,6 @@ Real sign(Real val);
 Real ceil(const Real v, Real rel = 0.0);
 Real round(Real v);
 
-} /* namespace Util */
 } /* namespace Math */
 } /* namespace SEMBA */
 

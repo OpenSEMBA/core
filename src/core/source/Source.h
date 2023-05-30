@@ -2,9 +2,9 @@
 
 #include "core/geometry/element/Group.h"
 #include "core/filesystem/Project.h"
-#include "core/class/Class.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Class.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 #include "magnitude/Magnitude.h"
 #include "magnitude/Numerical.h"
 
@@ -12,10 +12,10 @@ namespace SEMBA {
 namespace Source {
 
 class Source;
-    typedef Class::Identification<Source> Id;
+    typedef util::Identification<Source> Id;
 
-class Source : public virtual Class::Identifiable<Id>,
-               public virtual Class::Class {
+class Source : public virtual util::Identifiable<Id>,
+               public virtual util::Class {
 public:
     using Target = std::vector<Geometry::ElemId>;
 
