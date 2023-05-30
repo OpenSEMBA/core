@@ -1,16 +1,13 @@
 #pragma once
 
-#include "math/Types.h"
-#include "geometry/Box.h"
-
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
-
-#include "geometry/element/Element.h"
-#include "geometry/element/Group.h"
-
-#include "physicalModel/Group.h"
+#include "core/math/Types.h"
+#include "core/geometry/Box.h"
+#include "core/class/Class.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
+#include "core/geometry/element/Element.h"
+#include "core/geometry/element/Group.h"
+#include "core/physicalModel/Group.h"
 
 namespace SEMBA {
 namespace Geometry {

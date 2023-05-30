@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/simplex/Tetrahedron.h"
+#include "core/math/simplex/Tetrahedron.h"
 #include "Triangle3.h"
 #include "Volume.h"
 

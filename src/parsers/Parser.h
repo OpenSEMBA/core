@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "ProblemDescription.h"
+#include "core/ProblemDescription.h"
 
 namespace SEMBA::parsers {
     bool strToBool(const std::string& value);

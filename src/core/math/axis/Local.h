@@ -1,9 +1,7 @@
-
-
 #pragma once
 
-#include "math/vector/Cartesian.h"
-#include "math/matrix/Static.h"
+#include "core/math/vector/Cartesian.h"
+#include "core/math/matrix/Static.h"
 
 namespace SEMBA {
 namespace Math {

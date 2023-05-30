@@ -1,6 +1,6 @@
 #pragma once
 
-#include "physicalModel/PhysicalModel.h"
+#include "core/physicalModel/PhysicalModel.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

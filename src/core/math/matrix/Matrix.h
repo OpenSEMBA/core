@@ -9,8 +9,8 @@
 #include <vector>
 #include <numeric>
 
-#include "math/Types.h"
-#include "math/vector/Cartesian.h"
+#include "core/math/Types.h"
+#include "core/math/vector/Cartesian.h"
 
 namespace SEMBA {
 namespace Math {

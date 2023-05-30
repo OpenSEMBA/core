@@ -1,10 +1,8 @@
-
-
 #include "Exporter.h"
 
-#include "geometry/element/Line2.h"
-#include "geometry/element/Quadrilateral4.h"
-#include "geometry/element/Hexahedron8.h"
+#include "core/geometry/element/Line2.h"
+#include "core/geometry/element/Quadrilateral4.h"
+#include "core/geometry/element/Hexahedron8.h"
 
 namespace SEMBA {
 namespace exporters {

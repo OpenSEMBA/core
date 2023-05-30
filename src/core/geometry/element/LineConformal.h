@@ -1,6 +1,6 @@
 #pragma once
 
-#include "geometry/coordinate/Conformal.h"
+#include "core/geometry/coordinate/Conformal.h"
 
 #include "Line2.h"
 

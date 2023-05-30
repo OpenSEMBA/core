@@ -1,7 +1,7 @@
 #pragma once
 
-#include "math/matrix/Static.h"
-#include "filesystem/Project.h"
+#include "core/math/matrix/Static.h"
+#include "core/filesystem/Project.h"
 
 #include "Surface.h"
 

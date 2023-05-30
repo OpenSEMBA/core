@@ -1,11 +1,7 @@
-
-
 #pragma once
 
-#include <iomanip>
-
 #include "Magnitude.h"
-#include "filesystem/Project.h"
+#include "core/filesystem/Project.h"
 
 namespace SEMBA {
 namespace Source {

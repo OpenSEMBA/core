@@ -1,11 +1,9 @@
-
-
 #pragma once
 
 #include <cmath>
 #include <limits>
 
-#include "math/Types.h"
+#include "core/math/Types.h"
 
 namespace SEMBA {
 namespace Math {

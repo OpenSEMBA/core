@@ -1,6 +1,7 @@
 #include "Element.h"
 
 #include <algorithm>
+#include <vector>
 
 namespace SEMBA {
 namespace Geometry {

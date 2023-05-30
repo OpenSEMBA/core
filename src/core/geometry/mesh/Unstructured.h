@@ -1,13 +1,10 @@
 #pragma once
 
-#include "geometry/element/Triangle.h"
-
-
 #include "Mesh.h"
-#include "geometry/Grid.h"
-#include "geometry/coordinate/Group.h"
-#include "geometry/element/Group.h"
-#include "geometry/layer/Group.h"
+
+#include "core/geometry/coordinate/Group.h"
+#include "core/geometry/element/Group.h"
+#include "core/geometry/layer/Group.h"
 
 namespace SEMBA {
 namespace Geometry {

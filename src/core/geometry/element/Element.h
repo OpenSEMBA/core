@@ -1,15 +1,14 @@
 #pragma once
 
-#include "math/vector/Cartesian.h"
-#include "geometry/Box.h"
-#include "geometry/Grid.h"
-#include "geometry/coordinate/Group.h"
-#include "geometry/layer/Group.h"
-#include "physicalModel/Group.h"
-
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
+#include "core/math/vector/Cartesian.h"
+#include "core/physicalModel/Group.h"
+#include "core/geometry/Box.h"
+#include "core/geometry/Grid.h"
+#include "core/geometry/coordinate/Group.h"
+#include "core/geometry/layer/Group.h"
+#include "core/class/Class.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 
 #include <algorithm>
 

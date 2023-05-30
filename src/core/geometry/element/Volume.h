@@ -1,12 +1,9 @@
-
-
 #pragma once
 
 #include <exception>
 
-#include "math/simplex/Simplex.h"
+#include "core/math/simplex/Simplex.h"
 #include "Surface.h"
-
 #include "Element.h"
 
 namespace SEMBA {

@@ -2,12 +2,11 @@
 
 #include <memory>
 
-#include "geometry/Grid.h"
-#include "math/vector/Cartesian.h"
-
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
+#include "core/geometry/Grid.h"
+#include "core/math/vector/Cartesian.h"
+#include "core/class/Class.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 
 namespace SEMBA {
 namespace Geometry {

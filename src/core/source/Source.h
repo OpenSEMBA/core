@@ -1,14 +1,12 @@
 #pragma once
 
-#include "geometry/element/Group.h"
-
+#include "core/geometry/element/Group.h"
+#include "core/filesystem/Project.h"
+#include "core/class/Class.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 #include "magnitude/Magnitude.h"
 #include "magnitude/Numerical.h"
-#include "filesystem/Project.h"
-
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
 
 namespace SEMBA {
 namespace Source {

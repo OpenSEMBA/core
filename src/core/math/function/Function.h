@@ -1,10 +1,10 @@
 #pragma once
 
-#include "math/Types.h"
-#include "math/Constants.h"
-
-#include <iostream>
 #include <typeinfo>
+#include <iostream>
+
+#include "core/math/Constants.h"
+#include "core/math/Types.h"
 
 namespace SEMBA {
 namespace Math {

@@ -1,5 +1,7 @@
 #include "Parser.h"
 
+#include "core/geometry/element/Triangle3.h"
+
 namespace SEMBA {
 namespace parsers {
 namespace STL {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/matrix/Static.h"
+#include "core/math/matrix/Static.h"
 
 #include "Simplex.h"
 

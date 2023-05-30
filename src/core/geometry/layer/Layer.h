@@ -3,9 +3,8 @@
 #include <string>
 #include <memory>
 
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 
 namespace SEMBA {
 namespace Geometry {
@@ -44,6 +43,8 @@ private:
 
     static std::string spaceToUnderscore(std::string rhs);
 };
+
+
 
 } /* namespace Layer */
 

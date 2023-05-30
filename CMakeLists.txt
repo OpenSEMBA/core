@@ -17,7 +17,7 @@ option(OPENSEMBA_ENABLE_TESTS OFF)
 
 message(STATUS "OPEMSEMBA_ENABLE_TESTS: " ${OPENSEMBA_ENABLE_TESTS})
 
-include_directories(src/ src/core/)
+include_directories(src/)
 
 add_subdirectory(src/core)
 add_subdirectory(src/parsers)

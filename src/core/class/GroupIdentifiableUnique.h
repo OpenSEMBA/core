@@ -3,6 +3,7 @@
 #include <memory>
 #include <set>
 #include <iterator>
+#include <vector>
 
 namespace SEMBA {
 namespace Class {

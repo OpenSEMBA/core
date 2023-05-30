@@ -1,15 +1,14 @@
+
 #pragma once
 
 #include <exception>
 
-#include "geometry/element/Hexahedron8.h"
-
 #include "Mesh.h"
-#include "geometry/Grid.h"
-#include "geometry/BoundTerminations.h"
-#include "geometry/coordinate/Group.h"
-#include "geometry/element/Group.h"
-#include "geometry/layer/Group.h"
+#include "core/geometry/Grid.h"
+#include "core/geometry/BoundTerminations.h"
+#include "core/geometry/coordinate/Group.h"
+#include "core/geometry/element/Group.h"
+#include "core/geometry/layer/Group.h"
 
 namespace SEMBA {
 namespace Geometry {

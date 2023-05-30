@@ -1,8 +1,6 @@
-
-
 #pragma once
 
-#include "math/simplex/Triangle.h"
+#include "core/math/simplex/Triangle.h"
 
 #include "Surface.h"
 

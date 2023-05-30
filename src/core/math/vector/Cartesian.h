@@ -5,9 +5,9 @@
 #include <stdexcept>
 #include <cassert>
 
-#include "math/Types.h"
-#include "math/Constants.h"
-#include "math/util/Real.h"
+#include "core/math/Types.h"
+#include "core/math/Constants.h"
+#include "core/math/util/Real.h"
 
 namespace SEMBA {
 namespace Math {

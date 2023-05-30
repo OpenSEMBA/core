@@ -8,23 +8,8 @@
 #include <algorithm>
 #include <type_traits>
 
-#include "geometry/mesh/Geometric.h"
-#include "physicalModel/Bound.h"
-#include "physicalModel/multiport/Multiport.h"
-#include "physicalModel/surface/Multilayer.h"
-#include "physicalModel/surface/SIBCFile.h"
-#include "physicalModel/volume/Dispersive.h"
-#include "physicalModel/volume/Anisotropic.h"
-
-#include "source/Dipole.h"
-#include "source/Generator.h"
-#include "source/OnLine.h"
-#include "source/PlaneWave.h"
-#include "source/port/Waveguide.h"
-#include "source/port/TEM.h"
-
-#include "ProblemDescription.h"
-
+#include "core/geometry/mesh/Geometric.h"
+#include "core/ProblemDescription.h"
 #include "parsers/Parser.h"
 
 namespace SEMBA::parsers::JSON {
