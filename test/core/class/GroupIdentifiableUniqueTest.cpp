@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
-#include "core/class/GroupIdentifiableUnique.h"
+#include "core/util/GroupIdentifiableUnique.h"
 #include "core/geometry/layer/Layer.h"
 
 using namespace SEMBA;
 using namespace Geometry;
-using namespace Class::Group;
+using namespace util;
 
 class GroupIdentifiableUniqueTest : public ::testing::Test {
 public:

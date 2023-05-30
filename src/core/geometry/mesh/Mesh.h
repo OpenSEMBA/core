@@ -2,9 +2,9 @@
 
 #include "core/math/Types.h"
 #include "core/geometry/Box.h"
-#include "core/class/Class.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Class.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 #include "core/geometry/element/Element.h"
 #include "core/geometry/element/Group.h"
 #include "core/physicalModel/Group.h"
@@ -14,10 +14,10 @@ namespace Geometry {
 namespace Mesh {
 
 class Mesh;
-    typedef Class::Identification<Mesh> Id;
+    typedef util::Identification<Mesh> Id;
 
-class Mesh : public virtual Class::Identifiable<Id>,
-             public virtual Class::Class {
+class Mesh : public virtual util::Identifiable<Id>,
+             public virtual util::Class {
 public:
     Mesh() = default;
     virtual ~Mesh() = default;

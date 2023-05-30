@@ -5,9 +5,7 @@
 #include <iterator>
 #include <vector>
 
-namespace SEMBA {
-namespace Class {
-namespace Group {
+namespace SEMBA::util {
 
 template<typename T>
 class GroupIdentifiableUnique {
@@ -281,6 +279,4 @@ bool GroupIdentifiableUnique<T>::emptyOf() const
     return this->sizeOf<T2>() == 0;
 }
 
-} // Namespace Group
-} // Namespace Class
-} // Namespace SEMBA
+}

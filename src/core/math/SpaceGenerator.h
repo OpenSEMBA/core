@@ -9,7 +9,6 @@
 
 namespace SEMBA {
 namespace math {
-namespace Util {
 
 template<class T>
 std::vector<Real> logspace(const std::pair<Real, Real>& rangeExponents,
@@ -59,7 +58,6 @@ std::vector<T> linspace(const std::pair<T, T>& range,
     return res;
 }
 
-} /* namespace Util */
 } /* namespace Math */
 } /* namespace SEMBA */
 

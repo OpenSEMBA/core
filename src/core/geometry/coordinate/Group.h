@@ -7,7 +7,7 @@
 #pragma warning(disable:4250)
 #endif
 
-#include "core/class/GroupIdentifiableUnique.h"
+#include "core/util/GroupIdentifiableUnique.h"
 
 #include "Coordinate.h"
 
@@ -24,7 +24,7 @@ struct CoordComparator {
 };
 
 template<typename C = Coord>
-class Group final : public Class::Group::GroupIdentifiableUnique<C> {
+class Group final : public util::GroupIdentifiableUnique<C> {
 public:
     Group() = default;
     
@@ -38,7 +38,7 @@ public:
 
 private:
     template<typename VEC>
-    typename Class::Group::GroupIdentifiableUnique<C>::iterator  addPos(VEC);
+    typename util::GroupIdentifiableUnique<C>::iterator  addPos(VEC);
 };
 
 
@@ -55,7 +55,7 @@ Group<C>::Group(const std::vector<math::CVecI3>& pos)
 }
 
 template<typename C> template<typename VEC>
-typename Class::Group::GroupIdentifiableUnique<C>::iterator
+typename util::GroupIdentifiableUnique<C>::iterator
 Group<C>::addPos(VEC newPosition)
 {
     CoordId newId;

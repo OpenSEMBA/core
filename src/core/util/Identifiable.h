@@ -3,7 +3,7 @@
 #include "Class.h"
 
 namespace SEMBA {
-namespace Class {
+namespace util {
 
 template<class Id>
 class Identifiable : public virtual Class {

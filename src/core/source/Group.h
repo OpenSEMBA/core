@@ -1,13 +1,13 @@
 #pragma once
 
 #include "core/source/Source.h"
-#include "core/class/GroupIdentifiableUnique.h"
+#include "core/util/GroupIdentifiableUnique.h"
 
 namespace SEMBA {
 namespace Source {
 
 template<typename S = Source>
-class Group : public Class::Group::GroupIdentifiableUnique<S> {
+class Group : public util::GroupIdentifiableUnique<S> {
 };
 
 } /* namespace Source */

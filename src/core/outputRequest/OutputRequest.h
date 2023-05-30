@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/geometry/element/Group.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 
 #include "Domain.h"
 
@@ -10,10 +10,10 @@ namespace SEMBA {
 namespace OutputRequest {
 
 class OutputRequest;
-    typedef Class::Identification<OutputRequest> Id;
+    typedef util::Identification<OutputRequest> Id;
 
-class OutputRequest : public virtual Class::Identifiable<Id>,
-                      public virtual Class::Class {
+class OutputRequest : public virtual util::Identifiable<Id>,
+                      public virtual util::Class {
 public:
     using Target = std::vector<Geometry::ElemId>;
 

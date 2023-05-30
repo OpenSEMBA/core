@@ -1,13 +1,13 @@
 #pragma once
 
 #include "OutputRequest.h"
-#include "core/class/GroupIdentifiableUnique.h"
+#include "core/util/GroupIdentifiableUnique.h"
 
 namespace SEMBA {
 namespace OutputRequest {
 
 template<typename O = OutputRequest>
-class Group : public Class::Group::GroupIdentifiableUnique<O> {
+class Group : public util::GroupIdentifiableUnique<O> {
 };
 
 } /* namespace OutputRequest */

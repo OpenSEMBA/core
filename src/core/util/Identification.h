@@ -6,7 +6,7 @@
 #include <sstream>
 
 namespace SEMBA {
-namespace Class {
+namespace util {
 
 template <typename T>
 class Identification {

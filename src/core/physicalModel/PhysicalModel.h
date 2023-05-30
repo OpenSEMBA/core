@@ -1,18 +1,18 @@
 #pragma once
 
 #include "core/math/Constants.h"
-#include "core/class/Class.h"
-#include "core/class/Identifiable.h"
-#include "core/class/Identification.h"
+#include "core/util/Class.h"
+#include "core/util/Identifiable.h"
+#include "core/util/Identification.h"
 
 namespace SEMBA {
 namespace PhysicalModel {
 
 class PhysicalModel;
-typedef Class::Identification<PhysicalModel> Id;
+typedef util::Identification<PhysicalModel> Id;
 
-class PhysicalModel : public virtual Class::Identifiable<Id>,
-                      public virtual Class::Class {
+class PhysicalModel : public virtual util::Identifiable<Id>,
+                      public virtual util::Class {
 public:
     enum class Type {
         PEC,
