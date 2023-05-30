@@ -6,8 +6,8 @@ using namespace Math;
 using namespace Geometry;
 
 TEST(GeometryBoxTest, VolumeBoxBasicOperations) {
-    Vector::Cartesian<Real,3> min(-0.1, -0.1, -0.1);
-    Vector::Cartesian<Real,3> max(1.0, 1.0, 1.0);
+    CartesianVector<Real,3> min(-0.1, -0.1, -0.1);
+    CartesianVector<Real,3> max(1.0, 1.0, 1.0);
     Box<Real,3> box(min, max);
     EXPECT_EQ(box.getMin(), min);
     EXPECT_EQ(box.getMax(), max);

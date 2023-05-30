@@ -1,5 +1,3 @@
-
-
 #include "Tetrahedron4.h"
 
 namespace SEMBA {

@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "core/math/function/Gaussian.h"
-#include "core/math/util/SpaceGenerator.h"
+#include "core/math/SpaceGenerator.h"
 
 using namespace std;
 

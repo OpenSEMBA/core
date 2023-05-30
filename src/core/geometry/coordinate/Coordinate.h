@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "core/geometry/Grid.h"
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 #include "core/class/Class.h"
 #include "core/class/Identifiable.h"
 #include "core/class/Identification.h"
@@ -29,11 +29,11 @@ public:
 
 template <class T, std::size_t D>
 class Coordinate : public virtual Base,
-                   public virtual Math::Vector::Cartesian<T,D> {
+                   public virtual Math::CartesianVector<T,D> {
 public:
     Coordinate() = default;
-    Coordinate(const Id id_, const Math::Vector::Cartesian<T,D>& pos);
-    explicit Coordinate(const Math::Vector::Cartesian<T,D>& pos);
+    Coordinate(const Id id_, const Math::CartesianVector<T,D>& pos);
+    explicit Coordinate(const Math::CartesianVector<T,D>& pos);
     Coordinate(const Coordinate& rhs);
     virtual ~Coordinate() = default;
 
@@ -49,8 +49,8 @@ public:
     virtual bool isStructured(const Grid<D>&,
                               const Math::Real = Grid<D>::tolerance) const;
 
-    Math::Vector::Cartesian<T,D>&       pos()       { return *this; }
-    const Math::Vector::Cartesian<T,D>& pos() const { return *this; }
+    Math::CartesianVector<T,D>&       pos()       { return *this; }
+    const Math::CartesianVector<T,D>& pos() const { return *this; }
 
     virtual Coordinate<Math::Int ,D>* toStructured  (const Grid<D>&) const;
     virtual Coordinate<Math::Real,D>* toUnstructured(const Grid<D>&) const;
@@ -60,22 +60,22 @@ public:
 
 template<class T, std::size_t D>
 Coordinate<T, D>::Coordinate(const Id id,
-    const Math::Vector::Cartesian<T, D>& pos)
+    const Math::CartesianVector<T, D>& pos)
     : Identifiable<Id>(id),
-    Math::Vector::Cartesian<T, D>(pos) {
+    Math::CartesianVector<T, D>(pos) {
 
 }
 
 template<class T, std::size_t D>
-Coordinate<T, D>::Coordinate(const Math::Vector::Cartesian<T, D>& pos)
-    : Math::Vector::Cartesian<T, D>(pos) {
+Coordinate<T, D>::Coordinate(const Math::CartesianVector<T, D>& pos)
+    : Math::CartesianVector<T, D>(pos) {
 
 }
 
 template<class T, std::size_t D>
 Coordinate<T, D>::Coordinate(const Coordinate& rhs)
     : Identifiable<Id>(rhs),
-    Math::Vector::Cartesian<T, D>(rhs) {
+    Math::CartesianVector<T, D>(rhs) {
 
 }
 
@@ -83,7 +83,7 @@ template<class T, std::size_t D>
 Coordinate<T, D>& Coordinate<T, D>::operator=(const Coordinate& rhs)
 {
     setId(rhs.getId());
-    Math::Vector::Cartesian<T, D>::operator=(rhs);
+    Math::CartesianVector<T, D>::operator=(rhs);
     return *this;
 }
 

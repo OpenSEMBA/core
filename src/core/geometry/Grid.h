@@ -5,7 +5,7 @@
 #include <array>
 
 #include "core/geometry/Box.h"
-#include "core/math/util/Real.h"
+#include "core/math/Real.h"
 
 namespace SEMBA {
 namespace Geometry {
@@ -16,8 +16,8 @@ template<std::size_t D>
 class Grid {
     typedef Box<Math::Real,D> BoxRD;
     typedef Box<Math::Int ,D> BoxID;
-    typedef Math::Vector::Cartesian<Math::Real,D> CVecRD;
-    typedef Math::Vector::Cartesian<Math::Int, D> CVecID;
+    typedef Math::CartesianVector<Math::Real,D> CVecRD;
+    typedef Math::CartesianVector<Math::Int, D> CVecID;
 public:
     static const Math::Real tolerance;
 
@@ -325,7 +325,7 @@ bool Grid<D>::isCell(const std::vector<CVecRD>& pos,
 }
 
 template<std::size_t D>
-Math::Vector::Cartesian<Math::Int, D> Grid<D>::getNumCells() const {
+Math::CartesianVector<Math::Int, D> Grid<D>::getNumCells() const {
     CVecID res;
     for (std::size_t d = 0; d < D; d++) {
         res(d) = getPos(d).size() - 1; // Minimum size of pos is 2.
@@ -334,12 +334,12 @@ Math::Vector::Cartesian<Math::Int, D> Grid<D>::getNumCells() const {
 }
 
 template<std::size_t D>
-Math::Vector::Cartesian<Math::Int, D> Grid<D>::getOffset() const {
+Math::CartesianVector<Math::Int, D> Grid<D>::getOffset() const {
     return CVecID(0, 0, 0);
 }
 
 template<std::size_t D>
-Math::Vector::Cartesian<Math::Real, D> Grid<D>::getOrigin() const {
+Math::CartesianVector<Math::Real, D> Grid<D>::getOrigin() const {
     CVecRD res;
     for (std::size_t d = 0; d < D; d++) {
         if (pos_[d].size() == 0) {
@@ -428,7 +428,7 @@ Box<Math::Int, D> Grid<D>::getBoxIContaining(const CVecRD& point) const {
 }
 
 template<std::size_t D>
-std::vector< Math::Vector::Cartesian<Math::Real, D> >
+std::vector< Math::CartesianVector<Math::Real, D> >
 Grid<D>::getCenterOfCellsInside(const BoxRD& bound) const {
     // Determines centers of cells.
     std::vector<Math::Real> center[D];
@@ -489,7 +489,7 @@ std::vector<Math::Real> Grid<D>::getPosInRange(const std::size_t dir,
 }
 
 template<std::size_t D>
-std::vector< Math::Vector::Cartesian<Math::Real, D> > Grid<D>::getPos() const {
+std::vector< Math::CartesianVector<Math::Real, D> > Grid<D>::getPos() const {
     // Combines positions in a std::vector of CVecRD positions.
     std::vector<CVecRD> res;
     res.reserve(pos_[Math::Constants::x].size() *
@@ -514,7 +514,7 @@ std::vector<Math::Real> Grid<D>::getPos(const std::size_t direction) const {
 };
 
 template<std::size_t D>
-Math::Vector::Cartesian<Math::Real, D> Grid<D>::getPos(
+Math::CartesianVector<Math::Real, D> Grid<D>::getPos(
     const CVecID& ijk) const {
     CVecRD res;
     for (std::size_t i = 0; i < D; i++) {
@@ -593,8 +593,8 @@ std::pair<Math::Int, Math::Real> Grid<D>::getCellPair(const std::size_t dir,
 }
 
 template<std::size_t D>
-std::pair<Math::Vector::Cartesian<Math::Int, D>,
-    Math::Vector::Cartesian<Math::Real, D>>
+std::pair<Math::CartesianVector<Math::Int, D>,
+    Math::CartesianVector<Math::Real, D>>
     Grid<D>::getCellPair(const CVecRD& xyz,
         const bool approx,
         const Math::Real tol,
@@ -628,7 +628,7 @@ Math::Int Grid<D>::getCell(const std::size_t dir,
 }
 
 template<std::size_t D>
-Math::Vector::Cartesian<Math::Int, D> Grid<D>::getCell(const CVecRD& coords,
+Math::CartesianVector<Math::Int, D> Grid<D>::getCell(const CVecRD& coords,
     const bool approx,
     const Math::Real tol,
     bool* err) const {

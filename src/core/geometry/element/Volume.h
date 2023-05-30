@@ -30,7 +30,7 @@ public:
             const std::size_t face,
             const Math::Constants::CartesianPlane plane) const;
 
-    Math::Vector::Cartesian<T,3> getSideNormal(const std::size_t f) const;
+    Math::CartesianVector<T,3> getSideNormal(const std::size_t f) const;
 
     virtual Math::Real getAreaOfFace(const std::size_t face) const = 0;
     virtual Math::Real getVolume() const = 0;
@@ -49,14 +49,14 @@ bool Volume<T>::isFaceContainedInPlane(
     const std::size_t face,
     const Math::Constants::CartesianPlane plane) const {
     Box<T, 3> box = getBoundOfFace(face);
-    Math::Vector::Cartesian<T, 3> vec = box.getMax() - box.getMin();
+    Math::CartesianVector<T, 3> vec = box.getMax() - box.getMin();
     return vec.isContainedInPlane(plane);
 }
 
 template<class T>
-Math::Vector::Cartesian<T, 3> Volume<T>::getSideNormal(
+Math::CartesianVector<T, 3> Volume<T>::getSideNormal(
     const std::size_t f) const {
-    Math::Vector::Cartesian<T, 3> vec1, vec2, res;
+    Math::CartesianVector<T, 3> vec1, vec2, res;
     vec1 = *this->getSideVertex(f, 1) - *this->getSideVertex(f, 0);
     vec2 = *this->getSideVertex(f, 2) - *this->getSideVertex(f, 0);
     res = (vec1 ^ vec2).normalize();

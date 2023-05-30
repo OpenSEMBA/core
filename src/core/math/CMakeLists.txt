@@ -9,9 +9,9 @@ include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 add_library(opensemba_core_math STATIC
     "LocalAxis.cpp"
+    "Real.cpp"
     "function/BandLimited.cpp"
     "function/Gaussian.cpp"
     "function/Waveform.cpp"
     "simplex/Simplex.cpp"
-    "util/Real.cpp"
 )

@@ -1,7 +1,7 @@
 
 #include <gtest/gtest.h>
 
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 
 using namespace SEMBA;
 using namespace Math;

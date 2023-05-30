@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "core/math/matrix/Dynamic.h"
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 
 #include "Function.h"
 
@@ -45,10 +45,10 @@ public:
     Int maxPower() const;
 
     T operator()(const T&) const;
-    T eval(const Vector::Cartesian<T,1>& pos) const;
-    T eval(const Vector::Cartesian<T,2>& pos) const;
-    T eval(const Vector::Cartesian<T,3>& pos) const;
-    T eval(const Vector::Cartesian<T,4>& pos) const;
+    T eval(const CartesianVector<T,1>& pos) const;
+    T eval(const CartesianVector<T,2>& pos) const;
+    T eval(const CartesianVector<T,3>& pos) const;
+    T eval(const CartesianVector<T,4>& pos) const;
 
     void derive(std::size_t coord);
 
@@ -105,7 +105,7 @@ inline Int Polynomial<T>::monomialPower(
 }
 
 template<class T>
-T Polynomial<T>::eval(const Vector::Cartesian<T, 1>& pos) const {
+T Polynomial<T>::eval(const CartesianVector<T, 1>& pos) const {
     assert(1 == nv_);
     T prod;
     std::size_t m, v;
@@ -120,7 +120,7 @@ T Polynomial<T>::eval(const Vector::Cartesian<T, 1>& pos) const {
 }
 
 template<class T>
-T Polynomial<T>::eval(const Vector::Cartesian<T, 2>& pos) const {
+T Polynomial<T>::eval(const CartesianVector<T, 2>& pos) const {
     assert(2 == nv_);
     T prod;
     std::size_t m, v;
@@ -135,7 +135,7 @@ T Polynomial<T>::eval(const Vector::Cartesian<T, 2>& pos) const {
 }
 
 template<class T>
-T Polynomial<T>::eval(const Vector::Cartesian<T, 3>& pos) const {
+T Polynomial<T>::eval(const CartesianVector<T, 3>& pos) const {
     assert(3 == nv_);
     T prod;
     std::size_t m, v;
@@ -150,7 +150,7 @@ T Polynomial<T>::eval(const Vector::Cartesian<T, 3>& pos) const {
 }
 
 template<class T>
-T Polynomial<T>::eval(const Vector::Cartesian<T, 4>& pos) const {
+T Polynomial<T>::eval(const CartesianVector<T, 4>& pos) const {
     assert(4 == nv_);
     T prod;
     std::size_t m, v;
@@ -341,7 +341,7 @@ Int Polynomial<T>::maxPower() const {
 
 template<class T>
 inline T Polynomial<T>::operator ()(const T& arg) const {
-    return eval(Vector::Cartesian<T, 1>(arg));
+    return eval(CartesianVector<T, 1>(arg));
 }
 
 template<class T>
