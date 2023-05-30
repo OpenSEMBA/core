@@ -1,12 +1,12 @@
 #include "Exporter.h"
 
-#include "geometry/mesh/Unstructured.h"
-#include "geometry/mesh/Geometric.h"
-
-#include "geometry/element/Triangle.h"
-#include "geometry/element/Quadrilateral.h"
-#include "geometry/element/Tetrahedron.h"
-#include "class/GroupViewTools.h"
+#include "core/geometry/mesh/Unstructured.h"
+#include "core/geometry/mesh/Geometric.h"
+#include "core/geometry/element/Quadrilateral.h"
+#include "core/geometry/element/Tetrahedron.h"
+#include "core/geometry/element/Triangle3.h"
+#include "core/geometry/element/Hexahedron8.h"
+#include "core/class/GroupViewTools.h"
 
 namespace {
 #ifdef _WIN32

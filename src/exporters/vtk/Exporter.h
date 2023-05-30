@@ -5,7 +5,7 @@
 #include <algorithm>
 
 #include "exporters/Exporter.h"
-#include "ProblemDescription.h"
+#include "core/ProblemDescription.h"
 
 namespace SEMBA {
 namespace exporters {

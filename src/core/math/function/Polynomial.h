@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "math/matrix/Dynamic.h"
-#include "math/vector/Cartesian.h"
+#include "core/math/matrix/Dynamic.h"
+#include "core/math/vector/Cartesian.h"
 
 #include "Function.h"
 

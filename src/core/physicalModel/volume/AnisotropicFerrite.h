@@ -1,8 +1,6 @@
-
-
 #pragma once
 
-#include <physicalModel/volume/Anisotropic.h>
+#include "Anisotropic.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

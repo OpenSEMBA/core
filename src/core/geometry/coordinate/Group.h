@@ -7,8 +7,9 @@
 #pragma warning(disable:4250)
 #endif
 
+#include "core/class/GroupIdentifiableUnique.h"
+
 #include "Coordinate.h"
-#include "class/GroupIdentifiableUnique.h"
 
 namespace SEMBA {
 namespace Geometry {

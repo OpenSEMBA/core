@@ -1,12 +1,13 @@
 #pragma once
 
-#include "math/vector/Cartesian.h"
-#include "math/matrix/Static.h"
-#include "math/function/Polynomial.h"
+#include <algorithm>
+
+#include "core/math/vector/Cartesian.h"
+#include "core/math/matrix/Static.h"
+#include "core/math/function/Polynomial.h"
 
 #include "Line.h"
 
-#include <algorithm>
 
 namespace SEMBA::Math::Simplex {
 

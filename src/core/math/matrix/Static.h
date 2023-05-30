@@ -1,11 +1,9 @@
-
-
 #pragma once
 
 #include <array>
 #include <complex>
 
-#include "math/Types.h"
+#include "core/math/Types.h"
 
 #include "Matrix.h"
 #include "Dynamic.h"

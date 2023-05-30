@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/geometry/Grid.h"
+
 #include "Unstructured.h"
 
 namespace SEMBA {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "geometry/Box.h"
-#include "math/axis/Local.h"
+#include "core/geometry/Box.h"
+#include "core/math/axis/Local.h"
 
 #include "Volume.h"
 

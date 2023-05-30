@@ -1,9 +1,6 @@
-
-
 #pragma once
 
-#include "math/simplex/Line.h"
-
+#include "core/math/simplex/Line.h"
 #include "Element.h"
 
 namespace SEMBA {

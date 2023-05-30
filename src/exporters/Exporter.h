@@ -5,11 +5,10 @@
 #include <cstring>
 #include <vector>
 
-#include "ProblemDescription.h"
-#include "geometry/mesh/Structured.h"
+#include "core/ProblemDescription.h"
+#include "core/geometry/mesh/Structured.h"
 
-namespace SEMBA {
-namespace exporters {
+namespace SEMBA::exporters {
     using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
     using ElemRView = std::vector<const Geometry::ElemR*>;
 
@@ -39,6 +38,5 @@ protected:
             const std::size_t j);
 };
 
-} /* namespace exporters */
-} /* namespace SEMBA */
+} 
 

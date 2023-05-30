@@ -6,9 +6,9 @@
 #include <iostream>
 #include <string>
 
-#include "geometry/element/Triangle3.h"
-#include "geometry/mesh/Geometric.h"
-#include "physicalModel/Predefined.h"
+#include "core/geometry/mesh/Geometric.h"
+#include "core/physicalModel/Predefined.h"
+
 #include "parsers/Parser.h"
 
 namespace SEMBA::parsers::STL {

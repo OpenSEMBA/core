@@ -4,8 +4,8 @@
 #include <exception>
 #include <utility>
 
-#include "math/vector/Cartesian.h"
-#include "Grid.h"
+#include "core/math/vector/Cartesian.h"
+#include "core/geometry/Grid.h"
 
 namespace SEMBA {
 namespace Geometry {

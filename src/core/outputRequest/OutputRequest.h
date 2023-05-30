@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Domain.h"
-#include "geometry/element/Group.h"
+#include "core/geometry/element/Group.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
+#include "Domain.h"
 
 namespace SEMBA {
 namespace OutputRequest {

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "geometry/Grid.h"
-#include "physicalModel/Bound.h"
-#include "source/Group.h"
-#include "outputRequest/Group.h"
-#include "model/Model.h"
+#include <nlohmann/json.hpp>
 
-#include "nlohmann/json.hpp"
-#include "filesystem/Project.h"
+#include "core/geometry/Grid.h"
+#include "core/physicalModel/Bound.h"
+#include "core/source/Group.h"
+#include "core/outputRequest/Group.h"
+#include "core/model/Model.h"
+#include "core/filesystem/Project.h"
 
 namespace SEMBA {
 

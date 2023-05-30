@@ -1,7 +1,7 @@
 #pragma once
 
-#include "source/Source.h"
-#include "physicalModel/Bound.h"
+#include "core/source/Source.h"
+#include "core/physicalModel/Bound.h"
 
 namespace SEMBA {
 namespace Source {

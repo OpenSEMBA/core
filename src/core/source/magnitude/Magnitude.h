@@ -1,8 +1,7 @@
 #pragma once
 
-#include "math/function/Function.h"
-
-#include "class/Class.h"
+#include "core/math/function/Function.h"
+#include "core/class/Class.h"
 
 namespace SEMBA {
 namespace Source {

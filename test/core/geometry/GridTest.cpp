@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "geometry/Grid.h"
+#include "core/geometry/Grid.h"
 
 using namespace SEMBA;
 using namespace Geometry;

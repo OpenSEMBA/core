@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <array>
 
-#include "Box.h"
-#include "math/util/Real.h"
+#include "core/geometry/Box.h"
+#include "core/math/util/Real.h"
 
 namespace SEMBA {
 namespace Geometry {

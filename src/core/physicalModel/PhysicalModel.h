@@ -1,10 +1,9 @@
 #pragma once
 
-#include "math/Constants.h"
-
-#include "class/Class.h"
-#include "class/Identifiable.h"
-#include "class/Identification.h"
+#include "core/math/Constants.h"
+#include "core/class/Class.h"
+#include "core/class/Identifiable.h"
+#include "core/class/Identification.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

@@ -1,9 +1,5 @@
-
-
 #include "Structured.h"
 #include "Unstructured.h"
-
-#include "geometry/element/Tetrahedron.h"
 
 namespace SEMBA {
 namespace Geometry {

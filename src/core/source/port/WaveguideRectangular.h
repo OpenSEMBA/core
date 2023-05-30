@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Waveguide.h"
-#include "physicalModel/Bound.h"
+#include "core/physicalModel/Bound.h"
 
 namespace SEMBA {
 namespace Source {

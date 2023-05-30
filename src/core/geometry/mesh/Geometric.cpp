@@ -1,5 +1,3 @@
-
-
 #include "Geometric.h"
 
 namespace SEMBA {

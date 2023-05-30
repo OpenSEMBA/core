@@ -1,7 +1,8 @@
 #pragma once
 
+#include "core/geometry/coordinate/Coordinate.h"
+
 #include "Graph.h"
-#include "geometry/coordinate/Coordinate.h"
 
 namespace SEMBA {
 namespace Geometry {

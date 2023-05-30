@@ -1,9 +1,7 @@
-
-
 #pragma once
 
 #include "Wire.h"
-#include "physicalModel/multiport/Multiport.h"
+#include "core/physicalModel/multiport/Multiport.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

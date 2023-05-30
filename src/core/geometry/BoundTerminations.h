@@ -2,8 +2,9 @@
 
 #include <array>
 #include <memory>
-#include "geometry/element/Element.h"
-#include "physicalModel/Bound.h"
+
+#include "core/geometry/element/Element.h"
+#include "core/physicalModel/Bound.h"
 
 namespace SEMBA {
 namespace Geometry {
