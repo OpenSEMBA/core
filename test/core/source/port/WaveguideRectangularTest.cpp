@@ -79,14 +79,14 @@ protected:
 //        mode
 //    };
 //
-//    EXPECT_EQ(Math::CVecR3(0.0), wp.getOrigin());
+//    EXPECT_EQ(math::CVecR3(0.0), wp.getOrigin());
 //    EXPECT_EQ(30.0, wp.getWidth());
 //    EXPECT_EQ(10.0, wp.getHeight());
 //
-//    Math::CVecR3 midPoint = wp.getOrigin();
-//    midPoint(Math::Constants::x) = wp.getWidth() / 2.0;
+//    math::CVecR3 midPoint = wp.getOrigin();
+//    midPoint(math::Constants::x) = wp.getWidth() / 2.0;
 //
-//    EXPECT_EQ(Math::CVecR3(0.0,1.0,0.0), wp.getWeight(midPoint));
+//    EXPECT_EQ(math::CVecR3(0.0,1.0,0.0), wp.getWeight(midPoint));
 //
-//    EXPECT_EQ(Math::CVecR3(0.0), wp.getWeight(wp.getOrigin()));
+//    EXPECT_EQ(math::CVecR3(0.0), wp.getWeight(wp.getOrigin()));
 //}

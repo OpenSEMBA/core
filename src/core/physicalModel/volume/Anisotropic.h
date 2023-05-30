@@ -74,7 +74,7 @@ public:
 
     math::MatR33 getRelPermittivityMatR() const override;
 
-    math::MatR33 getRelPermeabilityMatR() const override; // Math::Real part.
+    math::MatR33 getRelPermeabilityMatR() const override; // math::Real part.
     math::MatR33 getRelPermeabilityMatI() const; // Imaginary part.
 
     math::MatR33 getElectricConductivityMat() const override;

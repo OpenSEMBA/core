@@ -24,11 +24,11 @@ public:
     //void set(const Target&);
 
     std::string getName() const override;
-    //Math::Real getWidth() const;
-    //Math::Real getHeight() const;
+    //math::Real getWidth() const;
+    //math::Real getHeight() const;
 
-    //Math::CVecR3 getOrigin() const override;
-    //Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
+    //math::CVecR3 getOrigin() const override;
+    //math::CVecR3 getWeight(const math::CVecR3& pos) const override;
 };
 
 } /* namespace Port */

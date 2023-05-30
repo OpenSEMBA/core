@@ -6,7 +6,7 @@
 #include <set>
 #include <type_traits>
 
-#include "ProblemDescription.h"
+#include "core/ProblemDescription.h"
 #include "core/geometry/element/Polyline.h"
 #include "core/geometry/element/Line2.h"
 #include "core/geometry/graph/Vertices.h"
@@ -21,8 +21,8 @@ namespace Wire {
 /* Class used to obtain the wires from the lines contained in a SEMBA::Data.
  *
  * It is constructed by a SEMBA::Data. It is templarized in such a way that:
- * - T = Math::Int: the SEMBA::Data contains a structured mesh.
- * - T = Math::Real: it contains a unstructured mesh.
+ * - T = math::Int: the SEMBA::Data contains a structured mesh.
+ * - T = math::Real: it contains a unstructured mesh.
  *
  * The information of the wires is given in the following functions:
  * - numberOfWires(): the number of wires
@@ -92,7 +92,7 @@ template<class T>
 Group<T>::Group(const UnstructuredModel& model) {
     fillWiresInfo_(
         constructGraph_(
-            model.mesh.elems().getOf<Geometry::Element::Line<Math::Real>>(),
+            model.mesh.elems().getOf<Geometry::Element::Line<math::Real>>(),
             model.physicalModels
         ),
         model.physicalModels
@@ -103,7 +103,7 @@ template<class T>
 Group<T>::Group(const StructuredModel& model) {
     fillWiresInfo_(
         constructGraph_(
-            model.mesh.elems().getOf<Geometry::Element::Line<Math::Int>>(),
+            model.mesh.elems().getOf<Geometry::Element::Line<math::Int>>(),
             model.physicalModels
         ),
         model.physicalModels
