@@ -19,9 +19,9 @@ Waveguide::Waveguide(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
     //                           "in a coplanar Geometry::Surface");
     //}
 
-    //Math::CVecR3 diagonal = Geometry::getBound(elem.begin(), elem.end()).getMax() -
+    //math::CVecR3 diagonal = Geometry::getBound(elem.begin(), elem.end()).getMax() -
     //    Geometry::getBound(elem.begin(), elem.end()).getMin();
-    //if (!diagonal.isContainedInPlane(Math::Constants::xy)) {
+    //if (!diagonal.isContainedInPlane(math::Constants::xy)) {
     //    throw std::logic_error("Waveport must be contained in plane xy.");
     //}
 

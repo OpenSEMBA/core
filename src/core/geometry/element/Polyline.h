@@ -45,7 +45,7 @@ public:
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
-        const Math::Real = Grid3::tolerance) const;
+        const math::Real = Grid3::tolerance) const;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&,
         const Grid3&) const;
 
@@ -117,7 +117,7 @@ void Polyline<T>::setV(const std::size_t i,
 template<class T>
 std::unique_ptr<ElemI> Polyline<T>::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const Math::Real tol) const {
+    const Grid3& grid, const math::Real tol) const {
     throw std::logic_error("Polyline::toStructured operation not permitted");
 }
 
@@ -131,8 +131,8 @@ std::unique_ptr<ElemR> Polyline<T>::toUnstructured(
 } /* namespace Element */
 
 typedef Element::PolylineBase         Polylin;
-typedef Element::Polyline<Math::Real> PolylinR;
-typedef Element::Polyline<Math::Int > PolylinI;
+typedef Element::Polyline<math::Real> PolylinR;
+typedef Element::Polyline<math::Int > PolylinI;
 
 } /* namespace Geometry */
 } /* namespace SEMBA */

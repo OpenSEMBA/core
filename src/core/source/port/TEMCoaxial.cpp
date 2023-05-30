@@ -1,5 +1,5 @@
 #include "TEMCoaxial.h"
-#include "geometry/Bound.h"
+#include "core/geometry/Bound.h"
 
 namespace SEMBA {
 namespace Source {
@@ -27,24 +27,24 @@ TEMCoaxial::TEMCoaxial(const TEMCoaxial& rhs) :
     outerRadius_ = rhs.outerRadius_;
 }
 //
-//Math::CVecR3 TEMCoaxial::getOrigin() const {
+//math::CVecR3 TEMCoaxial::getOrigin() const {
 //    return origin_;
 //}
 //
-//Math::CVecR3 TEMCoaxial::getWeight(
-//        const Math::CVecR3& pos) const {
+//math::CVecR3 TEMCoaxial::getWeight(
+//        const math::CVecR3& pos) const {
 //    // Return normalized weights for electric field components.
-//    const Math::Real rho = (pos - getOrigin()).norm();
+//    const math::Real rho = (pos - getOrigin()).norm();
 //    switch (getExcitationMode()) {
 //    case ExcitationMode::voltage:
 //    {
-//        const Math::CVecR3 rhoHat = (pos - getOrigin()).normalize();
+//        const math::CVecR3 rhoHat = (pos - getOrigin()).normalize();
 //        return rhoHat / (rho * log(outerRadius_/innerRadius_));
 //    }
 //    case ExcitationMode::current:
 //    {
-//        const Math::CVecR3 phiHat = (Math::CVecR3(0,0,1) ^ pos).normalize();
-//        return phiHat / (2.0 * Math::Constants::pi * rho);
+//        const math::CVecR3 phiHat = (math::CVecR3(0,0,1) ^ pos).normalize();
+//        return phiHat / (2.0 * math::Constants::pi * rho);
 //    }
 //    default:
 //        throw std::logic_error("Unsupported excitation mode.");
@@ -54,18 +54,18 @@ TEMCoaxial::TEMCoaxial(const TEMCoaxial& rhs) :
 //void TEMCoaxial::set(const Target& elemGroup) {
 //    // Reescales internal dimensions.
 //    Geometry::BoxR3 box = Geometry::getBound(elemGroup.begin(), elemGroup.end());
-//    const Math::CVecR3 diagonal = box.getMax()-box.getMin();
-//    if (!diagonal.isContainedInPlane(Math::Constants::CartesianPlane::xy)) {
+//    const math::CVecR3 diagonal = box.getMax()-box.getMin();
+//    if (!diagonal.isContainedInPlane(math::Constants::CartesianPlane::xy)) {
 //        throw std::logic_error("Port is not contained in a XY plane");
 //    }
-//    const Math::Real width  = box.getMax()(Math::Constants::x) -
-//                              box.getMin()(Math::Constants::x);
-//    const Math::Real height = box.getMax()(Math::Constants::y) -
-//                              box.getMin()(Math::Constants::y);
-//    const Math::Real averageNewRadius = (width + height)/4;
+//    const math::Real width  = box.getMax()(math::Constants::x) -
+//                              box.getMin()(math::Constants::x);
+//    const math::Real height = box.getMax()(math::Constants::y) -
+//                              box.getMin()(math::Constants::y);
+//    const math::Real averageNewRadius = (width + height)/4;
 //    innerRadius_ *= averageNewRadius;
 //    outerRadius_ *= averageNewRadius;
-//    const Math::CVecR3 averageNewOrigin = (box.getMax() + box.getMin()) / 2;
+//    const math::CVecR3 averageNewOrigin = (box.getMax() + box.getMin()) / 2;
 //    origin_ = averageNewOrigin;
 //    //
 //    Source::setTarget(elemGroup);

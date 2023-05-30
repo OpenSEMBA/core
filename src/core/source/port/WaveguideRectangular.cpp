@@ -21,49 +21,49 @@ std::string WaveguideRectangular::getName() const {
     return "Rectangular_waveguide_port";
 }
 
-//Math::CVecR3 WaveguideRectangular::getWeight(
-//        const Math::CVecR3& pos) const {
+//math::CVecR3 WaveguideRectangular::getWeight(
+//        const math::CVecR3& pos) const {
 //    // Return normalized weights for electric field components.
-//    static const Math::Real pi = acos(-1.0);
-//    Math::CVecR3 res;
-//    Math::CVecR3 rPos = pos - getOrigin();
-//    const Math::Real m = pi * getMode().first / getWidth();
-//    const Math::Real n = pi * getMode().second / getHeight();
-//    Math::Real normFactor = m;
+//    static const math::Real pi = acos(-1.0);
+//    math::CVecR3 res;
+//    math::CVecR3 rPos = pos - getOrigin();
+//    const math::Real m = pi * getMode().first / getWidth();
+//    const math::Real n = pi * getMode().second / getHeight();
+//    math::Real normFactor = m;
 //    if (n > m) {
 //        normFactor = n;
 //    }
-//    //const Math::Real betaC = sqrt(pow(m,2) + pow(n,2));
+//    //const math::Real betaC = sqrt(pow(m,2) + pow(n,2));
 //    if (getExcitationMode() == Waveguide::ExcitationMode::TE) {
-//        res(Math::Constants::x) =   n * cos(m * rPos(Math::Constants::x)) *
-//                                        sin(n * rPos(Math::Constants::y)) /
+//        res(math::Constants::x) =   n * cos(m * rPos(math::Constants::x)) *
+//                                        sin(n * rPos(math::Constants::y)) /
 //                                        normFactor;
-//        res(Math::Constants::y) =   m * sin(m * rPos(Math::Constants::x)) *
-//                                        cos(n * rPos(Math::Constants::y)) /
+//        res(math::Constants::y) =   m * sin(m * rPos(math::Constants::x)) *
+//                                        cos(n * rPos(math::Constants::y)) /
 //                                        normFactor;
-//        res(Math::Constants::z) = (Math::Real) 0.0;
+//        res(math::Constants::z) = (math::Real) 0.0;
 //    } else {
-//        res(Math::Constants::x) = - m * cos(m * rPos(Math::Constants::x)) *
-//                                        sin(n * rPos(Math::Constants::y)) /
+//        res(math::Constants::x) = - m * cos(m * rPos(math::Constants::x)) *
+//                                        sin(n * rPos(math::Constants::y)) /
 //                                        normFactor;
-//        res(Math::Constants::y) = - m * sin(m * rPos(Math::Constants::x)) *
-//                                        cos(n * rPos(Math::Constants::y)) /
+//        res(math::Constants::y) = - m * sin(m * rPos(math::Constants::x)) *
+//                                        cos(n * rPos(math::Constants::y)) /
 //                                        normFactor;
-//        res(Math::Constants::z) = (Math::Real) 0.0;
+//        res(math::Constants::z) = (math::Real) 0.0;
 //    }
 //    return res;
 //}
 
-//Math::Real WaveguideRectangular::getWidth() const {
-//    Math::CVecR3 origin = getOrigin();
-//    Math::CVecR3 max = box_.getMax();
-//    return max(Math::Constants::x) - origin(Math::Constants::x);
+//math::Real WaveguideRectangular::getWidth() const {
+//    math::CVecR3 origin = getOrigin();
+//    math::CVecR3 max = box_.getMax();
+//    return max(math::Constants::x) - origin(math::Constants::x);
 //}
 //
-//Math::Real WaveguideRectangular::getHeight() const {
-//    Math::CVecR3 origin = getOrigin();
-//    Math::CVecR3 max = box_.getMax();
-//    return max(Math::Constants::y) - origin(Math::Constants::y);
+//math::Real WaveguideRectangular::getHeight() const {
+//    math::CVecR3 origin = getOrigin();
+//    math::CVecR3 max = box_.getMax();
+//    return max(math::Constants::y) - origin(math::Constants::y);
 //}
 //
 //void WaveguideRectangular::set(
@@ -72,7 +72,7 @@ std::string WaveguideRectangular::getName() const {
 //    box_ = Geometry::getBound(constGroupElems.begin(), constGroupElems.end());
 //}
 //
-//Math::CVecR3 WaveguideRectangular::getOrigin() const {
+//math::CVecR3 WaveguideRectangular::getOrigin() const {
 //    return box_.getMin();
 //}
 

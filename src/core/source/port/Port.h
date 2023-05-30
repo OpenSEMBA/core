@@ -17,8 +17,8 @@ public:
     
     std::string getName() const { return "Port"; };
     
-    //virtual Math::CVecR3 getOrigin() const = 0;
-    //virtual Math::CVecR3 getWeight(const Math::CVecR3& pos) const = 0;
+    //virtual math::CVecR3 getOrigin() const = 0;
+    //virtual math::CVecR3 getWeight(const math::CVecR3& pos) const = 0;
 };
 
 } /* namespace Port */

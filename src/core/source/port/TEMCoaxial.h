@@ -26,8 +26,8 @@ public:
 
     std::string getName() const override { return "Coaxial_TEM_port"; }
 
-    //Math::CVecR3 getOrigin() const override;
-    //Math::CVecR3 getWeight(const Math::CVecR3& pos) const override;
+    //math::CVecR3 getOrigin() const override;
+    //math::CVecR3 getWeight(const math::CVecR3& pos) const override;
 
 private:
     math::CVecR3 origin_;
