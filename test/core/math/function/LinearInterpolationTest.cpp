@@ -1,6 +1,6 @@
 
-#include "gtest/gtest.h"
-#include "math/function/LinearInterpolation.h"
+#include <gtest/gtest.h>
+#include "core/math/function/LinearInterpolation.h"
 
 using namespace std;
 

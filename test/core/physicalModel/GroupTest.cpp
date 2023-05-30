@@ -1,9 +1,9 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "physicalModel/Group.h"
-#include "physicalModel/Bound.h"
-#include "physicalModel/volume/Classic.h"
-#include "physicalModel/multiport/Predefined.h"
+#include "core/physicalModel/Group.h"
+#include "core/physicalModel/Bound.h"
+#include "core/physicalModel/volume/Classic.h"
+#include "core/physicalModel/multiport/Predefined.h"
 
 using namespace SEMBA;
 using namespace PhysicalModel;

@@ -1,14 +1,13 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "geometry/Grid.h"
-#include "geometry/mesh/Unstructured.h"
+#include "core/geometry/Grid.h"
+#include "core/geometry/mesh/Unstructured.h"
+#include "core/source/PlaneWave.h"
+#include "core/math/function/Gaussian.h"
+#include "core/physicalModel/Predefined.h"
+#include "core/outputRequest/OnPoint.h"
+#include "core/ProblemDescription.h"
 
-#include "source/PlaneWave.h"
-#include "math/function/Gaussian.h"
-#include "physicalModel/Predefined.h"
-#include "outputRequest/OnPoint.h"
-
-#include "ProblemDescription.h"
 using namespace SEMBA;
 using namespace Geometry;
 

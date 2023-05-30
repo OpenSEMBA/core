@@ -1,8 +1,8 @@
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "source/PlaneWave.h"
-#include "math/function/Gaussian.h"
+#include "core/source/PlaneWave.h"
+#include "core/math/function/Gaussian.h"
 
 using namespace SEMBA;
 using namespace Source;

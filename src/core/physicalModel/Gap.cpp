@@ -1,4 +1,4 @@
-#include "physicalModel/Gap.h"
+#include "core/physicalModel/Gap.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include <array>
 
-#include "physicalModel/Bound.h"
+#include "core/physicalModel/Bound.h"
 
 using namespace SEMBA;
 using namespace PhysicalModel;

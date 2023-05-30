@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
-#include "geometry/mesh/Structured.h"
-#include "geometry/element/Quadrilateral4.h"
-#include "geometry/element/Line2.h"
+#include <gtest/gtest.h>
+#include "core/geometry/mesh/Structured.h"
+#include "core/geometry/element/Quadrilateral4.h"
+#include "core/geometry/element/Line2.h"
 
 using namespace SEMBA;
 using namespace Geometry;

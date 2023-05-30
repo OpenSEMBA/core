@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "physicalModel/multiport/RLC.h"
+#include <gtest/gtest.h>
+#include "core/physicalModel/multiport/RLC.h"
 
 namespace SEMBA {
 namespace PhysicalModel {

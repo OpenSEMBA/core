@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "class/GroupIdentifiableUnique.h"
-#include "geometry/layer/Layer.h"
+#include "core/class/GroupIdentifiableUnique.h"
+#include "core/geometry/layer/Layer.h"
 
 using namespace SEMBA;
 using namespace Geometry;

@@ -1,13 +1,11 @@
-
-
+#include <gtest/gtest.h>
 #include <utility>
 
 #ifdef EIGEN_SUPPORT
 #include <eigen3/Eigen/Dense>
 #endif
 
-#include "gtest/gtest.h"
-#include "math/matrix/Dynamic.h"
+#include "core/math/matrix/Dynamic.h"
 
 
 using namespace SEMBA;

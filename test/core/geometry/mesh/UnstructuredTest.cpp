@@ -1,5 +1,5 @@
 #include "MeshTest.h"
-#include "geometry/mesh/Unstructured.h"
+#include "core/geometry/mesh/Unstructured.h"
 
 class MeshUnstructuredTest : public ::testing::Test,
     public MeshTest {

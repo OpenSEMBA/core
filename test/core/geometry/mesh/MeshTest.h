@@ -1,10 +1,10 @@
 #pragma once
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "geometry/element/Tetrahedron4.h"
-#include "geometry/mesh/Mesh.h"
-#include "geometry/element/Group.h"
+#include "core/geometry/element/Tetrahedron4.h"
+#include "core/geometry/mesh/Mesh.h"
+#include "core/geometry/element/Group.h"
 
 using namespace SEMBA;
 using namespace Geometry;

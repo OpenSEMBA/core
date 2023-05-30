@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "math/simplex/Triangle.h"
+#include <gtest/gtest.h>
+#include "core/math/simplex/Triangle.h"
 
 using namespace SEMBA;
 using namespace Math;

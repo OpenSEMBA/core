@@ -1,7 +1,7 @@
 
-#include "gtest/gtest.h"
-#include "geometry/mesh/Geometric.h"
-#include "geometry/element/Triangle3.h"
+#include <gtest/gtest.h>
+#include "core/geometry/mesh/Geometric.h"
+#include "core/geometry/element/Triangle3.h"
 #include "parsers/stl/Parser.h"
 #include "exporters/vtk/Exporter.h"
 

@@ -1,7 +1,7 @@
 #include <iomanip>
 
-#include "math/function/LinearInterpolation.h"
-#include "math/util/Real.h"
+#include "core/math/function/LinearInterpolation.h"
+#include "core/math/util/Real.h"
 
 #include "Numerical.h"
 

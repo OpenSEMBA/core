@@ -1,7 +1,7 @@
 #pragma once
 
-#include "geometry/mesh/Unstructured.h"
-#include "physicalModel/Group.h"
+#include "core/geometry/mesh/Unstructured.h"
+#include "core/physicalModel/Group.h"
 
 namespace SEMBA {
 namespace model {

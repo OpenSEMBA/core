@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "math/simplex/Tetrahedron.h"
+#include <gtest/gtest.h>
+#include "core/math/simplex/Tetrahedron.h"
 
 using namespace SEMBA;
 using namespace Math;

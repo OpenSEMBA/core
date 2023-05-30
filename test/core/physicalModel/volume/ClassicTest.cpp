@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "physicalModel/volume/Classic.h"
+#include <gtest/gtest.h>
+#include "core/physicalModel/volume/Classic.h"
 
 using namespace SEMBA;
 using namespace PhysicalModel;

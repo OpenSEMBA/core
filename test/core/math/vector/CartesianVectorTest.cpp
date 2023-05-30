@@ -1,6 +1,6 @@
 
-#include "gtest/gtest.h"
-#include "math/vector/Cartesian.h"
+#include <gtest/gtest.h>
+#include "core/math/vector/Cartesian.h"
 
 using namespace SEMBA;
 using namespace Math;

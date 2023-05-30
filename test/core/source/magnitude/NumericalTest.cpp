@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
-#include "source/magnitude/Numerical.h"
+#include <gtest/gtest.h>
+#include "core/source/magnitude/Numerical.h"
 
 using namespace SEMBA;
 

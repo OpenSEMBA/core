@@ -1,16 +1,17 @@
-
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 #include "parsers/json/Parser.h"
 
-#include "geometry/element/Line2.h"
-#include "geometry/element/Triangle3.h"
-#include "geometry/element/Tetrahedron4.h"
-#include "math/function/Gaussian.h"
-#include "outputRequest/FarField.h"
-#include "outputRequest/OnPoint.h"
-#include "physicalModel/wire/Wire.h"
-#include "physicalModel/multiport/RLC.h"
+#include "core/math/function/Gaussian.h"
+#include "core/geometry/element/Line2.h"
+#include "core/geometry/element/Triangle3.h"
+#include "core/geometry/element/Tetrahedron4.h"
+#include "core/outputRequest/FarField.h"
+#include "core/outputRequest/OnPoint.h"
+#include "core/physicalModel/wire/Wire.h"
+#include "core/physicalModel/multiport/RLC.h"
+#include "core/source/PlaneWave.h"
+#include "core/source/Generator.h"
 
 using namespace SEMBA;
 using namespace SEMBA::parsers::JSON;

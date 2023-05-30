@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Source.h"
+#include "core/source/Source.h"
 #include "core/class/GroupIdentifiableUnique.h"
 
 namespace SEMBA {

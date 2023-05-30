@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "physicalModel/Predefined.h"
-#include "model/Model.h"
+#include "core/physicalModel/Predefined.h"
+#include "core/model/Model.h"
 
 using ModelObject = SEMBA::UnstructuredModel;
 
