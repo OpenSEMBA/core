@@ -1,12 +1,10 @@
-
-
-#include <physicalModel/volume/Anisotropic.h>
+#include "Anisotropic.h"
 
 namespace SEMBA {
 namespace PhysicalModel {
 namespace Volume {
 
-Anisotropic::Anisotropic(const Math::Axis::Local& localAxe) {
+Anisotropic::Anisotropic(const Math::LocalAxis& localAxe) {
     localAxe_ = localAxe;
 }
 
@@ -18,7 +16,7 @@ Anisotropic::~Anisotropic() {
 
 }
 
-Math::Axis::Local Anisotropic::getLocalAxe() const {
+Math::LocalAxis Anisotropic::getLocalAxe() const {
     return localAxe_;
 }
 

@@ -50,7 +50,7 @@ CVecI3 strToCVecI3(std::string str);
 CVecR3 strToCVecR3(std::string str);
 Constants::CartesianAxis strToCartesianAxis(std::string);
 std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
-Axis::Local strToLocalAxes(const std::string& str);
+LocalAxis strToLocalAxes(const std::string& str);
 const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
 
 LayerGroup readLayers(const json&);
@@ -1262,14 +1262,14 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     throw std::logic_error("Unable to recognize magnitude type when reading excitation.");
 }
 
-Axis::Local strToLocalAxes(const std::string& str) {
+LocalAxis strToLocalAxes(const std::string& str) {
     std::size_t begin = str.find_first_of("{");
     std::size_t end = str.find_first_of("}");
     CVecR3 eulerAngles = strToCVecR3(str.substr(begin+1,end-1));
     begin = str.find_last_of("{");
     end = str.find_last_of("}");
     CVecR3 origin = strToCVecR3(str.substr(begin+1,end-1));
-    return Axis::Local(eulerAngles, origin);
+    return LocalAxis(eulerAngles, origin);
 }
 
 Source::Port::TEM::ExcitationMode strToTEMMode(std::string str) {

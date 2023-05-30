@@ -8,7 +8,7 @@ project(opensemba_core_math CXX)
 include_directories(${CMAKE_CURRENT_LIST_DIR})
 
 add_library(opensemba_core_math STATIC
-    "axis/Local.cpp"
+    "LocalAxis.cpp"
     "function/BandLimited.cpp"
     "function/Gaussian.cpp"
     "function/Waveform.cpp"

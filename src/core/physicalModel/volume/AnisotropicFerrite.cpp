@@ -9,7 +9,7 @@ namespace Volume {
 AnisotropicFerrite::AnisotropicFerrite(
         const Id matId,
         const std::string& name,
-        const Math::Axis::Local& local,
+        const Math::LocalAxis& local,
         const Math::Real kappa,
         const Math::Real relativePermeability,
         const Math::Real relativePermittivity)

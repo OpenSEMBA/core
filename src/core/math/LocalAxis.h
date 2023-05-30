@@ -5,13 +5,12 @@
 
 namespace SEMBA {
 namespace Math {
-namespace Axis {
 
-class Local {
+class LocalAxis {
 public:
-    Local();
-    Local(CVecR3 eulerAngles, CVecR3 origin = CVecR3());
-    virtual ~Local();
+    LocalAxis() = default;
+    LocalAxis(CVecR3 eulerAngles, CVecR3 origin = CVecR3());
+    
 
     MatR33 getTransformationMatrix() const;
     const CVecR3 getEulerAngles() const;
@@ -25,7 +24,6 @@ private:
     CVecR3 origin_;
 };
 
-} /* namespace Axis */
 } /* namespace Math */
 } /* namespace SEMBA */
 
