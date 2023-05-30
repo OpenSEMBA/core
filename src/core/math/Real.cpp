@@ -1,5 +1,3 @@
-
-
 #include "Real.h"
 
 namespace SEMBA {

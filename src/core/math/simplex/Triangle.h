@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 #include "core/math/matrix/Static.h"
 #include "core/math/function/Polynomial.h"
 
@@ -25,7 +25,7 @@ public:
     using MatIntNfpNp = Matrix::Static<Int, nfp, np>;
 
     static const std::size_t nsc = 3;
-    using Index = Vector::Cartesian<size_t, nsc>;
+    using Index = CartesianVector<size_t, nsc>;
 
     Triangle();
 
@@ -52,7 +52,7 @@ private:
     Function::Polynomial<Real> lagr[np];
     Function::Polynomial<Real> dLagr[np][faces];
 
-    Vector::Cartesian<Real,nsc> nodePositions[np];
+    CartesianVector<Real,nsc> nodePositions[np];
     std::array<Real,np>         weights;
 
     MatIntNfpNp RMatrix(const std::size_t s) const;
@@ -99,7 +99,7 @@ Triangle<N>::Triangle() {
     }
 
     for (std::size_t i = 0; i < np; i++) {
-        Vector::Cartesian<Real, nsc> aux = indices[i];
+        CartesianVector<Real, nsc> aux = indices[i];
         nodePositions[i] = aux / (Real)N;
     }
     for (std::size_t i = 0; i < np; i++) {
@@ -151,9 +151,9 @@ inline std::size_t Triangle<N>::sideNode(
 }
 
 template <size_t N>
-Vector::Cartesian<Real, 3> Triangle<N>::coordinate(
+CartesianVector<Real, 3> Triangle<N>::coordinate(
     const std::size_t i) const {
-    Vector::Cartesian<Real, 3> res;
+    CartesianVector<Real, 3> res;
     res = indices[i];
     res /= (Real)N;
     return res;

@@ -19,7 +19,7 @@ public:
     using MatIntNfpNp = Matrix::Static<Int, nfp, np>;
     
     static const std::size_t nsc = 4;
-    using Index = Vector::Cartesian<size_t,nsc>;
+    using Index = CartesianVector<size_t,nsc>;
 
     static constexpr Real sizeFactor{ 1.0 / 6.0 };
 
@@ -44,7 +44,7 @@ private:
     const Triangle<N> tri;
 
     std::array<Index,np> indices;
-    Vector::Cartesian<Real,nsc> nodePositions[np];
+    CartesianVector<Real,nsc> nodePositions[np];
     std::array<Real,np> weights;
 
     Function::Polynomial<Real> lagr[np];
@@ -97,7 +97,7 @@ Tetrahedron<N>::Tetrahedron()
     }
 
     for (std::size_t i = 0; i < np; i++) {
-        Vector::Cartesian<Real, nsc> aux;
+        CartesianVector<Real, nsc> aux;
         nodePositions[i] = aux / (Real)N;
     }
     for (std::size_t i = 0; i < np; i++) {
@@ -159,16 +159,16 @@ inline std::size_t Tetrahedron<N>::nodeIndex(const std::size_t i,
 }
 
 template <size_t N>
-Vector::Cartesian<Real, 4> Tetrahedron<N>::coordinate(
+CartesianVector<Real, 4> Tetrahedron<N>::coordinate(
     const std::size_t i) const 
 {
-    Vector::Cartesian<Real, 4> res = indices[i];
+    CartesianVector<Real, 4> res = indices[i];
     res /= (Real)n;
     return res;
 }
 
 template <size_t N>
-Vector::Cartesian<Real, 4> Tetrahedron<N>::sideCoordinate(
+CartesianVector<Real, 4> Tetrahedron<N>::sideCoordinate(
     const std::size_t f,
     const std::size_t i) const 
 {

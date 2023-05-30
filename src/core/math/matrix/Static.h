@@ -34,7 +34,7 @@ public:
    Static<T,ROWS,COLS>& operator=(const Dynamic<Real>& rhs);
 
    Static<T,ROWS,COLS>& assign(const Static<Int,ROWS,COLS>& rhs);
-   Static<T,ROWS,COLS>& setInDiagonal(const Vector::Cartesian<T,ROWS>& rhs);
+   Static<T,ROWS,COLS>& setInDiagonal(const CartesianVector<T,ROWS>& rhs);
 
    Static<T,ROWS,COLS>& operator+=(const Real rhs);
    Static<T,ROWS,COLS>& operator+=(const Static<T,ROWS,COLS>& rhs);
@@ -42,7 +42,7 @@ public:
    Static<T,ROWS,COLS>& operator*=(const T rhs);
    Static<T,ROWS,COLS>& operator/=(const T rhs);
    Static<T,ROWS,COLS> operator*(T rhs) const;
-   Vector::Cartesian<T,COLS> operator*(Vector::Cartesian<T,COLS> rhs) const;
+   CartesianVector<T,COLS> operator*(CartesianVector<T,COLS> rhs) const;
    Static<T,ROWS,COLS> operator+(Static<T,ROWS,COLS> &rhs) const;
    Static<T,COLS,ROWS>& invert();
    Static<T,COLS,ROWS> transpose();
@@ -151,7 +151,7 @@ Static<T, ROWS, COLS>& Static<T, ROWS, COLS>::assign(
 
 template <class T, std::size_t ROWS, std::size_t COLS>
 Static<T, ROWS, COLS>& Static<T, ROWS, COLS>::setInDiagonal(
-    const Vector::Cartesian<T, ROWS>& rhs) {
+    const CartesianVector<T, ROWS>& rhs) {
     static_assert(ROWS == COLS, "Requires squire matrix");
     for (std::size_t i = 0; i < ROWS; i++) {
         val(i, i) = rhs(i);
@@ -265,9 +265,9 @@ Static<T, ROWS, COLS> Static<T, ROWS, COLS>::operator*(T param) const {
 }
 
 template<class T, std::size_t ROWS, std::size_t COLS>
-Vector::Cartesian<T, COLS> Static<T, ROWS, COLS>::operator*(
-    Vector::Cartesian<T, COLS> rhs) const {
-    Vector::Cartesian<T, COLS> res;
+CartesianVector<T, COLS> Static<T, ROWS, COLS>::operator*(
+    CartesianVector<T, COLS> rhs) const {
+    CartesianVector<T, COLS> res;
     for (std::size_t i = 0; i < ROWS; i++) {
         for (std::size_t j = 0; j < COLS; j++) {
             res(i) += this->val(i, j) * rhs(j);

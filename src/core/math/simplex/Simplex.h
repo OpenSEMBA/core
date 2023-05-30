@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 #include "core/math/function/Polynomial.h"
 
 namespace SEMBA::Math::Simplex {

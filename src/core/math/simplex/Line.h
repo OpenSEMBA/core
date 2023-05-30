@@ -18,7 +18,7 @@ public:
     static constexpr std::size_t np = (N + 1);
     static constexpr Real sizeFactor = 1.0;
 
-    typedef Vector::Cartesian<size_t,nsc> Index;
+    typedef CartesianVector<size_t,nsc> Index;
 
     Line();
     std::size_t vertex(const std::size_t) const;
@@ -41,7 +41,7 @@ private:
     Function::Polynomial<Real> lagr[np];
     Function::Polynomial<Real> dLagr[np][faces];
 
-    std::array<Vector::Cartesian<Real,nsc>, np> nodePositions;
+    std::array<CartesianVector<Real,nsc>, np> nodePositions;
     std::array<Real,np>                         weights;
 
     Matrix::Static<Int, 1, (N+1)> RMatrix(const std::size_t s) const;
@@ -77,7 +77,7 @@ Line<N>::Line() {
         }
     }
 
-    Vector::Cartesian<Real, nsc> aux;
+    CartesianVector<Real, nsc> aux;
     for (std::size_t i = 0; i < np; i++) {
         aux = indices[i];
         nodePositions[i] = aux / (Real)N;

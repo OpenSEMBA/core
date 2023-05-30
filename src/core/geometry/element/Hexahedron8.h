@@ -127,7 +127,7 @@ Hexahedron8<T>::Hexahedron8(
     if (!box.isVolume()) {
         throw Geometry::Error::Box::NotVolume();
     }
-    std::vector<Math::Vector::Cartesian<T, 3> > pos = box.getPos();
+    std::vector<Math::CartesianVector<T, 3> > pos = box.getPos();
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         v_[i] = cG.addPos(pos[i])->get();
     }
@@ -151,12 +151,12 @@ bool Hexahedron8<T>::isStructured(const Grid3& grid,
 template<class T>
 bool Hexahedron8<T>::isRegular() const {
     // Checks that all edges are aligned with one of the axis.
-    static const Math::Vector::Cartesian<T, 3> xAxe(1.0, 0.0, 0.0);
-    static const Math::Vector::Cartesian<T, 3> yAxe(0.0, 1.0, 0.0);
-    static const Math::Vector::Cartesian<T, 3> zAxe(1.0, 0.0, 1.0);
+    static const Math::CartesianVector<T, 3> xAxe(1.0, 0.0, 0.0);
+    static const Math::CartesianVector<T, 3> yAxe(0.0, 1.0, 0.0);
+    static const Math::CartesianVector<T, 3> zAxe(1.0, 0.0, 1.0);
     for (std::size_t f = 0; f < numberOfFaces(); f++) {
-        Math::Vector::Cartesian<T, 3> first, second;
-        Math::Vector::Cartesian<T, 3> inc;
+        Math::CartesianVector<T, 3> first, second;
+        Math::CartesianVector<T, 3> inc;
         for (std::size_t i = 0; i < numberOfSideVertices(); i++) {
             first = *getSideV(f, i);
             second = *getSideV(f, (i + 1) % numberOfSideVertices());
@@ -209,7 +209,7 @@ const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideVertex(
 
 template<class T>
 Math::Real Hexahedron8<T>::getAreaOfFace(const std::size_t f) const {
-    Math::Vector::Cartesian<T, 3> v1, v2;
+    Math::CartesianVector<T, 3> v1, v2;
     v1 = getSideV(f, 1)->pos() - getSideV(f, 0)->pos();
     v2 = getSideV(f, 2)->pos() - getSideV(f, 0)->pos();
     return ((Math::Real)0.5 * (v1 ^ v2).norm());

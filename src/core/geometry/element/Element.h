@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 #include "core/physicalModel/Group.h"
 #include "core/geometry/Box.h"
 #include "core/geometry/Grid.h"
@@ -101,7 +101,7 @@ public:
 
     virtual bool isStructured(const Grid3&,
                               const Math::Real = Grid3::tolerance) const;
-    virtual bool isInnerPoint(const Math::Vector::Cartesian<T,3>& pos) const;
+    virtual bool isInnerPoint(const Math::CartesianVector<T,3>& pos) const;
 
     virtual const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const = 0;
     virtual const Coordinate::Coordinate<T,3>* getSideV(
@@ -178,7 +178,7 @@ bool Element<T>::isStructured(const Grid3& grid, const Math::Real tol) const {
 }
 
 template<class T>
-bool Element<T>::isInnerPoint(const Math::Vector::Cartesian<T, 3>& pos) const {
+bool Element<T>::isInnerPoint(const Math::CartesianVector<T, 3>& pos) const {
     throw std::logic_error("Element::isInnerPoint not implemented");
     return false;
 }
@@ -294,7 +294,7 @@ bool Element<T>::vertexInCell(const Grid3& grid, const Math::Real tol) const {
 template<class T>
 bool Element<T>::vertexInBound() const {
     Box<T, 3> bound = this->getBound();
-    std::vector< Math::Vector::Cartesian<T, 3> > pos = bound.getPos();
+    std::vector< Math::CartesianVector<T, 3> > pos = bound.getPos();
     if (pos.size() != this->numberOfCoordinates()) {
         return false;
     }

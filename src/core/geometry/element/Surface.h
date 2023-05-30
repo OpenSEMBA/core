@@ -36,9 +36,9 @@ bool Surface<T>::isRectangular() const {
         return false;
     }
     for (std::size_t f = 0; f < 4; f++) {
-        Math::Vector::Cartesian<T, 3> p0 = this->getSideVertex(f % 4, 0)->pos();
-        Math::Vector::Cartesian<T, 3> p1 = this->getSideVertex(f % 4, 1)->pos();
-        Math::Vector::Cartesian<T, 3> p2 = this->getSideVertex((f + 1) % 4, 1)->pos();
+        Math::CartesianVector<T, 3> p0 = this->getSideVertex(f % 4, 0)->pos();
+        Math::CartesianVector<T, 3> p1 = this->getSideVertex(f % 4, 1)->pos();
+        Math::CartesianVector<T, 3> p2 = this->getSideVertex((f + 1) % 4, 1)->pos();
         Math::Real sProd = (Math::Real)(p2 - p1).dot(p1 - p0);
         if (Math::Util::greater(sProd, 0.0, 1.0)) {
             return false;

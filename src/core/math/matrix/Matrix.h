@@ -10,7 +10,7 @@
 #include <numeric>
 
 #include "core/math/Types.h"
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 
 namespace SEMBA {
 namespace Math {
@@ -40,7 +40,7 @@ public:
     void cpLowerTri2UpperTri();
     void convertToArray(const Int mode, Real *res) const;
 
-    std::vector<Vector::Cartesian<T,3> > convertToCartesianVector() const;
+    std::vector<CartesianVector<T,3> > convertToCartesianVector() const;
     std::vector<T> cpRowToVector(const std::size_t row) const;
     void cpToCol(const size_t col, const std::vector<T>& vec);
     void cpToRow(const size_t row, const std::vector<T>& vec);
@@ -542,12 +542,12 @@ void Matrix<T>::cpToRow(const size_t row, const std::vector<T>& vec) {
 }
 
 template <class T>
-std::vector<Vector::Cartesian<T, 3> >
+std::vector<CartesianVector<T, 3> >
 Matrix<T>::convertToCartesianVector() const {
     assert(nCols() == 3);
-    std::vector<Vector::Cartesian<T, 3> > res(nRows());
+    std::vector<CartesianVector<T, 3> > res(nRows());
     for (std::size_t r = 0; r < nRows(); r++) {
-        res[r] = Vector::Cartesian<T, 3>(val(r, 0), val(r, 1), val(r, 2));
+        res[r] = CartesianVector<T, 3>(val(r, 0), val(r, 1), val(r, 2));
     }
     return res;
 }

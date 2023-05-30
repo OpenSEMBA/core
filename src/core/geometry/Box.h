@@ -4,7 +4,7 @@
 #include <exception>
 #include <utility>
 
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 #include "core/geometry/Grid.h"
 
 namespace SEMBA {
@@ -14,7 +14,7 @@ template<std::size_t D> class Grid;
 
 template <class T, std::size_t D>
 class Box {
-    typedef Math::Vector::Cartesian<T,D> CVecTD;
+    typedef Math::CartesianVector<T,D> CVecTD;
 public:
     Box();
     Box(const std::pair<CVecTD,CVecTD>& boundsMinMax);
@@ -266,22 +266,22 @@ bool Box<T, D>::isInnerPoint(const CVecTD& point) const {
 }
 
 template<class T, std::size_t D>
-inline Math::Vector::Cartesian<T, D> Box<T, D>::getMin() const {
+inline Math::CartesianVector<T, D> Box<T, D>::getMin() const {
     return min_;
 }
 
 template<class T, std::size_t D>
-inline Math::Vector::Cartesian<T, D> Box<T, D>::getMax() const {
+inline Math::CartesianVector<T, D> Box<T, D>::getMax() const {
     return max_;
 }
 
 template<class T, std::size_t D>
-inline Math::Vector::Cartesian<T, D> Box<T, D>::getLength() const {
+inline Math::CartesianVector<T, D> Box<T, D>::getLength() const {
     return (max_ - min_);
 }
 
 template<class T, std::size_t D>
-inline std::vector<Math::Vector::Cartesian<T, D> > Box<T, D>::getPos() const {
+inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPos() const {
     assert(D == 3);
     std::vector<CVecTD> res;
     // TODO: Generalize this...
@@ -378,7 +378,7 @@ inline std::vector<Math::Vector::Cartesian<T, D> > Box<T, D>::getPos() const {
 }
 
 template<class T, std::size_t D>
-inline std::vector<Math::Vector::Cartesian<T, D> > Box<T, D>::getPosOfBound(
+inline std::vector<Math::CartesianVector<T, D> > Box<T, D>::getPosOfBound(
     Math::Constants::CartesianAxis d,
     Math::Constants::CartesianBound p) const {
 
@@ -422,7 +422,7 @@ inline std::vector<Math::Vector::Cartesian<T, D> > Box<T, D>::getPosOfBound(
 template<class T, std::size_t D>
 Box<T, D> Box<T, D>::getBoundAsBox(Math::Constants::CartesianAxis d,
     Math::Constants::CartesianBound p) const {
-    std::vector<Math::Vector::Cartesian<T, D>> pos = getPosOfBound(d, p);
+    std::vector<Math::CartesianVector<T, D>> pos = getPosOfBound(d, p);
     assert(pos.size() == 4);
     Box<T, D> res(pos[0], pos[1]);
     for (std::size_t i = 2; i < pos.size(); i++) {
@@ -433,7 +433,7 @@ Box<T, D> Box<T, D>::getBoundAsBox(Math::Constants::CartesianAxis d,
 }
 
 template<class T, std::size_t D>
-inline Math::Vector::Cartesian<T, D> Box<T, D>::getBound(
+inline Math::CartesianVector<T, D> Box<T, D>::getBound(
     Math::Constants::CartesianBound p) const {
     if (p == Math::Constants::L) {
         return getMin();
@@ -456,7 +456,7 @@ std::vector<Box<T, D>> Box<T, D>::chop(const CVecTD origStep) const {
             step(d) = length(d);
         }
     }
-    Math::Vector::Cartesian<Math::Real, 3> minR, maxR, stepR;
+    Math::CartesianVector<Math::Real, 3> minR, maxR, stepR;
     for (std::size_t d = 0; d < D; d++) {
         stepR(d) = step(d);
         if (stepR(d) == 0.0) {
@@ -493,7 +493,7 @@ std::vector<Box<T, D>> Box<T, D>::chop(const Grid<D>& grid) const {
     Grid<D> subGrid;
     subGrid.setPos(pos);
     //
-    Math::Vector::Cartesian<Math::Int, D> numBoxes = subGrid.getNumCells();
+    Math::CartesianVector<Math::Int, D> numBoxes = subGrid.getNumCells();
     std::vector<Box<T, D>> res;
     res.reserve(numBoxes(Math::Constants::x) *
         numBoxes(Math::Constants::y) *

@@ -1,10 +1,9 @@
 
 #include <gtest/gtest.h>
-#include "core/math/vector/Cartesian.h"
+#include "core/math/CartesianVector.h"
 
 using namespace SEMBA;
 using namespace Math;
-using namespace Vector;
 
 TEST(MathCartesianVectorTest, Basic) {
     EXPECT_EQ(CVecR3(2.0, 3.0, 4.0), CVecR3(2.0, 3.0, 4.0));
