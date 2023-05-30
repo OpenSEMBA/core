@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Volume.h"
-#include "core/math/axis/Local.h"
+#include "core/math/LocalAxis.h"
 
 namespace SEMBA {
 namespace PhysicalModel {
@@ -14,18 +14,18 @@ public:
         ferrite
     };
 
-    Anisotropic(const Math::Axis::Local& local);
+    Anisotropic(const Math::LocalAxis& local);
     Anisotropic(const Anisotropic& rhs);
     virtual ~Anisotropic();
 
-    Math::Axis::Local getLocalAxe() const;
+    Math::LocalAxis getLocalAxe() const;
     virtual Math::MatR33 getRelPermittivityMatR() const = 0;
     virtual Math::MatR33 getRelPermeabilityMatR() const = 0;
     virtual Math::MatR33 getElectricConductivityMat() const = 0;
     virtual Math::MatR33 getMagneticConductivityMat() const = 0;
 
 private:
-    Math::Axis::Local localAxe_;
+    Math::LocalAxis localAxe_;
 };
 
 } /* namespace Volume */

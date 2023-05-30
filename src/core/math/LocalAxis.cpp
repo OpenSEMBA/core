@@ -1,32 +1,22 @@
-
-
-#include "Local.h"
+#include "LocalAxis.h"
 
 namespace SEMBA {
 namespace Math {
-namespace Axis {
 
-Local::Local() {
-}
-
-Local::Local(CVecR3 eulerAngles, CVecR3 origin) {
+LocalAxis::LocalAxis(CVecR3 eulerAngles, CVecR3 origin) {
     eulerAngles_ = eulerAngles;
     origin_ = origin;
 }
 
-Local::~Local() {
-
-}
-
-const CVecR3 Local::getEulerAngles() const {
+const CVecR3 LocalAxis::getEulerAngles() const {
     return eulerAngles_;
 }
 
-const CVecR3 Local::getOrigin() const {
+const CVecR3 LocalAxis::getOrigin() const {
     return origin_;
 }
 
-MatR33 Local::getTransformationMatrix() const {
+MatR33 LocalAxis::getTransformationMatrix() const {
     MatR33 res;
     const Real phi = eulerAngles_(0);
     const Real theta = eulerAngles_(1);
@@ -47,19 +37,18 @@ MatR33 Local::getTransformationMatrix() const {
     return res;
 }
 
-MatR33 Local::convertToGlobal(const MatR33& local) const {
+MatR33 LocalAxis::convertToGlobal(const MatR33& local) const {
     MatR33 transformation = getTransformationMatrix();
     MatR33 transformationTransposed = getTransformationMatrix().transpose();
     MatR33 global = transformation * local * transformationTransposed;
     return global;
 }
 
-CVecR3 Local::convertToGlobal(const CVecR3& local) const {
+CVecR3 LocalAxis::convertToGlobal(const CVecR3& local) const {
     MatR33 transformation = getTransformationMatrix();
     CVecR3 global = transformation * local + origin_;
     return global;
 }
 
-} /* namespace Axis */
 } /* namespace Math */
 } /* namespace SEMBA */

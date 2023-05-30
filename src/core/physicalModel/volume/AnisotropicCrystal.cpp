@@ -9,7 +9,7 @@ namespace Volume {
 AnisotropicCrystal::AnisotropicCrystal(
         const Id matId,
         const std::string& name,
-        const Math::Axis::Local& local,
+        const Math::LocalAxis& local,
         const Math::CVecR3& principalAxesRelativePermittivity,
         const Math::Real relativePermeability)
 :   Identifiable<Id>(matId),

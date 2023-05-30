@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/geometry/Box.h"
-#include "core/math/axis/Local.h"
+#include "core/math/LocalAxis.h"
 
 #include "Volume.h"
 
@@ -11,7 +11,7 @@ namespace Volume {
 
 class PML : public virtual Volume {
 public:
-    PML(const Id id, const std::string& name, const Math::Axis::Local orientation);
+    PML(const Id id, const std::string& name, const Math::LocalAxis orientation);
     PML(const PML& rhs);
     virtual ~PML() = default;
   
@@ -19,11 +19,11 @@ public:
         return std::make_unique<PML>(*this);
     }
 
-    const Math::Axis::Local getOrientation() const;
+    const Math::LocalAxis getOrientation() const;
     const Math::CVecR3 getGlobalZAxis() const;
 
 private:
-    const Math::Axis::Local orientation_;
+    const Math::LocalAxis orientation_;
 };
 
 } /* namespace Volume */

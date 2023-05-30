@@ -1,6 +1,6 @@
 
 #include <gtest/gtest.h>
-#include "core/math/axis/Local.h"
+#include "core/math/LocalAxis.h"
 #include "core/math/Constants.h"
 
 #define _USE_MATH_DEFINES
@@ -8,7 +8,6 @@
 
 using namespace SEMBA;
 using namespace Math;
-using namespace Axis;
 
 class MathAxisLocalTest : public ::testing::Test {
 
@@ -16,10 +15,10 @@ class MathAxisLocalTest : public ::testing::Test {
 
 TEST_F(MathAxisLocalTest, BasicIdentities) {
 
-    Local global(CVecR3(0.0));
+    LocalAxis global(CVecR3(0.0));
 
     CVecR3 localOrigin(3.0,0.0,0.0);
-    Local local(CVecR3(Constants::pi, Constants::pi_2, Constants::pi / 3.0), localOrigin);
+    LocalAxis local(CVecR3(Constants::pi, Constants::pi_2, Constants::pi / 3.0), localOrigin);
 
     MatR33 eye;
     eye.eye();
@@ -34,18 +33,18 @@ TEST_F(MathAxisLocalTest, BasicIdentities) {
 }
 
 TEST_F(MathAxisLocalTest, VectorTransformation) {
-    Local global(CVecR3(0.0));
-    Local local(CVecR3(-Constants::pi/2, 0.0, 0.0));
+    LocalAxis global(CVecR3(0.0));
+    LocalAxis local(CVecR3(-Constants::pi/2, 0.0, 0.0));
 
     CVecR3 localV(1.0,1.0,0.0);
     EXPECT_EQ(CVecR3(-1.0,1.0,0.0), local.convertToGlobal(localV));
 }
 
 TEST_F(MathAxisLocalTest, TensorTransformation) {
-    Local global(CVecR3(0.0));
+    LocalAxis global(CVecR3(0.0));
 
     const Int rotations = 3;
-    Local local(CVecR3(Constants::pi*2.0/((Real)rotations), 0.0, 0.0));
+    LocalAxis local(CVecR3(Constants::pi*2.0/((Real)rotations), 0.0, 0.0));
 
     MatR33 original;
 
