@@ -17,7 +17,7 @@ public:
     Parser(const std::string& fn);  
 
 protected:
-    util::Project filename;
+    util::ProjectFile filename;
     static void postReadOperations(UnstructuredProblemDescription& res);
 };
 

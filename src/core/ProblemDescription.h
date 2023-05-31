@@ -7,14 +7,14 @@
 #include "core/source/Group.h"
 #include "core/outputRequest/Group.h"
 #include "core/model/Model.h"
-#include "core/util/Project.h"
+#include "core/util/ProjectFile.h"
 
 namespace SEMBA {
 
 template<typename M = UnstructuredModel>
 class ProblemDescriptionBase {
 public:
-	util::Project project;
+	util::ProjectFile project;
 	Geometry::Grid3 grids;
 	SourceGroup sources;
 	nlohmann::json analysis;

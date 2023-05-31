@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "core/util/Project.h"
+#include "core/util/ProjectFile.h"
 
 using namespace SEMBA;
 using namespace util;
@@ -57,7 +57,7 @@ TEST_F(ProjectTest, createDirs) {
 #else
 
 TEST(ProjectTest, canHandleFileExtensions) {
-    Project p;
+    ProjectFile p;
 
     std::vector<std::pair<std::string, std::string>> list{
         std::make_pair("/my/file/extension.program.subprogram", ".program.subprogram"),

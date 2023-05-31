@@ -33,7 +33,7 @@ Source& Source::operator=(const Source& rhs)
 
 
 void Source::convertToNumerical(
-    const util::Project& file,
+    const util::ProjectFile& file,
     const math::Real step,
     const math::Real finalTime) 
 {
@@ -44,7 +44,7 @@ void Source::convertToNumerical(
     magnitude_ = std::move(newMagnitude);
 }
 
-Magnitude::Numerical Source::exportToFile(const util::Project& file,
+Magnitude::Numerical Source::exportToFile(const util::ProjectFile& file,
                                          const math::Real step,
                                          const math::Real finalTime) const {
     if(magnitude_->is<Magnitude::Numerical>()) {

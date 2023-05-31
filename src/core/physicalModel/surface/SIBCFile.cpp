@@ -8,7 +8,7 @@ namespace Surface {
 
 SIBCFile::SIBCFile(const Id id,
                          const std::string& name,
-                         const util::Project& file)
+                         const util::ProjectFile& file)
 :   Identifiable<Id>(id),
     PhysicalModel(name),
     file_(file) {
@@ -18,7 +18,7 @@ SIBCFile::SIBCFile(const Id id,
     }
 }
 
-const util::Project SIBCFile::getFile() const {
+const util::ProjectFile SIBCFile::getFile() const {
     return file_;
 }
 

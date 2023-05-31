@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/geometry/element/Group.h"
-#include "core/util/Project.h"
+#include "core/util/ProjectFile.h"
 #include "core/util/Class.h"
 #include "core/util/Identifiable.h"
 #include "core/util/Identification.h"
@@ -29,11 +29,11 @@ public:
 
     virtual std::string getName() const = 0;
 
-    void convertToNumerical(const util::Project& file,
+    void convertToNumerical(const util::ProjectFile& file,
                             const math::Real step,
                             const math::Real finalTime);
     
-    Magnitude::Numerical exportToFile(const util::Project& file,
+    Magnitude::Numerical exportToFile(const util::ProjectFile& file,
                                        const math::Real step,
                                        const math::Real finalTime) const;
     const Magnitude::Magnitude* getMagnitude() const { return magnitude_.get(); }

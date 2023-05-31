@@ -8,7 +8,7 @@ namespace SEMBA {
 namespace exporters {
 
 Exporter::Exporter(const std::string& name)
-:   Project(name) {}
+:   ProjectFile(name) {}
 
 void Exporter::deleteExistentOutputFiles() const {
     std::string file;

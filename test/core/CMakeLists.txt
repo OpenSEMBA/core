@@ -7,8 +7,8 @@ include_directories(${GTEST_INCLUDE_DIRS})
 include(GoogleTest)
 
 add_executable(opensemba_core_tests
-    "class/GroupIdentifiableUniqueTest.cpp"
-    "filesystem/ProjectTest.cpp"
+    "util/GroupIdentifiableUniqueTest.cpp"
+    "util/ProjectTest.cpp"
     "geometry/coordinate/CoordinateGroupTest.cpp"
     "geometry/element/Line2Test.cpp"
     "geometry/layer/LayerTest.cpp"
