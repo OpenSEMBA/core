@@ -14,7 +14,7 @@ using namespace Geometry;
 void fillProblemDescription(UnstructuredProblemDescription& pD)
 {
 
-	pD.project = FileSystem::Project("MyPath");
+	pD.project = util::Project("MyPath");
 	
 	{
 		// Create mesh
@@ -83,7 +83,7 @@ TEST(ProblemDescriptionTest, CanInitializeProject)
 	const std::string path {"My/Project/Path/File.dat"};
 
 	UnstructuredProblemDescription problemDescription;
-	problemDescription.project = FileSystem::Project(path);
+	problemDescription.project = util::Project(path);
 
 	EXPECT_EQ(problemDescription.project, path);
 }

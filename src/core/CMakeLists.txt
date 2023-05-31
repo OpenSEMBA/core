@@ -8,7 +8,6 @@ add_subdirectory(model/ model/)
 add_subdirectory(math/ math/)
 add_subdirectory(geometry/ geometry/)
 add_subdirectory(outputRequest/ outputRequest/)
-add_subdirectory(filesystem/ filesystem/)
 add_subdirectory(physicalModel/ physicalModel/)
 add_subdirectory(source/ source/)
 
@@ -19,7 +18,6 @@ add_library(opensemba_core STATIC
 )
     
 target_link_libraries(opensemba_core
-    opensemba_core_filesystem
     opensemba_core_geometry
     opensemba_core_math
     opensemba_core_physicalmodel

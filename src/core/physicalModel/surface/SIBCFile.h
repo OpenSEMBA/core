@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core/math/matrix/Static.h"
-#include "core/filesystem/Project.h"
+#include "core/util/Project.h"
 
 #include "Surface.h"
 
@@ -14,16 +14,16 @@ public:
     SIBCFile();
     SIBCFile(const Id id,
              const std::string& name,
-             const FileSystem::Project& file);
+             const util::Project& file);
     
     virtual std::unique_ptr<PhysicalModel> clone() const override {
         return std::make_unique<SIBCFile>(*this);
     }
 
-    const FileSystem::Project getFile() const;
+    const util::Project getFile() const;
 
 protected:
-    FileSystem::Project file_;
+    util::Project file_;
 };
 
 } /* namespace Surface */

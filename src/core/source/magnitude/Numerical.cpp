@@ -9,12 +9,12 @@ namespace SEMBA {
 namespace Source {
 namespace Magnitude {
 
-Numerical::Numerical(const FileSystem::Project& fileIn) :   
+Numerical::Numerical(const util::Project& fileIn) :   
     Magnitude(new math::function::LinearInterpolation<math::Real, math::Real>(fileIn)),
     file(fileIn)
 {}
 
-Numerical::Numerical(const FileSystem::Project& fileIn,
+Numerical::Numerical(const util::Project& fileIn,
                      const Magnitude& mag,
                      const math::Real timeStep,
                      const math::Real finalTime) 

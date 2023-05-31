@@ -20,5 +20,4 @@ add_library(opensemba_core_source
     "magnitude/Magnitude.cpp"
     "magnitude/Numerical.cpp"
 )
-target_link_libraries(opensemba_core_source opensemba_core_geometry
-                                            opensemba_core_filesystem)
+target_link_libraries(opensemba_core_source opensemba_core_geometry)

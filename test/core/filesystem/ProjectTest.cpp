@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "core/filesystem/Project.h"
+#include "core/util/Project.h"
 
 using namespace SEMBA;
-using namespace FileSystem;
+using namespace util;
 
 #ifndef _WIN32
 class ProjectTest : public ::testing::Test {
