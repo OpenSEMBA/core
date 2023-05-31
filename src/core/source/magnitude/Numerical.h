@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Magnitude.h"
-#include "core/util/Project.h"
+#include "core/util/ProjectFile.h"
 
 namespace SEMBA {
 namespace Source {
@@ -11,8 +11,8 @@ class Numerical : public virtual Magnitude {
 public:
     Numerical() = default;
     Numerical(const Numerical&) = default;
-    Numerical(const util::Project& filename);
-    Numerical(const util::Project& filename,
+    Numerical(const util::ProjectFile& filename);
+    Numerical(const util::ProjectFile& filename,
               const Magnitude& mag,
               const math::Real timeStep,
               const math::Real finalTime);
@@ -24,11 +24,11 @@ public:
     bool operator==(const Numerical&) const;
     math::Real evaluate(const math::Real time) const;
 
-    util::Project getFile() const { return file; };
+    util::ProjectFile getFile() const { return file; };
 
 private:
     static const std::size_t defaultNumberOfSteps = 1000;
-    util::Project file;
+    util::ProjectFile file;
 
 };
 

@@ -14,7 +14,7 @@ namespace exporters {
 using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
 using ElemRView = std::vector<const Geometry::ElemR*>;
 
-class Exporter : public util::Project {
+class Exporter : public util::ProjectFile {
 
 public:
     Exporter(const std::string& name);

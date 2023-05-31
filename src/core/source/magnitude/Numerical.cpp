@@ -9,12 +9,12 @@ namespace SEMBA {
 namespace Source {
 namespace Magnitude {
 
-Numerical::Numerical(const util::Project& fileIn) :   
+Numerical::Numerical(const util::ProjectFile& fileIn) :   
     Magnitude(new math::function::LinearInterpolation<math::Real, math::Real>(fileIn)),
     file(fileIn)
 {}
 
-Numerical::Numerical(const util::Project& fileIn,
+Numerical::Numerical(const util::ProjectFile& fileIn,
                      const Magnitude& mag,
                      const math::Real timeStep,
                      const math::Real finalTime) 
@@ -73,7 +73,7 @@ Numerical::Numerical(const util::Project& fileIn,
 bool Numerical::operator==(const Numerical& rhs) const {
     bool areEqual = true;
     areEqual &= Magnitude::operator==(rhs);
-    areEqual &= file.compare(rhs.file);
+    areEqual &= (bool) file.compare(rhs.file);
     return areEqual;
 }
 

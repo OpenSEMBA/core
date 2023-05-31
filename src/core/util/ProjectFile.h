@@ -32,13 +32,13 @@
 namespace SEMBA {
 namespace util {
 
-class Project : public std::string {
+class ProjectFile : public std::string {
 public:
-    Project() = default;
-    Project(const std::string& filename) : std::string(filename) {}
-    Project(const Project& rhs) : std::string(rhs) {}
+    ProjectFile() = default;
+    ProjectFile(const std::string& filename) : std::string(filename) {}
+    ProjectFile(const ProjectFile& rhs) : std::string(rhs) {}
 
-    virtual ~Project() = default;
+    virtual ~ProjectFile() = default;
 
     bool canOpen() const;
     bool canExecute() const;
@@ -58,7 +58,7 @@ public:
     std::string getProjectName() const {
         return removeExtension_(getBasename());
     }
-    Project relativeTo(const Project& rhs) const;
+    ProjectFile relativeTo(const ProjectFile& rhs) const;
 
     void setFilename(const std::string& filename);
     void setToCurrentWorkingDir();
@@ -92,7 +92,7 @@ protected:
 };
 
 
-inline void Project::initDir_(const std::string& fn) const {
+inline void ProjectFile::initDir_(const std::string& fn) const {
     std::string dirname = fn;
 #ifdef _WIN32
     if (checkExistance_(dirname)) {
@@ -109,12 +109,12 @@ inline void Project::initDir_(const std::string& fn) const {
 #endif
 }
 
-inline void Project::makeDir() const {
+inline void ProjectFile::makeDir() const {
     initDir_(*this);
 }
 
 
-inline void Project::changeDir() const {
+inline void ProjectFile::changeDir() const {
 #ifdef _WIN32
     _chdir(this->c_str());
 #else
@@ -123,13 +123,13 @@ inline void Project::changeDir() const {
 }
 
 
-inline void Project::rmDir() const {
+inline void ProjectFile::rmDir() const {
     std::string dir = *this;
     deleteDirIfExists_(dir);
 }
 
 
-inline bool Project::canOpen() const {
+inline bool ProjectFile::canOpen() const {
     std::ifstream file;
     file.open(c_str());
     bool res;
@@ -143,7 +143,7 @@ inline bool Project::canOpen() const {
 }
 
 
-inline bool Project::canExecute() const {
+inline bool ProjectFile::canExecute() const {
 #ifdef _WIN32
     DWORD aux;
     if(GetBinaryTypeA(c_str(), &aux) != 0) {
@@ -163,12 +163,12 @@ inline bool Project::canExecute() const {
 }
 
 
-inline std::string Project::getFilename() const {
+inline std::string ProjectFile::getFilename() const {
     return *this;
 }
 
 
-inline std::string Project::getBasename() const {
+inline std::string ProjectFile::getBasename() const {
 #ifdef _WIN32
     char* fname = new char[getFilename().size() + 1];
     char* ext   = new char[getFilename().size() + 1];
@@ -181,7 +181,7 @@ inline std::string Project::getBasename() const {
 }
 
 
-inline std::string Project::getFolder() const {
+inline std::string ProjectFile::getFolder() const {
 #ifdef _WIN32
     char* drive = new char[getFilename().size() + 1];
     char* dir = new char[getFilename().size() + 1];
@@ -204,17 +204,17 @@ inline std::string Project::getFolder() const {
 }
 
 
-inline void Project::setFilename(const std::string& filename) {
+inline void ProjectFile::setFilename(const std::string& filename) {
     std::string::operator=(filename);
 }
 
 
-inline std::string Project::toStr() const {
+inline std::string ProjectFile::toStr() const {
     return *this;
 }
 
 
-inline std::vector<std::string> Project::getFilesBasenames_(
+inline std::vector<std::string> ProjectFile::getFilesBasenames_(
         const std::string& directory,
         const std::string& extension) const {
     std::vector<std::string> files;
@@ -256,13 +256,13 @@ inline std::vector<std::string> Project::getFilesBasenames_(
 }
 
 
-inline void Project::openFile(std::ofstream& file,
+inline void ProjectFile::openFile(std::ofstream& file,
                        const bool& textMode) const {
     openFile_(*this, file, textMode);
 }
 
 
-inline void Project::openFile_(const std::string& fileName,
+inline void ProjectFile::openFile_(const std::string& fileName,
                         std::ofstream& file,
                         const bool& textMode) const {
     try {
@@ -277,7 +277,7 @@ inline void Project::openFile_(const std::string& fileName,
 }
 
 
-inline std::string Project::removeExtension_(const std::string& fName) const {
+inline std::string ProjectFile::removeExtension_(const std::string& fName) const {
     size_t pos = fName.rfind(".");
     if (pos == std::string::npos) { //No extension.
         return fName;
@@ -289,7 +289,7 @@ inline std::string Project::removeExtension_(const std::string& fName) const {
 }
 
 
-inline void Project::deleteDirIfExists_(const std::string& directory) const {
+inline void ProjectFile::deleteDirIfExists_(const std::string& directory) const {
 #ifdef _WIN32
     if (checkExistance_(directory)) {
         char *cstr = new char[directory.size() + 2];
@@ -324,7 +324,7 @@ inline void Project::deleteDirIfExists_(const std::string& directory) const {
 }
 
 
-inline bool Project::checkExistance_(const std::string& fn) const {
+inline bool ProjectFile::checkExistance_(const std::string& fn) const {
     bool exists;
 #ifdef _WIN32
     exists = false;;
@@ -343,7 +343,7 @@ inline bool Project::checkExistance_(const std::string& fn) const {
 }
 
 
-inline Project Project::relativeTo(const Project& rhs) const {
+inline ProjectFile ProjectFile::relativeTo(const ProjectFile& rhs) const {
     std::string rhsFolder;
     if (rhs.isFolder()) {
         rhsFolder = rhs.getFilename();
@@ -353,11 +353,11 @@ inline Project Project::relativeTo(const Project& rhs) const {
     std::string name = getFilename();
     std::string res = name.substr(name.find(rhsFolder) + rhsFolder.length(),
                                   name.length());
-    return Project(res);
+    return ProjectFile(res);
 }
 
 
-inline bool Project::isFolder() const {
+inline bool ProjectFile::isFolder() const {
 #ifdef _WIN32
     DWORD atrib = GetFileAttributesA(c_str());
     if (atrib == INVALID_FILE_ATTRIBUTES) {
@@ -374,7 +374,7 @@ inline bool Project::isFolder() const {
 }
 
 
-inline void Project::openAsInput(std::ifstream& file) const {
+inline void ProjectFile::openAsInput(std::ifstream& file) const {
     try {
         file.open(this->c_str());
     } catch(const std::exception&) {
@@ -384,7 +384,7 @@ inline void Project::openAsInput(std::ifstream& file) const {
 }
 
 
-inline void Project::exec(const std::string arguments) const {
+inline void ProjectFile::exec(const std::string arguments) const {
     if (!canExecute()) {
         throw std::ios_base::failure("Can not execute " + *this);
     }
@@ -393,7 +393,7 @@ inline void Project::exec(const std::string arguments) const {
 }
 
 
-inline std::string Project::getExtension() const {
+inline std::string ProjectFile::getExtension() const {
     auto name = std::filesystem::path(this->toStr()).filename().string();
 
     auto position = name.find_first_of('.');
@@ -405,7 +405,7 @@ inline std::string Project::getExtension() const {
 }
 
 
-inline std::string Project::getFullPath() const {
+inline std::string ProjectFile::getFullPath() const {
     std::string res;
 #ifndef _WIN32
     res = (const char*) realpath(this->getFilename().c_str(), nullptr);
@@ -416,7 +416,7 @@ inline std::string Project::getFullPath() const {
     TCHAR fullPath[MAX_PATH];
     GetFullPathName(this->c_str(), MAX_PATH, fullPath, nullptr);
     res = fullPath;
-    if (Project(res).isFolder()) {
+    if (ProjectFile(res).isFolder()) {
         res += "\\";
     }
 #endif
@@ -424,7 +424,7 @@ inline std::string Project::getFullPath() const {
 }
 
 
-inline void Project::setToCurrentWorkingDir() {
+inline void ProjectFile::setToCurrentWorkingDir() {
 #ifndef _WIN32
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) != nullptr) {

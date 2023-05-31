@@ -6,7 +6,7 @@ using namespace SEMBA;
 TEST(NumericalTest, CanGetFileAttribute) {
 	const std::string filePath = "testData/dmcwf/predefinedExcitation.1.exc";
 
-	util::Project file(filePath);
+	util::ProjectFile file(filePath);
 	Source::Magnitude::Numerical num(file);
 
 	EXPECT_EQ(file, num.getFile());

@@ -33,7 +33,7 @@ Dispersive::Dispersive(const Id id,
 
 Dispersive::Dispersive(const Id id,
                        const std::string& name,
-                       const util::Project& file)
+                       const util::ProjectFile& file)
 :   Identifiable<Id>(id),
     PhysicalModel(name) {
 	rEpsInfty_ = 1.0;
@@ -110,7 +110,7 @@ void Dispersive::addPole(
     return;
 }
 
-const util::Project Dispersive::getFile() const {
+const util::ProjectFile Dispersive::getFile() const {
     return file_;
 }
 
