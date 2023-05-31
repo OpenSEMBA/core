@@ -4,7 +4,7 @@
 #include <exception>
 #include <utility>
 
-#include "core/filesystem/Project.h"
+#include "core/util/Project.h"
 #include "Volume.h"
 
 namespace SEMBA {
@@ -26,7 +26,7 @@ public:
                         std::vector<PoleResidue>());
     Dispersive(const Id id,
                      const std::string& name,
-                     const FileSystem::Project& file);
+                     const util::Project& file);
     Dispersive(const Dispersive& rhs);
     virtual ~Dispersive();
 
@@ -43,12 +43,12 @@ public:
     bool isSimplyConductive() const;
     bool isDispersive() const;
 
-    const FileSystem::Project getFile() const;
+    const util::Project getFile() const;
 
 protected:
     math::Real rEpsInfty_, rMuInfty_; // @ InftyFreq.
     std::vector<PoleResidue> poleResidue_; // Residues for dispers model. c_p.
-    FileSystem::Project file_;
+    util::Project file_;
     void addPole(const std::complex<math::Real>& pole_,
                  const std::complex<math::Real>& res_);
 };

@@ -22,5 +22,4 @@ add_library(opensemba_core_physicalmodel STATIC
     "wire/Extremes.cpp"
     "wire/Wire.cpp"
 )
-target_link_libraries(opensemba_core_physicalmodel opensemba_core_math
-                                                   opensemba_core_filesystem)
+target_link_libraries(opensemba_core_physicalmodel opensemba_core_math)

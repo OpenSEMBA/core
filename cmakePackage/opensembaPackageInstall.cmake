@@ -27,7 +27,6 @@ configure_file(
 install(
    TARGETS opensemba 
     opensemba_core 
-        opensemba_core_filesystem 
         opensemba_core_geometry 
         opensemba_core_math 
         opensemba_core_outputrequest
