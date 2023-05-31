@@ -1,5 +1,3 @@
-
-
 #include "Conformal.h"
 
 namespace SEMBA {
@@ -65,7 +63,7 @@ bool Conformal::operator==(const Base& rhs) const {
 
 CoordR3* Conformal::toUnstructured(const Grid3& grid) const {
     math::CVecR3 pos = grid.getPos(*this);
-    if (math::Util::greater(getLength(), 0.0)) {
+    if (math::greater(getLength(), 0.0)) {
         math::Int dir = getDir();
         math::Real length = getLength();
         math::CVecI3 cellAux = *this;

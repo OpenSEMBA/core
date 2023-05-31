@@ -136,8 +136,8 @@ Grid<D>::Grid(const BoxRD& box,
             nCells = 1;
         }
         else {
-            nCells = ceil(boxLength / dxyz(i));
-            if (math::Util::greater(boxLength, nCells * dxyz(i),
+            nCells = math::ceil(boxLength / dxyz(i));
+            if (math::greater(boxLength, nCells * dxyz(i),
                 dxyz(i), tolerance)) {
                 nCells++;
             }
@@ -286,7 +286,7 @@ template<std::size_t D>
 bool Grid<D>::isRegular(const std::size_t d) const {
     std::vector<math::Real> step = getStep(d);
     for (std::size_t n = 1; n < step.size(); n++) {
-        if (math::Util::notEqual(step[n], step[0], step[0], tolerance)) {
+        if (math::notEqual(step[n], step[0], step[0], tolerance)) {
             return false;
         }
     }
@@ -299,7 +299,7 @@ bool Grid<D>::isCartesian() const {
     for (std::size_t i = 0; i < D; i++) {
         std::vector<math::Real> step = getStep(i);
         for (std::size_t n = 1; n < step.size(); n++) {
-            if (math::Util::notEqual(step[n], canon, canon, tolerance)) {
+            if (math::notEqual(step[n], canon, canon, tolerance)) {
                 return false;
             }
         }
@@ -478,8 +478,8 @@ std::vector<math::Real> Grid<D>::getPosInRange(const std::size_t dir,
         else {
             step = steps.back();
         }
-        const bool inMin = math::Util::equal(pos[i], min, step, tolerance);
-        const bool inMax = math::Util::equal(pos[i], max, step, tolerance);
+        const bool inMin = math::equal(pos[i], min, step, tolerance);
+        const bool inMax = math::equal(pos[i], max, step, tolerance);
         const bool inRange = (pos[i] >= min && pos[i] <= max);
         if (inMin || inMax || inRange) {
             res.push_back(pos[i]);
@@ -544,7 +544,7 @@ std::pair<math::Int, math::Real> Grid<D>::getCellPair(const std::size_t dir,
     std::vector<math::Real> steps = getStep(dir);
     assert(pos_[dir].size() >= 1);
     // Checks if it is below the grid.
-    if (math::Util::lower(x, pos[0], steps[0], tol)) {
+    if (math::lower(x, pos[0], steps[0], tol)) {
         cell = 0;
         dist = (x - pos[0]) / steps[0];
         if (err != nullptr) {
@@ -563,7 +563,7 @@ std::pair<math::Int, math::Real> Grid<D>::getCellPair(const std::size_t dir,
         else {
             step = steps.back();
         }
-        if (math::Util::equal(x, pos[i], step, tol)) {
+        if (math::equal(x, pos[i], step, tol)) {
             cell = i;
             dist = 0.0;
             if (err != nullptr) {
@@ -571,10 +571,10 @@ std::pair<math::Int, math::Real> Grid<D>::getCellPair(const std::size_t dir,
             }
             return std::make_pair(cell, dist);
         }
-        else if (math::Util::lower(x, pos[i], step, tol)) {
+        else if (math::lower(x, pos[i], step, tol)) {
             cell = i - 1;
             dist = (x - pos[i - 1]) / step;
-            if (math::Util::equal(math::Util::round(dist), 1.0) && approx) {
+            if (math::equal(math::round(dist), 1.0) && approx) {
                 cell++;
                 dist -= 1.0;
             }
@@ -685,12 +685,12 @@ void Grid<D>::enlargeBound(math::Constants::CartesianAxis d,
         boundCell = this->getNumCells()(d) - 1;
     }
     std::vector<math::Real> newSteps;
-    if (math::Util::greaterEqual(getStep(d, b), siz) || siz == 0.0) {
+    if (math::greaterEqual(getStep(d, b), siz) || siz == 0.0) {
         siz = getStep(d, boundCell);
         // Computes enlargement for a padding with same size.
         math::Real nCellsFrac = std::abs(pad / siz);
         const math::Real tol = 0.01;
-        std::size_t nCells = (std::size_t)math::Util::ceil(nCellsFrac, tol);
+        std::size_t nCells = (std::size_t)math::ceil(nCellsFrac, tol);
         newSteps.resize(nCells, siz);
     }
     else {
@@ -703,7 +703,7 @@ void Grid<D>::enlargeBound(math::Constants::CartesianAxis d,
         math::Real t0 = d12;
         math::Real r0 = (d14 - d12) / (d14 - d34);
         math::Real r = r0;
-        math::Int n = math::Util::ceil(log(d34 / d12) / log(r0),
+        math::Int n = math::ceil(log(d34 / d12) / log(r0),
             (math::Real)0.01) - 1;
         if (n > 1) {
             // Newton method to adjust the sum of available space.

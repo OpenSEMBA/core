@@ -40,7 +40,7 @@ bool Surface<T>::isRectangular() const {
         math::CartesianVector<T, 3> p1 = this->getSideVertex(f % 4, 1)->pos();
         math::CartesianVector<T, 3> p2 = this->getSideVertex((f + 1) % 4, 1)->pos();
         math::Real sProd = (math::Real)(p2 - p1).dot(p1 - p0);
-        if (math::Util::greater(sProd, 0.0, 1.0)) {
+        if (math::greater(sProd, 0.0, 1.0)) {
             return false;
         }
     }

@@ -1,4 +1,4 @@
-#include "Exporter.h"
+#include "ExporterVTK.h"
 
 #include "core/geometry/mesh/Unstructured.h"
 #include "core/geometry/mesh/Geometric.h"
@@ -7,6 +7,29 @@
 #include "core/geometry/element/Triangle3.h"
 #include "core/geometry/element/Hexahedron8.h"
 #include "core/util/GroupViewTools.h"
+
+enum CELL_TYPES {
+    VTK_VERTEX = 1,
+    VTK_POLY_VERTEX = 2,
+    VTK_LINE = 3,
+    VTK_POLY_LINE = 4,
+    VTK_TRIANGLE = 5,
+    VTK_TRIANGLE_STRIP = 6,
+    VTK_POLYGON = 7,
+    VTK_PIXEL = 8,
+    VTK_QUAD = 9,
+    VTK_TETRA = 10,
+    VTK_VOXEL = 11,
+    VTK_HEXAHEDRON = 12,
+    VTK_WEDGE = 13,
+    VTK_PYRAMID = 14,
+    VTK_QUADRATIC_EDGE = 21,
+    VTK_QUADRATIC_TRIANGLE = 22,
+    VTK_QUADRATIC_QUAD = 23,
+    VTK_QUADRATIC_TETRA = 24,
+    VTK_QUADRATIC_HEXAHEDRON = 25
+};
+
 
 namespace {
 #ifdef _WIN32
@@ -18,10 +41,9 @@ namespace {
 
 namespace SEMBA {
 namespace exporters {
-namespace VTK {
 
-Exporter::Exporter(const UnstructuredProblemDescription& smb, const std::string& fn) :
-    SEMBA::exporters::Exporter(fn) 
+ExporterVTK::ExporterVTK(const UnstructuredProblemDescription& smb, const std::string& fn) :
+    Exporter(fn) 
 {
     initDir_(fn + ".vtk");
 
@@ -38,7 +60,7 @@ Exporter::Exporter(const UnstructuredProblemDescription& smb, const std::string&
     writeMesh_(unstructuredProblemDescription);
 }
 
-void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
+void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
 {
     const Geometry::Mesh::Unstructured* inMesh = &smb.model.mesh;
     const SourceGroup& srcs = smb.sources;
@@ -146,7 +168,7 @@ void Exporter::writeMesh_(const UnstructuredProblemDescription& smb)
 
 }
 // En master, `const Group::Group<const Geometry::ElemR>& elems`
-void Exporter::writeFile_(const ElemRView& elems,
+void ExporterVTK::writeFile_(const ElemRView& elems,
                           const std::string& name,
                           std::ofstream& outMain,
                           std::size_t& part) {
@@ -182,7 +204,7 @@ void Exporter::writeFile_(const ElemRView& elems,
 }
 
 std::pair<std::vector<math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
-    Exporter::getPoints_(
+    ExporterVTK::getPoints_(
         const ElemRView& elems) {
     std::map<Geometry::CoordId, std::size_t> mapCoords;
     std::vector<math::CVecR3> pos;
@@ -197,7 +219,7 @@ std::pair<std::vector<math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
     return make_pair(pos, mapCoords);
 }
 
-void Exporter::writePoints_(std::ofstream &outFile,
+void ExporterVTK::writePoints_(std::ofstream &outFile,
                             const std::vector<math::CVecR3>& pos) {
     outFile << "      " << "<Points>" << std::endl;
     outFile << "        " << "<DataArray "
@@ -216,7 +238,7 @@ void Exporter::writePoints_(std::ofstream &outFile,
     outFile << "      " << "</Points>" << std::endl;
 }
 
-void Exporter::writeCells_(
+void ExporterVTK::writeCells_(
         std::ofstream& outFile,
         const ElemRView& elems,
         std::map<Geometry::CoordId, std::size_t>& mapCoords) {
@@ -279,12 +301,11 @@ void Exporter::writeCells_(
     outFile << "      " << "</Cells>" << std::endl;
 }
 
-std::string Exporter::makeValid_(const std::string& allocator) {
+std::string ExporterVTK::makeValid_(const std::string& allocator) {
     std::string res = allocator;
     std::replace(res.begin(), res.end(), '/', '_');
     return res;
 }
 
-} /* namespace VTK */
-} /* namespace exporters */
+}
 } /* namespace SEMBA */

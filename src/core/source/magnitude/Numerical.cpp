@@ -52,7 +52,7 @@ Numerical::Numerical(const FileSystem::Project& fileIn,
             math::function::LinearInterpolation<math::Real,math::Real>(
                 preAndPost)(time);
         const math::Real current = mag.evaluate(time);
-        bool isAligned = math::Util::equal(current, interpolated,
+        bool isAligned = math::equal(current, interpolated,
                 0.0, std::numeric_limits<math::Real>::epsilon());
         if (!isAligned) {
             out << std::setw(16) << std::setfill(' ') << time 

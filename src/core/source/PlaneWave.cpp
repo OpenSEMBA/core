@@ -127,7 +127,7 @@ void PlaneWave::init_(math::CVecR3 direction, math::CVecR3 polarization) {
         throw Error::PlaneWave::ZeroMagnitude();
     }
     math::Real dotProd = direction.dot(polarization);
-    if (math::Util::notEqual(dotProd, 0.0)) {
+    if (math::notEqual(dotProd, 0.0)) {
         throw Error::PlaneWave::NotPerpendicular();
     }
 }

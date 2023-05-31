@@ -25,7 +25,7 @@ TEST(MathFunctionGaussianTest, fourierSimmetric) {
     const Real delay  = 0.0;
     const Real amplitude = 1.0;
     Gaussian gaussian(spread, delay, amplitude);
-    vector<Real> fq = Util::linspace(pair<Real,Real>(-10,10), 100);
+    vector<Real> fq = linspace(pair<Real,Real>(-10,10), 100);
     for (size_t i = 0; i < fq.size(); ++i) {
         EXPECT_EQ(0.0, gaussian.getFourier(fq[i]).imag());
     }

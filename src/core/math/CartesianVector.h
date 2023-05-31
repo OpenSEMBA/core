@@ -383,7 +383,7 @@ CartesianVector<T, D>& CartesianVector<T, D>::setWithMinimalComponents(
 
 template <class T, std::size_t D>
 bool CartesianVector<T, D>::operator==(const CartesianVector<T, D>& param) const {
-    return Util::equal((*this - param).norm(), 0.0, (*this + param).norm());
+    return equal((*this - param).norm(), 0.0, (*this + param).norm());
 }
 
 template <class T, std::size_t D>
@@ -405,17 +405,17 @@ bool CartesianVector<T, D>::isContainedInPlane(
     if (std::is_same<T, std::complex<Real>>::value) {
         switch (plane) {
         case Constants::xy:
-            if (Util::equal(std::abs(val[2]), 0.0)) {
+            if (equal(std::abs(val[2]), 0.0)) {
                 return true;
             }
             break;
         case Constants::yz:
-            if (Util::equal(std::abs(val[0]), 0.0)) {
+            if (equal(std::abs(val[0]), 0.0)) {
                 return true;
             }
             break;
         case Constants::zx:
-            if (Util::equal(std::abs(val[1]), 0.0)) {
+            if (equal(std::abs(val[1]), 0.0)) {
                 return true;
             }
             break;
@@ -425,17 +425,17 @@ bool CartesianVector<T, D>::isContainedInPlane(
     else {
         switch (plane) {
         case Constants::xy:
-            if (Util::equal(std::abs(val[2]), 0.0)) {
+            if (equal(std::abs(val[2]), 0.0)) {
                 return true;
             }
             break;
         case Constants::yz:
-            if (Util::equal(std::abs(val[0]), 0.0)) {
+            if (equal(std::abs(val[0]), 0.0)) {
                 return true;
             }
             break;
         case Constants::zx:
-            if (Util::equal(std::abs(val[1]), 0.0)) {
+            if (equal(std::abs(val[1]), 0.0)) {
                 return true;
             }
             break;
@@ -501,7 +501,7 @@ inline Constants::CartesianAxis CartesianVector<T, D>::getCartesianAxis() const 
         axis(dir) = (T)1.0;
         Real dotProduct = std::abs(this->dot(axis));
         Real norm = this->norm();
-        if (Util::equal(dotProduct, norm, 1e-2)) {
+        if (equal(dotProduct, norm, 1e-2)) {
             return Constants::CartesianAxis(dir);
         }
     }
@@ -601,10 +601,10 @@ template<class T, std::size_t D>
 bool operator< (const CartesianVector<T, D>& lhs,
     const CartesianVector<T, D>& rhs) {
     for (std::size_t i = 0; i < D; i++) {
-        if (Util::lower(lhs(i), rhs(i))) {
+        if (lower(lhs(i), rhs(i))) {
             return true;
         }
-        if (Util::greater(lhs(i), rhs(i))) {
+        if (greater(lhs(i), rhs(i))) {
             return false;
         }
     }
