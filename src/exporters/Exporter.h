@@ -8,9 +8,11 @@
 #include "core/ProblemDescription.h"
 #include "core/geometry/mesh/Structured.h"
 
-namespace SEMBA::exporters {
-    using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
-    using ElemRView = std::vector<const Geometry::ElemR*>;
+namespace SEMBA {
+namespace exporters {
+
+using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
+using ElemRView = std::vector<const Geometry::ElemR*>;
 
 class Exporter : public FileSystem::Project {
 
@@ -39,4 +41,4 @@ protected:
 };
 
 } 
-
+}

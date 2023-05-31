@@ -96,9 +96,9 @@ TEST_F(GeometryGridTest, EnlargeBound2) {
 }
 
 TEST_F(GeometryGridTest, GetSteps) {
-    EXPECT_NEAR(0.05, grid_.getStep(0,2), math::Util::tolerance);
-    EXPECT_NEAR(0.05, grid_.getStep(1,5), math::Util::tolerance);
-    EXPECT_NEAR(0.05, grid_.getStep(2,5), math::Util::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(0,2), math::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(1,5), math::tolerance);
+    EXPECT_NEAR(0.05, grid_.getStep(2,5), math::tolerance);
 }
 
 TEST_F(GeometryGridTest, Equality) {

@@ -203,7 +203,7 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMinV() const {
         for (std::size_t j = 0; j < 3; j++) {
             math::Real val1 = getVertex(i)->pos()(j);
             math::Real val2 = res->pos()(j);
-            if (math::Util::lower(val1, val2, res->pos().norm())) {
+            if (math::lower(val1, val2, res->pos().norm())) {
                 res = getVertex(i);
                 break;
             }
@@ -223,7 +223,7 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMaxV() const {
         for (std::size_t j = 0; j < 3; j++) {
             math::Real val1 = getVertex(i)->pos()(j);
             math::Real val2 = res->pos()(j);
-            if (math::Util::greater(val1, val2, res->pos().norm())) {
+            if (math::greater(val1, val2, res->pos().norm())) {
                 res = getVertex(i);
                 break;
             }

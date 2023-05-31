@@ -12,9 +12,9 @@ TEST(MathRealTest, equal) {
     num.push_back((Real) 1e-10);
 
     for (UInt i = 0; i < num.size(); i++) {
-        EXPECT_TRUE(Util::equal(num[i], num[i]));
-        EXPECT_TRUE(Util::equal(num[i], num[i], 0.0, 0.25));
+        EXPECT_TRUE(math::equal(num[i], num[i]));
+        EXPECT_TRUE(math::equal(num[i], num[i], 0.0, 0.25));
     }
 
-    EXPECT_FALSE(Util::equal(0.0, 0.17, 0.5, 0.01));
+    EXPECT_FALSE(math::equal(0.0, 0.17, 0.5, 0.01));
 }

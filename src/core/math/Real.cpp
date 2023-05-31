@@ -1,8 +1,6 @@
 #include "Real.h"
 
-namespace SEMBA {
-namespace math {
-namespace Util {
+namespace SEMBA::math {
 
 bool equal(const Real lhs, const Real rhs,
            Real rel, const Real tol) {
@@ -73,6 +71,4 @@ Real sign(Real val) {
     }
 }
 
-} /* namespace Util */
-} /* namespace Math */
-} /* namespace SEMBA */
+}

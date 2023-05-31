@@ -198,7 +198,7 @@ math::Constants::CartesianAxis Box<T, D>::getDirection() const {
     }
     math::Constants::CartesianAxis res = math::Constants::x;
     for (std::size_t d = 0; d < D; d++) {
-        if (math::Util::notEqual(max_(d), min_(d))) {
+        if (math::notEqual(max_(d), min_(d))) {
             res = math::Constants::CartesianAxis(d);
             break;
         }
@@ -214,7 +214,7 @@ math::Constants::CartesianAxis Box<T, D>::getNormal() const {
     assert(D == 3);
     math::Constants::CartesianAxis res = math::Constants::x;
     for (std::size_t d = 0; d < D; d++) {
-        if (math::Util::equal(max_(d), min_(d))) {
+        if (math::equal(max_(d), min_(d))) {
             res = math::Constants::CartesianAxis(d);
             break;
         }
@@ -294,7 +294,7 @@ inline std::vector<math::CartesianVector<T, D> > Box<T, D>::getPos() const {
         res[0] = min_;
         res[1] = min_;
         for (std::size_t d = 0; d < D; d++) {
-            if (math::Util::notEqual(max_(d), min_(d))) {
+            if (math::notEqual(max_(d), min_(d))) {
                 res[0](d) = min_(d);
                 res[1](d) = max_(d);
             }
@@ -554,7 +554,7 @@ template<class T, std::size_t D>
 std::size_t Box<T, D>::numberOfDifferentCoords() const {
     std::size_t res = 0;
     for (std::size_t d = 0; d < D; d++) {
-        if (math::Util::notEqual(max_(d), min_(d))) {
+        if (math::notEqual(max_(d), min_(d))) {
             res++;
         }
     }
