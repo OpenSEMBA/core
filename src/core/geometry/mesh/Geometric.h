@@ -5,7 +5,7 @@
 #include "Unstructured.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 class Geometric : public Unstructured {

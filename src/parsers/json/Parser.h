@@ -16,7 +16,7 @@ namespace semba::parsers::JSON {
 
 const std::string VERSION{ "0.16" };
 
-using namespace Geometry;
+using namespace geometry;
 using namespace math;
 
 using json = nlohmann::json;

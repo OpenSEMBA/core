@@ -24,39 +24,39 @@ std::string Exporter::getOutputfilename() const {
     return folder + output;
 }
 
-Geometry::ElemR* Exporter::getBoundary(
+geometry::ElemR* Exporter::getBoundary(
         const math::Constants::CartesianAxis dir,
         const math::Constants::CartesianBound pos,
-        Geometry::CoordR3Group& cG,
-        const Geometry::Grid3* grid,
-        const Geometry::Mesh::Mesh* mesh) const {
-    Geometry::BoxR3 box;
+        geometry::CoordR3Group& cG,
+        const geometry::Grid3* grid,
+        const geometry::Mesh::Mesh* mesh) const {
+    geometry::BoxR3 box;
     if (grid != nullptr) {
         box = grid->getFullDomainBoundingBox();
     } else {
         box = mesh->getBoundingBox();
     }
-    Geometry::BoxR3 quadBox = box.getBoundAsBox(dir,pos);
+    geometry::BoxR3 quadBox = box.getBoundAsBox(dir,pos);
 
     if (!quadBox.isSurface()) {
         throw std::runtime_error("Not surface");
     }
 
     auto posVec = quadBox.getPos();
-    std::vector<const Geometry::CoordR3*> coords;
-    for (std::size_t i = 0; i < Geometry::Qua4::sizeOfCoordinates; i++) {
+    std::vector<const geometry::CoordR3*> coords;
+    for (std::size_t i = 0; i < geometry::Qua4::sizeOfCoordinates; i++) {
         coords.push_back(
             cG.addAndAssignId(
-                std::make_unique<Geometry::CoordR3>(Geometry::CoordId(), posVec[i])
+                std::make_unique<geometry::CoordR3>(geometry::CoordId(), posVec[i])
             )->get()
         );
     }
 
-    return new Geometry::QuaR4(Geometry::ElemId(0), coords.data());
+    return new geometry::QuaR4(geometry::ElemId(0), coords.data());
 }
 
 std::string Exporter::getBoundaryName(
-        const Geometry::Mesh::Structured* mesh,
+        const geometry::Mesh::Structured* mesh,
         const std::size_t i,
         const std::size_t j) {
     auto boundType = mesh->bounds()(i, j);
@@ -71,8 +71,8 @@ std::string Exporter::getBoundaryName(
 }
 
 ElemRGroup Exporter::getGridElems(
-        Geometry::CoordR3Group& cG,
-        const Geometry::Grid3* grid
+        geometry::CoordR3Group& cG,
+        const geometry::Grid3* grid
 ) const {
     auto elem = ElemRGroup();
 
@@ -80,7 +80,7 @@ ElemRGroup Exporter::getGridElems(
         return elem;
     }
 
-    Geometry::BoxR3 box = grid->getFullDomainBoundingBox();
+    geometry::BoxR3 box = grid->getFullDomainBoundingBox();
 
     for (std::size_t d = 0; d < 3; d++) {
         // Generates grid as lines.
@@ -94,24 +94,24 @@ ElemRGroup Exporter::getGridElems(
                 pMin((d-i+2)%3) = grid->getPos((d-i+2)%3).front();
                 pMax((d-i+2)%3) = grid->getPos((d-i+2)%3).back();
 
-                auto newBox = Geometry::BoxR3(pMin, pMax);
+                auto newBox = geometry::BoxR3(pMin, pMax);
                 if(!newBox.isLine()) {
                     throw std::runtime_error("Not line");
                 }
 
                 auto posVec = newBox.getPos();
-                std::vector<const Geometry::CoordR3*> coords;
-                for (std::size_t i = 0; i < Geometry::LinR2::sizeOfCoordinates; i++) {
+                std::vector<const geometry::CoordR3*> coords;
+                for (std::size_t i = 0; i < geometry::LinR2::sizeOfCoordinates; i++) {
                     coords.push_back(
                         cG.addAndAssignId(
-                            std::make_unique<Geometry::CoordR3>(Geometry::CoordId(), posVec[i])
+                            std::make_unique<geometry::CoordR3>(geometry::CoordId(), posVec[i])
                         )->get()
                     );
                 }
 
                 elem.addAndAssignId(
-                    std::make_unique<Geometry::LinR2>(
-                        Geometry::ElemId(0),
+                    std::make_unique<geometry::LinR2>(
+                        geometry::ElemId(0),
                         coords.data()
                     )
                 );

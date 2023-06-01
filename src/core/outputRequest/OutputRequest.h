@@ -15,7 +15,7 @@ class OutputRequest;
 class OutputRequest : public virtual util::Identifiable<Id>,
                       public virtual util::Class {
 public:
-    using Target = std::vector<Geometry::ElemId>;
+    using Target = std::vector<geometry::ElemId>;
 
     enum class Type {
         electric,

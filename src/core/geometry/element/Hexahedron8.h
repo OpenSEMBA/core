@@ -5,7 +5,7 @@
 #include "Volume.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class Hexahedron8Base : public virtual VolumeBase {
@@ -125,7 +125,7 @@ Hexahedron8<T>::Hexahedron8(
     Elem(lay, mat) {
 
     if (!box.isVolume()) {
-        throw Geometry::Error::Box::NotVolume();
+        throw geometry::Error::Box::NotVolume();
     }
     std::vector<math::CartesianVector<T, 3> > pos = box.getPos();
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {

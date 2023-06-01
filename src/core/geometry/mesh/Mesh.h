@@ -10,7 +10,7 @@
 #include "core/physicalModel/Group.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 class Mesh;

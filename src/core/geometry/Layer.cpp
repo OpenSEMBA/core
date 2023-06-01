@@ -5,7 +5,7 @@
 #include <sstream>
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 Layer::Layer(const LayerId id, const std::string& name)
 :   Identifiable<LayerId>(id) 

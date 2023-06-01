@@ -2,7 +2,7 @@
 #include "Structured.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 Structured::Structured(const Grid3& grid)

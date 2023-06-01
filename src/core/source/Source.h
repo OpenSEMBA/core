@@ -17,7 +17,7 @@ class Source;
 class Source : public virtual util::Identifiable<Id>,
                public virtual util::Class {
 public:
-    using Target = std::vector<Geometry::ElemId>;
+    using Target = std::vector<geometry::ElemId>;
 
     Source(const std::unique_ptr<Magnitude::Magnitude>&, const Target&);
     Source(const Source&);

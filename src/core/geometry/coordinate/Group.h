@@ -12,7 +12,7 @@
 #include "Coordinate.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 struct CoordComparator {

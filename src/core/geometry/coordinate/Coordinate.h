@@ -9,7 +9,7 @@
 #include "core/util/Identification.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 class Base;

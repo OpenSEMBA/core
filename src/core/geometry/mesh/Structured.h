@@ -11,7 +11,7 @@
 #include "core/geometry/Layer.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 class Unstructured;
@@ -81,7 +81,7 @@ public:
 } 
 } 
 
-typedef Geometry::Mesh::Structured StructuredMesh;
+typedef geometry::Mesh::Structured StructuredMesh;
 
 } 
 

@@ -5,7 +5,7 @@
 #include "Element.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class NodeBase : public virtual Base {

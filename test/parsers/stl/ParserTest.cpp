@@ -31,5 +31,5 @@ TEST_F(ParserSTLParserTest, case_single)
     };
 
     EXPECT_EQ(3, mesh.coords().size());
-    EXPECT_EQ(1, mesh.elems().getOf<Geometry::Tri3>().size());
+    EXPECT_EQ(1, mesh.elems().getOf<geometry::Tri3>().size());
 }

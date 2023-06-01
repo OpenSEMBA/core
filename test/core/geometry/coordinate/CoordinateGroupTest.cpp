@@ -6,19 +6,19 @@ class CoordinateGroupTest : public ::testing::Test {
 protected:
     auto buildCoordGroup() 
     {
-        semba::Geometry::CoordId id(1);
+        semba::geometry::CoordId id(1);
         semba::math::CVecR3 one(1.0, 1.0, 1.0);
         const size_t nCoords = 5;
-        semba::Geometry::CoordR3Group res;
+        semba::geometry::CoordR3Group res;
         for (size_t i = 0; i < nCoords; i++) {
-            res.add(std::make_unique<semba::Geometry::CoordR3>(id++, one * (double)i));
+            res.add(std::make_unique<semba::geometry::CoordR3>(id++, one * (double)i));
         }
         return res;
     }
 };
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 TEST_F(CoordinateGroupTest, CopyCtor)
 {
     auto original(buildCoordGroup());
@@ -159,10 +159,10 @@ TEST_F(CoordinateGroupTest, AddAndAssignIdShouldUpdateEntryOnce)
 
     EXPECT_EQ(index.find(math::CVecR3(3.1416)), index.end());
 
-    semba::Geometry::CoordR3 coord(CoordId(), math::CVecR3(3.1416));
+    semba::geometry::CoordR3 coord(CoordId(), math::CVecR3(3.1416));
 
     grp.addAndAssignId(
-        std::make_unique<semba::Geometry::CoordR3>(coord)
+        std::make_unique<semba::geometry::CoordR3>(coord)
     );
 
     EXPECT_EQ(6, grp.size());

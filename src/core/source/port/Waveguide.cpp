@@ -14,13 +14,13 @@ Waveguide::Waveguide(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
     excitationMode_ = excMode;
     mode_ = mode;
     // Performs checks
-    //if (!Geometry::getBound(elem.begin(), elem.end()).isSurface()) {
+    //if (!geometry::getBound(elem.begin(), elem.end()).isSurface()) {
     //    throw std::logic_error("Waveport elements must be contained "
-    //                           "in a coplanar Geometry::Surface");
+    //                           "in a coplanar geometry::Surface");
     //}
 
-    //math::CVecR3 diagonal = Geometry::getBound(elem.begin(), elem.end()).getMax() -
-    //    Geometry::getBound(elem.begin(), elem.end()).getMin();
+    //math::CVecR3 diagonal = geometry::getBound(elem.begin(), elem.end()).getMax() -
+    //    geometry::getBound(elem.begin(), elem.end()).getMin();
     //if (!diagonal.isContainedInPlane(math::Constants::xy)) {
     //    throw std::logic_error("Waveport must be contained in plane xy.");
     //}

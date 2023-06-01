@@ -15,7 +15,7 @@ template<typename M = UnstructuredModel>
 class ProblemDescriptionBase {
 public:
 	util::ProjectFile project;
-	Geometry::Grid3 grids;
+	geometry::Grid3 grids;
 	SourceGroup sources;
 	nlohmann::json analysis;
 	M model;

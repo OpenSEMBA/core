@@ -14,16 +14,16 @@ using namespace std;
 
 class SourcePortWaveguideRectangularTest : public ::testing::Test {
     void SetUp() {
-        Geometry::BoxI3 plane(math::CVecI3(0,0,0), math::CVecI3(30,10,0));
-        vector<Geometry::BoxI3> quadBoxes = plane.chop();
-        Geometry::ElemId id(0);
+        geometry::BoxI3 plane(math::CVecI3(0,0,0), math::CVecI3(30,10,0));
+        vector<geometry::BoxI3> quadBoxes = plane.chop();
+        geometry::ElemId id(0);
         for (size_t i = 0; i < quadBoxes.size(); i++) {
-            std::vector<const Geometry::CoordI3*> coords;
-            for (size_t j = 0; j < Geometry::Qua4::sizeOfCoordinates; j++) {
+            std::vector<const geometry::CoordI3*> coords;
+            for (size_t j = 0; j < geometry::Qua4::sizeOfCoordinates; j++) {
                 coords.push_back(
                     cG_.addAndAssignId(
-                        std::make_unique<Geometry::CoordI3>(
-                            Geometry::CoordId(),
+                        std::make_unique<geometry::CoordI3>(
+                            geometry::CoordId(),
                             quadBoxes[i].getPos()[j]
                             )
                     )->get()
@@ -31,7 +31,7 @@ class SourcePortWaveguideRectangularTest : public ::testing::Test {
             }
 
             surfs.add(
-                std::make_unique<Geometry::QuaI4>(++id, coords.data())
+                std::make_unique<geometry::QuaI4>(++id, coords.data())
             );
         }
 
@@ -51,8 +51,8 @@ class SourcePortWaveguideRectangularTest : public ::testing::Test {
     }
 
 protected:
-    Geometry::CoordI3Group cG_;
-    Geometry::Element::Group<Geometry::Surf> surfs;
+    geometry::CoordI3Group cG_;
+    geometry::Element::Group<geometry::Surf> surfs;
     Port::Waveguide::ExcitationMode excMode;
     pair<size_t,size_t> mode;
     Port::Bound3 bounds;

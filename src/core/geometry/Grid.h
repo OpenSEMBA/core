@@ -8,7 +8,7 @@
 #include "core/math/Real.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 template<class T, std::size_t D> class Box;
 

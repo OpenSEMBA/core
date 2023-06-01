@@ -7,7 +7,7 @@
 #include "core/geometry/element/Group.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 using namespace math;
 
 class MeshTest {

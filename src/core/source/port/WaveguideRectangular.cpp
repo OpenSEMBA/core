@@ -69,7 +69,7 @@ std::string WaveguideRectangular::getName() const {
 //void WaveguideRectangular::set(
 //    const Target& constGroupElems) {
 //    Waveguide::setTarget(constGroupElems);
-//    box_ = Geometry::getBound(constGroupElems.begin(), constGroupElems.end());
+//    box_ = geometry::getBound(constGroupElems.begin(), constGroupElems.end());
 //}
 //
 //math::CVecR3 WaveguideRectangular::getOrigin() const {

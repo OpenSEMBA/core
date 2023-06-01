@@ -6,7 +6,7 @@
 namespace semba {
 namespace model {
 
-using namespace Geometry;
+using namespace geometry;
 
 template<typename M = Mesh::Unstructured>
 class Model {
@@ -49,6 +49,6 @@ Model<M>& Model<M>::operator=(const Model& rhs) {
 }
 
 }
-typedef model::Model<Geometry::Mesh::Unstructured> UnstructuredModel;
-typedef model::Model<Geometry::Mesh::Structured> StructuredModel;
+typedef model::Model<geometry::Mesh::Unstructured> UnstructuredModel;
+typedef model::Model<geometry::Mesh::Structured> StructuredModel;
 }

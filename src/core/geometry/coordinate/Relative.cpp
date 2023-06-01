@@ -1,7 +1,7 @@
 #include "Relative.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 Relative::Relative(const Id id,

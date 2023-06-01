@@ -7,7 +7,7 @@
 #include "core/physicalModel/Bound.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 template <std::size_t D>
 class BoundTerminations {

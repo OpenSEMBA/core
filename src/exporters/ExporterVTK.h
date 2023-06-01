@@ -21,14 +21,14 @@ private:
                     std::ofstream& outMain,
                     std::size_t& part);
     std::pair<std::vector<math::CVecR3>, 
-              std::map<Geometry::CoordId, std::size_t>> getPoints_(
+              std::map<geometry::CoordId, std::size_t>> getPoints_(
               const exporters::ElemRView& elems);
     void writePoints_(std::ofstream& outFile,
                       const std::vector<math::CVecR3>& pos);
     void writeCells_(
             std::ofstream& outFile,
             const exporters::ElemRView& elems,
-            std::map<Geometry::CoordId, std::size_t>& mapCoords);
+            std::map<geometry::CoordId, std::size_t>& mapCoords);
 
     static std::string makeValid_(const std::string&);
 };

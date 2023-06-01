@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 Base::Base(const Layer* lay,

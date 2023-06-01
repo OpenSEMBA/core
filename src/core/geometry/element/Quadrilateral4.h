@@ -3,7 +3,7 @@
 #include "Quadrilateral.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class Quadrilateral4Base : public virtual SurfaceBase {

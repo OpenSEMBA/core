@@ -15,7 +15,7 @@
 
 using namespace semba;
 using namespace semba::parsers::JSON;
-using namespace Geometry::Mesh;
+using namespace geometry::Mesh;
 
 class ParserJSONParserTest : public ::testing::Test {
 protected:
@@ -64,7 +64,7 @@ TEST_F(ParserJSONParserTest, b2_detailed)
     auto data{ Parser{getFilename("b2") }.read() };
 
     EXPECT_EQ(353, data.model.mesh.coords().size());
-    EXPECT_EQ(652, data.model.mesh.elems().sizeOf<Geometry::Tri3>());
+    EXPECT_EQ(652, data.model.mesh.elems().sizeOf<geometry::Tri3>());
 }
 
 TEST_F(ParserJSONParserTest, bowtie_detailed)
@@ -155,7 +155,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     ASSERT_EQ(1, probes.get()[0]->getTarget().size());
 
     auto recoveredNodeId = probes.get()[0]->getTarget().at(0);
-    auto recoveredNode = model.mesh.elems().getId(recoveredNodeId)->castTo<Geometry::NodR>();
+    auto recoveredNode = model.mesh.elems().getId(recoveredNodeId)->castTo<geometry::NodR>();
     EXPECT_EQ(
         math::CVecR3(-0.8441360141053171, 12.017228978451016, 13.154724231963254),
         recoveredNode->getV(0)->pos()
@@ -189,7 +189,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 
     EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
     EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
-    EXPECT_EQ(data.model.mesh.elems().sizeOf<Geometry::NodR>(), 5);
+    EXPECT_EQ(data.model.mesh.elems().sizeOf<geometry::NodR>(), 5);
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
@@ -202,7 +202,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
     auto& materialCable = materialCableList.front();
     auto& materialPort = materialPortList.front();
 
-    Geometry::ElemView elementsWithCableMaterial;
+    geometry::ElemView elementsWithCableMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialCable->getId()) {
             elementsWithCableMaterial.push_back(elem.get());
@@ -211,7 +211,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 
     EXPECT_EQ(elementsWithCableMaterial.size(), 2);
 
-    Geometry::ElemView elementsWithPortMaterial;
+    geometry::ElemView elementsWithPortMaterial;
     for (auto& elem : data.model.mesh.elems()) {
         if (elem->getMatId() == materialPort->getId()) {
             elementsWithPortMaterial.push_back(elem.get());
