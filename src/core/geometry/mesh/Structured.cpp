@@ -3,7 +3,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 Structured::Structured(const Grid3& grid)
 :   grid_(grid) {

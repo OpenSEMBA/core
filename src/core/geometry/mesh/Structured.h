@@ -12,7 +12,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 class Unstructured;
 
@@ -81,7 +81,7 @@ public:
 } 
 } 
 
-typedef geometry::Mesh::Structured StructuredMesh;
+typedef geometry::mesh::Structured StructuredMesh;
 
 } 
 

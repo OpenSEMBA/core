@@ -6,11 +6,11 @@ class MeshUnstructuredTest : public ::testing::Test,
 public:
     void SetUp() {
         MeshTest::SetUp();
-        mesh_ = Mesh::Unstructured(cG_, eG_, lG_);
+        mesh_ = mesh::Unstructured(cG_, eG_, lG_);
     }
 
 protected:
-    Mesh::Unstructured mesh_;
+    mesh::Unstructured mesh_;
 };
 TEST_F(MeshUnstructuredTest, ctor) 
 {
@@ -25,7 +25,7 @@ TEST_F(MeshUnstructuredTest, ctor)
 
 TEST_F(MeshUnstructuredTest, copy_assignment)
 {
-    Mesh::Unstructured mesh = mesh_;
+    mesh::Unstructured mesh = mesh_;
     for (auto const& copiedCoordIt : mesh.coords()) {
         const CoordR3* copiedCoord = copiedCoordIt.get();
 
@@ -39,7 +39,7 @@ TEST_F(MeshUnstructuredTest, copy_assignment)
 
 TEST_F(MeshUnstructuredTest, move_assignment)
 {
-    Mesh::Unstructured mesh = std::move(mesh_);
+    mesh::Unstructured mesh = std::move(mesh_);
     
     EXPECT_EQ(0, mesh_.coords().size());
 

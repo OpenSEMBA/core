@@ -181,7 +181,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 	);
 
 	const UnstructuredModel model{
-		Mesh::Unstructured(coordinatesGroup, elementsGroup),
+		mesh::Unstructured(coordinatesGroup, elementsGroup),
 		physicalModelsGroup
 	};
 

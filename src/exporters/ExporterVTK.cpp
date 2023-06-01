@@ -62,15 +62,15 @@ ExporterVTK::ExporterVTK(const UnstructuredProblemDescription& smb, const std::s
 
 void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
 {
-    const geometry::Mesh::Unstructured* inMesh = &smb.model.mesh;
+    const geometry::mesh::Unstructured* inMesh = &smb.model.mesh;
     const SourceGroup& srcs = smb.sources;
     const OutputRequestGroup& oRqs = smb.outputRequests;
 
     const geometry::Grid3* grid = nullptr;
 
     assert(inMesh != nullptr);
-    const geometry::Mesh::Unstructured* mesh;
-    const geometry::Mesh::Structured* meshStr;
+    const geometry::mesh::Unstructured* mesh;
+    const geometry::mesh::Structured* meshStr;
 
     std::string preName;
     meshStr = nullptr;
@@ -162,7 +162,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     outFile << "  " << "</Collection>" << std::endl;
     outFile << "</VTKFile>" << std::endl;
 
-    if (inMesh->is<geometry::Mesh::Structured>()) {
+    if (inMesh->is<geometry::mesh::Structured>()) {
         delete mesh;
     }
 

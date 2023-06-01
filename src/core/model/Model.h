@@ -8,7 +8,7 @@ namespace model {
 
 using namespace geometry;
 
-template<typename M = Mesh::Unstructured>
+template<typename M = mesh::Unstructured>
 class Model {
 public:
 	Model() = default;
@@ -49,6 +49,6 @@ Model<M>& Model<M>::operator=(const Model& rhs) {
 }
 
 }
-typedef model::Model<geometry::Mesh::Unstructured> UnstructuredModel;
-typedef model::Model<geometry::Mesh::Structured> StructuredModel;
+typedef model::Model<geometry::mesh::Unstructured> UnstructuredModel;
+typedef model::Model<geometry::mesh::Structured> StructuredModel;
 }

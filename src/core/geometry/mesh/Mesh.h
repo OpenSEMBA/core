@@ -11,7 +11,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 class Mesh;
     typedef util::Identification<Mesh> Id;

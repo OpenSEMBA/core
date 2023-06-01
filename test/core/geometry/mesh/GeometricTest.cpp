@@ -7,11 +7,11 @@ public:
     void SetUp() {
         Grid3 grid;
         MeshTest::SetUp();
-        mesh_ = Mesh::Geometric(grid, cG_, eG_, lG_);
+        mesh_ = mesh::Geometric(grid, cG_, eG_, lG_);
     }
 
 protected:
-    Mesh::Geometric mesh_;
+    mesh::Geometric mesh_;
 };
 
 TEST_F(MeshGeometricTest, ctor) {
@@ -26,7 +26,7 @@ TEST_F(MeshGeometricTest, ctor) {
 
 TEST_F(MeshGeometricTest, move_assignment)
 {
-    Mesh::Geometric mesh = std::move(mesh_);
+    mesh::Geometric mesh = std::move(mesh_);
 
     EXPECT_EQ(0, mesh_.coords().size());
 

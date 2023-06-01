@@ -16,7 +16,7 @@ namespace semba::parsers::STL {
 class Parser : public semba::parsers::Parser {
 public:
     Parser(const std::string& fn);
-    geometry::Mesh::Unstructured readAsUnstructuredMesh() const;
+    geometry::mesh::Unstructured readAsUnstructuredMesh() const;
 };
 
 }

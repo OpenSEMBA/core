@@ -29,12 +29,12 @@ public:
 };
 
 json readAnalysis(const json&);
-std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&, const std::string& folder);
+std::unique_ptr<mesh::Unstructured> readUnstructuredMesh(const PMGroup&, const json&, const std::string& folder);
 Grid3 readGrids(const json&);
 PMGroup readMaterials(const json&);
-SourceGroup readSources(Mesh::Unstructured& mesh, const json&);
-OutputRequestGroup readProbes(Mesh::Unstructured& mesh, const json&);
-void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
+SourceGroup readSources(mesh::Unstructured& mesh, const json&);
+OutputRequestGroup readProbes(mesh::Unstructured& mesh, const json&);
+void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
 
 
 } 
