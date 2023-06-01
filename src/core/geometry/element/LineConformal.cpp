@@ -8,7 +8,7 @@ namespace geometry {
 namespace element {
 
 LineConformal::LineConformal(const Id id,
-                             std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> v,
+                             std::array<const coordinate::Coordinate<math::Int, 3>*, 2> v,
                              const math::CVecR3& norm,
                              const Layer* lay,
                              const Model* mat)
@@ -22,18 +22,18 @@ LineConformal::LineConformal(const Id id,
 
 LineConformal::LineConformal(
     const Id id,
-    const Coordinate::Coordinate<math::Int, 3>* v[2],
+    const coordinate::Coordinate<math::Int, 3>* v[2],
     const math::CVecR3& norm,
     const Layer* lay,
     const Model* mat)
 {
-    std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> vArr;
+    std::array<const coordinate::Coordinate<math::Int, 3>*, 2> vArr;
     std::copy(v, v + 2, vArr.begin());
     *this = LineConformal{id, vArr, norm, lay, mat};
 }
 
 LineConformal::LineConformal(
-    std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> v,
+    std::array<const coordinate::Coordinate<math::Int, 3>*, 2> v,
     const math::CVecR3& norm,
     const Layer* lay,
     const Model* mat):   
@@ -52,7 +52,7 @@ LineConformal::LineConformal(const LineConformal& rhs)
 }
 
 const CoordConf* LineConformal::getV(const std::size_t i) const {
-	const Coordinate::Coordinate<math::Int,3>* coord;
+	const coordinate::Coordinate<math::Int,3>* coord;
 	coord = Line2<math::Int>::getV(i);
     return coord->castTo<CoordConf>();
 }

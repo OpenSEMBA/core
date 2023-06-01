@@ -20,15 +20,15 @@ class Line2 : public virtual Line<T>,
 public:
     Line2() = default;
     Line2(const Id id,
-		std::array<const Coordinate::Coordinate<T, 3>*,2> v,
+		std::array<const coordinate::Coordinate<T, 3>*,2> v,
 		const Layer* lay = nullptr,
 		const Model* mat = nullptr);
     Line2(const Id id,
-        const Coordinate::Coordinate<T, 3>* v[2],
+        const coordinate::Coordinate<T, 3>* v[2],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
-    Line2(std::array<const Coordinate::Coordinate<T, 3>*, 2>);
-    Line2(Coordinate::Group<Coordinate::Coordinate<T,3> >&,
+    Line2(std::array<const coordinate::Coordinate<T, 3>*, 2>);
+    Line2(coordinate::Group<coordinate::Coordinate<T,3> >&,
           const Box<T,3>& box);
 
     Line2(const Line2<T>& rhs) = default;
@@ -40,16 +40,16 @@ public:
 
     bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
-    const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
+    const coordinate::Coordinate<T,3>* getV    (const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
                                                 const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex    (const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideVertex(
+    const coordinate::Coordinate<T,3>* getVertex    (const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideVertex(
             const std::size_t f,
             const std::size_t i) const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord) override;
+    void setV(const std::size_t i, const coordinate::Coordinate<T,3>* coord) override;
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
@@ -62,10 +62,10 @@ public:
 private:
     static const math::simplex::Line<1> lin;
     
-    std::array<const Coordinate::Coordinate<T,3>*,2> v_;
+    std::array<const coordinate::Coordinate<T,3>*,2> v_;
 
-    void setCoordinates(std::array<const Coordinate::Coordinate<T, 3>*, 2>);
-    void setCoordinates(Coordinate::Group<Coordinate::Coordinate<T,3> >&,
+    void setCoordinates(std::array<const coordinate::Coordinate<T, 3>*, 2>);
+    void setCoordinates(coordinate::Group<coordinate::Coordinate<T,3> >&,
                         const Box<T,3>& box);
 };
 
@@ -75,7 +75,7 @@ const math::simplex::Line<1> Line2<T>::lin;
 
 template<class T>
 Line2<T>::Line2(const Id id,
-    std::array<const Coordinate::Coordinate<T, 3>*, 2> v,
+    std::array<const coordinate::Coordinate<T, 3>*, 2> v,
     const Layer* lay, const Model* mat): 
     Identifiable<Id>(id),
     Elem(lay, mat),
@@ -86,22 +86,22 @@ Line2<T>::Line2(const Id id,
 template<class T>
 Line2<T>::Line2(
     const Id id,
-    const Coordinate::Coordinate<T, 3>* v[2],
+    const coordinate::Coordinate<T, 3>* v[2],
     const Layer* lay,
     const Model* mat)
 {
-    std::array<const Coordinate::Coordinate<T, 3>*, 2> vArr;
+    std::array<const coordinate::Coordinate<T, 3>*, 2> vArr;
     std::copy(v, v+2, vArr.begin());
     *this = Line2<T>(id, vArr, lay, mat);
 }
 
 template<class T>
-Line2<T>::Line2(std::array<const Coordinate::Coordinate<T, 3>*, 2> v) {
+Line2<T>::Line2(std::array<const coordinate::Coordinate<T, 3>*, 2> v) {
     setCoordinates(v);
 }
 
 template<class T>
-Line2<T>::Line2(Coordinate::Group<Coordinate::Coordinate<T, 3> >& cG,
+Line2<T>::Line2(coordinate::Group<coordinate::Coordinate<T, 3> >& cG,
     const Box<T, 3>& box) 
 {
     setCoordinates(cG, box);
@@ -122,25 +122,25 @@ bool Line2<T>::isStructured(const Grid3& grid, const math::Real tol) const {
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Line2<T>::getV(const std::size_t i) const {
+const coordinate::Coordinate<T, 3>* Line2<T>::getV(const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Line2<T>::getSideV(
+const coordinate::Coordinate<T, 3>* Line2<T>::getSideV(
     const std::size_t f,
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Line2<T>::getVertex(
+const coordinate::Coordinate<T, 3>* Line2<T>::getVertex(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Line2<T>::getSideVertex(
+const coordinate::Coordinate<T, 3>* Line2<T>::getSideVertex(
     const std::size_t f,
     const std::size_t i) const {
     return v_[i];
@@ -148,14 +148,14 @@ const Coordinate::Coordinate<T, 3>* Line2<T>::getSideVertex(
 
 template<class T>
 void Line2<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
 
     assert(i < numberOfCoordinates());
     v_[i] = coord;
 }
 
 template<class T>
-void Line2<T>::setCoordinates(std::array<const Coordinate::Coordinate<T, 3>*, 2> v) {
+void Line2<T>::setCoordinates(std::array<const coordinate::Coordinate<T, 3>*, 2> v) {
     v_ = v;
 }
 
@@ -186,17 +186,17 @@ std::unique_ptr<ElemR> Line2<T>::toUnstructured(
 template<class T>
 std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
     auto vertices = this->getVertices();
-    const Coordinate::Coordinate<T, 3>* left = vertices[0];
-    const Coordinate::Coordinate<T, 3>* right = vertices[1];
+    const coordinate::Coordinate<T, 3>* left = vertices[0];
+    const coordinate::Coordinate<T, 3>* right = vertices[1];
 
-    const Coordinate::Coordinate<T, 3>* middleCoordinate = new Coordinate::Coordinate<T, 3>{ CoordId(), (*right - *left) / 2 + *left };
+    const coordinate::Coordinate<T, 3>* middleCoordinate = new coordinate::Coordinate<T, 3>{ CoordId(), (*right - *left) / 2 + *left };
 
     std::vector<std::unique_ptr<const Line2<T>>> result{};
 
     result.push_back(
         std::make_unique<const Line2<T>>(
             ElemId(),
-            std::array<const Coordinate::Coordinate<T, 3>*, 2>{ left, middleCoordinate },
+            std::array<const coordinate::Coordinate<T, 3>*, 2>{ left, middleCoordinate },
             this->getLayer(),
             this->getModel()
         )
@@ -204,7 +204,7 @@ std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
     result.push_back(
         std::make_unique<const Line2<T>>(
             ElemId(),
-            std::array<const Coordinate::Coordinate<T, 3>*, 2>{ middleCoordinate, right },
+            std::array<const coordinate::Coordinate<T, 3>*, 2>{ middleCoordinate, right },
             this->getLayer(),
             this->getModel()
         )

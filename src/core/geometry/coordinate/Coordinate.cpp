@@ -2,7 +2,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 bool Base::operator ==(const Base& rhs) const {
     if (typeid(*this) == typeid(rhs)) {

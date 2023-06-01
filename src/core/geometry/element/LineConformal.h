@@ -11,16 +11,16 @@ namespace element {
 class LineConformal : public virtual Line2<math::Int> {
 public:
     LineConformal(const Id id,
-                  std::array<const Coordinate::Coordinate<math::Int,3>*,2>,
+                  std::array<const coordinate::Coordinate<math::Int,3>*,2>,
                   const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
     LineConformal(const Id id,
-                  const Coordinate::Coordinate<math::Int, 3>* v[2],
+                  const coordinate::Coordinate<math::Int, 3>* v[2],
                   const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);
-    LineConformal(std::array<const Coordinate::Coordinate<math::Int, 3>*, 2>,
+    LineConformal(std::array<const coordinate::Coordinate<math::Int, 3>*, 2>,
                   const math::CVecR3& norm,
                   const Layer* lay = nullptr,
                   const Model* mat = nullptr);

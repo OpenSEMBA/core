@@ -23,7 +23,7 @@ public:
     BoxR3 getBound() const;
     
     template<class T>
-    void reassignPointers(const Coordinate::Group<Coordinate::Coordinate<T,3>>& vNew);
+    void reassignPointers(const coordinate::Group<coordinate::Coordinate<T,3>>& vNew);
 
     void reassignPointers(const LayerGroup& lNew);
     void reassignPointers(const PMGroup& mNew);
@@ -102,7 +102,7 @@ BoxR3 Group<E>::getBound() const
 }
 
 template<typename E> template<class T>
-void Group<E>::reassignPointers(const Coordinate::Group< Coordinate::Coordinate<T, 3> >& vNew)
+void Group<E>::reassignPointers(const coordinate::Group< coordinate::Coordinate<T, 3> >& vNew)
 {
     for (auto const& item : *this) {
         if (item->template is<Element<T>>()) {

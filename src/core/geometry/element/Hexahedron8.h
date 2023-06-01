@@ -33,14 +33,14 @@ class Hexahedron8 : public virtual Volume<T>,
               public virtual Hexahedron8Base {
 public:
     Hexahedron8(const Id id,
-                const std::array<const Coordinate::Coordinate<T,3>*, 8> v,
+                const std::array<const coordinate::Coordinate<T,3>*, 8> v,
 				const Layer* lay = nullptr,
                 const Model* mat = nullptr);
     Hexahedron8(const Id id,
-        const Coordinate::Coordinate<T, 3>* v[8],
+        const coordinate::Coordinate<T, 3>* v[8],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
-    Hexahedron8(Coordinate::Group<Coordinate::Coordinate<T,3> >&,
+    Hexahedron8(coordinate::Group<coordinate::Coordinate<T,3> >&,
                 const Id id,
                 const Box<T,3>& box,
                 const Layer* lay = nullptr,
@@ -61,30 +61,30 @@ public:
     bool isRegular() const;
     inline bool isCurvedFace(const std::size_t f) const override{ return false; }
 
-    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideV(
+    const coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideV(
         const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideVertex(
+    const coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideVertex(
         const std::size_t f, const std::size_t i) const override;
 
-    std::vector<const Coordinate::Coordinate<T,3>*> getVertices() const;
-    std::vector<const Coordinate::Coordinate<T,3>*> getSideVertices(
+    std::vector<const coordinate::Coordinate<T,3>*> getVertices() const;
+    std::vector<const coordinate::Coordinate<T,3>*> getSideVertices(
             const std::size_t face) const;
 
     math::Real getAreaOfFace(const std::size_t face) const override;
     math::Real getVolume() const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
+    void setV(const std::size_t i, const coordinate::Coordinate<T,3>*) override;
 
     std::unique_ptr<ElemI> toStructured(
-        const Coordinate::Group<CoordI3>&, const Grid3&, const math::Real = Grid3::tolerance) const override;
+        const coordinate::Group<CoordI3>&, const Grid3&, const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(
-        const Coordinate::Group<CoordR3>&, const Grid3&) const override;
+        const coordinate::Group<CoordR3>&, const Grid3&) const override;
 
 private:
-    std::array<const Coordinate::Coordinate<T,3>*, 8> v_;
+    std::array<const coordinate::Coordinate<T,3>*, 8> v_;
 
     const static math::Real tolerance;
 };
@@ -94,7 +94,7 @@ const math::Real Hexahedron8<T>::tolerance = 1e-15;
 
 template<class T>
 Hexahedron8<T>::Hexahedron8(const Id id,
-    const std::array<const Coordinate::Coordinate<T, 3>*,8> v,
+    const std::array<const coordinate::Coordinate<T, 3>*,8> v,
     const Layer* lay, const Model* mat): Identifiable<Id>(id),
     Elem(lay, mat),
     v_{v}
@@ -105,18 +105,18 @@ Hexahedron8<T>::Hexahedron8(const Id id,
 template<class T>
 Hexahedron8<T>::Hexahedron8(
     const Id id,
-    const Coordinate::Coordinate<T, 3>* v[8],
+    const coordinate::Coordinate<T, 3>* v[8],
     const Layer* lay,
     const Model* mat)
 {
-    std::array<const Coordinate::Coordinate<T, 3>*, 8> vArr;
+    std::array<const coordinate::Coordinate<T, 3>*, 8> vArr;
     std::copy(v, v + 8, vArr.begin());
     *this = Hexahedron8<T>(id, vArr, lay, mat);
 }
 
 template<class T>
 Hexahedron8<T>::Hexahedron8(
-    Coordinate::Group<Coordinate::Coordinate<T, 3> >& cG,
+    coordinate::Group<coordinate::Coordinate<T, 3> >& cG,
     const Id id,
     const Box<T, 3>& box,
     const Layer* lay,
@@ -173,13 +173,13 @@ bool Hexahedron8<T>::isRegular() const {
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getV(
+const coordinate::Coordinate<T, 3>* Hexahedron8<T>::getV(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideV(
+const coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideV(
     const std::size_t f, const std::size_t i) const {
     assert(f < numberOfFaces());
     assert(i < numberOfSideCoordinates());
@@ -195,13 +195,13 @@ const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideV(
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getVertex(
+const coordinate::Coordinate<T, 3>* Hexahedron8<T>::getVertex(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideVertex(
+const coordinate::Coordinate<T, 3>* Hexahedron8<T>::getSideVertex(
     const std::size_t f,
     const std::size_t i) const {
     return getSideV(f, i);
@@ -222,7 +222,7 @@ math::Real Hexahedron8<T>::getVolume() const {
 
 template<class T>
 void Hexahedron8<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
     assert(i < numberOfCoordinates());
     v_[i] = coord;
 }

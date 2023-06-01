@@ -70,7 +70,7 @@ public:
 
     template<class T>
     static std::vector<CoordId> getIds(
-            std::vector<const Coordinate::Coordinate<T,3>*> in) {
+            std::vector<const coordinate::Coordinate<T,3>*> in) {
         std::vector<CoordId> res(in.size());
         for  (std::size_t i = 0; i < in.size(); i++) {
             res[i] = in[i]->getId();
@@ -96,34 +96,34 @@ public:
 
     bool operator== (const Base& rhs) const;
 
-    bool isCoordinate(const Coordinate::Coordinate<T,3>* coord) const;
+    bool isCoordinate(const coordinate::Coordinate<T,3>* coord) const;
 
     virtual bool isStructured(const Grid3&,
                               const math::Real = Grid3::tolerance) const;
     virtual bool isInnerPoint(const math::CartesianVector<T,3>& pos) const;
 
-    virtual const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const = 0;
-    virtual const Coordinate::Coordinate<T,3>* getSideV(
+    virtual const coordinate::Coordinate<T,3>* getV(const std::size_t i) const = 0;
+    virtual const coordinate::Coordinate<T,3>* getSideV(
             const std::size_t f, const std::size_t i) const = 0;
 
-    virtual const Coordinate::Coordinate<T,3>* getVertex(
+    virtual const coordinate::Coordinate<T,3>* getVertex(
             const std::size_t i) const = 0;
-    virtual const Coordinate::Coordinate<T,3>* getSideVertex(
+    virtual const coordinate::Coordinate<T,3>* getSideVertex(
             const std::size_t f, const std::size_t i) const = 0;
 
     Box<T,3> getBound() const;
     // Returns ptr to coord with min(max) lexicographical position.
-    virtual const Coordinate::Coordinate<T,3>* getMinV() const;
-    virtual const Coordinate::Coordinate<T,3>* getMaxV() const;
+    virtual const coordinate::Coordinate<T,3>* getMinV() const;
+    virtual const coordinate::Coordinate<T,3>* getMaxV() const;
 
-    std::vector<const Coordinate::Coordinate<T,3>*>getVertices() const;
-    std::vector<const Coordinate::Coordinate<T,3>*> getCoordinates() const;
-    std::vector<const Coordinate::Coordinate<T,3>*> getSideCoordinates(
+    std::vector<const coordinate::Coordinate<T,3>*>getVertices() const;
+    std::vector<const coordinate::Coordinate<T,3>*> getCoordinates() const;
+    std::vector<const coordinate::Coordinate<T,3>*> getSideCoordinates(
             const std::size_t face) const;
-    std::vector<const Coordinate::Coordinate<T,3>*> getSideVertices(
+    std::vector<const coordinate::Coordinate<T,3>*> getSideVertices(
             const std::size_t face) const;
 
-    virtual void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*);
+    virtual void setV(const std::size_t i, const coordinate::Coordinate<T,3>*);
 
     virtual std::unique_ptr<Element<math::Int >> toStructured(
             const CoordI3Group&,
@@ -162,7 +162,7 @@ bool Element<T>::operator==(const Base& rhs) const {
 }
 
 template<class T>
-bool Element<T>::isCoordinate(const Coordinate::Coordinate<T, 3>* coord) const {
+bool Element<T>::isCoordinate(const coordinate::Coordinate<T, 3>* coord) const {
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         if (*getV(i) == *coord) {
             return true;
@@ -192,9 +192,9 @@ Box<T, 3> Element<T>::getBound() const {
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Element<T>::getMinV() const {
+const coordinate::Coordinate<T, 3>* Element<T>::getMinV() const {
     assert(getV(0) != nullptr);
-    const Coordinate::Coordinate<T, 3>* res = getVertex(0);
+    const coordinate::Coordinate<T, 3>* res = getVertex(0);
     for (std::size_t i = 1; i < numberOfVertices(); i++) {
         if (res->pos() == getVertex(i)->pos()) {
             continue;
@@ -212,9 +212,9 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMinV() const {
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Element<T>::getMaxV() const {
+const coordinate::Coordinate<T, 3>* Element<T>::getMaxV() const {
     assert(getV(0) != nullptr);
-    const Coordinate::Coordinate<T, 3>* res = getVertex(0);
+    const coordinate::Coordinate<T, 3>* res = getVertex(0);
     for (std::size_t i = 1; i < numberOfVertices(); i++) {
         if (res->pos() == getVertex(i)->pos()) {
             continue;
@@ -232,9 +232,9 @@ const Coordinate::Coordinate<T, 3>* Element<T>::getMaxV() const {
 }
 
 template<class T>
-std::vector<const Coordinate::Coordinate<T, 3>*>
+std::vector<const coordinate::Coordinate<T, 3>*>
 Element<T>::getVertices() const {
-    std::vector<const Coordinate::Coordinate<T, 3>*> res(numberOfVertices());
+    std::vector<const coordinate::Coordinate<T, 3>*> res(numberOfVertices());
     for (std::size_t i = 0; i < numberOfVertices(); i++) {
         res[i] = getVertex(i);
     }
@@ -242,9 +242,9 @@ Element<T>::getVertices() const {
 }
 
 template<class T>
-std::vector<const Coordinate::Coordinate<T, 3>*>
+std::vector<const coordinate::Coordinate<T, 3>*>
 Element<T>::getCoordinates() const {
-    std::vector<const Coordinate::Coordinate<T, 3>*> res(numberOfCoordinates());
+    std::vector<const coordinate::Coordinate<T, 3>*> res(numberOfCoordinates());
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         res[i] = getV(i);
     }
@@ -252,9 +252,9 @@ Element<T>::getCoordinates() const {
 }
 
 template<class T>
-std::vector<const Coordinate::Coordinate<T, 3>*> Element<T>::getSideCoordinates(
+std::vector<const coordinate::Coordinate<T, 3>*> Element<T>::getSideCoordinates(
     const std::size_t face) const {
-    std::vector<const Coordinate::Coordinate<T, 3>*>
+    std::vector<const coordinate::Coordinate<T, 3>*>
         res(numberOfSideCoordinates());
     for (std::size_t i = 0; i < numberOfSideCoordinates(); i++) {
         res[i] = getSideV(face, i);
@@ -263,9 +263,9 @@ std::vector<const Coordinate::Coordinate<T, 3>*> Element<T>::getSideCoordinates(
 }
 
 template<class T>
-std::vector<const Coordinate::Coordinate<T, 3>*> Element<T>::getSideVertices(
+std::vector<const coordinate::Coordinate<T, 3>*> Element<T>::getSideVertices(
     const std::size_t face) const {
-    std::vector<const Coordinate::Coordinate<T, 3>*> res;
+    std::vector<const coordinate::Coordinate<T, 3>*> res;
     res.resize(numberOfSideVertices());
     for (std::size_t i = 0; i < numberOfSideVertices(); i++) {
         res[i] = getSideVertex(face, i);
@@ -275,7 +275,7 @@ std::vector<const Coordinate::Coordinate<T, 3>*> Element<T>::getSideVertices(
 
 template<class T>
 void Element<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
     throw std::logic_error(
         "Setting coordinates is not allowed for this element");
 }

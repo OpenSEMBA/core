@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 class Relative : public virtual Coordinate<math::Int,3> {
 public:
@@ -34,7 +34,7 @@ private:
 
 } 
 
-typedef Coordinate::Relative CoordRel;
+typedef coordinate::Relative CoordRel;
 
 } 
 } 

@@ -19,7 +19,7 @@ class Polyline : public virtual Line<T>,
                  public virtual PolylineBase {
 public:
     Polyline(const Id id,
-             const std::vector<const Coordinate::Coordinate<T,3>*>& v,
+             const std::vector<const coordinate::Coordinate<T,3>*>& v,
              const Layer* lay = nullptr,
              const Model* mat = nullptr);
     Polyline(const Polyline<T>& rhs);
@@ -31,17 +31,17 @@ public:
 
     inline std::size_t numberOfCoordinates() const { return v_.size(); }
 
-    const Coordinate::Coordinate<T,3>* getV    (const std::size_t i) const;
-    const Coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
+    const coordinate::Coordinate<T,3>* getV    (const std::size_t i) const;
+    const coordinate::Coordinate<T,3>* getSideV(const std::size_t f,
                                                 const std::size_t i) const;
 
-    const Coordinate::Coordinate<T,3>* getVertex    (
+    const coordinate::Coordinate<T,3>* getVertex    (
             const std::size_t i) const;
-    const Coordinate::Coordinate<T,3>* getSideVertex(
+    const coordinate::Coordinate<T,3>* getSideVertex(
             const std::size_t f,
             const std::size_t i) const;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord);
+    void setV(const std::size_t i, const coordinate::Coordinate<T,3>* coord);
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&,
         const Grid3&,
@@ -50,13 +50,13 @@ public:
         const Grid3&) const;
 
 private:
-    std::vector<const Coordinate::Coordinate<T,3>*> v_;
+    std::vector<const coordinate::Coordinate<T,3>*> v_;
 };
 
 
 template<class T>
 Polyline<T>::Polyline(const Id id,
-    const std::vector<const Coordinate::Coordinate<T, 3>*>& v,
+    const std::vector<const coordinate::Coordinate<T, 3>*>& v,
     const Layer* lay,
     const Model* mat)
     : Identifiable<Id>(id),
@@ -72,13 +72,13 @@ Polyline<T>::Polyline(const Polyline<T>& rhs)
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Polyline<T>::getV(
+const coordinate::Coordinate<T, 3>* Polyline<T>::getV(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Polyline<T>::getSideV(
+const coordinate::Coordinate<T, 3>* Polyline<T>::getSideV(
     const std::size_t f,
     const std::size_t i) const {
     if (f == 0) {
@@ -88,7 +88,7 @@ const Coordinate::Coordinate<T, 3>* Polyline<T>::getSideV(
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Polyline<T>::getVertex(
+const coordinate::Coordinate<T, 3>* Polyline<T>::getVertex(
     const std::size_t i) const {
     if (i == 0) {
         return v_.front();
@@ -97,7 +97,7 @@ const Coordinate::Coordinate<T, 3>* Polyline<T>::getVertex(
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Polyline<T>::getSideVertex(
+const coordinate::Coordinate<T, 3>* Polyline<T>::getSideVertex(
     const std::size_t f,
     const std::size_t i) const {
     if (f == 0) {
@@ -108,7 +108,7 @@ const Coordinate::Coordinate<T, 3>* Polyline<T>::getSideVertex(
 
 template<class T>
 void Polyline<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
 
     assert(i < numberOfCoordinates());
     v_[i] = coord;

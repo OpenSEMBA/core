@@ -26,11 +26,11 @@ class Quadrilateral4: public virtual Quadrilateral<T>,
 public:
     Quadrilateral4(
         const Id id,
-        const Coordinate::Coordinate<T,3>* coords[4],
+        const coordinate::Coordinate<T,3>* coords[4],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
 	Quadrilateral4(const Id id,
-		std::array<const Coordinate::Coordinate<T, 3>*, 4> v,
+		std::array<const coordinate::Coordinate<T, 3>*, 4> v,
 		const Layer* lay = nullptr,
 		const Model* mat = nullptr);
     Quadrilateral4(const Quadrilateral4<T>& rhs) = default;
@@ -42,15 +42,15 @@ public:
 
     bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override; 
 
-    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideV(
+    const coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideV(
         const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideVertex(
+    const coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideVertex(
         const std::size_t f, const std::size_t i) const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>*) override;
+    void setV(const std::size_t i, const coordinate::Coordinate<T,3>*) override;
 
     std::unique_ptr<ElemI> toStructured(
         const CoordI3Group&, const Grid3&, const math::Real = Grid3::tolerance) const override;
@@ -58,12 +58,12 @@ public:
         const CoordR3Group&, const Grid3&) const override;
 
 private:
-    std::array<const Coordinate::Coordinate<T,3>*, 4> v_;
+    std::array<const coordinate::Coordinate<T,3>*, 4> v_;
 };
 
 template<class T>
 Quadrilateral4<T>::Quadrilateral4(const Id id,
-    const Coordinate::Coordinate<T, 3>* coords[4],
+    const coordinate::Coordinate<T, 3>* coords[4],
     const Layer* lay,
     const Model* mat): 
     Identifiable<Id>(id),
@@ -76,7 +76,7 @@ Quadrilateral4<T>::Quadrilateral4(const Id id,
 
 template<class T>
 Quadrilateral4<T>::Quadrilateral4(const Id id,
-    std::array<const Coordinate::Coordinate<T, 3>*, 4> v,
+    std::array<const coordinate::Coordinate<T, 3>*, 4> v,
     const Layer* lay,
     const Model* mat): 
     Identifiable<Id>(id),
@@ -100,19 +100,19 @@ bool Quadrilateral4<T>::isStructured(const Grid3& grid,
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getV(
+const coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getV(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getVertex(
+const coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getVertex(
     const std::size_t i) const {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideV(
+const coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideV(
     const std::size_t f,
     const std::size_t i) const {
     assert(f < this->numberOfFaces());
@@ -121,7 +121,7 @@ const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideV(
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideVertex(
+const coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideVertex(
     const std::size_t f,
     const std::size_t i) const {
     assert(f < this->numberOfFaces());
@@ -131,7 +131,7 @@ const Coordinate::Coordinate<T, 3>* Quadrilateral4<T>::getSideVertex(
 
 template<class T>
 void Quadrilateral4<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
     v_[i] = coord;
 }
 
