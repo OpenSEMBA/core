@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Tetrahedron4 : public Tetrahedron {
 public:
@@ -69,7 +69,7 @@ private:
 
 } 
 
-typedef Element::Tetrahedron4 Tet4;
+typedef element::Tetrahedron4 Tet4;
 
 } 
 } 

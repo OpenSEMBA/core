@@ -42,7 +42,7 @@ TEST(ModelTest, CanInitializeGrid) {
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
-			Element::Id(), 
+			element::Id(), 
 			coordinatesArgumentList
 		)
 	);
@@ -103,7 +103,7 @@ TEST(ModelTest, CanCopyConstructor) {
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
-			Element::Id(),
+			element::Id(),
 			coordinatesArgumentList
 		)
 	);
@@ -172,7 +172,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
-			Element::Id(),
+			element::Id(),
 			coordinatesArgumentList,
 			nullptr,
 			physicalModelsGroup.get().front()
@@ -218,7 +218,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
-			Element::Id(),
+			element::Id(),
 			coordinatesArgumentList,
 			nullptr,
 			physicalModelsGroup.get().front()

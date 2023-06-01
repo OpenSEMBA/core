@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Line2Base : public virtual LineBase {
 public:
@@ -216,9 +216,9 @@ std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
 
 } 
 
-typedef Element::Line2Base         Lin2;
-typedef Element::Line2<math::Real> LinR2;
-typedef Element::Line2<math::Int> LinI2;
+typedef element::Line2Base         Lin2;
+typedef element::Line2<math::Real> LinR2;
+typedef element::Line2<math::Int> LinI2;
 
 } 
 } 

@@ -82,12 +82,12 @@ std::vector<ElemId> readElemIds(const json& j)
 
 
 template<typename T>
-Element::Group<ElemR> readElemStrAs(
+element::Group<ElemR> readElemStrAs(
     const PhysicalModel::Group<>& mG,
     const LayerGroup& lG,
     const CoordR3Group& cG,
     const json& e) {
-    Element::Group<ElemR> res;
+    element::Group<ElemR> res;
 
     for (auto it = e.begin(); it != e.end(); ++it) {
 

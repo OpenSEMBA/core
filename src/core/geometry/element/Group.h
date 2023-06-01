@@ -10,7 +10,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 template<typename E = Elem>
 class Group final : public util::GroupIdentifiableUnique<E> {
@@ -137,11 +137,11 @@ void Group<E>::reassignPointers(const PMGroup& mNew)
 
 } 
 
-typedef Element::Group<Elem> ElemGroup;
-typedef Element::Group<ElemR> ElemRGroup;
-typedef Element::Group<ElemI> ElemIGroup;
-typedef Element::Group<SurfR> SurfRGroup;
-typedef Element::Group<VolR> VolRGroup;
+typedef element::Group<Elem> ElemGroup;
+typedef element::Group<ElemR> ElemRGroup;
+typedef element::Group<ElemI> ElemIGroup;
+typedef element::Group<SurfR> SurfRGroup;
+typedef element::Group<VolR> VolRGroup;
 
 } 
 } 

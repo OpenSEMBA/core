@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class NodeBase : public virtual Base {
 public:
@@ -169,9 +169,9 @@ typedef Node<math::Int > NodI;
 
 } 
 
-typedef Element::NodeBase         Nod;
-typedef Element::Node<math::Real> NodR;
-typedef Element::Node<math::Int > NodI;
+typedef element::NodeBase         Nod;
+typedef element::Node<math::Real> NodR;
+typedef element::Node<math::Int > NodI;
 
 } 
 } 

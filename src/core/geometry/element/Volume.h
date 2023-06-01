@@ -8,7 +8,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class VolumeBase : public virtual Base {
 public:
@@ -93,9 +93,9 @@ std::size_t Volume<T>::getFaceNumber(const Surface<T>* surf) const {
 
 } 
 
-typedef Element::VolumeBase         Vol;
-typedef Element::Volume<math::Real> VolR;
-typedef Element::Volume<math::Int > VolI;
+typedef element::VolumeBase         Vol;
+typedef element::Volume<math::Real> VolR;
+typedef element::Volume<math::Int > VolI;
 
 } 
 } 

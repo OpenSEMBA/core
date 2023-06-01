@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class PolylineBase : public virtual LineBase {
 public:
@@ -130,9 +130,9 @@ std::unique_ptr<ElemR> Polyline<T>::toUnstructured(
 
 } 
 
-typedef Element::PolylineBase         Polylin;
-typedef Element::Polyline<math::Real> PolylinR;
-typedef Element::Polyline<math::Int > PolylinI;
+typedef element::PolylineBase         Polylin;
+typedef element::Polyline<math::Real> PolylinR;
+typedef element::Polyline<math::Int > PolylinI;
 
 } 
 } 

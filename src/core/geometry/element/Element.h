@@ -17,7 +17,7 @@ namespace semba {
 typedef PhysicalModel::Id MatId;
 
 namespace geometry {
-namespace Element {
+namespace element {
 
 typedef util::Identifiable<MatId> Model;
 
@@ -371,11 +371,11 @@ typedef Element<math::Int>  ElemI;
 
 } 
 
-typedef Element::Element<math::Real> ElemR;
-typedef Element::Element<math::Int>  ElemI;
+typedef element::Element<math::Real> ElemR;
+typedef element::Element<math::Int>  ElemI;
 
-typedef Element::Id                  ElemId;
-typedef Element::Base                Elem;
+typedef element::Id                  ElemId;
+typedef element::Base                Elem;
 
 typedef std::vector<const geometry::Elem*>  ElemView;
 

@@ -5,7 +5,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 Base::Base(const Layer* lay,
            const Model* mat) {

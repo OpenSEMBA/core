@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class SurfaceBase : public virtual Base {
 public:
@@ -74,9 +74,9 @@ math::CVecR3 Surface<T>::getNormal() const
 
 } 
 
-typedef Element::SurfaceBase         Surf;
-typedef Element::Surface<math::Real> SurfR;
-typedef Element::Surface<math::Int > SurfI;
+typedef element::SurfaceBase         Surf;
+typedef element::Surface<math::Real> SurfR;
+typedef element::Surface<math::Int > SurfI;
 
 } 
 } 

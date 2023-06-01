@@ -39,7 +39,7 @@ class SourcePortTEMCoaxialTest : public ::testing::Test {
 
 protected:
     geometry::CoordI3Group cG_;
-    geometry::Element::Group<geometry::Surf> surfs;
+    geometry::element::Group<geometry::Surf> surfs;
     Port::TEM::ExcitationMode excMode;
     math::Real innerRadius_, outerRadius_;
 

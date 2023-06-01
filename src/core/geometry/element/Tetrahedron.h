@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Tetrahedron : public Volume<math::Real> {
 public:
@@ -31,7 +31,7 @@ public:
 
 } 
 
-typedef Element::Tetrahedron Tet;
+typedef element::Tetrahedron Tet;
 
 } 
 } 

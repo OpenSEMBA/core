@@ -11,7 +11,7 @@
 namespace semba {
 namespace exporters {
 
-using ElemRGroup = geometry::Element::Group<geometry::ElemR>;
+using ElemRGroup = geometry::element::Group<geometry::ElemR>;
 using ElemRView = std::vector<const geometry::ElemR*>;
 
 class Exporter : public util::ProjectFile {
