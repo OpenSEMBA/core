@@ -3,7 +3,7 @@
 
 using namespace semba;
 using namespace math;
-using namespace Geometry;
+using namespace geometry;
 
 TEST(GeometryBoxTest, VolumeBoxBasicOperations) {
     CartesianVector<Real,3> min(-0.1, -0.1, -0.1);

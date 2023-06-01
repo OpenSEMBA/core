@@ -3,7 +3,7 @@
 #include "Coordinate.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 class Relative : public virtual Coordinate<math::Int,3> {

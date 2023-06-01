@@ -9,7 +9,7 @@
 #include "core/ProblemDescription.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 
 void fillProblemDescription(UnstructuredProblemDescription& pD)
 {

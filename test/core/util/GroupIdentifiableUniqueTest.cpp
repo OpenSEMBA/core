@@ -4,7 +4,7 @@
 #include "core/geometry/Layer.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 using namespace util;
 
 class GroupIdentifiableUniqueTest : public ::testing::Test {

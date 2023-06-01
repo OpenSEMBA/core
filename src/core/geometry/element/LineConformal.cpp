@@ -4,7 +4,7 @@
 #include <algorithm>
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 LineConformal::LineConformal(const Id id,

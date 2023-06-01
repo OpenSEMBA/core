@@ -5,7 +5,7 @@
 #include "Volume.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class Tetrahedron : public Volume<math::Real> {

@@ -5,7 +5,7 @@
 #include "Triangle.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class Triangle3 : public Triangle {

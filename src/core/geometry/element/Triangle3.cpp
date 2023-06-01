@@ -3,7 +3,7 @@
 #include "Triangle3.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 const math::simplex::Triangle<1> Triangle3::geo;

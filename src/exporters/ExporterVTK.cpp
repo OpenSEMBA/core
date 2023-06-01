@@ -62,15 +62,15 @@ ExporterVTK::ExporterVTK(const UnstructuredProblemDescription& smb, const std::s
 
 void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
 {
-    const Geometry::Mesh::Unstructured* inMesh = &smb.model.mesh;
+    const geometry::Mesh::Unstructured* inMesh = &smb.model.mesh;
     const SourceGroup& srcs = smb.sources;
     const OutputRequestGroup& oRqs = smb.outputRequests;
 
-    const Geometry::Grid3* grid = nullptr;
+    const geometry::Grid3* grid = nullptr;
 
     assert(inMesh != nullptr);
-    const Geometry::Mesh::Unstructured* mesh;
-    const Geometry::Mesh::Structured* meshStr;
+    const geometry::Mesh::Unstructured* mesh;
+    const geometry::Mesh::Structured* meshStr;
 
     std::string preName;
     meshStr = nullptr;
@@ -137,7 +137,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
         for (std::size_t i = 0; i < 3; i++) {
             for (std::size_t j = 0; j < 2; j++) {
                 if (meshStr->bounds()(i, j) != nullptr) {
-                    Geometry::CoordR3Group cG;
+                    geometry::CoordR3Group cG;
                     writeFile_(
                         { getBoundary(
                             math::Constants::CartesianAxis(i),
@@ -154,7 +154,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
 
     // Writes grid.
     if (grid != nullptr) {
-        Geometry::CoordR3Group cG;
+        geometry::CoordR3Group cG;
         writeFile_(getGridElems(cG, grid).get(), makeValid_("Grid"), outFile, part);
     }
 
@@ -162,7 +162,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     outFile << "  " << "</Collection>" << std::endl;
     outFile << "</VTKFile>" << std::endl;
 
-    if (inMesh->is<Geometry::Mesh::Structured>()) {
+    if (inMesh->is<geometry::Mesh::Structured>()) {
         delete mesh;
     }
 
@@ -190,7 +190,7 @@ void ExporterVTK::writeFile_(const ElemRView& elems,
             << "byte_order=\"LittleEndian\""
             << ">" << std::endl;
     std::pair<std::vector<math::CVecR3>,
-              std::map<Geometry::CoordId, std::size_t>> aux =
+              std::map<geometry::CoordId, std::size_t>> aux =
         getPoints_(elems);
     outFile << "  " << "<UnstructuredGrid "
             << "NumberOfPoints=\"" << aux.first.size() << "\" "
@@ -203,10 +203,10 @@ void ExporterVTK::writeFile_(const ElemRView& elems,
     outFile.close();
 }
 
-std::pair<std::vector<math::CVecR3>, std::map<Geometry::CoordId, std::size_t>>
+std::pair<std::vector<math::CVecR3>, std::map<geometry::CoordId, std::size_t>>
     ExporterVTK::getPoints_(
         const ElemRView& elems) {
-    std::map<Geometry::CoordId, std::size_t> mapCoords;
+    std::map<geometry::CoordId, std::size_t> mapCoords;
     std::vector<math::CVecR3> pos;
     for (const auto& elem: elems) {
         for (std::size_t j = 0; j < elem->numberOfVertices(); j++) {
@@ -241,7 +241,7 @@ void ExporterVTK::writePoints_(std::ofstream &outFile,
 void ExporterVTK::writeCells_(
         std::ofstream& outFile,
         const ElemRView& elems,
-        std::map<Geometry::CoordId, std::size_t>& mapCoords) {
+        std::map<geometry::CoordId, std::size_t>& mapCoords) {
 
     outFile << "      " << "<Cells>" << std::endl;
     outFile << "        " << "<DataArray "
@@ -280,17 +280,17 @@ void ExporterVTK::writeCells_(
     outFile << "         ";
     for (const auto& elem : elems) {
         outFile << " ";
-        if (elem->is<Geometry::Nod>()) {
+        if (elem->is<geometry::Nod>()) {
             outFile << CELL_TYPES::VTK_VERTEX;
-        } else if (elem->is<Geometry::Lin>()) {
+        } else if (elem->is<geometry::Lin>()) {
             outFile << CELL_TYPES::VTK_LINE;
-        } else if (elem->is<Geometry::Tri>()) {
+        } else if (elem->is<geometry::Tri>()) {
             outFile << CELL_TYPES::VTK_TRIANGLE;
-        } else if (elem->is<Geometry::Qua>()) {
+        } else if (elem->is<geometry::Qua>()) {
             outFile << CELL_TYPES::VTK_QUAD;
-        } else if (elem->is<Geometry::Tet>()) {
+        } else if (elem->is<geometry::Tet>()) {
             outFile << CELL_TYPES::VTK_TETRA;
-        } else if (elem->is<Geometry::Hex8>()) {
+        } else if (elem->is<geometry::Hex8>()) {
             outFile << CELL_TYPES::VTK_HEXAHEDRON;
         } else {
             outFile << CELL_TYPES::VTK_POLY_LINE;

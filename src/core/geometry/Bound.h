@@ -3,7 +3,7 @@
 #include "element/Element.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 template< class It >
 BoxR3 getBound(It first, It last) {

@@ -1,7 +1,7 @@
 #include "Tetrahedron4.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 const math::simplex::Tetrahedron<1> Tetrahedron4::tet;

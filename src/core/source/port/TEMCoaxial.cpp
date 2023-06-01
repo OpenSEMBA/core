@@ -53,7 +53,7 @@ TEMCoaxial::TEMCoaxial(const TEMCoaxial& rhs) :
 //
 //void TEMCoaxial::set(const Target& elemGroup) {
 //    // Reescales internal dimensions.
-//    Geometry::BoxR3 box = Geometry::getBound(elemGroup.begin(), elemGroup.end());
+//    geometry::BoxR3 box = geometry::getBound(elemGroup.begin(), elemGroup.end());
 //    const math::CVecR3 diagonal = box.getMax()-box.getMin();
 //    if (!diagonal.isContainedInPlane(math::Constants::CartesianPlane::xy)) {
 //        throw std::logic_error("Port is not contained in a XY plane");

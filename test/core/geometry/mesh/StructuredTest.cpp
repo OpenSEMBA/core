@@ -4,7 +4,7 @@
 #include "core/geometry/element/Line2.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 using namespace math;
 
 class MeshStructuredTest : public ::testing::Test {

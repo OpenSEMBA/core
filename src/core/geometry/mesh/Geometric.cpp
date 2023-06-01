@@ -1,7 +1,7 @@
 #include "Geometric.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 Geometric::Geometric(const Grid3& grid)

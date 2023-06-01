@@ -3,7 +3,7 @@
 #include "Tetrahedron.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class Tetrahedron4 : public Tetrahedron {

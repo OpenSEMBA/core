@@ -5,7 +5,7 @@
 #include "Line2.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class LineConformal : public virtual Line2<math::Int> {

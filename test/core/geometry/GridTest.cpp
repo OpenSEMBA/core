@@ -2,7 +2,7 @@
 #include "core/geometry/Grid.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 using namespace math;
 using namespace Constants;
 
@@ -13,7 +13,7 @@ protected:
 		min_ = semba::math::CVecR3(0.0, 0.0, 0.0);
 		max_ = semba::math::CVecR3(1.0, 1.0, 1.0);
 		step_ = semba::math::CVecR3(0.05, 0.05, 0.05);
-		grid_ = semba::Geometry::Grid3(semba::Geometry::BoxR3(min_, max_), step_);
+		grid_ = semba::geometry::Grid3(semba::geometry::BoxR3(min_, max_), step_);
 
 		std::vector<double> offset_;
 		std::vector<double> off_;
@@ -24,7 +24,7 @@ protected:
 
 	}
 
-	semba::Geometry::Grid3 grid_;
+	semba::geometry::Grid3 grid_;
 	semba::math::CVecR3 min_, max_, step_;
 };
 
@@ -104,7 +104,7 @@ TEST_F(GeometryGridTest, GetSteps) {
 TEST_F(GeometryGridTest, Equality) {
     EXPECT_EQ(
         grid_, 
-        semba::Geometry::Grid3(semba::Geometry::BoxR3(min_, max_), step_)
+        semba::geometry::Grid3(semba::geometry::BoxR3(min_, max_), step_)
     );
 }
 

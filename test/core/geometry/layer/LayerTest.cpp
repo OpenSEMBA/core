@@ -3,7 +3,7 @@
 #include "core/geometry/Layer.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 
 class GeometryLayersLayerTest : public ::testing::Test {
 };

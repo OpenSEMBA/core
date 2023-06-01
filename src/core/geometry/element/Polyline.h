@@ -5,7 +5,7 @@
 #include "Line.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 class PolylineBase : public virtual LineBase {

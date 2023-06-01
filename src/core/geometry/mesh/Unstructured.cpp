@@ -2,7 +2,7 @@
 #include "Unstructured.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 Unstructured::Unstructured(const CoordR3Group& cG,

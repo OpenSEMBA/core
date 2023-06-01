@@ -1,7 +1,7 @@
 #include "Coordinate.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 bool Base::operator ==(const Base& rhs) const {

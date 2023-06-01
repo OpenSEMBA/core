@@ -9,7 +9,7 @@
 #include "core/util/GroupIdentifiableUnique.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Element {
 
 template<typename E = Elem>

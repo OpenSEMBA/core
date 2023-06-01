@@ -1,7 +1,7 @@
 #include "Conformal.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Coordinate {
 
 Conformal::Conformal() {

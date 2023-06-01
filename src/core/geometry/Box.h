@@ -8,7 +8,7 @@
 #include "core/geometry/Grid.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 template<std::size_t D> class Grid;
 

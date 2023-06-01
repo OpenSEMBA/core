@@ -6,7 +6,7 @@ namespace semba {
 namespace parsers {
 namespace STL {
 
-using namespace Geometry;
+using namespace geometry;
 using namespace math::Constants;
 
 Parser::Parser(const std::string& fn) :

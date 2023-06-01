@@ -24,7 +24,7 @@
 #include "core/outputRequest/OnLayer.h"
 
 using namespace semba;
-using namespace Geometry;
+using namespace geometry;
 using namespace math;
 
 using json = nlohmann::json;

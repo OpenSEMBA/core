@@ -8,7 +8,7 @@
 #include "core/util/GroupIdentifiableUnique.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 
 class Layer;
 using LayerId = util::Identification<Layer>;

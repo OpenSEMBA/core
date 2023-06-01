@@ -7,7 +7,7 @@
 #include "core/geometry/Layer.h"
 
 namespace semba {
-namespace Geometry {
+namespace geometry {
 namespace Mesh {
 
 class Structured;

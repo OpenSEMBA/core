@@ -11,8 +11,8 @@
 namespace semba {
 namespace exporters {
 
-using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;
-using ElemRView = std::vector<const Geometry::ElemR*>;
+using ElemRGroup = geometry::Element::Group<geometry::ElemR>;
+using ElemRView = std::vector<const geometry::ElemR*>;
 
 class Exporter : public util::ProjectFile {
 
@@ -25,17 +25,17 @@ protected:
     std::size_t determineStepsSaved(const math::Real savingPeriod, const math::Real dt) const;
     
     std::string getOutputfilename() const;
-	Geometry::ElemR* getBoundary(
+	geometry::ElemR* getBoundary(
             const math::Constants::CartesianAxis dir,
             const math::Constants::CartesianBound bound,
-            Geometry::CoordR3Group& cG,
-            const Geometry::Grid3* grid,
-            const Geometry::Mesh::Mesh* mesh) const;
+            geometry::CoordR3Group& cG,
+            const geometry::Grid3* grid,
+            const geometry::Mesh::Mesh* mesh) const;
     ElemRGroup getGridElems(
-            Geometry::CoordR3Group& cG,
-            const Geometry::Grid3* grid) const;
+            geometry::CoordR3Group& cG,
+            const geometry::Grid3* grid) const;
     static std::string getBoundaryName(
-            const Geometry::Mesh::Structured* mesh,
+            const geometry::Mesh::Structured* mesh,
             const std::size_t i,
             const std::size_t j);
 };
