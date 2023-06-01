@@ -3,7 +3,7 @@
 #include "core/geometry/mesh/Unstructured.h"
 #include "core/physicalModel/Group.h"
 
-namespace SEMBA {
+namespace semba {
 namespace model {
 
 using namespace Geometry;

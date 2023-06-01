@@ -11,7 +11,7 @@
 
 #include "Coordinate.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -98,11 +98,11 @@ std::map<VEC, std::vector<const C*>> Group<C>::getIndex() const {
     return index;
 }
 
-} /* namespace Coordinate */
+} 
 
 typedef Coordinate::Group<CoordR3> CoordR3Group;
 typedef Coordinate::Group<CoordI3> CoordI3Group;
 typedef Coordinate::Group<> CoordGroup;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

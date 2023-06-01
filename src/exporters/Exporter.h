@@ -8,7 +8,7 @@
 #include "core/ProblemDescription.h"
 #include "core/geometry/mesh/Structured.h"
 
-namespace SEMBA {
+namespace semba {
 namespace exporters {
 
 using ElemRGroup = Geometry::Element::Group<Geometry::ElemR>;

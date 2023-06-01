@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <vector>
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -50,6 +50,6 @@ std::vector<CoordId> Base::ascendingIdOrder(
     return res;
 }
 
-} /* namespace Element */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

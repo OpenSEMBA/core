@@ -13,8 +13,8 @@
 #include "core/source/PlaneWave.h"
 #include "core/source/Generator.h"
 
-using namespace SEMBA;
-using namespace SEMBA::parsers::JSON;
+using namespace semba;
+using namespace semba::parsers::JSON;
 using namespace Geometry::Mesh;
 
 class ParserJSONParserTest : public ::testing::Test {

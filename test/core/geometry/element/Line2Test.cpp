@@ -2,13 +2,13 @@
 
 #include "core/geometry/element/Line2.h"
 
-using namespace SEMBA;
+using namespace semba;
 
 TEST(Line2Test, CanCreate) {
 	Geometry::CoordR3 vertexLeft{ Geometry::CoordId(), math::CVecR3({0.0, 0.0, 0.0}) };
 	Geometry::CoordR3 vertexRight{ Geometry::CoordId(), math::CVecR3({1.0, 0.0, 0.0}) };
 
-	Geometry::Layer::Layer lay{Geometry::LayerId(), "My layer"};
+	Geometry::Layer lay{Geometry::LayerId(), "My layer"};
 	Geometry::Element::Model model{MatId()};
 
 	Geometry::LinR2 lin{ Geometry::ElemId(), {&vertexLeft, &vertexRight}, &lay, &model };

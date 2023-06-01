@@ -1,7 +1,7 @@
 #include "WaveguideRectangular.h"
 #include "core/geometry/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -76,6 +76,6 @@ std::string WaveguideRectangular::getName() const {
 //    return box_.getMin();
 //}
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

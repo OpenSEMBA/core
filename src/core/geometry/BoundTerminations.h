@@ -6,7 +6,7 @@
 #include "core/geometry/element/Element.h"
 #include "core/physicalModel/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 
 template <std::size_t D>
@@ -84,6 +84,6 @@ void BoundTerminations<D>::setBound(
     bounds_[d][p] = std::move(bound);
 }
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

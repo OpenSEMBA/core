@@ -3,7 +3,7 @@
 #include "Volume.h"
 #include "core/math/LocalAxis.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -85,7 +85,7 @@ private:
     math::Real relativePermittivity_;
 };
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

@@ -1,6 +1,6 @@
 #include "core/physicalModel/wire/Extremes.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Wire {
 
@@ -47,6 +47,6 @@ void Extremes::swapExtremes() {
     std::swap(extreme_[0], extreme_[1]);
 }
 
-} /* namespace Wire */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

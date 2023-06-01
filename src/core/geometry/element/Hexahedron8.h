@@ -4,7 +4,7 @@
 
 #include "Volume.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -247,12 +247,12 @@ std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
 }
 
 
-} /* namespace Element */
+} 
 
 typedef Element::Hexahedron8Base         Hex8;
 typedef Element::Hexahedron8<math::Real> HexR8;
 typedef Element::Hexahedron8<math::Int > HexI8;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

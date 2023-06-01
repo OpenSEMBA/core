@@ -11,9 +11,9 @@
 
 #include "parsers/Parser.h"
 
-namespace SEMBA::parsers::STL {
+namespace semba::parsers::STL {
 
-class Parser : public SEMBA::parsers::Parser {
+class Parser : public semba::parsers::Parser {
 public:
     Parser(const std::string& fn);
     Geometry::Mesh::Unstructured readAsUnstructuredMesh() const;

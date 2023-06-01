@@ -1,6 +1,6 @@
 #include "core/physicalModel/multiport/Predefined.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -20,6 +20,6 @@ Predefined::Predefined(const Predefined& rhs)
 
 
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

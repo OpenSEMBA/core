@@ -4,7 +4,7 @@
 
 #include "Line2.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -48,10 +48,10 @@ private:
     math::CVecR3 norm_;
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::LineConformal LinConf;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

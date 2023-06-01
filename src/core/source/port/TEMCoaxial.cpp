@@ -1,7 +1,7 @@
 #include "TEMCoaxial.h"
 #include "core/geometry/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -71,6 +71,6 @@ TEMCoaxial::TEMCoaxial(const TEMCoaxial& rhs) :
 //    Source::setTarget(elemGroup);
 //}
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

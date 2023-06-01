@@ -2,7 +2,7 @@
 
 #include "core/physicalModel/PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -12,7 +12,7 @@ public:
     virtual ~Surface() = default;
 };
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

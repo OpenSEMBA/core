@@ -4,7 +4,7 @@
 #include "core/geometry/element/Quadrilateral4.h"
 #include "core/math/function/Gaussian.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Source;
 using namespace std;
 

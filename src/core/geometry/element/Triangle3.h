@@ -4,7 +4,7 @@
 
 #include "Triangle.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -58,10 +58,10 @@ protected:
     std::array<const CoordR3*,3> v_;
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::Triangle3 Tri3;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

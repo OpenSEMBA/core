@@ -1,6 +1,6 @@
 #include "Tetrahedron4.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -152,6 +152,6 @@ std::unique_ptr<ElemR> Tetrahedron4::toUnstructured(
         this->getModel());
 }
 
-} /* namespace Element */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

@@ -2,7 +2,7 @@
 
 #include <physicalModel/multiport/RLC.h>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -46,6 +46,6 @@ math::Real RLC::getC() const {
 }
 
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

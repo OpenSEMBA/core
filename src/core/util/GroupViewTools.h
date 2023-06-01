@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-namespace SEMBA {
+namespace semba {
 namespace util {
     
 class View {

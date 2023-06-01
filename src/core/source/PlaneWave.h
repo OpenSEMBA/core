@@ -4,7 +4,7 @@
 
 #include "Source.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 class PlaneWave : public Source {
@@ -100,8 +100,8 @@ public:
     }
 };
 
-} /* namespace PlaneWave */
-} /* namespace Error */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 
+}
+} 
 

@@ -2,7 +2,7 @@
 
 #include "Tetrahedron.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -23,6 +23,6 @@ Triangle3* Tetrahedron::getTri3Face(const std::size_t f) const {
     return new Triangle3(Id(0), coord, getLayer(), getModel());
 }
 
-} /* namespace Element */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

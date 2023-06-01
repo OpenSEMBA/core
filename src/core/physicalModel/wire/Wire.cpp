@@ -1,6 +1,6 @@
 #include "Wire.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Wire {
 
@@ -117,6 +117,6 @@ std::string Wire::getFilename() const
     return filename_;
 }
 
-} /* namespace Wire */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

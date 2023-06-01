@@ -3,7 +3,7 @@
 #include "core/math/matrix/Static.h"
 #include "CartesianVector.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 class LocalAxis {
@@ -24,6 +24,6 @@ private:
     CVecR3 origin_;
 };
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 

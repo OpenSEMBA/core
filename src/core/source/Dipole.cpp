@@ -1,6 +1,6 @@
 #include "Dipole.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 Dipole::Dipole(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
@@ -16,5 +16,5 @@ Dipole::Dipole(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
 }
 
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 

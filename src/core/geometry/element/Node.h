@@ -4,7 +4,7 @@
 
 #include "Element.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -167,11 +167,11 @@ std::unique_ptr<ElemR> Node<T>::toUnstructured(
 typedef Node<math::Real> NodR;
 typedef Node<math::Int > NodI;
 
-} /* namespace Element */
+} 
 
 typedef Element::NodeBase         Nod;
 typedef Element::Node<math::Real> NodR;
 typedef Element::Node<math::Int > NodI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

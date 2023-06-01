@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -35,6 +35,6 @@ std::complex<Real> Gaussian::getFourier(const Real freq) const {
             * std::exp(- (Real) 0.5 * pow(getSpread()*pi2*freq,2));
 }
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 

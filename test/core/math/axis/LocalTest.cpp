@@ -6,7 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 
 class MathAxisLocalTest : public ::testing::Test {

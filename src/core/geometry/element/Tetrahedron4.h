@@ -2,7 +2,7 @@
 
 #include "Tetrahedron.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -67,10 +67,10 @@ private:
     bool hasZeroVolume() const;
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::Tetrahedron4 Tet4;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

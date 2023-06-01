@@ -1,7 +1,7 @@
 #include <physicalModel/volume/Classic.h>
 #include <cmath>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -87,6 +87,6 @@ bool Classic::isVacuum() const {
             && magneticConudctivity_ == 0.0);
 }
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

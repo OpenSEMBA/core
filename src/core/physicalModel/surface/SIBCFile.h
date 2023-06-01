@@ -5,7 +5,7 @@
 
 #include "Surface.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -26,7 +26,7 @@ protected:
     util::ProjectFile file_;
 };
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

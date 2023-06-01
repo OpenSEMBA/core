@@ -5,7 +5,7 @@
 
 #include "Numerical.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Magnitude {
 
@@ -81,6 +81,6 @@ math::Real Numerical::evaluate(const math::Real time) const {
     throw std::logic_error("Numerical::evaluate not implemented");
 }
 
-} /* namespace Magnitude */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

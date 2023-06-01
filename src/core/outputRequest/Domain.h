@@ -6,7 +6,7 @@
 
 #include "core/math/Types.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 class Domain {
@@ -66,6 +66,6 @@ private:
     std::string transferFunctionFile_;
 };
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 
 

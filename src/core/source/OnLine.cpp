@@ -1,6 +1,6 @@
 #include "OnLine.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 OnLine::OnLine(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
@@ -13,5 +13,5 @@ OnLine::OnLine(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
     hardness_ = sourceHardness;
 }
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 

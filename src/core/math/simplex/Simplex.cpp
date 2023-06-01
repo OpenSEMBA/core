@@ -1,7 +1,7 @@
 
 #include "Simplex.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace simplex {
 
@@ -87,6 +87,6 @@ Real Simplex::integrate(const function::Polynomial<Real> pol,
     return (sizeFactor * sum);
 }
 
-} /* namespace Simplex */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 

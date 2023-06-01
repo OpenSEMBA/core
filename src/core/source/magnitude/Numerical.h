@@ -3,7 +3,7 @@
 #include "Magnitude.h"
 #include "core/util/ProjectFile.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Magnitude {
 
@@ -32,7 +32,7 @@ private:
 
 };
 
-} /* namespace Magnitude */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

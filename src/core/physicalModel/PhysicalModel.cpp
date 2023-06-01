@@ -1,6 +1,6 @@
 #include "PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 PhysicalModel::PhysicalModel(const std::string& name) 
@@ -24,5 +24,5 @@ void PhysicalModel::setName(const std::string& newName)
     name_ = newName;
 }
 
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 

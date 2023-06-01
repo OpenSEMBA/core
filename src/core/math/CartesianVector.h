@@ -9,7 +9,7 @@
 #include "core/math/Constants.h"
 #include "Real.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 template <class T, std::size_t D>
@@ -650,6 +650,6 @@ typedef CartesianVector<Int ,3> CVecI3;
 
 typedef CartesianVector<std::complex<Real>,3> CVecC3;
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 

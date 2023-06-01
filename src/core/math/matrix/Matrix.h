@@ -12,7 +12,7 @@
 #include "core/math/Types.h"
 #include "core/math/CartesianVector.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace matrix {
 
@@ -103,7 +103,7 @@ public:
 
 
 
-} /* namespace Error */
+} 
 
 
 template <class T>
@@ -637,8 +637,8 @@ T Matrix<T>::belowDiagonalAbsSum_() {
     return sum;
 }
 
-} /* namespace Matrix */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 
 

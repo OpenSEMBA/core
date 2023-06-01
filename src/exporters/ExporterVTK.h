@@ -7,7 +7,7 @@
 #include "Exporter.h"
 #include "core/ProblemDescription.h"
 
-namespace SEMBA {
+namespace semba {
 namespace exporters {
 
 class ExporterVTK : public exporters::Exporter {
@@ -34,4 +34,4 @@ private:
 };
 
 }
-} /* namespace SEMBA */
+} 

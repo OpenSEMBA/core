@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 OutputRequest::OutputRequest(
@@ -42,5 +42,5 @@ std::string OutputRequest::getTypeStr() const
     }
 }
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

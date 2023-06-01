@@ -5,7 +5,7 @@
 
 #include "Volume.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -26,7 +26,7 @@ private:
     const math::LocalAxis orientation_;
 };
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

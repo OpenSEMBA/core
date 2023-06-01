@@ -8,7 +8,7 @@
 #include "magnitude/Magnitude.h"
 #include "magnitude/Numerical.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 class Source;
@@ -46,7 +46,7 @@ protected:
     Target target_;
 };
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 
 
 

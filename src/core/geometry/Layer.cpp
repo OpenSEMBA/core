@@ -4,21 +4,23 @@
 #include <iostream>
 #include <sstream>
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
-namespace Layer {
 
-Layer::Layer(const Id id, const std::string& name)
-:   Identifiable<Id>(id) {
+Layer::Layer(const LayerId id, const std::string& name)
+:   Identifiable<LayerId>(id) 
+{
     name_ = spaceToUnderscore(name);
 }
 
-Layer::Layer(const std::string& name) {
+Layer::Layer(const std::string& name) 
+{
     name_ = spaceToUnderscore(name);
 }
 
 Layer::Layer(const Layer& rhs)
-:   Identifiable<Id>(rhs) {
+:   Identifiable<LayerId>(rhs) 
+{
     name_ = rhs.name_;
 }
 
@@ -66,6 +68,15 @@ std::string Layer::spaceToUnderscore(std::string rhs) {
     return str;
 }
 
-} /* namespace Layer */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+const Layer* LayerGroup::getName(const std::string name) const
+{
+    for (auto& it{ this->begin() }; it != this->end(); ++it) {
+        if (it->get()->getName() == name) {
+            return it->get();
+        }
+    }
+    return nullptr;
+}
+
+} 
+} 

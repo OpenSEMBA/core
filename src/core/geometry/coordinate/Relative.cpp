@@ -1,6 +1,6 @@
 #include "Relative.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -71,6 +71,6 @@ CoordR3* Relative::toUnstructured(const Grid3& grid) const {
     return new CoordR3(this->getId(), pos);
 }
 
-} /* namespace Coordinate */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

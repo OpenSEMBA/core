@@ -3,7 +3,7 @@
 
 #include "core/physicalModel/Bound.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace PhysicalModel;
 
 TEST(PhysicalModelBoundTest, TestGetTypeName) {

@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 Domain::Domain() {
@@ -171,5 +171,5 @@ void Domain::setSamplingPeriod(const math::Real samplingPeriod) {
     samplingPeriod_ = samplingPeriod;
 }
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

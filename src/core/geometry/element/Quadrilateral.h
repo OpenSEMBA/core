@@ -2,7 +2,7 @@
 
 #include "Surface.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -24,12 +24,12 @@ public:
     virtual ~Quadrilateral() = default;
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::QuadrilateralBase         Qua;
 typedef Element::Quadrilateral<math::Real> QuaR;
 typedef Element::Quadrilateral<math::Int > QuaI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

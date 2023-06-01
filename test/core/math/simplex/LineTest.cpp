@@ -4,7 +4,7 @@
 
 #include <type_traits>
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 
 template <typename T>

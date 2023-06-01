@@ -6,7 +6,7 @@
 #include "core/geometry/mesh/Mesh.h"
 #include "core/geometry/element/Group.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 using namespace math;
 
@@ -33,7 +33,7 @@ public:
         eG_ = ElemRGroup();
         eG_.add(std::make_unique<Tet4>(ElemId(1), vTet));
         eG_.add(std::make_unique<Tri3>(ElemId(2), vTri));
-        lG_ = Layer::Group<>();
+        lG_ = LayerGroup();
     }
 
 protected:

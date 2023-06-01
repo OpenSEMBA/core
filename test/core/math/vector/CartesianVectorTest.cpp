@@ -2,7 +2,7 @@
 
 #include "core/math/CartesianVector.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 
 TEST(MathCartesianVectorTest, Basic) {

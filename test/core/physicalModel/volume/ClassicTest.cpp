@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/physicalModel/volume/Classic.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace PhysicalModel;
 
 class PhysicalModelVolumeClassicTest : public ::testing::Test {

@@ -1,6 +1,6 @@
 #include "Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 Bound::Bound(const Bound& rhs) :
@@ -44,5 +44,5 @@ Bound::Type Bound::getType() const {
     return type;
 }
 
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 

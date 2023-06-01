@@ -5,21 +5,20 @@
 #include "core/geometry/Box.h"
 #include "core/geometry/Grid.h"
 #include "core/geometry/coordinate/Group.h"
-#include "core/geometry/layer/Group.h"
+#include "core/geometry/Layer.h"
 #include "core/util/Class.h"
 #include "core/util/Identifiable.h"
 #include "core/util/Identification.h"
 
 #include <algorithm>
 
-namespace SEMBA {
+namespace semba {
 
 typedef PhysicalModel::Id MatId;
 
 namespace Geometry {
 namespace Element {
 
-typedef Geometry::Layer::Layer     Layer;
 typedef util::Identifiable<MatId> Model;
 
 class Base;
@@ -370,7 +369,7 @@ std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
 typedef Element<math::Real> ElemR;
 typedef Element<math::Int>  ElemI;
 
-} /* namespace Element */
+} 
 
 typedef Element::Element<math::Real> ElemR;
 typedef Element::Element<math::Int>  ElemI;
@@ -380,5 +379,5 @@ typedef Element::Base                Elem;
 
 typedef std::vector<const Geometry::Elem*>  ElemView;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

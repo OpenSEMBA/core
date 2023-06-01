@@ -2,21 +2,21 @@
 
 #include "Generator.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 Generator::Generator(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                      const Target& elem,
                      const Type& generatorType,
                      const Hardness& hardness)
-:   SEMBA::Source::Source(magnitude, elem)
+:   semba::Source::Source(magnitude, elem)
 {
     type_ = generatorType;
     hardness_ = hardness;
 }
 
 Generator::Generator(const Generator& rhs)
-:   SEMBA::Source::Source(rhs)
+:   semba::Source::Source(rhs)
 {
     type_ = rhs.type_;
     hardness_ = rhs.hardness_;
@@ -39,5 +39,5 @@ std::string Generator::getTypeStr() const {
     }
 }
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 

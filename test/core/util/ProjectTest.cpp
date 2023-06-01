@@ -2,7 +2,7 @@
 
 #include "core/util/ProjectFile.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace util;
 
 #ifndef _WIN32

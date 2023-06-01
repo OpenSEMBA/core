@@ -8,7 +8,7 @@
 #include "core/outputRequest/OnPoint.h"
 #include "core/ProblemDescription.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 
 void fillProblemDescription(UnstructuredProblemDescription& pD)
@@ -44,7 +44,7 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 	pD.sources.copyAndAssignId(
 		Source::PlaneWave{
 			std::make_unique<Source::Magnitude::Magnitude>(
-				new SEMBA::math::function::Gaussian(0.5, 0.0, 1.0)
+				new semba::math::function::Gaussian(0.5, 0.0, 1.0)
 			),
 			{ElemId{1}},
 			math::CVecR3(1.0, 0.0, 0.0),
@@ -95,7 +95,7 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 
 	Source::PlaneWave planewave{
 		std::make_unique<Source::Magnitude::Magnitude>(
-			new SEMBA::math::function::Gaussian(0.5, 0.0, 1.0)
+			new semba::math::function::Gaussian(0.5, 0.0, 1.0)
 		),
 		{},
 		math::CVecR3(1.0, 0.0, 0.0),

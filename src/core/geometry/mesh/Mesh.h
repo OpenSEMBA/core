@@ -9,7 +9,7 @@
 #include "core/geometry/element/Group.h"
 #include "core/physicalModel/Group.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -31,7 +31,7 @@ public:
     virtual ElemView reassign(const ElemView&) = 0;
 };
 
-} /* namespace Mesh */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

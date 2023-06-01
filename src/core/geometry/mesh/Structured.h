@@ -8,9 +8,9 @@
 #include "core/geometry/BoundTerminations.h"
 #include "core/geometry/coordinate/Group.h"
 #include "core/geometry/element/Group.h"
-#include "core/geometry/layer/Group.h"
+#include "core/geometry/Layer.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -76,12 +76,12 @@ public:
         return "Invalid boundary to discretize";
     }
 };
-} /* namespace Error */
+} 
 
-} /* namespace Mesh */
-} /* namespace Geometry */
+} 
+} 
 
 typedef Geometry::Mesh::Structured StructuredMesh;
 
-} /* namespace SEMBA */
+} 
 

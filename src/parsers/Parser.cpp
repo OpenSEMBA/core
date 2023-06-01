@@ -1,6 +1,6 @@
 #include "Parser.h"
 
-namespace SEMBA {
+namespace semba {
 namespace parsers {
 
 Parser::Parser(const std::string& fn) :
@@ -60,5 +60,5 @@ void Parser::postReadOperations(UnstructuredProblemDescription& res)
     }
 }
 
-} /* namespace Parser */
-} /* namespace SEMBA */
+}
+} 

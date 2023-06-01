@@ -1,6 +1,6 @@
 #include "Real.h"
 
-namespace SEMBA::math {
+namespace semba::math {
 
 bool equal(const Real lhs, const Real rhs,
            Real rel, const Real tol) {

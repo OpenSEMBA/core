@@ -2,7 +2,7 @@
 
 #include <physicalModel/volume/Dispersive.h>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -115,6 +115,6 @@ const util::ProjectFile Dispersive::getFile() const {
 }
 
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

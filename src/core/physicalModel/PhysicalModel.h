@@ -5,7 +5,7 @@
 #include "core/util/Identifiable.h"
 #include "core/util/Identification.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 class PhysicalModel;
@@ -53,7 +53,7 @@ public:
     virtual ~Error() throw() {}
 };
 
-} /* namespace Error */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

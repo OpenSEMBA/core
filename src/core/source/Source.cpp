@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 Source::Source(
@@ -53,5 +53,5 @@ Magnitude::Numerical Source::exportToFile(const util::ProjectFile& file,
     return Magnitude::Numerical(file, *magnitude_, step, finalTime);
 }
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 

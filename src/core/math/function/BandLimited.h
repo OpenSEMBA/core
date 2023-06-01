@@ -5,7 +5,7 @@
 
 #include "Function.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -22,7 +22,7 @@ namespace function {
         Real maximumFrequency_;
     };
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

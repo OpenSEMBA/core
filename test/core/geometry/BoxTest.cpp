@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/geometry/Box.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 using namespace Geometry;
 

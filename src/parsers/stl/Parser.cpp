@@ -2,7 +2,7 @@
 
 #include "core/geometry/element/Triangle3.h"
 
-namespace SEMBA {
+namespace semba {
 namespace parsers {
 namespace STL {
 
@@ -10,7 +10,7 @@ using namespace Geometry;
 using namespace math::Constants;
 
 Parser::Parser(const std::string& fn) :
-	SEMBA::parsers::Parser(fn)
+	semba::parsers::Parser(fn)
 {}
 
 CoordR3Group readCoordinates(const std::string& fn)
@@ -46,11 +46,11 @@ CoordR3Group readCoordinates(const std::string& fn)
 	return cG;
 }
 
-std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
+std::pair<std::unique_ptr<Layer>, ElemRGroup> readLayerAndElements(
     const std::string& fn,
     const CoordR3Group& cG)
 {
-    std::unique_ptr<Layer::Layer> lay;
+    std::unique_ptr<Layer> lay;
     ElemRGroup eG;
 
     auto cGIndex = cG.getIndex<math::CVecR3>();
@@ -66,7 +66,7 @@ std::pair<std::unique_ptr<Layer::Layer>, ElemRGroup> readLayerAndElements(
 
         std::string layerName;
         stl >> layerName;
-        lay = std::make_unique<Layer::Layer>(layerName);
+        lay = std::make_unique<Layer>(layerName);
         std::string line;
         while (stl.peek() != EOF) {
             std::getline(stl, line);
@@ -109,7 +109,7 @@ Mesh::Unstructured Parser::readAsUnstructuredMesh() const
 {
     CoordR3Group cG = readCoordinates(this->filename);
     ElemRGroup eG;
-    std::unique_ptr<Layer::Layer> lay;
+    std::unique_ptr<Layer> lay;
     LayerGroup lG;
     std::tie(lay, eG) = readLayerAndElements(this->filename, cG);
     if (lay) {
@@ -119,6 +119,6 @@ Mesh::Unstructured Parser::readAsUnstructuredMesh() const
     return Mesh::Unstructured(cG, eG, lG);
 }
 
-} /* namespace STL */
-} /* namespace Parser */
-} /* namespace SEMBA */
+}
+}
+} 

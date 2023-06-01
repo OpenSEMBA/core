@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <memory>
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 class Class {
@@ -29,6 +29,6 @@ public:
     }
 };
 
-} /* namespace Class */
-} /* namespace SEMBA */
+}
+} 
 

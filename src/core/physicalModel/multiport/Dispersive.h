@@ -2,7 +2,7 @@
 
 #include "Multiport.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -24,7 +24,7 @@ private:
     std::string filename_;
 };
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

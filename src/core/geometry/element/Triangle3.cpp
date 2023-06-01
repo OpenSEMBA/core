@@ -2,7 +2,7 @@
 
 #include "Triangle3.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -79,6 +79,6 @@ std::unique_ptr<ElemR> Triangle3::toUnstructured(
 }
 
 
-} /* namespace Element */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

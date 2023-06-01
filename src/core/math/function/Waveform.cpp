@@ -23,7 +23,7 @@
 #include <cmath>
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
     namespace math {
         namespace function {
             Waveform::Waveform(Type type) {
@@ -64,6 +64,6 @@ namespace SEMBA {
                     this->gamma_ == rhsPtr->gamma_;
             }
 
-        } /* namespace Function */
-    } /* namespace Math */
-} /* namespace SEMBA */
+        } 
+    } 
+} 

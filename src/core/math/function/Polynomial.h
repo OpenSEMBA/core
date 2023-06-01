@@ -7,7 +7,7 @@
 
 #include "Function.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -356,8 +356,8 @@ inline bool Polynomial<T>::operator ==(const Base& rhs) const {
     return areEqual;
 }
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 
 

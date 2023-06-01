@@ -8,7 +8,7 @@
 
 #include "nlohmann/json.hpp"
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 class OptionsBase {

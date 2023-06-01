@@ -2,7 +2,7 @@
 
 #include "Source.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 class Generator : public Source {
@@ -37,6 +37,6 @@ private:
     std::string getTypeStr() const;
 };
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 
 

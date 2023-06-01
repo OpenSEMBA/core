@@ -3,9 +3,9 @@
 #include "core/physicalModel/Predefined.h"
 #include "core/model/Model.h"
 
-using ModelObject = SEMBA::UnstructuredModel;
+using ModelObject = semba::UnstructuredModel;
 
-using namespace SEMBA;
+using namespace semba;
 using namespace model;
 
 TEST(ModelTest, CanCreate) {

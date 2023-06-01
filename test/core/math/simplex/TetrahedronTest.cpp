@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/math/simplex/Tetrahedron.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 
 template <typename T>
