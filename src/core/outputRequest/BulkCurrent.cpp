@@ -2,7 +2,7 @@
 
 #include "BulkCurrent.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 BulkCurrent::BulkCurrent(
@@ -24,5 +24,5 @@ math::UInt BulkCurrent::getSkip() const {
     return skip_;
 }
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

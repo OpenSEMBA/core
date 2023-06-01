@@ -3,7 +3,7 @@
 #include "core/math/simplex/Line.h"
 #include "Element.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -30,13 +30,13 @@ public:
     virtual ~Line() = default;
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::LineBase         Lin;
 typedef Element::Line<math::Real> LinR;
 typedef Element::Line<math::Int > LinI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 
 

@@ -29,7 +29,7 @@
 
 #include <filesystem>
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 class ProjectFile : public std::string {

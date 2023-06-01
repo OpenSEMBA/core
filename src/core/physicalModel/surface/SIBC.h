@@ -5,7 +5,7 @@
 
 #include "Surface.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -35,7 +35,7 @@ private:
     std::vector<PoleResidue> poleZ_;
 };
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

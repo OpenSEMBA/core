@@ -2,7 +2,7 @@
 
 #include "Multiport.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -19,7 +19,7 @@ public:
 
 };
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

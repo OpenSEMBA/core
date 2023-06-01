@@ -1,6 +1,6 @@
 #include "Geometric.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -47,6 +47,6 @@ void Geometric::applyScalingFactor(const math::Real factor) {
     grid_.applyScalingFactor(factor);
 }
 
-} /* namespace Mesh */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

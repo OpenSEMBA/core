@@ -4,7 +4,7 @@
 
 #include "Multiport.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -30,7 +30,7 @@ private:
     math::Real R_, L_, C_;
 };
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

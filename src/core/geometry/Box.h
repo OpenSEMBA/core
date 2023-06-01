@@ -7,7 +7,7 @@
 #include "core/math/CartesianVector.h"
 #include "core/geometry/Grid.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 
 template<std::size_t D> class Grid;
@@ -561,56 +561,11 @@ std::size_t Box<T, D>::numberOfDifferentCoords() const {
     return res;
 }
 
-namespace Error {
-namespace Box {
-
-class Error : public std::exception {
-public:
-    Error() {}
-    virtual ~Error() throw() {}
-};
-
-class NotPoint : public Error {
-public:
-    NotPoint() {}
-    virtual ~NotPoint() throw() {}
-
-    const char* what() const throw() { return "Box is not a Point"; }
-};
-
-class NotLine : public Error {
-public:
-    NotLine() {}
-    virtual ~NotLine() throw() {}
-
-    const char* what() const throw() { return "Box is not a Line"; }
-};
-
-class NotSurface : public Error {
-public:
-    NotSurface() {}
-    virtual ~NotSurface() throw() {}
-
-    const char* what() const throw() { return "Box is not a Surface"; }
-};
-
-class NotVolume : public Error {
-public:
-    NotVolume() {}
-    virtual ~NotVolume() throw() {}
-
-    const char* what() const throw() { return "Box is not a Volume"; }
-};
-
-
-} /* namespace Box */
-} /* namespace Error */
-
 typedef Box<math::Real,3> BoxR3;
 typedef Box<math::Int ,2> BoxI2;
 typedef Box<math::Int, 3> BoxI3;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 
 

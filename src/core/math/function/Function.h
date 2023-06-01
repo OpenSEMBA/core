@@ -6,7 +6,7 @@
 #include "core/math/Constants.h"
 #include "core/math/Types.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -35,12 +35,12 @@ inline T Function<S, T>::eval(const S& arg) const {
     return this->operator ()(arg);
 }
 
-} /* namespace Function */
+} 
 
 typedef function::Function<Real, Real> FunctionRR;
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 
 #ifndef SEMBA_MATH_FUNCTION_DEFINE_CLONE
 #define SEMBA_MATH_FUNCTION_DEFINE_CLONE(NAME)  \

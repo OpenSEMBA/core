@@ -3,7 +3,7 @@
 #include "core/math/function/Function.h"
 #include "core/util/Class.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Magnitude {
 
@@ -28,7 +28,7 @@ private:
     math::FunctionRR* mathFunction_;
 };
 
-} /* namespace Magnitude */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

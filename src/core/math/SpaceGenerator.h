@@ -7,7 +7,7 @@
 
 #include "core/math/Types.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 template<class T>
@@ -58,7 +58,7 @@ std::vector<T> linspace(const std::pair<T, T>& range,
     return res;
 }
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 
 

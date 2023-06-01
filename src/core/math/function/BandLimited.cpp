@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -55,6 +55,6 @@ bool BandLimited::operator==(const Base& rhs) const {
 }
 
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 

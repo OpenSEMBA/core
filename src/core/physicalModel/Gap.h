@@ -2,7 +2,7 @@
 
 #include "PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 class Gap : public virtual PhysicalModel {
@@ -21,6 +21,6 @@ private:
     math::Real width_;
 };
 
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
 

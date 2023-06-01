@@ -3,7 +3,7 @@
 #include "core/geometry/element/Quadrilateral4.h"
 #include "core/geometry/element/Line2.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 using namespace math;
 
@@ -11,7 +11,7 @@ class MeshStructuredTest : public ::testing::Test {
 public:
     void SetUp() 
     {
-        auto lay = lG_.add(std::make_unique<Layer::Layer>(LayerId(1), "Melon"))->get();
+        auto lay = lG_.add(std::make_unique<Layer>(LayerId(1), "Melon"))->get();
             
         CoordId coordId(1);
         cG_.add(std::make_unique<CoordI3>(coordId++, CVecI3(0, 0, 0)));

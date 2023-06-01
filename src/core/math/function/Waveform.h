@@ -25,7 +25,7 @@
 
 #include "Function.h"
 
-namespace SEMBA {
+namespace semba {
     namespace math {
         namespace function {
 
@@ -50,7 +50,7 @@ namespace SEMBA {
                 Real gamma_;
             };
 
-        } /* namespace Function */
-    } /* namespace Math */
-} /* namespace SEMBA */
+        } 
+    } 
+} 
 

@@ -3,7 +3,7 @@
 #include "Waveguide.h"
 #include "core/physicalModel/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -31,7 +31,7 @@ public:
     //math::CVecR3 getWeight(const math::CVecR3& pos) const override;
 };
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

@@ -7,7 +7,7 @@
 
 #include "Function.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -112,8 +112,8 @@ void LinearInterpolation<S, T>::initFromFile(
     }
 }
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 
 

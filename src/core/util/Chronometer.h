@@ -3,7 +3,7 @@
 #include <chrono>
 #include <iostream>
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 class Chronometer {

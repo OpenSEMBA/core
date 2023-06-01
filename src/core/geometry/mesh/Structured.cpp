@@ -1,7 +1,7 @@
 #include "Unstructured.h"
 #include "Structured.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -107,6 +107,6 @@ ElemView Structured::reassign(const ElemView& inGroup) {
     return res;
 }
 
-} /* namespace Mesh */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

@@ -8,7 +8,7 @@
 #include "core/util/Identifiable.h"
 #include "core/util/Identification.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -126,14 +126,14 @@ Coordinate<math::Real, D>* Coordinate<T, D>::toUnstructured(
 }
 
 
-} /* namespace Coordinate */
+} 
 
 typedef Coordinate::Id                       CoordId;
 typedef Coordinate::Base                     Coord;
 typedef Coordinate::Coordinate<math::Real,3> CoordR3;
 typedef Coordinate::Coordinate<math::Int ,3> CoordI3;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 
 

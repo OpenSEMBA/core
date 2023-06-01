@@ -8,7 +8,7 @@
 #include "core/math/matrix/Dynamic.h"
 
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 using namespace matrix;
 

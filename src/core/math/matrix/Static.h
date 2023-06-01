@@ -8,7 +8,7 @@
 #include "Matrix.h"
 #include "Dynamic.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace matrix {
 
@@ -361,11 +361,11 @@ Dynamic<T> operator*(
     return res;
 }
 
-} /* namespace Matrix */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 typedef matrix::Static<Real,2,2> MatR22;
@@ -375,6 +375,6 @@ typedef matrix::Static<Real,4,4> MatR44;
 typedef matrix::Static<std::complex<Real>,2,2> MatC22;
 typedef matrix::Static<std::complex<Real>,3,3> MatC33;
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 

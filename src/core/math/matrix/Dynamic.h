@@ -4,7 +4,7 @@
 
 #include "Matrix.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace matrix {
 
@@ -644,7 +644,7 @@ Dynamic<T>& Dynamic<T>::transpose() {
     return *this;
 }
 
-} /* namespace Matrix */
-} /* namespace Math */
-} /* namespace SEMBA */
+}
+} 
+} 
 

@@ -1,6 +1,6 @@
 #include "Conformal.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -75,6 +75,6 @@ CoordR3* Conformal::toUnstructured(const Grid3& grid) const {
     return new CoordR3(this->getId(), pos);
 }
 
-} /* namespace Coordinate */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

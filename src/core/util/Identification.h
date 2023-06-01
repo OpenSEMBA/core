@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 template <typename T>
@@ -144,5 +144,5 @@ std::ostream& operator<<(std::ostream& output, const Identification<I>& id) {
     return output;
 }
 
-} /* namespace Class */
-} /* namespace SEMBA */
+}
+} 

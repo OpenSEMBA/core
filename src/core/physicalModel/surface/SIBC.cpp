@@ -2,7 +2,7 @@
 
 #include <physicalModel/surface/SIBC.h>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -26,6 +26,6 @@ std::size_t SIBC::getNumberOfPoles() const {
     return poleZ_.size();
 }
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 

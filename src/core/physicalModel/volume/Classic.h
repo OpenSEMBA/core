@@ -4,7 +4,7 @@
 
 #include "Volume.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -40,7 +40,7 @@ private:
     math::Real magneticConudctivity_;
 };
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

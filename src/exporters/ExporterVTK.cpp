@@ -39,7 +39,7 @@ namespace {
 #endif
 }
 
-namespace SEMBA {
+namespace semba {
 namespace exporters {
 
 ExporterVTK::ExporterVTK(const UnstructuredProblemDescription& smb, const std::string& fn) :
@@ -308,4 +308,4 @@ std::string ExporterVTK::makeValid_(const std::string& allocator) {
 }
 
 }
-} /* namespace SEMBA */
+} 

@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-namespace SEMBA::math::simplex {
+namespace semba::math::simplex {
 
 template <size_t N>
 class Line : public Simplex {

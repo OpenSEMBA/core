@@ -2,7 +2,7 @@
 
 #include "Quadrilateral.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -155,11 +155,11 @@ std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
         this->getModel());
 }
 
-} /* namespace Element */
+} 
 
 typedef Element::Quadrilateral4Base         Qua4;
 typedef Element::Quadrilateral4<math::Real> QuaR4;
 typedef Element::Quadrilateral4<math::Int > QuaI4;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

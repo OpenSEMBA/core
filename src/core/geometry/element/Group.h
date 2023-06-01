@@ -8,7 +8,7 @@
 
 #include "core/util/GroupIdentifiableUnique.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -135,7 +135,7 @@ void Group<E>::reassignPointers(const PMGroup& mNew)
     }
 }
 
-} /* namespace Element */
+} 
 
 typedef Element::Group<Elem> ElemGroup;
 typedef Element::Group<ElemR> ElemRGroup;
@@ -143,8 +143,8 @@ typedef Element::Group<ElemI> ElemIGroup;
 typedef Element::Group<SurfR> SurfRGroup;
 typedef Element::Group<VolR> VolRGroup;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 
 
 

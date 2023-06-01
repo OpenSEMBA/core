@@ -4,7 +4,7 @@
 
 #include "core/ProblemDescription.h"
 
-namespace SEMBA::parsers {
+namespace semba::parsers {
     bool strToBool(const std::string& value);
     bool toBool(const std::size_t param);
 

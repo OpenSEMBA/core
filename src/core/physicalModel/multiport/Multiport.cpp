@@ -1,6 +1,6 @@
 #include "Multiport.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -47,6 +47,6 @@ std::string Multiport::getTypeStr() const {
     }
 }
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

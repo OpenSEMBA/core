@@ -2,7 +2,7 @@
 
 #include "PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 class PredefinedGeneric : public virtual PhysicalModel {
@@ -30,6 +30,6 @@ typedef Predefined<Predefined<void>::PEC> PEC;
 typedef Predefined<Predefined<void>::PMC> PMC;
 typedef Predefined<Predefined<void>::SMA> SMA;
 
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
 

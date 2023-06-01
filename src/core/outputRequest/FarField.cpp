@@ -1,6 +1,6 @@
 #include "FarField.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 FarField::FarField(const Domain& domain,
@@ -18,5 +18,5 @@ FarField::FarField(const Domain& domain,
     stepPhi = sPhi;
 }
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

@@ -2,7 +2,7 @@
 
 #include "TEM.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -31,6 +31,6 @@ std::string TEM::toStr(const ExcitationMode& excitationMode) {
     }
 }
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

@@ -4,9 +4,9 @@
 
 #include "core/geometry/coordinate/Group.h"
 #include "core/geometry/element/Group.h"
-#include "core/geometry/layer/Group.h"
+#include "core/geometry/Layer.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -54,10 +54,10 @@ private:
 	LayerGroup layers_;
 };
 
-} /* namespace Mesh */
+} 
 
 using UnstructuredMesh = Mesh::Unstructured;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

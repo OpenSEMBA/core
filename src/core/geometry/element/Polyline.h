@@ -4,7 +4,7 @@
 
 #include "Line.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -128,11 +128,11 @@ std::unique_ptr<ElemR> Polyline<T>::toUnstructured(
     throw std::logic_error("Polyline::toUnstructured operation not permitted");
 }
 
-} /* namespace Element */
+} 
 
 typedef Element::PolylineBase         Polylin;
 typedef Element::Polyline<math::Real> PolylinR;
 typedef Element::Polyline<math::Int > PolylinI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

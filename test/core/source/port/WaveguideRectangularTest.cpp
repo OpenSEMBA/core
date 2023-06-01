@@ -7,7 +7,7 @@
 #include "core/physicalModel/Bound.h"
 #include "core/math/function/Gaussian.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Source;
 using namespace PhysicalModel;
 using namespace std;

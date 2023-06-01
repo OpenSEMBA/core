@@ -1,10 +1,8 @@
-
-
 #pragma once
 
 #include "Coordinate.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -38,10 +36,10 @@ private:
     math::Real                     length_;
 };
 
-} /* namespace Coordinate */
+} 
 
 typedef Coordinate::Conformal CoordConf;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

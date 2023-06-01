@@ -4,7 +4,7 @@
 
 #include "Element.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -72,11 +72,11 @@ math::CVecR3 Surface<T>::getNormal() const
     return (v0 ^ v1).normalize();
 }
 
-} /* namespace Element */
+} 
 
 typedef Element::SurfaceBase         Surf;
 typedef Element::Surface<math::Real> SurfR;
 typedef Element::Surface<math::Int > SurfI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

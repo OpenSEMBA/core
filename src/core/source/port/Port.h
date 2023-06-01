@@ -3,7 +3,7 @@
 #include "core/source/Source.h"
 #include "core/physicalModel/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -21,7 +21,7 @@ public:
     //virtual math::CVecR3 getWeight(const math::CVecR3& pos) const = 0;
 };
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

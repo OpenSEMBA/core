@@ -6,7 +6,7 @@
 
 #include "Function.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace function {
 
@@ -48,7 +48,7 @@ inline Gaussian Gaussian::buildFromMaximumFrequency(
     return Gaussian(spread, delay, amplitude);
 }
 
-} /* namespace Function */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

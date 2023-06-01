@@ -2,7 +2,7 @@
 
 #include "Class.h"
 
-namespace SEMBA {
+namespace semba {
 namespace util {
 
 template<class Id>
@@ -44,5 +44,5 @@ bool Identifiable<Id>::operator==(const Identifiable& rhs) const {
     return (this->id_ == rhs.id_);
 }
 
-} /* namespace Class */
-} /* namespace SEMBA */
+}
+} 

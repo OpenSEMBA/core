@@ -1,6 +1,6 @@
 #include "core/physicalModel/Gap.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 Gap::Gap(const Id id, const std::string name, const math::Real width) :   
@@ -22,5 +22,5 @@ math::Real Gap::getWidth() const
     return width_;
 }
 
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 

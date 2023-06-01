@@ -6,7 +6,7 @@
 #include "core/math/CartesianVector.h"
 #include "core/math/function/Polynomial.h"
 
-namespace SEMBA::math::simplex {
+namespace semba::math::simplex {
 
 class Simplex {
 public:

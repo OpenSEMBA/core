@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/geometry/Grid.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 using namespace math;
 using namespace Constants;
@@ -10,22 +10,22 @@ class GeometryGridTest : public ::testing::Test {
 
 protected:
 	virtual void SetUp() {
-		min_ = SEMBA::math::CVecR3(0.0, 0.0, 0.0);
-		max_ = SEMBA::math::CVecR3(1.0, 1.0, 1.0);
-		step_ = SEMBA::math::CVecR3(0.05, 0.05, 0.05);
-		grid_ = SEMBA::Geometry::Grid3(SEMBA::Geometry::BoxR3(min_, max_), step_);
+		min_ = semba::math::CVecR3(0.0, 0.0, 0.0);
+		max_ = semba::math::CVecR3(1.0, 1.0, 1.0);
+		step_ = semba::math::CVecR3(0.05, 0.05, 0.05);
+		grid_ = semba::Geometry::Grid3(semba::Geometry::BoxR3(min_, max_), step_);
 
 		std::vector<double> offset_;
 		std::vector<double> off_;
 		off_.resize(3);
-		SEMBA::math::CVecR3 offsetIni;
+		semba::math::CVecR3 offsetIni;
 
 		offsetIni = grid_.getOrigin();
 
 	}
 
-	SEMBA::Geometry::Grid3 grid_;
-	SEMBA::math::CVecR3 min_, max_, step_;
+	semba::Geometry::Grid3 grid_;
+	semba::math::CVecR3 min_, max_, step_;
 };
 
 
@@ -104,7 +104,7 @@ TEST_F(GeometryGridTest, GetSteps) {
 TEST_F(GeometryGridTest, Equality) {
     EXPECT_EQ(
         grid_, 
-        SEMBA::Geometry::Grid3(SEMBA::Geometry::BoxR3(min_, max_), step_)
+        semba::Geometry::Grid3(semba::Geometry::BoxR3(min_, max_), step_)
     );
 }
 

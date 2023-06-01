@@ -1,7 +1,7 @@
 #include "Waveguide.h"
 #include "core/geometry/Bound.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -44,6 +44,6 @@ std::pair<size_t,size_t> Waveguide::getMode() const {
     return mode_;
 }
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

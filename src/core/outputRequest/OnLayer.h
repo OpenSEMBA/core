@@ -2,7 +2,7 @@
 
 #include "OutputRequest.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
     class OnLayer : public virtual OutputRequest {
     public:
@@ -19,5 +19,5 @@ namespace OutputRequest {
         }
     };
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

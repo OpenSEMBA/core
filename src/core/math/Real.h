@@ -5,7 +5,7 @@
 
 #include "core/math/Types.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 const Real epsilon = std::numeric_limits<Real>::epsilon()*1.0e2;
@@ -28,6 +28,6 @@ Real sign(Real val);
 Real ceil(const Real v, Real rel = 0.0);
 Real round(Real v);
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 

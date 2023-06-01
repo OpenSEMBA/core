@@ -2,7 +2,7 @@
 
 #include "core/physicalModel/PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Wire {
 
@@ -61,7 +61,7 @@ private:
     std::string filename_ = "";
 };
 
-} /* namespace Wire */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

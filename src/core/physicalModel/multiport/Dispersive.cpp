@@ -2,7 +2,7 @@
 
 #include "Dispersive.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -26,6 +26,6 @@ std::string Dispersive::getFilename() const {
 }
 
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 

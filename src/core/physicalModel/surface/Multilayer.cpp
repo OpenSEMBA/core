@@ -4,7 +4,7 @@
 #include <vector>
 
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -72,8 +72,8 @@ Multilayer::FittingOptions Multilayer::getFittingOptions() const {
     return options_.front();
 }
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 
 
 

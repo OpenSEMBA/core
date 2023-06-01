@@ -9,7 +9,7 @@
 #include "core/model/Model.h"
 #include "core/util/ProjectFile.h"
 
-namespace SEMBA {
+namespace semba {
 
 template<typename M = UnstructuredModel>
 class ProblemDescriptionBase {

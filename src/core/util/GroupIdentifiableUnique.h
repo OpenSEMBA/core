@@ -5,7 +5,7 @@
 #include <iterator>
 #include <vector>
 
-namespace SEMBA::util {
+namespace semba::util {
 
 template<typename T>
 class GroupIdentifiableUnique {

@@ -1,6 +1,6 @@
 #include "OnSurface.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 OnSurface::OnSurface(
@@ -11,5 +11,5 @@ OnSurface::OnSurface(
 ) : OutputRequest(outputType, name, domain, elem)
 {}
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

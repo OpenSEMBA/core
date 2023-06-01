@@ -2,7 +2,7 @@
 
 #include "TEM.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -34,7 +34,7 @@ private:
     math::Real innerRadius_, outerRadius_;
 };
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

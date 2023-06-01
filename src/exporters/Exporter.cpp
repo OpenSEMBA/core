@@ -4,7 +4,7 @@
 #include "core/geometry/element/Quadrilateral4.h"
 #include "core/geometry/element/Hexahedron8.h"
 
-namespace SEMBA {
+namespace semba {
 namespace exporters {
 
 Exporter::Exporter(const std::string& name)
@@ -39,7 +39,7 @@ Geometry::ElemR* Exporter::getBoundary(
     Geometry::BoxR3 quadBox = box.getBoundAsBox(dir,pos);
 
     if (!quadBox.isSurface()) {
-        throw Geometry::Error::Box::NotSurface();
+        throw std::runtime_error("Not surface");
     }
 
     auto posVec = quadBox.getPos();
@@ -96,7 +96,7 @@ ElemRGroup Exporter::getGridElems(
 
                 auto newBox = Geometry::BoxR3(pMin, pMax);
                 if(!newBox.isLine()) {
-                    throw Geometry::Error::Box::NotLine();
+                    throw std::runtime_error("Not line");
                 }
 
                 auto posVec = newBox.getPos();
@@ -122,5 +122,5 @@ ElemRGroup Exporter::getGridElems(
     return elem;
 }
 
-} /* namespace exporters */
-} /* namespace SEMBA */
+}
+} 

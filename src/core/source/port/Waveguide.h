@@ -2,7 +2,7 @@
 
 #include "Port.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -34,7 +34,7 @@ private:
     std::pair<size_t,size_t> mode_;
 };
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

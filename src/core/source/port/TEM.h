@@ -2,7 +2,7 @@
 
 #include "Port.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Port {
 
@@ -31,7 +31,7 @@ private:
     ExcitationMode excitationMode_;
 };
 
-} /* namespace Port */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 
 

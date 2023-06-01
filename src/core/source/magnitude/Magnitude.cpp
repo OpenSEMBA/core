@@ -1,6 +1,6 @@
 #include "Magnitude.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 namespace Magnitude {
 
@@ -25,6 +25,6 @@ math::Real Magnitude::evaluate(const math::Real time) const {
     return mathFunction_->operator()(time);
 }
 
-} /* namespace Magnitude */
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+}
+} 

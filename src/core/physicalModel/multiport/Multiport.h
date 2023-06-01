@@ -2,7 +2,7 @@
 
 #include "core/physicalModel/PhysicalModel.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 
@@ -37,7 +37,7 @@ protected:
     std::string getTypeStr() const;
 };
 
-} /* namespace Multiport */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

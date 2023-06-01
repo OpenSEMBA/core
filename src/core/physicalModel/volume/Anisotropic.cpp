@@ -1,6 +1,6 @@
 #include "Anisotropic.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -123,6 +123,6 @@ math::MatR33 AnisotropicFerrite::getMagneticConductivityMat() const {
 }
 
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 

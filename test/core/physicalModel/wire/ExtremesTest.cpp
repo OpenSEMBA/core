@@ -3,7 +3,7 @@
 #include "core/physicalModel/wire/Extremes.h"
 #include "core/physicalModel/multiport/Predefined.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 
 class ExtremesTest : public ::testing::Test {

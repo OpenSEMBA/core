@@ -9,7 +9,7 @@
 #include "Line.h"
 
 
-namespace SEMBA::math::simplex {
+namespace semba::math::simplex {
 
 template <size_t N>
 class Triangle : public Simplex {

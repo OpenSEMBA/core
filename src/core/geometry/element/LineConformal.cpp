@@ -3,7 +3,7 @@
 #include <iterator>
 #include <algorithm>
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -88,6 +88,6 @@ std::unique_ptr<ElemR> LineConformal::toUnstructured(
     throw std::logic_error("LineConformal::toUnstructured operation not permitted");
 }
 
-} /* namespace Element */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

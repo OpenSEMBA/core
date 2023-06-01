@@ -2,7 +2,7 @@
 
 #include "OutputRequest.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 class FarField : public virtual OutputRequest {
@@ -23,6 +23,6 @@ public:
     math::Real initialPhi, finalPhi, stepPhi;
 };
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 
 

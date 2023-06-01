@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "core/util/GroupIdentifiableUnique.h"
-#include "core/geometry/layer/Layer.h"
+#include "core/geometry/Layer.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 using namespace util;
 
@@ -13,10 +13,10 @@ public:
 protected:
     auto buildGroupOfThreeLayers() const 
     {
-        GroupIdentifiableUnique<Layer::Layer> res;
-        res.add(std::make_unique<Layer::Layer>(LayerId(1), "Patata"));
-        res.add(std::make_unique<Layer::Layer>(LayerId(2), "Cebolla"));
-        res.add(std::make_unique<Layer::Layer>(LayerId(3), "Huevos"));
+        GroupIdentifiableUnique<Layer> res;
+        res.add(std::make_unique<Layer>(LayerId(1), "Patata"));
+        res.add(std::make_unique<Layer>(LayerId(2), "Cebolla"));
+        res.add(std::make_unique<Layer>(LayerId(3), "Huevos"));
         return res;
     }
 };
@@ -53,10 +53,10 @@ TEST_F(GroupIdentifiableUniqueTest, DeepCopyAndMoveAdd)
 {
     auto orig{ buildGroupOfThreeLayers() };
     
-    orig.add(std::make_unique<Layer::Layer>(LayerId(5), "Melon"));
+    orig.add(std::make_unique<Layer>(LayerId(5), "Melon"));
 
     // Keep building and moving as separate operations to avoid warnings by intel compiler.
-    auto sandia{ std::make_unique<Layer::Layer>(LayerId(6), "Sandia") };
+    auto sandia{ std::make_unique<Layer>(LayerId(6), "Sandia") };
     orig.add(std::move(sandia));
 
     EXPECT_EQ(5, orig.size());
@@ -65,7 +65,7 @@ TEST_F(GroupIdentifiableUniqueTest, DeepCopyAndMoveAdd)
 TEST_F(GroupIdentifiableUniqueTest, AddAndAssignId) 
 {
     auto orig(buildGroupOfThreeLayers());
-    auto melon = std::make_unique<Layer::Layer>("Melon");
+    auto melon = std::make_unique<Layer>("Melon");
     auto melonInGroup = orig.addAndAssignId(std::move(melon))->get();
     EXPECT_EQ(LayerId(4), melonInGroup->getId());
 }
@@ -73,7 +73,7 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignId)
 TEST_F(GroupIdentifiableUniqueTest, CopyAndAssignId)
 {
     auto orig(buildGroupOfThreeLayers());
-    auto melonInGroup = orig.copyAndAssignId(Layer::Layer{"Melon"})->get();
+    auto melonInGroup = orig.copyAndAssignId(Layer{"Melon"})->get();
     EXPECT_EQ(LayerId(4), melonInGroup->getId());
 }
 
@@ -82,16 +82,16 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds)
 	auto orig(buildGroupOfThreeLayers());
 
     // Keep building and moving as separate operations to avoid warnings by intel compiler.
-    auto melon{ std::make_unique<Layer::Layer>("Melon") };
+    auto melon{ std::make_unique<Layer>("Melon") };
 	orig.addAndAssignId(std::move(melon));
 
-    auto nispora{ std::make_unique<Layer::Layer>("Nispora") };
+    auto nispora{ std::make_unique<Layer>("Nispora") };
 	auto nisporaInGroup = orig.addAndAssignId(std::move(nispora))->get();
 
 	EXPECT_EQ(LayerId(5), nisporaInGroup->getId());
 
-	GroupIdentifiableUnique<Layer::Layer> another;
-    auto naranja{ std::make_unique<Layer::Layer>("Naranja") };
+	GroupIdentifiableUnique<Layer> another;
+    auto naranja{ std::make_unique<Layer>("Naranja") };
 	another.addAndAssignId(std::move(naranja));
 
 	another.addAndAssignIds(orig);
@@ -108,7 +108,7 @@ TEST_F(GroupIdentifiableUniqueTest, DuplicatedIdShouldTriggerLogicException)
 
     EXPECT_EQ(orig.getId(LayerId(1))->getName(), "Patata");
 
-    orig.add(std::make_unique<Layer::Layer>(LayerId(1), "Another Patata"));
+    orig.add(std::make_unique<Layer>(LayerId(1), "Another Patata"));
 
     EXPECT_EQ(orig.getId(LayerId(1))->getName(), "Another_Patata");
 

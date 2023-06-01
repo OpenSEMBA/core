@@ -2,7 +2,7 @@
 
 #include <physicalModel/volume/PML.h>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -31,7 +31,7 @@ const math::CVecR3 PML::getGlobalZAxis() const {
     return res;
 }
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

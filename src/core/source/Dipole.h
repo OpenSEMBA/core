@@ -2,7 +2,7 @@
 
 #include "Source.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 class Dipole : public Source {
@@ -24,6 +24,6 @@ private:
     math::CVecR3 position_;
 };
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 
 

@@ -5,19 +5,19 @@
 
 #include "core/util/Identifiable.h"
 #include "core/util/Identification.h"
+#include "core/util/GroupIdentifiableUnique.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
-namespace Layer {
 
 class Layer;
-typedef util::Identification<Layer> Id;
+using LayerId = util::Identification<Layer>;
 
 class Layer final : public virtual util::Class,
-              public virtual util::Identifiable<Id> {
+              public virtual util::Identifiable<LayerId> {
 public:
     Layer() = default;
-    Layer(const Id id, const std::string& name);
+    Layer(const LayerId id, const std::string& name);
     Layer(const std::string& name);
     Layer(const Layer& rhs);
     
@@ -45,11 +45,10 @@ private:
 };
 
 
+class LayerGroup final : public util::GroupIdentifiableUnique<Layer>  {
+public:
+    const Layer* getName(const std::string name) const;
+};
 
-} /* namespace Layer */
-
-typedef Layer::Id LayerId;
-
-} /* namespace Geometry */
-} /* namespace SEMBA */
-
+}
+}

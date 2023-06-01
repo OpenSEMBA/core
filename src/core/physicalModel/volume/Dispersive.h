@@ -7,7 +7,7 @@
 #include "core/util/ProjectFile.h"
 #include "Volume.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Volume {
 
@@ -53,7 +53,7 @@ protected:
                  const std::complex<math::Real>& res_);
 };
 
-} /* namespace Volume */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

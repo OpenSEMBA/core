@@ -7,7 +7,7 @@
 #include "core/geometry/Box.h"
 #include "core/math/Real.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 
 template<class T, std::size_t D> class Box;
@@ -731,5 +731,5 @@ void Grid<D>::enlargeBound(math::Constants::CartesianAxis d,
 
 typedef Grid<3> Grid3;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

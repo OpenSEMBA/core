@@ -2,7 +2,7 @@
 
 #include "Source.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 class OnLine : public Source {
@@ -35,6 +35,6 @@ private:
     Hardness hardness_;
 };
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 
 

@@ -4,7 +4,7 @@
 
 #include "Unstructured.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Mesh {
 
@@ -39,7 +39,7 @@ private:
 	Grid3 grid_;
 };
 
-} /* namespace Mesh */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

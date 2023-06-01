@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/physicalModel/wire/Wire.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace PhysicalModel;
 
 class PhysicalModelWireTest : public ::testing::Test {};

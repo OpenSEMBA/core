@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/source/magnitude/Numerical.h"
 
-using namespace SEMBA;
+using namespace semba;
 
 TEST(NumericalTest, CanGetFileAttribute) {
 	const std::string filePath = "testData/dmcwf/predefinedExcitation.1.exc";

@@ -23,14 +23,14 @@
 #include "core/outputRequest/OnSurface.h"
 #include "core/outputRequest/OnLayer.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace Geometry;
 using namespace math;
 
 using json = nlohmann::json;
 
 
-namespace SEMBA::parsers::JSON {
+namespace semba::parsers::JSON {
 
 CVecI3 strToCVecI3(std::string str);
 CVecR3 strToCVecR3(std::string str);
@@ -78,6 +78,56 @@ std::vector<ElemId> readElemIds(const json& j)
         r.push_back(ElemId{ std::size_t(eId.get<int>()) });
     }
     return r;
+}
+
+
+template<typename T>
+Element::Group<ElemR> readElemStrAs(
+    const PhysicalModel::Group<>& mG,
+    const LayerGroup& lG,
+    const CoordR3Group& cG,
+    const json& e) {
+    Element::Group<ElemR> res;
+
+    for (auto it = e.begin(); it != e.end(); ++it) {
+
+        ElemId elemId;
+        MatId matId;
+        LayerId layerId;
+        std::vector<CoordId> vId;
+
+        std::stringstream ss(it->get<std::string>());
+        ss >> elemId >> matId >> layerId;
+        vId.resize(T::sizeOfCoordinates);
+        for (std::size_t j = 0; j < T::sizeOfCoordinates; j++) {
+            ss >> vId[j];
+        }
+
+        const Layer* layerPtr;
+        const PhysicalModel::PhysicalModel* matPtr;
+        std::vector<const CoordR3*> vPtr;
+
+        if (matId != MatId(0)) {
+            matPtr = mG.getId(matId);
+        }
+        else {
+            matPtr = nullptr;
+        }
+        if (layerId != LayerId(0)) {
+            layerPtr = lG.getId(layerId);
+        }
+        else {
+            layerPtr = nullptr;
+        }
+        vPtr.resize(vId.size(), nullptr);
+        for (size_t i = 0; i < vId.size(); ++i) {
+            vPtr[i] = cG.getId(vId[i]);
+        }
+
+        res.add(std::make_unique<T>(T(elemId, vPtr.data(), layerPtr, matPtr)));
+    }
+
+    return res;
 }
 
 double getProgressionStepByTotalNumber(const json& j, const std::string& jsonKey) {
@@ -168,7 +218,7 @@ UnstructuredProblemDescription Parser::read() const
 	return res;
 }
 
-Parser::Parser(const std::string& fn) : SEMBA::parsers::Parser(fn) 
+Parser::Parser(const std::string& fn) : semba::parsers::Parser(fn) 
 {}
 
 PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) {
@@ -265,7 +315,7 @@ json readAnalysis(const json& j)
 
 std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup& physicalModels, const json& j, const std::string& folder)
 {
-    Layer::Group<> layers = readLayers(j);
+    LayerGroup layers = readLayers(j);
 	CoordR3Group coords = readCoordinates(j);
 	return std::make_unique<Mesh::Unstructured>(
 		coords,
@@ -696,8 +746,8 @@ LayerGroup readLayers(const json& j)
     LayerGroup res;
     for (auto const& it: j.at("layers")) {
         res.add(
-            std::make_unique<Layer::Layer>(
-                Layer::Id(it.at("id").get<int>()),
+            std::make_unique<Layer>(
+                LayerId(it.at("id").get<int>()),
                 it.at("name").get<std::string>()
             )
         );
@@ -1096,7 +1146,7 @@ Source::Generator::Hardness strToGeneratorHardness(std::string str)
 
 PhysicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
 {
-    using Type = SEMBA::PhysicalModel::PhysicalModel::Type;
+    using Type = semba::PhysicalModel::PhysicalModel::Type;
 
     str = trim(str);
     if (str.compare("PEC")==0) {

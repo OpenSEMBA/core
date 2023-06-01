@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include "core/physicalModel/multiport/RLC.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Multiport {
 

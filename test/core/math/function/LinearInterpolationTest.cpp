@@ -4,7 +4,7 @@
 
 using namespace std;
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 using namespace function;
 

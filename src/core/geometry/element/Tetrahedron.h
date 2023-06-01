@@ -4,7 +4,7 @@
 #include "Triangle3.h"
 #include "Volume.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -29,10 +29,10 @@ public:
 
 };
 
-} /* namespace Element */
+} 
 
 typedef Element::Tetrahedron Tet;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

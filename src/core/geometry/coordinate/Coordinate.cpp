@@ -1,6 +1,6 @@
 #include "Coordinate.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -15,6 +15,6 @@ bool Base::operator !=(const Base& rhs) const {
     return !(*this == rhs);
 }
 
-} /* namespace Coordinate */
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
+} 

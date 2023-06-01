@@ -1,6 +1,6 @@
 #include "PlaneWave.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Source {
 
 PlaneWave::PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
@@ -148,5 +148,5 @@ math::Real PlaneWave::reduceRadians(const math::Real radianIn) {
     return  radianOut;
 }
 
-} /* namespace Source */
-} /* namespace SEMBA */
+}
+} 

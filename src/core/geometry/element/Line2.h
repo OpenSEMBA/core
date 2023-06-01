@@ -2,7 +2,7 @@
 
 #include "Line.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -214,11 +214,11 @@ std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
 }
 
 
-} /* namespace Element */
+} 
 
 typedef Element::Line2Base         Lin2;
 typedef Element::Line2<math::Real> LinR2;
 typedef Element::Line2<math::Int> LinI2;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 

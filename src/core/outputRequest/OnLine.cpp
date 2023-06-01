@@ -1,6 +1,6 @@
 #include "OnLine.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
     OnLine::OnLine(
         const Type& outputType,
@@ -11,5 +11,5 @@ namespace OutputRequest {
         : OutputRequest(outputType, name, domain, elem)
     {}
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

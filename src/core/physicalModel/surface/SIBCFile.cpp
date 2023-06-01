@@ -2,7 +2,7 @@
 
 #include <physicalModel/surface/SIBCFile.h>
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Surface {
 
@@ -22,6 +22,6 @@ const util::ProjectFile SIBCFile::getFile() const {
     return file_;
 }
 
-} /* namespace Surface */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+} 
+} 
+} 

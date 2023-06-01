@@ -2,7 +2,7 @@
 
 #include "OutputRequest.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 class BulkCurrent : public virtual OutputRequest {
@@ -26,6 +26,6 @@ private:
     math::UInt                     skip_;
 };
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 
 

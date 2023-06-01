@@ -4,7 +4,7 @@
 
 #include "Types.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 namespace Constants {
 
@@ -41,7 +41,7 @@ enum CartesianBound {
     U = 1
 };
 
-} /* namespace Constants */
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

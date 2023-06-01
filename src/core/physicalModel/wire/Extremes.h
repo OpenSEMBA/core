@@ -3,7 +3,7 @@
 #include "Wire.h"
 #include "core/physicalModel/multiport/Multiport.h"
 
-namespace SEMBA {
+namespace semba {
 namespace PhysicalModel {
 namespace Wire {
 
@@ -32,7 +32,7 @@ private:
     std::unique_ptr<const Multiport::Multiport> extreme_[2];
 };
 
-} /* namespace Wire */
-} /* namespace PhysicalModel */
-} /* namespace SEMBA */
+}
+} 
+} 
 

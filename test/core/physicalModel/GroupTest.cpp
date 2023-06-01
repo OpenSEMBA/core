@@ -5,7 +5,7 @@
 #include "core/physicalModel/volume/Classic.h"
 #include "core/physicalModel/multiport/Predefined.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace PhysicalModel;
 
 class PhysicalModelGroupTest : public ::testing::Test {

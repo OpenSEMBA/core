@@ -1,6 +1,6 @@
 #include "OnLayer.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
     OnLayer::OnLayer(
@@ -12,5 +12,5 @@ namespace OutputRequest {
         : OutputRequest(outputType, name, domain, elem)
     {}
 
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 

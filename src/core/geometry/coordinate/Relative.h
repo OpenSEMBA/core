@@ -2,7 +2,7 @@
 
 #include "Coordinate.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Coordinate {
 
@@ -32,10 +32,10 @@ private:
     math::CVecR3 rel_;
 };
 
-} /* namespace Coordinate */
+} 
 
 typedef Coordinate::Relative CoordRel;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 

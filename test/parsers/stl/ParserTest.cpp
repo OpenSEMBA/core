@@ -5,7 +5,7 @@
 #include "parsers/stl/Parser.h"
 
 using namespace std;
-using namespace SEMBA;
+using namespace semba;
 
 class ParserSTLParserTest : public ::testing::Test {
 protected:

@@ -1,6 +1,6 @@
 #include "LocalAxis.h"
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 LocalAxis::LocalAxis(CVecR3 eulerAngles, CVecR3 origin) {
@@ -50,5 +50,5 @@ CVecR3 LocalAxis::convertToGlobal(const CVecR3& local) const {
     return global;
 }
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 

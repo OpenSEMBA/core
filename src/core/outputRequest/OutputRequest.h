@@ -6,7 +6,7 @@
 
 #include "Domain.h"
 
-namespace SEMBA {
+namespace semba {
 namespace OutputRequest {
 
 class OutputRequest;
@@ -71,7 +71,7 @@ public:
     }
 };
 
-} /* namespace Error */
-} /* namespace OutputRequest */
-} /* namespace SEMBA */
+} 
+} 
+} 
 

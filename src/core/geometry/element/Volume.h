@@ -6,7 +6,7 @@
 #include "Surface.h"
 #include "Element.h"
 
-namespace SEMBA {
+namespace semba {
 namespace Geometry {
 namespace Element {
 
@@ -91,13 +91,13 @@ std::size_t Volume<T>::getFaceNumber(const Surface<T>* surf) const {
     throw std::logic_error("Surface not found");;
 }
 
-} /* namespace Element */
+} 
 
 typedef Element::VolumeBase         Vol;
 typedef Element::Volume<math::Real> VolR;
 typedef Element::Volume<math::Int > VolI;
 
-} /* namespace Geometry */
-} /* namespace SEMBA */
+} 
+} 
 
 

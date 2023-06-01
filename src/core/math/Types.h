@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <cstdlib>
 
-namespace SEMBA {
+namespace semba {
 namespace math {
 
 #if   defined CompileWithInt1
@@ -39,6 +39,6 @@ typedef long double Real;
 typedef double      Real;
 #endif
 
-} /* namespace Math */
-} /* namespace SEMBA */
+} 
+} 
 

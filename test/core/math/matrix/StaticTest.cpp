@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include "core/math/matrix/Static.h"
 
-using namespace SEMBA;
+using namespace semba;
 using namespace math;
 using namespace matrix;
 

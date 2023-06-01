@@ -3,7 +3,7 @@
 #include "Simplex.h"
 #include "Triangle.h"
 
-namespace SEMBA::math::simplex {
+namespace semba::math::simplex {
 
 template <size_t N>
 class Tetrahedron : public Simplex {
