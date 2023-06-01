@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 class Conformal : public virtual Coordinate<math::Int,3> {
 public:
@@ -38,7 +38,7 @@ private:
 
 } 
 
-typedef Coordinate::Conformal CoordConf;
+typedef coordinate::Conformal CoordConf;
 
 } 
 } 

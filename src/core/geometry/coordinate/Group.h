@@ -13,7 +13,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 struct CoordComparator {
     template<class T, std::size_t D>
@@ -100,9 +100,9 @@ std::map<VEC, std::vector<const C*>> Group<C>::getIndex() const {
 
 } 
 
-typedef Coordinate::Group<CoordR3> CoordR3Group;
-typedef Coordinate::Group<CoordI3> CoordI3Group;
-typedef Coordinate::Group<> CoordGroup;
+typedef coordinate::Group<CoordR3> CoordR3Group;
+typedef coordinate::Group<CoordI3> CoordI3Group;
+typedef coordinate::Group<> CoordGroup;
 
 } 
 } 

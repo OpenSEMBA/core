@@ -2,7 +2,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 Relative::Relative(const Id id,
                    const math::CVecR3& rel)

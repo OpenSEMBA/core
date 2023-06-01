@@ -2,7 +2,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 Conformal::Conformal() {
     dir_ = math::Constants::CartesianAxis::x;

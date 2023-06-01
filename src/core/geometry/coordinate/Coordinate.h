@@ -10,7 +10,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Coordinate {
+namespace coordinate {
 
 class Base;
 typedef util::Identification<Base> Id;
@@ -128,10 +128,10 @@ Coordinate<math::Real, D>* Coordinate<T, D>::toUnstructured(
 
 } 
 
-typedef Coordinate::Id                       CoordId;
-typedef Coordinate::Base                     Coord;
-typedef Coordinate::Coordinate<math::Real,3> CoordR3;
-typedef Coordinate::Coordinate<math::Int ,3> CoordI3;
+typedef coordinate::Id                       CoordId;
+typedef coordinate::Base                     Coord;
+typedef coordinate::Coordinate<math::Real,3> CoordR3;
+typedef coordinate::Coordinate<math::Int ,3> CoordI3;
 
 } 
 } 

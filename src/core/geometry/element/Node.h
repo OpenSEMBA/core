@@ -32,12 +32,12 @@ class Node : public virtual Element<T>,
 public:
     Node() = default;
     Node(const Id id,
-         const std::array<const Coordinate::Coordinate<T, 3>*, 1> v,
+         const std::array<const coordinate::Coordinate<T, 3>*, 1> v,
          const Layer* lay = nullptr,
          const Model* mat = nullptr);
     Node(
         const Id id,
-        const Coordinate::Coordinate<T, 3>* v[1],
+        const coordinate::Coordinate<T, 3>* v[1],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
 
@@ -53,27 +53,27 @@ public:
 
     bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
-    const Coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideV(
+    const coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideV(
         const std::size_t f, const std::size_t i) const override;
 
-    const Coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
-    const Coordinate::Coordinate<T,3>* getSideVertex(
+    const coordinate::Coordinate<T,3>* getVertex(const std::size_t i) const override;
+    const coordinate::Coordinate<T,3>* getSideVertex(
             const std::size_t f, const std::size_t i) const override;
 
-    void setV(const std::size_t i, const Coordinate::Coordinate<T,3>* coord) override;
+    void setV(const std::size_t i, const coordinate::Coordinate<T,3>* coord) override;
 
     std::unique_ptr<ElemI> toStructured(const CoordI3Group&, const Grid3&,
                         const math::Real = Grid3::tolerance) const override;
     std::unique_ptr<ElemR> toUnstructured(const CoordR3Group&, const Grid3&) const override;
 
 private:
-    std::array<const Coordinate::Coordinate<T,3>*, 1> v_;
+    std::array<const coordinate::Coordinate<T,3>*, 1> v_;
 };
 
 template<class T>
 Node<T>::Node(
-    const Id id, std::array<const Coordinate::Coordinate<T, 3>*,1> v,
+    const Id id, std::array<const coordinate::Coordinate<T, 3>*,1> v,
     const Layer* lay, const Model* mat): Identifiable<Id>(id),
     Elem(lay, mat),
     v_{v}
@@ -83,11 +83,11 @@ Node<T>::Node(
 template<class T>
 Node<T>::Node(
     const Id id,
-    const Coordinate::Coordinate<T, 3>* v[1],
+    const coordinate::Coordinate<T, 3>* v[1],
     const Layer* lay,
     const Model* mat)
 {
-    std::array<const Coordinate::Coordinate<T, 3>*, 1> vArr;
+    std::array<const coordinate::Coordinate<T, 3>*, 1> vArr;
     std::copy(v, v+1, vArr.begin());
     *this = Node<T>{id, vArr, lay, mat};
 }
@@ -108,13 +108,13 @@ bool Node<T>::isStructured(const Grid3& grid, const math::Real tol) const
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Node<T>::getV(const std::size_t i) const 
+const coordinate::Coordinate<T, 3>* Node<T>::getV(const std::size_t i) const 
 {
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Node<T>::getSideV(
+const coordinate::Coordinate<T, 3>* Node<T>::getSideV(
     const std::size_t f,
     const std::size_t i) const {
     assert(f == 0 && i == 0);
@@ -122,14 +122,14 @@ const Coordinate::Coordinate<T, 3>* Node<T>::getSideV(
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Node<T>::getVertex(
+const coordinate::Coordinate<T, 3>* Node<T>::getVertex(
     const std::size_t i) const {
     assert(i == 0);
     return v_[i];
 }
 
 template<class T>
-const Coordinate::Coordinate<T, 3>* Node<T>::getSideVertex(
+const coordinate::Coordinate<T, 3>* Node<T>::getSideVertex(
     const std::size_t f,
     const std::size_t i) const {
     assert(f == 0 && i == 0);
@@ -138,7 +138,7 @@ const Coordinate::Coordinate<T, 3>* Node<T>::getSideVertex(
 
 template<class T>
 void Node<T>::setV(const std::size_t i,
-    const Coordinate::Coordinate<T, 3>* coord) {
+    const coordinate::Coordinate<T, 3>* coord) {
     assert(i < numberOfCoordinates());
     v_[i] = coord;
 }
