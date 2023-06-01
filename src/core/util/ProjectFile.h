@@ -56,8 +56,9 @@ public:
         return getProjectName();
     }
     std::string getProjectName() const {
-        return removeExtension_(getBasename());
+        return removeExtension(getBasename());
     }
+    static std::string removeExtension(const std::string& filename);
     ProjectFile relativeTo(const ProjectFile& rhs) const;
 
     void setFilename(const std::string& filename);
@@ -85,7 +86,7 @@ protected:
     void openFile_(const std::string& fileName,
                    std::ofstream& file,
                    const bool& = true) const;
-    std::string removeExtension_(const std::string& filename) const;
+    
     void deleteDirIfExists_(const std::string& directory) const;
     bool checkExistance_(const std::string& fn) const;
     void initDir_(const std::string& fn) const;
@@ -277,7 +278,8 @@ inline void ProjectFile::openFile_(const std::string& fileName,
 }
 
 
-inline std::string ProjectFile::removeExtension_(const std::string& fName) const {
+inline std::string ProjectFile::removeExtension(const std::string& fName) 
+{
     size_t pos = fName.rfind(".");
     if (pos == std::string::npos) { //No extension.
         return fName;

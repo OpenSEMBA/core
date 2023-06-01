@@ -14,6 +14,7 @@ public:
     class PEC;
     class PMC;
     class SMA;
+    class Vacuum;
 
     Predefined(Id id, const std::string& name) :
         Identifiable<Id>(id), 
@@ -29,6 +30,7 @@ public:
 typedef Predefined<Predefined<void>::PEC> PEC;
 typedef Predefined<Predefined<void>::PMC> PMC;
 typedef Predefined<Predefined<void>::SMA> SMA;
+typedef Predefined<Predefined<void>::Vacuum> Vacuum;
 
 } 
 } 

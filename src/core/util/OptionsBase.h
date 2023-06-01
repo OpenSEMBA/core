@@ -14,7 +14,7 @@ namespace util {
 class OptionsBase {
 public:
     typedef nlohmann::json json;
-protected:
+
     static math::CVecR3 strToCVecR3(std::string str) {
         std::stringstream ss(str);
         math::CVecR3 res;
