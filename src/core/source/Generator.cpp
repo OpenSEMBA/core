@@ -3,20 +3,20 @@
 #include "Generator.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 Generator::Generator(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                      const Target& elem,
                      const Type& generatorType,
                      const Hardness& hardness)
-:   semba::Source::Source(magnitude, elem)
+:   semba::source::Source(magnitude, elem)
 {
     type_ = generatorType;
     hardness_ = hardness;
 }
 
 Generator::Generator(const Generator& rhs)
-:   semba::Source::Source(rhs)
+:   semba::source::Source(rhs)
 {
     type_ = rhs.type_;
     hardness_ = rhs.hardness_;

@@ -3,8 +3,8 @@
 #include "Port.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 class TEM : public Port {
 public:

@@ -1,7 +1,7 @@
 #include "PlaneWave.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 PlaneWave::PlaneWave(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                      const Target& elem,

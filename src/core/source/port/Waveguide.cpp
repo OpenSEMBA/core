@@ -2,8 +2,8 @@
 #include "core/geometry/Bound.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 Waveguide::Waveguide(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
         const Target& elem,

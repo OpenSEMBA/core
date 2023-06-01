@@ -5,7 +5,7 @@
 #include "core/math/function/Gaussian.h"
 
 using namespace semba;
-using namespace Source;
+using namespace source;
 using namespace std;
 
 class SourcePortTEMCoaxialTest : public ::testing::Test {
@@ -32,7 +32,7 @@ class SourcePortTEMCoaxialTest : public ::testing::Test {
             );
         }
 
-        excMode = Port::TEM::voltage;
+        excMode = port::TEM::voltage;
         innerRadius_ = 1.0;
         outerRadius_ = 3.0;
     }
@@ -40,7 +40,7 @@ class SourcePortTEMCoaxialTest : public ::testing::Test {
 protected:
     geometry::CoordI3Group cG_;
     geometry::element::Group<geometry::Surf> surfs;
-    Port::TEM::ExcitationMode excMode;
+    port::TEM::ExcitationMode excMode;
     math::Real innerRadius_, outerRadius_;
 
     static const std::unique_ptr<Magnitude::Magnitude> buildMagnitude() {

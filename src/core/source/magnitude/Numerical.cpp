@@ -6,7 +6,7 @@
 #include "Numerical.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 namespace Magnitude {
 
 Numerical::Numerical(const util::ProjectFile& fileIn) :   

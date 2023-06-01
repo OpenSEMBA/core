@@ -1,8 +1,8 @@
 #include "Port.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 Port::Port(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
            const Target& elem) :   

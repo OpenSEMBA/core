@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace semba {
-namespace Source {
+namespace source {
 
 Source::Source(
     const std::unique_ptr<Magnitude::Magnitude>& magnitude, 

@@ -84,7 +84,7 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     auto& sources = data.sources;
     EXPECT_EQ(sources.size(), 1);
 
-    const Source::PlaneWave* source = sources.get()[0]->castTo<Source::PlaneWave>();
+    const source::PlaneWave* source = sources.get()[0]->castTo<source::PlaneWave>();
     EXPECT_EQ(
         source->getPolarization(),
         math::CVecR3(-0.4082482904638631, 0.8164965809277261, -0.4082482904638631)
@@ -94,10 +94,10 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
         math::CVecR3(1.0, 1.0, 1.0)
     );
 
-    Source::Magnitude::Magnitude magnitude = *source->getMagnitude();
+    source::Magnitude::Magnitude magnitude = *source->getMagnitude();
     EXPECT_EQ(
         magnitude,
-        Source::Magnitude::Magnitude(
+        source::Magnitude::Magnitude(
             new math::function::Gaussian(
                 math::function::Gaussian::buildFromMaximumFrequency(
                     1000000000.0,
@@ -188,7 +188,7 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
     auto data{ Parser{ getFilename("antennas") }.read() };
 
     EXPECT_EQ(data.outputRequests.sizeOf<outputRequest::OnPoint>(), 3);
-    EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
+    EXPECT_EQ(data.sources.sizeOf<source::Generator>(), 1);
     EXPECT_EQ(data.model.mesh.elems().sizeOf<geometry::NodR>(), 5);
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)

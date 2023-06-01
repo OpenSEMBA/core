@@ -4,7 +4,7 @@
 #include "core/util/Class.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 namespace Magnitude {
 
 class Magnitude : public virtual util::Class {

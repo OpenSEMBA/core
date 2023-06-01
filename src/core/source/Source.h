@@ -9,7 +9,7 @@
 #include "magnitude/Numerical.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 class Source;
     typedef util::Identification<Source> Id;

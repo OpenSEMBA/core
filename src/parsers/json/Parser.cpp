@@ -51,18 +51,18 @@ physicalModel::PhysicalModel::Type strToMaterialType(std::string label);
 physicalModel::multiport::Multiport::Type strToMultiportType(std::string label);
 physicalModel::volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
-std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::TEM> readPortTEM(mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Generator> readGenerator(mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
-Source::Generator::Type strToGeneratorType(std::string label);
-Source::Generator::Hardness strToGeneratorHardness(std::string str);
-Source::OnLine::Type strToNodalType(std::string label);
-Source::OnLine::Hardness strToNodalHardness(std::string label);
-Source::Port::TEM::ExcitationMode strToTEMMode(std::string);
-Source::Port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
+std::unique_ptr<source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<source::port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<source::Generator> readGenerator(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<source::Magnitude::Magnitude> readMagnitude(const json&);
+source::Generator::Type strToGeneratorType(std::string label);
+source::Generator::Hardness strToGeneratorHardness(std::string str);
+source::OnLine::Type strToNodalType(std::string label);
+source::OnLine::Hardness strToNodalHardness(std::string label);
+source::port::TEM::ExcitationMode strToTEMMode(std::string);
+source::port::Waveguide::ExcitationMode strToWaveguideMode(std::string);
 
 void checkVersionCompatibility(const std::string& version)
 {
@@ -1015,15 +1015,15 @@ Grid3 readGrids(const json& j)
     
 }
 
-std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json& j) {
+std::unique_ptr<source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json& j) {
     
     auto magnitude{ readMagnitude(j.at("magnitude").get<json>()) };
     auto elemId{ boxToElemGroup(mesh, j.at("layerBox").get<std::string>())->getId()};
     
     auto definitionMode = j.at("definitionMode").get<std::string>();
     if (definitionMode.compare("by_vectors")==0) {
-		return std::make_unique<Source::PlaneWave>(
-			Source::PlaneWave(
+		return std::make_unique<source::PlaneWave>(
+			source::PlaneWave(
 				magnitude,
                 { elemId },
 				strToCVecR3(j.at("directionVector").get<std::string>()),
@@ -1037,8 +1037,8 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const
         dirAngles.second = j.at("directionPhi").get<double>()      * degToRad;
         polAngles.first  = j.at("polarizationAlpha").get<double>() * degToRad;
         polAngles.second = j.at("polarizationBeta").get<double>()  * degToRad;
-		return std::make_unique<Source::PlaneWave>(
-			Source::PlaneWave(
+		return std::make_unique<source::PlaneWave>(
+			source::PlaneWave(
 				magnitude,
                 { elemId },
 				dirAngles,
@@ -1047,8 +1047,8 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const
 		);
 
     } else if (definitionMode.compare("randomized_multisource")==0) {
-		return std::make_unique<Source::PlaneWave>(
-			Source::PlaneWave(
+		return std::make_unique<source::PlaneWave>(
+			source::PlaneWave(
 				magnitude,
                 { elemId },
 				j.at("numberOfRandomPlanewaves").get<int>(),
@@ -1060,14 +1060,14 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const
     }
 }
 
-std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
+std::unique_ptr<source::port::Waveguide> readPortWaveguide(
     mesh::Unstructured& mesh, 
     const json& j
 ) {
 	std::string shape = j.at("shape").get<std::string>();
 	if (shape.compare("Rectangular") == 0) {
-		return std::make_unique<Source::Port::WaveguideRectangular>(
-			Source::Port::WaveguideRectangular(
+		return std::make_unique<source::port::WaveguideRectangular>(
+			source::port::WaveguideRectangular(
 				readMagnitude(j.at("magnitude").get<json>()),
 				readElemIds(j.at("elemIds").get<json>()),
 				strToWaveguideMode(j.at("excitationMode").get<std::string>()),
@@ -1080,10 +1080,10 @@ std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
 	}
 }
 
-std::unique_ptr<Source::Port::TEM> readPortTEM(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const json& j) 
 {
-	return std::make_unique<Source::Port::TEMCoaxial>(
-		Source::Port::TEMCoaxial(
+	return std::make_unique<source::port::TEMCoaxial>(
+		source::port::TEMCoaxial(
 			readMagnitude(j.at("magnitude").get<json>()),
 			readElemIds(j.at("elemIds").get<json>()),
 			strToTEMMode(j.at("excitationMode").get<std::string>()),
@@ -1094,22 +1094,22 @@ std::unique_ptr<Source::Port::TEM> readPortTEM(mesh::Unstructured& mesh, const j
 	);
 }
 
-std::unique_ptr<Source::Generator> readGenerator(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::Generator> readGenerator(mesh::Unstructured& mesh, const json& j) 
 {
-	return std::make_unique<Source::Generator>(
-		Source::Generator(
+	return std::make_unique<source::Generator>(
+		source::Generator(
 			readMagnitude(j.at("magnitude").get<json>()),
 			readElemIds(j.at("elemIds").get<json>()),
 			strToGeneratorType(j.at("type").get<std::string>()),
-			Source::Generator::soft
+			source::Generator::soft
         )
 	);
 }
 
-std::unique_ptr<Source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json& j) 
 {
-	return std::make_unique<Source::OnLine>(
-		Source::OnLine(
+	return std::make_unique<source::OnLine>(
+		source::OnLine(
 			readMagnitude(j.at("magnitude").get<json>()),
 			readElemIds(j.at("elemIds").get<json>()),
 			strToNodalType(j.at("type").get<std::string>()),
@@ -1118,27 +1118,27 @@ std::unique_ptr<Source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const
 	);
 }
 
-Source::Generator::Type strToGeneratorType(std::string str) 
+source::Generator::Type strToGeneratorType(std::string str) 
 {
     str = trim(str);
     if (str.compare("voltage")==0) {
-        return Source::Generator::voltage;
+        return source::Generator::voltage;
     }
     
     if (str.compare("current")==0) {
-        return Source::Generator::current;
+        return source::Generator::current;
     }
 
     throw std::logic_error("Unrecognized generator type: " + str);
 }
 
-Source::Generator::Hardness strToGeneratorHardness(std::string str) 
+source::Generator::Hardness strToGeneratorHardness(std::string str) 
 {
     str = trim(str);
     if (str.compare("soft")==0) {
-        return Source::Generator::soft;
+        return source::Generator::soft;
     } else if (str.compare("hard")==0) {
-        return Source::Generator::hard;
+        return source::Generator::hard;
     } else {
         throw std::logic_error("Unrecognized generator hardness: " + str);
     }
@@ -1239,43 +1239,43 @@ CVecR3 strToCVecR3(std::string str) {
     return res;
 }
 
-Source::OnLine::Type strToNodalType(std::string str) 
+source::OnLine::Type strToNodalType(std::string str) 
 {
     str = trim(str);
     if (str.compare("electricField")==0) {
-        return Source::OnLine::Type::electric;
+        return source::OnLine::Type::electric;
     } else if (str.compare("magneticField")==0) {
-        return Source::OnLine::Type::magnetic;
+        return source::OnLine::Type::magnetic;
     } else {
         throw std::logic_error("Unrecognized nodal type: " + str);
     }
 }
 
-Source::OnLine::Hardness strToNodalHardness(std::string str) 
+source::OnLine::Hardness strToNodalHardness(std::string str) 
 {
     str = trim(str);
     if (str.compare("soft")==0) {
-        return Source::OnLine::Hardness::soft;
+        return source::OnLine::Hardness::soft;
     } else if (str.compare("hard")==0) {
-        return Source::OnLine::Hardness::hard;
+        return source::OnLine::Hardness::hard;
     } else {
         throw std::logic_error("Unrecognized nodal hardness: " + str);
     }
 }
 
-std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j) 
+std::unique_ptr<source::Magnitude::Magnitude> readMagnitude(const json& j) 
 {
     std::string type = j.at("type").get<std::string>();
     if (type.compare("File") == 0) {
-		return std::make_unique<Source::Magnitude::Numerical>(
-			Source::Magnitude::Numerical(
+		return std::make_unique<source::Magnitude::Numerical>(
+			source::Magnitude::Numerical(
 				j.at("filename").get<std::string>())
 		);
     }
 
     if (type.compare("Gaussian") == 0) {
-		return std::make_unique<Source::Magnitude::Magnitude>(
-			Source::Magnitude::Magnitude(
+		return std::make_unique<source::Magnitude::Magnitude>(
+			source::Magnitude::Magnitude(
 				new function::Gaussian(
 					function::Gaussian::buildFromMaximumFrequency(
 						j.at("frequencyMaximum").get<double>(),
@@ -1287,8 +1287,8 @@ std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json& j)
     }
 
     if (type.compare("Band_limited") == 0) {
-		return std::make_unique<Source::Magnitude::Magnitude>(
-			Source::Magnitude::Magnitude(
+		return std::make_unique<source::Magnitude::Magnitude>(
+			source::Magnitude::Magnitude(
 				new function::BandLimited(
 					j.at("frequencyMinimum").get<double>(),
 					j.at("frequencyMaximum").get<double>()))
@@ -1308,23 +1308,23 @@ LocalAxis strToLocalAxes(const std::string& str) {
     return LocalAxis(eulerAngles, origin);
 }
 
-Source::Port::TEM::ExcitationMode strToTEMMode(std::string str) {
+source::port::TEM::ExcitationMode strToTEMMode(std::string str) {
     if (str.compare("Voltage") == 0) {
-        return Source::Port::TEM::voltage;
+        return source::port::TEM::voltage;
     } else if (str.compare("Current") == 0) {
-        return Source::Port::TEM::current;
+        return source::port::TEM::current;
     } else {
         throw std::logic_error("Unrecognized exc. mode label: " + str);
     }
 
 }
 
-Source::Port::Waveguide::ExcitationMode strToWaveguideMode(
+source::port::Waveguide::ExcitationMode strToWaveguideMode(
         std::string str) {
     if (str.compare("TE") == 0) {
-        return Source::Port::Waveguide::ExcitationMode::TE;
+        return source::port::Waveguide::ExcitationMode::TE;
     } else if (str.compare("TM") == 0) {
-        return Source::Port::Waveguide::ExcitationMode::TM;
+        return source::port::Waveguide::ExcitationMode::TM;
     } else {
         throw std::logic_error("Unrecognized exc. mode label: " + str);
     }

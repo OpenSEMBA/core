@@ -4,8 +4,8 @@
 #include "core/physicalModel/Bound.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 typedef std::array<std::array<const physicalModel::Bound*,2>,3> Bound3;
 
