@@ -42,8 +42,8 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 	
 	// Create source
 	pD.sources.copyAndAssignId(
-		Source::PlaneWave{
-			std::make_unique<Source::Magnitude::Magnitude>(
+		source::PlaneWave{
+			std::make_unique<source::Magnitude::Magnitude>(
 				new semba::math::function::Gaussian(0.5, 0.0, 1.0)
 			),
 			{ElemId{1}},
@@ -93,8 +93,8 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 
 	SourceGroup sources;
 
-	Source::PlaneWave planewave{
-		std::make_unique<Source::Magnitude::Magnitude>(
+	source::PlaneWave planewave{
+		std::make_unique<source::Magnitude::Magnitude>(
 			new semba::math::function::Gaussian(0.5, 0.0, 1.0)
 		),
 		{},
@@ -102,7 +102,7 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 		math::CVecR3(0.0, 0.0, 1.0)
 	};
 
-	sources.addAndAssignId(std::make_unique<Source::PlaneWave>(planewave));
+	sources.addAndAssignId(std::make_unique<source::PlaneWave>(planewave));
 
 	problemDescription.sources = sources;
 
@@ -110,7 +110,7 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 
 	EXPECT_EQ(problemDescription.sources.size(), 1);
 
-	auto sourceInGroup = problemDescription.sources.getId(Source::Id(1))->castTo<Source::PlaneWave>();
+	auto sourceInGroup = problemDescription.sources.getId(source::Id(1))->castTo<source::PlaneWave>();
 	EXPECT_EQ(sourceInGroup->getDirection(), planewave.getDirection());
 	EXPECT_EQ(sourceInGroup->getPolarization(), planewave.getPolarization());
 	

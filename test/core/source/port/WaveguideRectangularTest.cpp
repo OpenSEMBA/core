@@ -8,7 +8,7 @@
 #include "core/math/function/Gaussian.h"
 
 using namespace semba;
-using namespace Source;
+using namespace source;
 using namespace physicalModel;
 using namespace std;
 
@@ -35,7 +35,7 @@ class SourcePortWaveguideRectangularTest : public ::testing::Test {
             );
         }
 
-        excMode = Port::Waveguide::ExcitationMode::TE;
+        excMode = port::Waveguide::ExcitationMode::TE;
         mode = pair<size_t,size_t>(1,0);
 
         boundType.add( std::make_unique <Bound>(MatId(1), Bound::Type::pml));
@@ -53,9 +53,9 @@ class SourcePortWaveguideRectangularTest : public ::testing::Test {
 protected:
     geometry::CoordI3Group cG_;
     geometry::element::Group<geometry::Surf> surfs;
-    Port::Waveguide::ExcitationMode excMode;
+    port::Waveguide::ExcitationMode excMode;
     pair<size_t,size_t> mode;
-    Port::Bound3 bounds;
+    port::Bound3 bounds;
     PMGroup boundType;
 
     static const std::unique_ptr<Magnitude::Magnitude> buildMagnitude() {

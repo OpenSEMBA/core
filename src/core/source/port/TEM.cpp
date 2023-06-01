@@ -1,10 +1,8 @@
-
-
 #include "TEM.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 TEM::TEM(
         const std::unique_ptr<Magnitude::Magnitude>& magnitude,

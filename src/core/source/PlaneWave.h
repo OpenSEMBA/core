@@ -5,7 +5,7 @@
 #include "Source.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 class PlaneWave : public Source {
 public:

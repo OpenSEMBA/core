@@ -1,7 +1,7 @@
 #include "Magnitude.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 namespace Magnitude {
 
 Magnitude::Magnitude(math::FunctionRR* mathFunction) {

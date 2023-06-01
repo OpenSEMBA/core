@@ -4,7 +4,7 @@
 #include "core/util/ProjectFile.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 namespace Magnitude {
 
 class Numerical : public virtual Magnitude {

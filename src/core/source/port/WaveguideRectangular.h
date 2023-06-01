@@ -4,8 +4,8 @@
 #include "core/physicalModel/Bound.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 class WaveguideRectangular: public Waveguide {
 public:

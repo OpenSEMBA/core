@@ -4,7 +4,7 @@
 #include "core/util/GroupIdentifiableUnique.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 template<typename S = Source>
 class Group : public util::GroupIdentifiableUnique<S> {
@@ -12,6 +12,6 @@ class Group : public util::GroupIdentifiableUnique<S> {
 
 }
 
-using SourceGroup = Source::Group<>;
+using SourceGroup = source::Group<>;
 
 } 

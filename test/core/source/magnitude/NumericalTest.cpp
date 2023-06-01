@@ -7,7 +7,7 @@ TEST(NumericalTest, CanGetFileAttribute) {
 	const std::string filePath = "testData/dmcwf/predefinedExcitation.1.exc";
 
 	util::ProjectFile file(filePath);
-	Source::Magnitude::Numerical num(file);
+	source::Magnitude::Numerical num(file);
 
 	EXPECT_EQ(file, num.getFile());
 	EXPECT_EQ(file.getFullPath(), num.getFile().getFullPath());

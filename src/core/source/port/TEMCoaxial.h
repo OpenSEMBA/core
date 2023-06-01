@@ -3,8 +3,8 @@
 #include "TEM.h"
 
 namespace semba {
-namespace Source {
-namespace Port {
+namespace source {
+namespace port {
 
 class TEMCoaxial : public TEM {
 public:

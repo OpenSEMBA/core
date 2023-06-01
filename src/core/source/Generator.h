@@ -3,7 +3,7 @@
 #include "Source.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 class Generator : public Source {
 public:

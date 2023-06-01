@@ -1,7 +1,7 @@
 #include "OnLine.h"
 
 namespace semba {
-namespace Source {
+namespace source {
 
 OnLine::OnLine(const std::unique_ptr<Magnitude::Magnitude>& magnitude,
                const Target& elem,
