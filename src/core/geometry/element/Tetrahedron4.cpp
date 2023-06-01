@@ -2,7 +2,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 const math::simplex::Tetrahedron<1> Tetrahedron4::tet;
 

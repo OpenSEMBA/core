@@ -5,7 +5,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class LineBase : public virtual Base {
 public:    
@@ -32,9 +32,9 @@ public:
 
 } 
 
-typedef Element::LineBase         Lin;
-typedef Element::Line<math::Real> LinR;
-typedef Element::Line<math::Int > LinI;
+typedef element::LineBase         Lin;
+typedef element::Line<math::Real> LinR;
+typedef element::Line<math::Int > LinI;
 
 } 
 } 

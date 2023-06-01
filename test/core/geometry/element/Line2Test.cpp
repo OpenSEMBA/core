@@ -9,7 +9,7 @@ TEST(Line2Test, CanCreate) {
 	geometry::CoordR3 vertexRight{ geometry::CoordId(), math::CVecR3({1.0, 0.0, 0.0}) };
 
 	geometry::Layer lay{geometry::LayerId(), "My layer"};
-	geometry::Element::Model model{MatId()};
+	geometry::element::Model model{MatId()};
 
 	geometry::LinR2 lin{ geometry::ElemId(), {&vertexLeft, &vertexRight}, &lay, &model };
 

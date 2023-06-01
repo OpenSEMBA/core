@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Triangle : public Surface<math::Real> {
 public:
@@ -22,7 +22,7 @@ public:
 
 } 
 
-typedef Element::Triangle Tri;
+typedef element::Triangle Tri;
 typedef std::array<CoordId, 3> TriIds;
 
 } 

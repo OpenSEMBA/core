@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class LineConformal : public virtual Line2<math::Int> {
 public:
@@ -50,7 +50,7 @@ private:
 
 } 
 
-typedef Element::LineConformal LinConf;
+typedef element::LineConformal LinConf;
 
 } 
 } 

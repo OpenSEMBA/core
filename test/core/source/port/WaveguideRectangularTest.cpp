@@ -52,7 +52,7 @@ class SourcePortWaveguideRectangularTest : public ::testing::Test {
 
 protected:
     geometry::CoordI3Group cG_;
-    geometry::Element::Group<geometry::Surf> surfs;
+    geometry::element::Group<geometry::Surf> surfs;
     Port::Waveguide::ExcitationMode excMode;
     pair<size_t,size_t> mode;
     Port::Bound3 bounds;

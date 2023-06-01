@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Quadrilateral4Base : public virtual SurfaceBase {
 public:
@@ -157,9 +157,9 @@ std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
 
 } 
 
-typedef Element::Quadrilateral4Base         Qua4;
-typedef Element::Quadrilateral4<math::Real> QuaR4;
-typedef Element::Quadrilateral4<math::Int > QuaI4;
+typedef element::Quadrilateral4Base         Qua4;
+typedef element::Quadrilateral4<math::Real> QuaR4;
+typedef element::Quadrilateral4<math::Int > QuaI4;
 
 } 
 } 

@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 Tetrahedron::Tetrahedron() {
 

@@ -5,7 +5,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 LineConformal::LineConformal(const Id id,
                              std::array<const Coordinate::Coordinate<math::Int, 3>*, 2> v,

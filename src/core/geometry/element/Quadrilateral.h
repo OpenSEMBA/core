@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class QuadrilateralBase : public virtual SurfaceBase {
 public:
@@ -26,9 +26,9 @@ public:
 
 } 
 
-typedef Element::QuadrilateralBase         Qua;
-typedef Element::Quadrilateral<math::Real> QuaR;
-typedef Element::Quadrilateral<math::Int > QuaI;
+typedef element::QuadrilateralBase         Qua;
+typedef element::Quadrilateral<math::Real> QuaR;
+typedef element::Quadrilateral<math::Int > QuaI;
 
 } 
 } 

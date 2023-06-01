@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Triangle3 : public Triangle {
 public:
@@ -60,7 +60,7 @@ protected:
 
 } 
 
-typedef Element::Triangle3 Tri3;
+typedef element::Triangle3 Tri3;
 
 } 
 } 

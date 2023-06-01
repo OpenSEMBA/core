@@ -4,7 +4,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 const math::simplex::Triangle<1> Triangle3::geo;
 

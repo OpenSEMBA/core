@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Element {
+namespace element {
 
 class Hexahedron8Base : public virtual VolumeBase {
 public:
@@ -249,9 +249,9 @@ std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
 
 } 
 
-typedef Element::Hexahedron8Base         Hex8;
-typedef Element::Hexahedron8<math::Real> HexR8;
-typedef Element::Hexahedron8<math::Int > HexI8;
+typedef element::Hexahedron8Base         Hex8;
+typedef element::Hexahedron8<math::Real> HexR8;
+typedef element::Hexahedron8<math::Int > HexI8;
 
 } 
 } 
