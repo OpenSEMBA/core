@@ -18,6 +18,7 @@ public:
         PEC,
         PMC,
         SMA,
+        vacuum,
         classic,
         elecDispersive,
         anisotropic,
@@ -45,15 +46,7 @@ private:
     std::string name_ = "";
 };
 
-namespace Error {
 
-class Error : public std::exception {
-public:
-    Error() {}
-    virtual ~Error() throw() {}
-};
-
-} 
 } 
 } 
 

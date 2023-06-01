@@ -397,6 +397,8 @@ std::unique_ptr<physicalModel::PhysicalModel> readPhysicalModel(const json& j)
         return std::make_unique<physicalModel::PMC>(id, name);
     case PM::Type::SMA:
         return std::make_unique<physicalModel::SMA>(id, name);
+    case PM::Type::vacuum:
+        return std::make_unique<physicalModel::Vacuum>(id, name);
     case PM::Type::PML:
         return std::make_unique<physicalModel::volume::PML>(id, name, 
 			strToLocalAxes(j.at("localAxes").get<std::string>()));
@@ -1157,6 +1159,8 @@ physicalModel::PhysicalModel::Type strToMaterialType(std::string str)
         return Type::PML;
     } else if (str.compare("SMA")==0) {
         return Type::SMA;
+    } else if (str.compare("Vacuum") == 0) {
+        return Type::vacuum;
     } else if (str.compare("Classic")==0) {
         return Type::classic;
     } else if (str.compare("Dispersive")==0) {
