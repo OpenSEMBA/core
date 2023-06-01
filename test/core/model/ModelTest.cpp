@@ -47,7 +47,7 @@ TEST(ModelTest, CanInitializeGrid) {
 		)
 	);
 
-	Mesh::Unstructured mesh(coordinatesGroup, elementsGroup);
+	mesh::Unstructured mesh(coordinatesGroup, elementsGroup);
 	model.mesh = mesh;
 
 	EXPECT_FALSE(model.mesh.coords().empty());
@@ -108,7 +108,7 @@ TEST(ModelTest, CanCopyConstructor) {
 		)
 	);
 
-	Mesh::Unstructured mesh = Mesh::Unstructured(coordinatesGroup, elementsGroup);
+	mesh::Unstructured mesh = mesh::Unstructured(coordinatesGroup, elementsGroup);
 
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.addAndAssignId(
@@ -182,7 +182,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 	ModelObject newModel = ModelObject();
 	{
 		ModelObject model(
-			Mesh::Unstructured(coordinatesGroup, elementsGroup),
+			mesh::Unstructured(coordinatesGroup, elementsGroup),
 			physicalModelsGroup
 		);
 
@@ -226,7 +226,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	);
 
 	ModelObject model(
-		Mesh::Unstructured(coordinatesGroup, elementsGroup), 
+		mesh::Unstructured(coordinatesGroup, elementsGroup), 
 		physicalModelsGroup
 	);
 

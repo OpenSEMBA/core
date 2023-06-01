@@ -105,7 +105,7 @@ std::pair<std::unique_ptr<Layer>, ElemRGroup> readLayerAndElements(
     return std::make_pair(std::move(lay), eG);
 }
 
-Mesh::Unstructured Parser::readAsUnstructuredMesh() const 
+mesh::Unstructured Parser::readAsUnstructuredMesh() const 
 {
     CoordR3Group cG = readCoordinates(this->filename);
     ElemRGroup eG;
@@ -116,7 +116,7 @@ Mesh::Unstructured Parser::readAsUnstructuredMesh() const
         lG.addAndAssignId(std::move(lay));
     }
 
-    return Mesh::Unstructured(cG, eG, lG);
+    return mesh::Unstructured(cG, eG, lG);
 }
 
 }

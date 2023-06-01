@@ -3,7 +3,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 Unstructured::Unstructured(const CoordR3Group& cG,
                            const ElemRGroup& elem,

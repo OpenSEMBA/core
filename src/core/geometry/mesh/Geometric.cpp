@@ -2,7 +2,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 Geometric::Geometric(const Grid3& grid)
 :   grid_(grid) {

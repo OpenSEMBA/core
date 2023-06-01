@@ -8,7 +8,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 class Structured;
 
@@ -56,7 +56,7 @@ private:
 
 } 
 
-using UnstructuredMesh = Mesh::Unstructured;
+using UnstructuredMesh = mesh::Unstructured;
 
 } 
 } 

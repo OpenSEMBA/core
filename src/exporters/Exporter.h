@@ -30,12 +30,12 @@ protected:
             const math::Constants::CartesianBound bound,
             geometry::CoordR3Group& cG,
             const geometry::Grid3* grid,
-            const geometry::Mesh::Mesh* mesh) const;
+            const geometry::mesh::Mesh* mesh) const;
     ElemRGroup getGridElems(
             geometry::CoordR3Group& cG,
             const geometry::Grid3* grid) const;
     static std::string getBoundaryName(
-            const geometry::Mesh::Structured* mesh,
+            const geometry::mesh::Structured* mesh,
             const std::size_t i,
             const std::size_t j);
 };

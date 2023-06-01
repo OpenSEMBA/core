@@ -33,7 +33,7 @@ public:
         eG_.add(std::make_unique<QuaI4>(ElemId(1), vQua, lay));
         eG_.add(std::make_unique<LinI2>(ElemId(2), vLin, lay));
         
-        mesh_ = Mesh::Structured(grid_, cG_, eG_, lG_);
+        mesh_ = mesh::Structured(grid_, cG_, eG_, lG_);
     }
 
 protected:
@@ -41,7 +41,7 @@ protected:
     CoordI3Group cG_;
     ElemIGroup eG_;
     Grid3 grid_;
-    Mesh::Structured mesh_;
+    mesh::Structured mesh_;
 };
 
 TEST_F(MeshStructuredTest, ctor) 
@@ -57,7 +57,7 @@ TEST_F(MeshStructuredTest, ctor)
 
 TEST_F(MeshStructuredTest, copy_assignment)
 {
-    Mesh::Structured mesh = mesh_;
+    mesh::Structured mesh = mesh_;
     for (auto const& copiedCoordIt : mesh.coords()) {
         auto copiedCoord = copiedCoordIt.get();
         auto id = copiedCoord->getId();
@@ -69,7 +69,7 @@ TEST_F(MeshStructuredTest, copy_assignment)
 
 TEST_F(MeshStructuredTest, move_assignment)
 {
-    Mesh::Structured mesh = std::move(mesh_);
+    mesh::Structured mesh = std::move(mesh_);
     
     EXPECT_EQ(0, mesh_.coords().size());
 

@@ -29,7 +29,7 @@ geometry::ElemR* Exporter::getBoundary(
         const math::Constants::CartesianBound pos,
         geometry::CoordR3Group& cG,
         const geometry::Grid3* grid,
-        const geometry::Mesh::Mesh* mesh) const {
+        const geometry::mesh::Mesh* mesh) const {
     geometry::BoxR3 box;
     if (grid != nullptr) {
         box = grid->getFullDomainBoundingBox();
@@ -56,7 +56,7 @@ geometry::ElemR* Exporter::getBoundary(
 }
 
 std::string Exporter::getBoundaryName(
-        const geometry::Mesh::Structured* mesh,
+        const geometry::mesh::Structured* mesh,
         const std::size_t i,
         const std::size_t j) {
     auto boundType = mesh->bounds()(i, j);

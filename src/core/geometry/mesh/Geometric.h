@@ -6,7 +6,7 @@
 
 namespace semba {
 namespace geometry {
-namespace Mesh {
+namespace mesh {
 
 class Geometric : public Unstructured {
 public:

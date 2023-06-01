@@ -37,7 +37,7 @@ CVecR3 strToCVecR3(std::string str);
 Constants::CartesianAxis strToCartesianAxis(std::string);
 std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
 LocalAxis strToLocalAxes(const std::string& str);
-const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line);
+const ElemR* boxToElemGroup(mesh::Unstructured& mesh, const std::string& line);
 
 LayerGroup readLayers(const json&);
 CoordR3Group readCoordinates(const json&);
@@ -51,11 +51,11 @@ PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
 PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
 PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
-std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json&);
-std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Port::TEM> readPortTEM(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::Generator> readGenerator(mesh::Unstructured& mesh, const json&);
+std::unique_ptr<Source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json&);
 std::unique_ptr<Source::Magnitude::Magnitude> readMagnitude(const json&);
 Source::Generator::Type strToGeneratorType(std::string label);
 Source::Generator::Hardness strToGeneratorHardness(std::string str);
@@ -249,7 +249,7 @@ PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) {
     throw std::logic_error("Unrecognized value in Bound ctor.");
 }
 
-void readBoundary(Mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)  
+void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)  
 {
     if (j.find("boundary") == j.end()) {
         return;
@@ -313,18 +313,18 @@ json readAnalysis(const json& j)
     return j.find(key) == j.end() ? json(): j.at(key).get<json>();
 }
 
-std::unique_ptr<Mesh::Unstructured> readUnstructuredMesh(const PMGroup& physicalModels, const json& j, const std::string& folder)
+std::unique_ptr<mesh::Unstructured> readUnstructuredMesh(const PMGroup& physicalModels, const json& j, const std::string& folder)
 {
     LayerGroup layers = readLayers(j);
 	CoordR3Group coords = readCoordinates(j);
-	return std::make_unique<Mesh::Unstructured>(
+	return std::make_unique<mesh::Unstructured>(
 		coords,
 		readElements(physicalModels, layers, coords, j, folder),
 		layers
 	);
 }
 
-SourceGroup readSources(Mesh::Unstructured& mesh, const json& j)
+SourceGroup readSources(mesh::Unstructured& mesh, const json& j)
 {
     auto sources = j.find("sources");
     
@@ -582,7 +582,7 @@ OutputRequest::Domain readDomain(const json& j)
         usingTransferFunction, transferFunctionFile);
 }
 
-std::unique_ptr<OutputRequest::OutputRequest> readProbe(Mesh::Unstructured& mesh, const json& j)
+std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh, const json& j)
 {
     std::string name = j.at("name").get<std::string>();
     OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
@@ -687,7 +687,7 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(Mesh::Unstructured& mesh
     throw std::logic_error("Unrecognized GiD Output request type: " + gidOutputType);
 }
 
-OutputRequestGroup readProbes(Mesh::Unstructured& mesh, const json& j)
+OutputRequestGroup readProbes(mesh::Unstructured& mesh, const json& j)
 {
     OutputRequestGroup res;
     
@@ -703,7 +703,7 @@ OutputRequestGroup readProbes(Mesh::Unstructured& mesh, const json& j)
     return res;
 }
 
-const ElemR* boxToElemGroup(Mesh::Unstructured& mesh, const std::string& line)
+const ElemR* boxToElemGroup(mesh::Unstructured& mesh, const std::string& line)
 {
     BoxR3 box = strToBox(line);
     std::unique_ptr<ElemR> elem;
@@ -837,7 +837,7 @@ ElemRGroup readElementsFromSTLFile(
     const json& f, const std::string& folder)
 {
     std::string fn = folder + f.at("file").get<std::string>();
-    Mesh::Unstructured m = parsers::STL::Parser(fn).readAsUnstructuredMesh();
+    mesh::Unstructured m = parsers::STL::Parser(fn).readAsUnstructuredMesh();
 
     auto lay = lG.getId( LayerId(f.at("layerId").get<std::size_t>())  );
     auto mat = mG.getId( MatId(f.at("materialId").get<std::size_t>()) );
@@ -1015,7 +1015,7 @@ Grid3 readGrids(const json& j)
     
 }
 
-std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const json& j) {
+std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json& j) {
     
     auto magnitude{ readMagnitude(j.at("magnitude").get<json>()) };
     auto elemId{ boxToElemGroup(mesh, j.at("layerBox").get<std::string>())->getId()};
@@ -1061,7 +1061,7 @@ std::unique_ptr<Source::PlaneWave> readPlanewave(Mesh::Unstructured& mesh, const
 }
 
 std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
-    Mesh::Unstructured& mesh, 
+    mesh::Unstructured& mesh, 
     const json& j
 ) {
 	std::string shape = j.at("shape").get<std::string>();
@@ -1080,7 +1080,7 @@ std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(
 	}
 }
 
-std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<Source::Port::TEM> readPortTEM(mesh::Unstructured& mesh, const json& j) 
 {
 	return std::make_unique<Source::Port::TEMCoaxial>(
 		Source::Port::TEMCoaxial(
@@ -1094,7 +1094,7 @@ std::unique_ptr<Source::Port::TEM> readPortTEM(Mesh::Unstructured& mesh, const j
 	);
 }
 
-std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<Source::Generator> readGenerator(mesh::Unstructured& mesh, const json& j) 
 {
 	return std::make_unique<Source::Generator>(
 		Source::Generator(
@@ -1106,7 +1106,7 @@ std::unique_ptr<Source::Generator> readGenerator(Mesh::Unstructured& mesh, const
 	);
 }
 
-std::unique_ptr<Source::OnLine> readSourceOnLine(Mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<Source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json& j) 
 {
 	return std::make_unique<Source::OnLine>(
 		Source::OnLine(

@@ -15,7 +15,7 @@
 
 using namespace semba;
 using namespace semba::parsers::JSON;
-using namespace geometry::Mesh;
+using namespace geometry::mesh;
 
 class ParserJSONParserTest : public ::testing::Test {
 protected:
