@@ -114,22 +114,22 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     EXPECT_EQ("pec", model.physicalModels.get()[0]->getName());
     EXPECT_EQ("pmc", model.physicalModels.get()[1]->getName());
 
-    const PhysicalModel::Bound::Type boundaryLowerUpperMaterials[6] = {
-        PhysicalModel::Bound::Type::pml,
-        PhysicalModel::Bound::Type::pec,
-        PhysicalModel::Bound::Type::pmc,
-        PhysicalModel::Bound::Type::mur1,
-        PhysicalModel::Bound::Type::mur2,
-        PhysicalModel::Bound::Type::periodic
+    const physicalModel::Bound::Type boundaryLowerUpperMaterials[6] = {
+        physicalModel::Bound::Type::pml,
+        physicalModel::Bound::Type::pec,
+        physicalModel::Bound::Type::pmc,
+        physicalModel::Bound::Type::mur1,
+        physicalModel::Bound::Type::mur2,
+        physicalModel::Bound::Type::periodic
     };
 
-    auto boundaries = model.physicalModels.getOf<PhysicalModel::Bound>();
+    auto boundaries = model.physicalModels.getOf<physicalModel::Bound>();
     for (auto& bound : boundaryLowerUpperMaterials) {
         EXPECT_TRUE(
             std::find_if(
                 boundaries.cbegin(),
                 boundaries.cend(),
-                [&](const PhysicalModel::Bound* boundI) -> bool {return boundI->getType() == bound; }
+                [&](const physicalModel::Bound* boundI) -> bool {return boundI->getType() == bound; }
             ) != boundaries.cend()
         );
     }
@@ -149,8 +149,8 @@ TEST_F(ParserJSONParserTest, sphere_detailed)
     auto& probes = data.outputRequests;
 
     ASSERT_EQ(2, probes.size());
-    EXPECT_EQ(OutputRequest::OutputRequest::Type::electric, probes.get()[0]->getType());
-    EXPECT_EQ(OutputRequest::OutputRequest::Type::electricFarField, probes.get()[1]->getType());
+    EXPECT_EQ(outputRequest::OutputRequest::Type::electric, probes.get()[0]->getType());
+    EXPECT_EQ(outputRequest::OutputRequest::Type::electricFarField, probes.get()[1]->getType());
 
     ASSERT_EQ(1, probes.get()[0]->getTarget().size());
 
@@ -176,8 +176,8 @@ TEST_F(ParserJSONParserTest, sphere_onePlaneFarField)
 {
     auto data{ Parser{ getFolder() + "sphere/sphere-one-plane-farfield.smb.json" }.read() };
 
-    EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::FarField>(), 1);
-    auto farFieldProbe{ data.outputRequests.getOf<OutputRequest::FarField>().front() };
+    EXPECT_EQ(data.outputRequests.sizeOf<outputRequest::FarField>(), 1);
+    auto farFieldProbe{ data.outputRequests.getOf<outputRequest::FarField>().front() };
     EXPECT_EQ(farFieldProbe->initialPhi, 0.0);
     EXPECT_EQ(farFieldProbe->finalPhi, 0.0);
     EXPECT_EQ(farFieldProbe->stepPhi, 0.1 * 2 * math::Constants::pi / 360.0);
@@ -187,16 +187,16 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
 {
     auto data{ Parser{ getFilename("antennas") }.read() };
 
-    EXPECT_EQ(data.outputRequests.sizeOf<OutputRequest::OnPoint>(), 3);
+    EXPECT_EQ(data.outputRequests.sizeOf<outputRequest::OnPoint>(), 3);
     EXPECT_EQ(data.sources.sizeOf<Source::Generator>(), 1);
     EXPECT_EQ(data.model.mesh.elems().sizeOf<geometry::NodR>(), 5);
 
     EXPECT_EQ(data.model.physicalModels.size(), 5); // Cable, 2 connector, 2 bounds (pec and pml)
 
-    auto materialCableList = data.model.physicalModels.getOf<PhysicalModel::Wire::Wire>();
+    auto materialCableList = data.model.physicalModels.getOf<physicalModel::wire::Wire>();
     EXPECT_EQ(materialCableList.size(), 1);
 
-    auto materialPortList = data.model.physicalModels.getOf<PhysicalModel::Multiport::RLC>();
+    auto materialPortList = data.model.physicalModels.getOf<physicalModel::multiport::RLC>();
     EXPECT_EQ(materialPortList.size(), 1);
 
     auto& materialCable = materialCableList.front();

@@ -45,11 +45,11 @@ ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&,
 ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
 ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
 
-std::unique_ptr<PhysicalModel::Surface::Multilayer> readMultilayerSurface(const json& layers);
+std::unique_ptr<physicalModel::surface::Multilayer> readMultilayerSurface(const json& layers);
 std::unique_ptr<PM> readPhysicalModel(const json& material);
-PhysicalModel::PhysicalModel::Type strToMaterialType(std::string label);
-PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string label);
-PhysicalModel::Volume::Anisotropic::Model strToAnisotropicModel(std::string label);
+physicalModel::PhysicalModel::Type strToMaterialType(std::string label);
+physicalModel::multiport::Multiport::Type strToMultiportType(std::string label);
+physicalModel::volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
 std::unique_ptr<Source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
 std::unique_ptr<Source::Port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
@@ -83,7 +83,7 @@ std::vector<ElemId> readElemIds(const json& j)
 
 template<typename T>
 element::Group<ElemR> readElemStrAs(
-    const PhysicalModel::Group<>& mG,
+    const physicalModel::Group<>& mG,
     const LayerGroup& lG,
     const CoordR3Group& cG,
     const json& e) {
@@ -104,7 +104,7 @@ element::Group<ElemR> readElemStrAs(
         }
 
         const Layer* layerPtr;
-        const PhysicalModel::PhysicalModel* matPtr;
+        const physicalModel::PhysicalModel* matPtr;
         std::vector<const CoordR3*> vPtr;
 
         if (matId != MatId(0)) {
@@ -221,29 +221,29 @@ UnstructuredProblemDescription Parser::read() const
 Parser::Parser(const std::string& fn) : semba::parsers::Parser(fn) 
 {}
 
-PhysicalModel::Bound::Type strToBoundType(const std::string& boundType) {
+physicalModel::Bound::Type strToBoundType(const std::string& boundType) {
     if (boundType == "PEC") {
-        return PhysicalModel::Bound::Type::pec;
+        return physicalModel::Bound::Type::pec;
     }
 
     if (boundType == "PMC") {
-        return PhysicalModel::Bound::Type::pmc;
+        return physicalModel::Bound::Type::pmc;
     }
 
     if (boundType == "PML") {
-        return PhysicalModel::Bound::Type::pml;
+        return physicalModel::Bound::Type::pml;
     }
 
     if (boundType == "Periodic") {
-        return PhysicalModel::Bound::Type::periodic;
+        return physicalModel::Bound::Type::periodic;
     }
 
     if (boundType == "MUR1") {
-        return PhysicalModel::Bound::Type::mur1;
+        return physicalModel::Bound::Type::mur1;
     }
 
     if (boundType == "MUR2") {
-        return PhysicalModel::Bound::Type::mur2;
+        return physicalModel::Bound::Type::mur2;
     }
 
     throw std::logic_error("Unrecognized value in Bound ctor.");
@@ -268,18 +268,18 @@ void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalMode
         const auto& boundaryResource = bound == Constants::CartesianBound::L ? lower : upper;
 
         for (const auto& axis : { Constants::CartesianAxis::x,Constants::CartesianAxis::y,Constants::CartesianAxis::z }) {
-            PhysicalModel::Id id(0);
+            physicalModel::Id id(0);
 
-            for (const auto& boundI : physicalModelGroup.getOf<PhysicalModel::Bound>()) {
+            for (const auto& boundI : physicalModelGroup.getOf<physicalModel::Bound>()) {
                 if (boundI->getType() == strToBoundType(boundaryResource[axis].get<std::string>())) {
                     id = boundI->getId();
                     break;
                 }
             }
 
-            if (id == PhysicalModel::Id(0)) {
+            if (id == physicalModel::Id(0)) {
                 auto it = physicalModelGroup.addAndAssignId(
-                    std::make_unique<PhysicalModel::Bound>(PhysicalModel::Id(), strToBoundType(boundaryResource[axis].get<std::string>()))
+                    std::make_unique<physicalModel::Bound>(physicalModel::Id(), strToBoundType(boundaryResource[axis].get<std::string>()))
                 );
 
                 id = (*it)->getId();
@@ -375,9 +375,9 @@ PMGroup readMaterials(const json& j)
     return res;
 }
 
-std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
+std::unique_ptr<physicalModel::PhysicalModel> readPhysicalModel(const json& j)
 {
-    typedef PhysicalModel::PhysicalModel PM;
+    typedef physicalModel::PhysicalModel PM;
     
 	MatId id(0);
 	if (j.find("materialId") != j.end()) {
@@ -392,17 +392,17 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     auto type{ strToMaterialType( j.at("materialType").get<std::string>() ) };
     switch (type) {
     case PM::Type::PEC:
-        return std::make_unique<PhysicalModel::PEC>(id, name);
+        return std::make_unique<physicalModel::PEC>(id, name);
     case PM::Type::PMC:
-        return std::make_unique<PhysicalModel::PMC>(id, name);
+        return std::make_unique<physicalModel::PMC>(id, name);
     case PM::Type::SMA:
-        return std::make_unique<PhysicalModel::SMA>(id, name);
+        return std::make_unique<physicalModel::SMA>(id, name);
     case PM::Type::PML:
-        return std::make_unique<PhysicalModel::Volume::PML>(id, name, 
+        return std::make_unique<physicalModel::volume::PML>(id, name, 
 			strToLocalAxes(j.at("localAxes").get<std::string>()));
 
     case PM::Type::classic:
-        return std::make_unique<PhysicalModel::Volume::Classic>(
+        return std::make_unique<physicalModel::volume::Classic>(
                 id, 
                 name,
                 j.at("permittivity").get<double>(),
@@ -412,7 +412,7 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
             );
 
     case PM::Type::elecDispersive:
-        return std::make_unique <PhysicalModel::Volume::Dispersive>(
+        return std::make_unique <physicalModel::volume::Dispersive>(
                 id, 
                 name,
                 j.at("filename").get<std::string>()
@@ -422,11 +422,11 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     {
         std::string wireType = j.at("wireType").get<std::string>();
         if (wireType.compare("Dispersive") == 0) {
-            return std::make_unique < PhysicalModel::Wire::Wire>(id, name,
+            return std::make_unique < physicalModel::wire::Wire>(id, name,
                     j.at("radius").get<double>(),
                     j.at("filename").get<std::string>());
         } else if(wireType.compare("SeriesParallel") == 0) {
-            return std::make_unique < PhysicalModel::Wire::Wire>(id, name,
+            return std::make_unique < physicalModel::wire::Wire>(id, name,
                     j.at("radius").get<double>(),
                     j.at("resistance").get<double>(),
                     j.at("inductance").get<double>(),
@@ -435,7 +435,7 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
                     j.at("parallelInductance").get<double>(),
                     j.at("parallelCapacitance").get<double>());
         } else if(wireType.compare("Standard") == 0) {
-            return std::make_unique < PhysicalModel::Wire::Wire>(id, name,
+            return std::make_unique < physicalModel::wire::Wire>(id, name,
                     j.at("radius").get<double>(),
                     j.at("resistance").get<double>(),
                     j.at("inductance").get<double>());
@@ -448,13 +448,13 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     {
         std::string str = j.at("anisotropicModel").get<std::string>();
         if (str.compare("Crystal")==0) {
-            return std::make_unique < PhysicalModel::Volume::AnisotropicCrystal>(id, name,
+            return std::make_unique < physicalModel::volume::AnisotropicCrystal>(id, name,
                     strToLocalAxes(j.at("localAxes").get<std::string>()),
                     strToCVecR3(
                             j.at("relativePermittiviy").get<std::string>()),
                     j.at("crystalRelativePermeability").get<double>());
         } else if (str.compare("Ferrite")==0) {
-            return std::make_unique < PhysicalModel::Volume::AnisotropicFerrite>(id, name,
+            return std::make_unique < physicalModel::volume::AnisotropicFerrite>(id, name,
                     strToLocalAxes(j.at("localAxes").get<std::string>()),
                     j.at("kappa").get<double>(),
                     j.at("ferriteRelativePermeability").get<double>(),
@@ -468,7 +468,7 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     {
         std::string sibcType = j.at("surfaceType").get<std::string>();
         if (sibcType.compare("File")==0) {
-            return std::make_unique < PhysicalModel::Surface::SIBCFile>(id, name,
+            return std::make_unique < physicalModel::surface::SIBCFile>(id, name,
                     j.at("filename").get<std::string>() );
         } else if (sibcType.compare("Layers")==0) {
             return readMultilayerSurface(j);
@@ -478,11 +478,11 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     }
 
     case PM::Type::gap:
-        return std::make_unique < PhysicalModel::Gap>(id, name, j.at("width").get<double>());
+        return std::make_unique < physicalModel::Gap>(id, name, j.at("width").get<double>());
 
     case PM::Type::multiport:
     {
-        using namespace PhysicalModel::Multiport;
+        using namespace physicalModel::multiport;
         auto mpType = strToMultiportType(j.at("connectorType").get<std::string>());
         switch (mpType) {
         case Multiport::Type::shortCircuit:
@@ -504,41 +504,41 @@ std::unique_ptr<PhysicalModel::PhysicalModel> readPhysicalModel(const json& j)
     }
 }
 
-OutputRequest::OutputRequest::Type strToOutputType(std::string str) {
+outputRequest::OutputRequest::Type strToOutputType(std::string str) {
     str = trim(str);
     if (str.compare("electricField") == 0) {
-        return OutputRequest::OutputRequest::Type::electric;
+        return outputRequest::OutputRequest::Type::electric;
     }
     else if (str.compare("magneticField") == 0) {
-        return OutputRequest::OutputRequest::Type::magnetic;
+        return outputRequest::OutputRequest::Type::magnetic;
     }
     else if (str.compare("electricFieldNormals") == 0) {
-        return OutputRequest::OutputRequest::Type::electricFieldNormals;
+        return outputRequest::OutputRequest::Type::electricFieldNormals;
     }
     else if (str.compare("magneticFieldNormals") == 0) {
-        return OutputRequest::OutputRequest::Type::magneticFieldNormals;
+        return outputRequest::OutputRequest::Type::magneticFieldNormals;
     }
     else if (str.compare("current") == 0) {
-        return OutputRequest::OutputRequest::Type::current;;
+        return outputRequest::OutputRequest::Type::current;;
     }
     else if (str.compare("bulkCurrentElectric") == 0) {
-        return OutputRequest::OutputRequest::Type::bulkCurrentElectric;
+        return outputRequest::OutputRequest::Type::bulkCurrentElectric;
     }
     else if (str.compare("bulkCurrentMagnetic") == 0) {
-        return OutputRequest::OutputRequest::Type::bulkCurrentMagnetic;
+        return outputRequest::OutputRequest::Type::bulkCurrentMagnetic;
     }
     else if (str.compare("surfaceCurrentDensity") == 0) {
-        return OutputRequest::OutputRequest::Type::surfaceCurrentDensity;
+        return outputRequest::OutputRequest::Type::surfaceCurrentDensity;
     }
     else if (str.compare("farField") == 0) {
-        return OutputRequest::OutputRequest::Type::electric;
+        return outputRequest::OutputRequest::Type::electric;
     }
     else {
         throw std::logic_error("Unrecognized output type: " + str);
     }
 }
 
-OutputRequest::Domain readDomain(const json& j)
+outputRequest::Domain readDomain(const json& j)
 {
     bool timeDomain = false;
     Real initialTime = 0.0;
@@ -575,25 +575,25 @@ OutputRequest::Domain readDomain(const json& j)
         }
     }
 
-    return OutputRequest::Domain(
+    return outputRequest::Domain(
         timeDomain, initialTime, finalTime, samplingPeriod,
         frequencyDomain, initialFrequency, finalFrequency,
         frequencyStep, logFrequencySweep,
         usingTransferFunction, transferFunctionFile);
 }
 
-std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh, const json& j)
+std::unique_ptr<outputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh, const json& j)
 {
     std::string name = j.at("name").get<std::string>();
-    OutputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
+    outputRequest::OutputRequest::Type type = strToOutputType(j.at("type").get<std::string>());
     std::string gidOutputType = j.at("gidOutputType").get<std::string>();
-    OutputRequest::Domain domain = readDomain(j.at("domain").get<json>());
+    outputRequest::Domain domain = readDomain(j.at("domain").get<json>());
 
-    if (type == OutputRequest::OutputRequest::Type::bulkCurrentElectric ||
-        type == OutputRequest::OutputRequest::Type::bulkCurrentMagnetic) {
+    if (type == outputRequest::OutputRequest::Type::bulkCurrentElectric ||
+        type == outputRequest::OutputRequest::Type::bulkCurrentMagnetic) {
         if (gidOutputType.compare("OutRq_on_layer") == 0) {
-            return std::make_unique<OutputRequest::BulkCurrent>(
-                OutputRequest::BulkCurrent(
+            return std::make_unique<outputRequest::BulkCurrent>(
+                outputRequest::BulkCurrent(
                     domain,
                     name,
                     { boxToElemGroup(mesh, j.at("box").get<std::string>())->getId() },
@@ -604,8 +604,8 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
         }
 
         if (gidOutputType.compare("OutRq_on_point") == 0) {
-            return std::make_unique<OutputRequest::BulkCurrent>(
-                OutputRequest::BulkCurrent(
+            return std::make_unique<outputRequest::BulkCurrent>(
+                outputRequest::BulkCurrent(
                     domain,
                     name,
                     readElemIds(j.at("elemIds").get<json>()),
@@ -615,8 +615,8 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
             );
         }
 
-        return std::make_unique<OutputRequest::BulkCurrent>(
-            OutputRequest::BulkCurrent(
+        return std::make_unique<outputRequest::BulkCurrent>(
+            outputRequest::BulkCurrent(
                 domain,
                 name,
                 readElemIds(j.at("elemIds").get<json>()),
@@ -627,14 +627,14 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
     }
 
     if (gidOutputType.compare("OutRq_on_point") == 0) {
-        return std::make_unique<OutputRequest::OnPoint>(
+        return std::make_unique<outputRequest::OnPoint>(
             type, domain, name, readElemIds(j.at("elemIds").get<json>())
         );
     }
 
     if (gidOutputType.compare("OutRq_on_line") == 0) {
-        return std::make_unique<OutputRequest::OnLine>(
-            OutputRequest::OnLine(
+        return std::make_unique<outputRequest::OnLine>(
+            outputRequest::OnLine(
                 type,
                 domain,
                 name,
@@ -644,8 +644,8 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
     }
 
     if (gidOutputType.compare("OutRq_on_surface") == 0) {
-        return std::make_unique<OutputRequest::OnSurface>(
-            OutputRequest::OnSurface(
+        return std::make_unique<outputRequest::OnSurface>(
+            outputRequest::OnSurface(
                 type,
                 domain,
                 name,
@@ -655,8 +655,8 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
     }
 
     if (gidOutputType.compare("OutRq_on_layer") == 0) {
-        return std::make_unique<OutputRequest::OnLayer>(
-            OutputRequest::OnLayer(
+        return std::make_unique<outputRequest::OnLayer>(
+            outputRequest::OnLayer(
                 type,
                 domain,
                 name,
@@ -667,8 +667,8 @@ std::unique_ptr<OutputRequest::OutputRequest> readProbe(mesh::Unstructured& mesh
 
     if (gidOutputType.compare("Far_field") == 0) {
         static const Real degToRad = 2.0 * Constants::pi / 360.0;
-        return std::make_unique<OutputRequest::FarField>(
-            OutputRequest::FarField(
+        return std::make_unique<outputRequest::FarField>(
+            outputRequest::FarField(
                 domain,
                 name,
                 { boxToElemGroup(mesh, j.at(
@@ -895,15 +895,15 @@ ElemRGroup readElementsFromFile(
     return res;
 }
 
-std::unique_ptr<PhysicalModel::Surface::Multilayer> 
+std::unique_ptr<physicalModel::surface::Multilayer> 
 readMultilayerSurface(const json& mat)
 {
     MatId id = MatId(mat.at("materialId").get<int>());
     std::string name = mat.at("name").get<std::string>();
 
-    std::vector<PhysicalModel::Surface::Multilayer::Layer> layers;
+    std::vector<physicalModel::surface::Multilayer::Layer> layers;
     for (json::const_iterator it = mat.at("layers").begin(); it != mat.at("layers").end(); ++it) {
-        layers.push_back(PhysicalModel::Surface::Multilayer::Layer(
+        layers.push_back(physicalModel::surface::Multilayer::Layer(
             it->at("thickness").get<double>(),
             it->at("permittivity").get<double>(),
             it->at("permeability").get<double>(),
@@ -912,14 +912,14 @@ readMultilayerSurface(const json& mat)
     }
 
     if (mat.at("useSembaVectorFitting").get<bool>()) {
-        PhysicalModel::Surface::Multilayer::FittingOptions opts(
+        physicalModel::surface::Multilayer::FittingOptions opts(
                 std::make_pair(mat.at("freqMin").get<double>(),
                         mat.at("freqMax").get<double>()),
                         mat.at("numberOfPoles").get<int>());
-        std::vector<PhysicalModel::Surface::Multilayer::FittingOptions> optsVec = { opts };
-        return std::make_unique<PhysicalModel::Surface::Multilayer>(id, name, layers, optsVec);
+        std::vector<physicalModel::surface::Multilayer::FittingOptions> optsVec = { opts };
+        return std::make_unique<physicalModel::surface::Multilayer>(id, name, layers, optsVec);
     } else {
-        return std::make_unique < PhysicalModel::Surface::Multilayer>(id, name, layers);
+        return std::make_unique < physicalModel::surface::Multilayer>(id, name, layers);
     }
 }
 
@@ -1144,9 +1144,9 @@ Source::Generator::Hardness strToGeneratorHardness(std::string str)
     }
 }
 
-PhysicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
+physicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
 {
-    using Type = semba::PhysicalModel::PhysicalModel::Type;
+    using Type = semba::physicalModel::PhysicalModel::Type;
 
     str = trim(str);
     if (str.compare("PEC")==0) {
@@ -1178,8 +1178,8 @@ PhysicalModel::PhysicalModel::Type strToMaterialType(std::string str)
     }
 }
 
-PhysicalModel::Multiport::Multiport::Type strToMultiportType(std::string str) {
-    using namespace PhysicalModel::Multiport;
+physicalModel::multiport::Multiport::Type strToMultiportType(std::string str) {
+    using namespace physicalModel::multiport;
 
     str = trim(str);
     if (str.compare("Conn_short")==0) {

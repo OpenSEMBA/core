@@ -4,7 +4,7 @@
 #include "core/util/GroupIdentifiableUnique.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 template<typename P = PhysicalModel>
 class Group : public util::GroupIdentifiableUnique<P> {
@@ -12,7 +12,7 @@ class Group : public util::GroupIdentifiableUnique<P> {
 
 } 
 
-typedef PhysicalModel::Group<> PMGroup;
+typedef physicalModel::Group<> PMGroup;
 
 } 
 

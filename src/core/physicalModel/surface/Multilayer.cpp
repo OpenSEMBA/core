@@ -5,8 +5,8 @@
 
 
 namespace semba {
-namespace PhysicalModel {
-namespace Surface {
+namespace physicalModel {
+namespace surface {
 
 Multilayer::Multilayer(
         const Id id,

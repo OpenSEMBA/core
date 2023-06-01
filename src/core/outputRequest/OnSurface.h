@@ -3,7 +3,7 @@
 #include "OutputRequest.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
     class OnSurface : public virtual OutputRequest {
     public:
         OnSurface(

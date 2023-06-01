@@ -4,7 +4,7 @@
 #include "core/physicalModel/Bound.h"
 
 using namespace semba;
-using namespace PhysicalModel;
+using namespace physicalModel;
 
 TEST(PhysicalModelBoundTest, TestGetTypeName) {
 	using EntryType = std::pair<Bound, std::string>;

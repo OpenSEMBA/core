@@ -1,8 +1,8 @@
 #include "Multiport.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 Multiport::Multiport(const Id& id, const std::string& name, const Type& type) :
     Identifiable<Id>(id),

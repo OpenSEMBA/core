@@ -69,8 +69,8 @@ TEST(ModelTest, CanInitializePhysicalModels) {
 
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.addAndAssignId(
-		std::make_unique<PhysicalModel::PEC>(
-			PhysicalModel::Id(),
+		std::make_unique<physicalModel::PEC>(
+			physicalModel::Id(),
 			"Material PEC"
 		)
 	);
@@ -80,7 +80,7 @@ TEST(ModelTest, CanInitializePhysicalModels) {
 	EXPECT_EQ(1, model.physicalModels.size());
 	EXPECT_EQ(
 		"Material PEC",
-		model.physicalModels.getId(PhysicalModel::Id(1))->getName()
+		model.physicalModels.getId(physicalModel::Id(1))->getName()
 	);
 }
 
@@ -112,8 +112,8 @@ TEST(ModelTest, CanCopyConstructor) {
 
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.addAndAssignId(
-		std::make_unique<PhysicalModel::PEC>(
-			PhysicalModel::Id(),
+		std::make_unique<physicalModel::PEC>(
+			physicalModel::Id(),
 			"Material PEC"
 		)
 	);
@@ -154,8 +154,8 @@ TEST(ModelTest, CanCopyConstructor) {
 TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.add(
-		std::make_unique<PhysicalModel::PEC>(
-			PhysicalModel::Id(18),
+		std::make_unique<physicalModel::PEC>(
+			physicalModel::Id(18),
 			"Material PEC"
 		)
 	);
@@ -192,7 +192,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 	EXPECT_FALSE(newModel.physicalModels.empty());
 	EXPECT_EQ(
 		newModel.mesh.elems().getId(ElemId(1))->getModel()->getId(),
-		PhysicalModel::Id(18)
+		physicalModel::Id(18)
 	);
 
 }
@@ -200,8 +200,8 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.add(
-		std::make_unique<PhysicalModel::PEC>(
-			PhysicalModel::Id(18),
+		std::make_unique<physicalModel::PEC>(
+			physicalModel::Id(18),
 			"Material PEC"
 		)
 	);
@@ -236,6 +236,6 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	EXPECT_TRUE(physicalModelsGroup.empty());
 	EXPECT_EQ(
 		model.mesh.elems().getId(ElemId(1))->getModel()->getId(),
-		PhysicalModel::Id(18)
+		physicalModel::Id(18)
 	);
 }

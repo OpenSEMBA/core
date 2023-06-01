@@ -6,8 +6,8 @@
 #include "Surface.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Surface {
+namespace physicalModel {
+namespace surface {
 
 class SIBC : public virtual Surface {
 public:

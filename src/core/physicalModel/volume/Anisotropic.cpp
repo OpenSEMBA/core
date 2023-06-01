@@ -1,8 +1,8 @@
 #include "Anisotropic.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 Anisotropic::Anisotropic(const math::LocalAxis& localAxe) {
     localAxe_ = localAxe;

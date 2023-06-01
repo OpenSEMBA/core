@@ -6,7 +6,7 @@
 #include "core/util/Identification.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 class PhysicalModel;
 typedef util::Identification<PhysicalModel> Id;

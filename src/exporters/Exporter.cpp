@@ -65,7 +65,7 @@ std::string Exporter::getBoundaryName(
     if (boundType == nullptr) {
         boundName = "Undefined";
     } else {
-        boundName = boundType->castTo<PhysicalModel::PhysicalModel>()->getName();
+        boundName = boundType->castTo<physicalModel::PhysicalModel>()->getName();
     }
     return boundName + "@Boundary";
 }

@@ -2,8 +2,8 @@
 #include "core/physicalModel/multiport/RLC.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 class RLCTest : public ::testing::Test {
 public:

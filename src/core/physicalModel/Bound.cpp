@@ -1,7 +1,7 @@
 #include "Bound.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 Bound::Bound(const Bound& rhs) :
     Identifiable<Id>(rhs),

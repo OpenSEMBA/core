@@ -1,7 +1,7 @@
 #include "OnLayer.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
     OnLayer::OnLayer(
         const Type& outputType,

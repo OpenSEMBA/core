@@ -4,7 +4,7 @@
 #include "core/util/GroupIdentifiableUnique.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 template<typename O = OutputRequest>
 class Group : public util::GroupIdentifiableUnique<O> {
@@ -12,7 +12,7 @@ class Group : public util::GroupIdentifiableUnique<O> {
 
 } 
 
-typedef OutputRequest::Group<> OutputRequestGroup;
+typedef outputRequest::Group<> OutputRequestGroup;
 
 } 
 

@@ -4,15 +4,15 @@
 #include "core/physicalModel/multiport/Multiport.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Wire {
+namespace physicalModel {
+namespace wire {
 
 class Extremes : public virtual Wire  {
 public:
     Extremes(const std::string&,
              const Wire& wire,
-             const Multiport::Multiport* extremeL,
-             const Multiport::Multiport* extremeR);
+             const multiport::Multiport* extremeL,
+             const multiport::Multiport* extremeR);
     Extremes(const Extremes& rhs);
     virtual ~Extremes() = default;
 
@@ -20,16 +20,16 @@ public:
         return std::make_unique<Extremes>(*this);
     }
 
-    const Multiport::Multiport *getExtreme(const std::size_t i) const {
+    const multiport::Multiport *getExtreme(const std::size_t i) const {
         return extreme_[i].get();
     }
 
-    void setExtreme(const std::size_t i, const Multiport::Multiport* extreme);
+    void setExtreme(const std::size_t i, const multiport::Multiport* extreme);
     void swapExtremes();
 
 private:
     // TODO: Remove plain array, maybe GroupIdentifiableUnique / Physical Model Group?
-    std::unique_ptr<const Multiport::Multiport> extreme_[2];
+    std::unique_ptr<const multiport::Multiport> extreme_[2];
 };
 
 }

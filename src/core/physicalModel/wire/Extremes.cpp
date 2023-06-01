@@ -1,22 +1,22 @@
 #include "core/physicalModel/wire/Extremes.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Wire {
+namespace physicalModel {
+namespace wire {
 
 Extremes::Extremes(const std::string& name,
                    const Wire& wire,
-                   const Multiport::Multiport* extremeL,
-                   const Multiport::Multiport* extremeR)
+                   const multiport::Multiport* extremeL,
+                   const multiport::Multiport* extremeR)
 :   Wire(wire)
 {
     setName(name);
     setId(wire.getId());
     if (extremeL != nullptr) {
-        extreme_[0].reset(extremeL->clone().release()->castTo<Multiport::Multiport>());
+        extreme_[0].reset(extremeL->clone().release()->castTo<multiport::Multiport>());
     }
     if (extremeR != nullptr) {
-        extreme_[1].reset(extremeR->clone().release()->castTo<Multiport::Multiport>());
+        extreme_[1].reset(extremeR->clone().release()->castTo<multiport::Multiport>());
     }
 }
 
@@ -26,20 +26,20 @@ Extremes::Extremes(const Extremes& rhs) :
     Wire(rhs)
 {
     if (rhs.extreme_[0] != nullptr) {
-        extreme_[0].reset(rhs.extreme_[0]->clone().release()->castTo<Multiport::Multiport>());
+        extreme_[0].reset(rhs.extreme_[0]->clone().release()->castTo<multiport::Multiport>());
     }
     if (rhs.extreme_[1] != nullptr) {
-        extreme_[1].reset(rhs.extreme_[1]->clone().release()->castTo<Multiport::Multiport>());
+        extreme_[1].reset(rhs.extreme_[1]->clone().release()->castTo<multiport::Multiport>());
     }
 }
 
 void Extremes::setExtreme(const std::size_t i,
-                          const Multiport::Multiport* extreme) {
+                          const multiport::Multiport* extreme) {
     if (extreme == nullptr) {
         extreme_[i].reset();
     }
     else {
-        extreme_[i].reset(extreme->clone().release()->castTo<Multiport::Multiport>());
+        extreme_[i].reset(extreme->clone().release()->castTo<multiport::Multiport>());
     }
 }
 

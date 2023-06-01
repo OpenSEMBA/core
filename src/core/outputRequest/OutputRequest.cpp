@@ -3,7 +3,7 @@
 #include <iostream>
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 OutputRequest::OutputRequest(
     const Type& type, const std::string& name, const Domain& domain, const Target& target) :

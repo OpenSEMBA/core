@@ -3,8 +3,8 @@
 #include "Dispersive.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 Dispersive::Dispersive(const Id id,
                        const std::string name,

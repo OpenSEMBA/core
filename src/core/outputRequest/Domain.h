@@ -7,7 +7,7 @@
 #include "core/math/Types.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 class Domain {
 public:

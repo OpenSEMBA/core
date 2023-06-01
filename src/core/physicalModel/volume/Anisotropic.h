@@ -4,8 +4,8 @@
 #include "core/math/LocalAxis.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 class Anisotropic : public virtual Volume {
 public:

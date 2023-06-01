@@ -1,8 +1,8 @@
 #include "core/physicalModel/multiport/Predefined.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 Predefined::Predefined(const Id id,
         const std::string name,
