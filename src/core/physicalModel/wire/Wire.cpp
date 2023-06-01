@@ -1,8 +1,8 @@
 #include "Wire.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Wire {
+namespace physicalModel {
+namespace wire {
 
 Wire::Wire(const Id id,
            const std::string name,

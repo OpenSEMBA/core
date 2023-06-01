@@ -9,8 +9,8 @@
 #include "Surface.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Surface {
+namespace physicalModel {
+namespace surface {
 
 class Multilayer : public virtual Surface {
 public:

@@ -1,7 +1,7 @@
 #include "core/physicalModel/Gap.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 Gap::Gap(const Id id, const std::string name, const math::Real width) :   
     Identifiable<Id>(id),

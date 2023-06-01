@@ -3,8 +3,8 @@
 #include <physicalModel/volume/Dispersive.h>
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 Dispersive::Dispersive(const Id id,
                                    const std::string& name,

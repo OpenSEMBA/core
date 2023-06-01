@@ -3,8 +3,8 @@
 #include "core/physicalModel/PhysicalModel.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Surface {
+namespace physicalModel {
+namespace surface {
 
 class Surface : public virtual PhysicalModel {
 public:

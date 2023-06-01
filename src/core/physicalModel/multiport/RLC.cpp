@@ -3,8 +3,8 @@
 #include <physicalModel/multiport/RLC.h>
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 RLC::RLC(const Id id,
                            const std::string name,

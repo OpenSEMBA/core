@@ -1,7 +1,7 @@
 #include "FarField.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 FarField::FarField(const Domain& domain,
                    const std::string& name,

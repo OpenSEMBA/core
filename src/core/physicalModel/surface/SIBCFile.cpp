@@ -3,8 +3,8 @@
 #include <physicalModel/surface/SIBCFile.h>
 
 namespace semba {
-namespace PhysicalModel {
-namespace Surface {
+namespace physicalModel {
+namespace surface {
 
 SIBCFile::SIBCFile(const Id id,
                          const std::string& name,

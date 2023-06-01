@@ -35,7 +35,7 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 
 		// Create PMGroup.
 		PMGroup physicalModelsGroup;
-		physicalModelsGroup.copyAndAssignId(PhysicalModel::PEC{PhysicalModel::Id(), "Material PEC"});
+		physicalModelsGroup.copyAndAssignId(physicalModel::PEC{physicalModel::Id(), "Material PEC"});
 		
 		pD.model = UnstructuredModel{m, physicalModelsGroup};
 	}
@@ -54,9 +54,9 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 
 	// Create OutputRequest
 	pD.outputRequests.copyAndAssignId(
-		OutputRequest::OnPoint{
-			OutputRequest::OutputRequest::Type::electric,
-			OutputRequest::Domain(),
+		outputRequest::OnPoint{
+			outputRequest::OutputRequest::Type::electric,
+			outputRequest::Domain(),
 			"My electric field point probe",
 			{ElemId(2)}
 		}
@@ -122,14 +122,14 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 
 	PMGroup physicalModelsGroup = PMGroup();
 	physicalModelsGroup.addAndAssignId(
-		std::make_unique<PhysicalModel::PEC>(
-			PhysicalModel::Id(),
+		std::make_unique<physicalModel::PEC>(
+			physicalModel::Id(),
 			"Material PEC"
 		)
 	);
 
 	const auto& physicalModelIt = physicalModelsGroup.addAndAssignId(
-		std::make_unique<PhysicalModel::Bound>(PhysicalModel::Id(), PhysicalModel::Bound::Type::pml)
+		std::make_unique<physicalModel::Bound>(physicalModel::Id(), physicalModel::Bound::Type::pml)
 	);
 
 	CoordR3Group coordinatesGroup = CoordR3Group();

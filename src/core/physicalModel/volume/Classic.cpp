@@ -2,8 +2,8 @@
 #include <cmath>
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 Classic::Classic(const Id matId,
                  const std::string& name,

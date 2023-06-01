@@ -14,7 +14,7 @@
 
 namespace semba {
 
-typedef PhysicalModel::Id MatId;
+typedef physicalModel::Id MatId;
 
 namespace geometry {
 namespace element {

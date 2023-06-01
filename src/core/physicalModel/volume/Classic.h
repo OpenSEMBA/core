@@ -5,8 +5,8 @@
 #include "Volume.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 class Classic : public virtual Volume {
 public:

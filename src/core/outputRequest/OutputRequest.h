@@ -7,7 +7,7 @@
 #include "Domain.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 class OutputRequest;
     typedef util::Identification<OutputRequest> Id;

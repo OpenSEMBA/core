@@ -20,7 +20,7 @@ using namespace geometry;
 using namespace math;
 
 using json = nlohmann::json;
-using PM = PhysicalModel::PhysicalModel;
+using PM = physicalModel::PhysicalModel;
 
 class Parser : public semba::parsers::Parser {
 public:  

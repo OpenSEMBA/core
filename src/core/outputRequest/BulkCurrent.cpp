@@ -3,7 +3,7 @@
 #include "BulkCurrent.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 BulkCurrent::BulkCurrent(
         const Domain& domain,

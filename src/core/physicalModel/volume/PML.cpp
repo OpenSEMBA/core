@@ -3,8 +3,8 @@
 #include <physicalModel/volume/PML.h>
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 PML::PML(const Id id,
          const std::string& name,

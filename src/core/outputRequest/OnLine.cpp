@@ -1,7 +1,7 @@
 #include "OnLine.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
     OnLine::OnLine(
         const Type& outputType,
         const Domain& domain,

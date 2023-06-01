@@ -3,8 +3,8 @@
 #include "core/physicalModel/PhysicalModel.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Multiport {
+namespace physicalModel {
+namespace multiport {
 
 class Multiport : public virtual PhysicalModel {
 public:

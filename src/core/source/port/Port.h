@@ -7,7 +7,7 @@ namespace semba {
 namespace Source {
 namespace Port {
 
-typedef std::array<std::array<const PhysicalModel::Bound*,2>,3> Bound3;
+typedef std::array<std::array<const physicalModel::Bound*,2>,3> Bound3;
 
 class Port : public Source {
 public:

@@ -9,7 +9,7 @@
 
 using namespace semba;
 using namespace Source;
-using namespace PhysicalModel;
+using namespace physicalModel;
 using namespace std;
 
 class SourcePortWaveguideRectangularTest : public ::testing::Test {

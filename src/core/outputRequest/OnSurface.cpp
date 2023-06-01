@@ -1,7 +1,7 @@
 #include "OnSurface.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 OnSurface::OnSurface(
     const Type& outputType,

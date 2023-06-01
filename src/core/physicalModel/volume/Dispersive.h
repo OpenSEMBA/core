@@ -8,8 +8,8 @@
 #include "Volume.h"
 
 namespace semba {
-namespace PhysicalModel {
-namespace Volume {
+namespace physicalModel {
+namespace volume {
 
 typedef std::pair<std::complex<math::Real>,
                   std::complex<math::Real>> PoleResidue;

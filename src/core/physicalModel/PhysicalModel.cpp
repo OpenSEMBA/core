@@ -1,7 +1,7 @@
 #include "PhysicalModel.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 PhysicalModel::PhysicalModel(const std::string& name) 
 {

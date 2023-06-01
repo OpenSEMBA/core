@@ -3,7 +3,7 @@
 #include "PhysicalModel.h"
 
 namespace semba {
-namespace PhysicalModel {
+namespace physicalModel {
 
 class Bound : public virtual PhysicalModel {
 public:

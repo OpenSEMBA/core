@@ -5,7 +5,7 @@
 #include <iostream>
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
 Domain::Domain() {
     timeDomain_ = false;

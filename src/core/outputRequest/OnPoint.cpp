@@ -1,7 +1,7 @@
 #include "OnPoint.h"
 
 namespace semba {
-namespace OutputRequest {
+namespace outputRequest {
 
     OnPoint::OnPoint(
         const Type& outputType,
