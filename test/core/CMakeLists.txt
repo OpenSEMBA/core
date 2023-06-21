@@ -11,6 +11,7 @@ add_executable(opensemba_core_tests
     "util/ProjectTest.cpp"
     "geometry/coordinate/CoordinateGroupTest.cpp"
     "geometry/element/Line2Test.cpp"
+    "geometry/junction/JunctionTest.cpp"
     "geometry/layer/LayerTest.cpp"
     "geometry/mesh/GeometricTest.cpp"
     "geometry/mesh/StructuredTest.cpp"

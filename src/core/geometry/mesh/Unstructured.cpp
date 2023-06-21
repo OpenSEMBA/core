@@ -7,10 +7,12 @@ namespace mesh {
 
 Unstructured::Unstructured(const CoordR3Group& cG,
                            const ElemRGroup& elem,
-                           const LayerGroup& layers) :   
+                           const LayerGroup& layers,
+                           const std::vector<junction::Junction>& junctions) :
     coords_(cG),
     elems_(elem),
-    layers_(layers) 
+    layers_(layers),
+    junctions_(junctions)
 {
     elems_.reassignPointers( coords_ );
     elems_.reassignPointers( layers_ );
@@ -19,7 +21,8 @@ Unstructured::Unstructured(const CoordR3Group& cG,
 Unstructured::Unstructured(const Unstructured& rhs) :   
     coords_(rhs.coords()),
     elems_(rhs.elems()),
-    layers_(rhs.layers()) 
+    layers_(rhs.layers()),
+    junctions_(rhs.junctions())
 {
     elems_.reassignPointers(this->coords());
     elems_.reassignPointers(this->layers());
@@ -30,6 +33,7 @@ Unstructured& Unstructured::operator=(const Unstructured& rhs)
     coords_ = rhs.coords();
     elems_ = rhs.elems();
     layers_ = rhs.layers();
+    junctions_ = rhs.junctions();
 
     elems_.reassignPointers(this->coords());
     elems_.reassignPointers(this->layers());

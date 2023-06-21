@@ -39,6 +39,8 @@ std::pair<CVecR3, CVecR3> strToBox(const std::string& str);
 LocalAxis strToLocalAxes(const std::string& str);
 const ElemR* boxToElemGroup(mesh::Unstructured& mesh, const std::string& line);
 
+bool areValidUnitedCoordIds(const std::vector<int>& unitedCoordIds, const CoordR3Group& cG, CoordR3* coordinate);
+
 LayerGroup readLayers(const json&);
 CoordR3Group readCoordinates(const json&);
 ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
@@ -207,6 +209,7 @@ UnstructuredProblemDescription Parser::read() const
 	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"), this->filename.getFolder());
 
 	res.sources = readSources(*mesh, j);
+
 	res.outputRequests = readProbes(*mesh, j);
 
 	readBoundary(*mesh, j, materialsGroup, res.grids);
@@ -320,7 +323,8 @@ std::unique_ptr<mesh::Unstructured> readUnstructuredMesh(const PMGroup& physical
 	return std::make_unique<mesh::Unstructured>(
 		coords,
 		readElements(physicalModels, layers, coords, j, folder),
-		layers
+		layers,
+        readJunctions(coords, j)
 	);
 }
 
@@ -737,6 +741,54 @@ Constants::CartesianAxis strToCartesianAxis(std::string str) {
     } else {
         throw std::logic_error("Unrecognized cartesian axis label: " + str);
     }
+}
+
+
+std::vector<junction::Junction> readJunctions(const CoordR3Group& cG, const json& j) {
+    if (j.find("junctions") == j.end())
+        return std::vector<junction::Junction>();
+
+    auto junctionsToReturn = std::vector<junction::Junction>();
+
+    for (auto const& it : j.at("junctions")) {
+        junctionsToReturn.push_back(junction::Junction(it.at("name").get<std::string>()));
+
+        CoordR3* coordinate = nullptr;
+
+        for (auto const& unitedCoordIds : it.at("unitedCoordIds").get< std::vector< std::vector< int > > >()) {
+            if (areValidUnitedCoordIds(unitedCoordIds, cG, coordinate)) {
+                if (coordinate == nullptr)
+                    coordinate = cG.findId(junction::CoordIdForJunctions(unitedCoordIds[0]))->get();
+
+                junctionsToReturn.back().addCoordinatesToUnite(unitedCoordIds);
+            }
+        }
+
+        if (junctionsToReturn.back().getUnitedCoordIds().size() == 0){
+            junctionsToReturn.pop_back();
+        }
+    }
+
+    return junctionsToReturn;
+}
+
+bool areValidUnitedCoordIds(const std::vector<int>& unitedCoordIds, const CoordR3Group& cG, CoordR3* coordinate) {
+    if (unitedCoordIds.size() < 2)
+        return false;
+
+    auto coordinateCandidate = cG.findId(junction::CoordIdForJunctions(unitedCoordIds[0]));
+
+    if (coordinate && coordinateCandidate->get()->pos() != coordinate->pos())
+        return false;
+
+    for(int i = 1; i < unitedCoordIds.size(); ++i){
+        auto otherCoordinate = cG.findId(junction::CoordIdForJunctions(unitedCoordIds[i]));
+
+        if (otherCoordinate->get()->pos() != coordinateCandidate->get()->pos())
+            return false;
+    }
+
+    return true;
 }
 
 LayerGroup readLayers(const json& j) 
