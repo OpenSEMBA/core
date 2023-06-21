@@ -13,6 +13,7 @@ add_library(opensemba_core_geometry STATIC
     "element/Tetrahedron.cpp"
     "element/Tetrahedron4.cpp"
     "element/Triangle3.cpp"
+    "junction/Junction.cpp"
     "Layer.cpp"
     "mesh/Geometric.cpp"
     "mesh/Structured.cpp"

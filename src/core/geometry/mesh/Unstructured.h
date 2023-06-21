@@ -4,6 +4,7 @@
 
 #include "core/geometry/coordinate/Group.h"
 #include "core/geometry/element/Group.h"
+#include "core/geometry/junction/Junction.h"
 #include "core/geometry/Layer.h"
 
 namespace semba {
@@ -17,7 +18,8 @@ public:
     Unstructured() = default;
     Unstructured(const CoordR3Group& cG,
                  const ElemRGroup& elem,
-                 const LayerGroup& = LayerGroup());
+                 const LayerGroup& = LayerGroup(),
+                 const std::vector<junction::Junction>& junctions = std::vector<junction::Junction>());
     Unstructured(const Unstructured& param);
     Unstructured(Unstructured&&) = default;
     virtual ~Unstructured() = default;
@@ -32,10 +34,12 @@ public:
     CoordR3Group& coords() { return coords_; }
     ElemRGroup&      elems () { return elems_; }
     LayerGroup& layers() { return layers_; }
+    std::vector<junction::Junction>& junctions() { return junctions_; }
 
     const CoordR3Group& coords() const { return coords_; }
     const ElemRGroup&      elems () const { return elems_; }
     const LayerGroup& layers() const { return layers_; }
+    const std::vector<junction::Junction>& junctions() const { return junctions_; }
 
     Structured* getMeshStructured(
             const Grid3& grid,
@@ -52,12 +56,13 @@ private:
 	CoordR3Group coords_;
     ElemRGroup elems_;
 	LayerGroup layers_;
+    std::vector<junction::Junction> junctions_;
 };
 
-} 
+}
 
 using UnstructuredMesh = mesh::Unstructured;
 
-} 
-} 
+}
+}
 

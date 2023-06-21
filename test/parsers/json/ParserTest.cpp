@@ -1,4 +1,7 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+#include <gmock/gmock-matchers.h>
+
 
 #include "parsers/json/Parser.h"
 
@@ -230,4 +233,73 @@ TEST_F(ParserJSONParserTest, readMaterials)
     auto materials{ parsers::JSON::readMaterials(j) };
 
     EXPECT_EQ(4, materials.size());
+}
+
+TEST_F(ParserJSONParserTest, readJunctionsForTwoWires)
+{
+    std::ifstream stream(getFolder() + "/wires/two_wires.smb.json");
+    json j;
+    stream >> j;
+    auto& modelJson = j.at("model");
+
+    auto coordinates = parsers::JSON::readCoordinates(modelJson);
+
+    auto junctions = parsers::JSON::readJunctions(coordinates, modelJson);
+
+    ASSERT_EQ(1, junctions.size());
+
+    const auto& specificJunction = junctions[0];
+
+    EXPECT_THAT("j1", ::testing::StrEq(specificJunction.getName()));
+    EXPECT_EQ(1, specificJunction.getUnitedCoordIds().size());
+    EXPECT_THAT(specificJunction.getUnitedCoordIds()[0], ::testing::ElementsAre(
+        junction::CoordIdForJunctions(3),
+        junction::CoordIdForJunctions(4)
+    ));
+}
+
+TEST_F(ParserJSONParserTest, readJunctionsForThreeWires)
+{
+    std::ifstream stream(getFolder() + "/wires/three_wires.smb.json");
+    json j;
+    stream >> j;
+    auto& modelJson = j.at("model");
+
+    auto coordinates = parsers::JSON::readCoordinates(modelJson);
+
+    auto junctions = parsers::JSON::readJunctions(coordinates, modelJson);
+
+    ASSERT_EQ(1, junctions.size());
+
+    const auto& specificJunction = junctions[0];
+
+    EXPECT_THAT("j1", ::testing::StrEq(specificJunction.getName()));
+    EXPECT_EQ(1, specificJunction.getUnitedCoordIds().size());
+    EXPECT_THAT(specificJunction.getUnitedCoordIds()[0], ::testing::ElementsAre(
+        junction::CoordIdForJunctions(3),
+        junction::CoordIdForJunctions(4),
+        junction::CoordIdForJunctions(7)
+    ));
+}
+
+TEST_F(ParserJSONParserTest, readJunctionsForBundleAndTwoWires)
+{
+    std::ifstream stream(getFolder() + "/wires/cable_bundle_and_two_wires.smb.json");
+    json j;
+    stream >> j;
+    auto& modelJson = j.at("model");
+
+    auto coordinates = parsers::JSON::readCoordinates(modelJson);
+
+    auto junctions = parsers::JSON::readJunctions(coordinates, modelJson);
+
+    ASSERT_EQ(1, junctions.size());
+
+    const auto& specificJunction = junctions[0];
+
+    EXPECT_THAT("j1", ::testing::StrEq(specificJunction.getName()));
+    EXPECT_THAT(specificJunction.getUnitedCoordIds(), ::testing::ElementsAre(
+        std::vector<junction::CoordIdForJunctions>({ junction::CoordIdForJunctions(2), junction::CoordIdForJunctions(5) }),
+        std::vector<junction::CoordIdForJunctions>({ junction::CoordIdForJunctions(4), junction::CoordIdForJunctions(7) })
+    ));
 }
