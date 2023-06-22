@@ -40,6 +40,11 @@ public:
         const coordinate::Coordinate<T, 3>* v[1],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
+    Node(
+        const Id id,
+        const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
 
     Node(const Node<T>& rhs) = default;
     Node& operator=(const Node<T>& rhs) = default;
@@ -93,7 +98,18 @@ Node<T>::Node(
 }
 
 template<class T>
-bool Node<T>::isStructured(const Grid3& grid, const math::Real tol) const 
+Node<T>::Node(
+    const Id id,
+    const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+    const Layer* lay,
+    const Model* mat)
+{
+    std::array<const coordinate::Coordinate<T, 3>*, 1> vArr = {v[0]};
+    *this = Node<T>{ id, vArr, lay, mat };
+}
+
+template<class T>
+bool Node<T>::isStructured(const Grid3& grid, const math::Real tol) const
 {
     if (!this->vertexInCell(grid, tol)) {
         return false;
@@ -108,7 +124,7 @@ bool Node<T>::isStructured(const Grid3& grid, const math::Real tol) const
 }
 
 template<class T>
-const coordinate::Coordinate<T, 3>* Node<T>::getV(const std::size_t i) const 
+const coordinate::Coordinate<T, 3>* Node<T>::getV(const std::size_t i) const
 {
     return v_[i];
 }
@@ -167,11 +183,11 @@ std::unique_ptr<ElemR> Node<T>::toUnstructured(
 typedef Node<math::Real> NodR;
 typedef Node<math::Int > NodI;
 
-} 
+}
 
 typedef element::NodeBase         Nod;
 typedef element::Node<math::Real> NodR;
 typedef element::Node<math::Int > NodI;
 
-} 
-} 
+}
+}

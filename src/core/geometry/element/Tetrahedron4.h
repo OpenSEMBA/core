@@ -14,6 +14,10 @@ public:
                  const CoordR3* v[4],
                  const Layer* lay = nullptr,
                  const Model* mat = nullptr);
+    Tetrahedron4(const Id id,
+                 const std::vector<const CoordR3*>& v,
+                 const Layer* lay = nullptr,
+                 const Model* mat = nullptr);
     Tetrahedron4(const Tetrahedron4& rhs);
     virtual ~Tetrahedron4() = default;
 

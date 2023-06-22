@@ -19,6 +19,20 @@ Tetrahedron4::Tetrahedron4(const Id id,
     check();
 }
 
+Tetrahedron4::Tetrahedron4(const Id id,
+            const std::vector<const CoordR3*>& v,
+            const Layer* lay,
+            const Model* mat)
+:    Identifiable<Id>(id),
+     Elem(lay, mat) {
+
+     for (std::size_t i = 0; i < tet.np; i++) {
+        v_[i] = v[i];
+     }
+    check();
+}
+
+
 Tetrahedron4::Tetrahedron4(const Tetrahedron4& rhs)
 :   Identifiable<Id>(rhs),
     Elem(rhs) {

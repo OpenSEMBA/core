@@ -30,6 +30,10 @@ public:
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
 	Quadrilateral4(const Id id,
+        const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+		const Layer* lay = nullptr,
+		const Model* mat = nullptr);
+    Quadrilateral4(const Id id,
 		std::array<const coordinate::Coordinate<T, 3>*, 4> v,
 		const Layer* lay = nullptr,
 		const Model* mat = nullptr);
@@ -40,7 +44,7 @@ public:
         return std::make_unique<Quadrilateral4<T>>(*this);
     }
 
-    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override; 
+    bool isStructured(const Grid3&, const math::Real = Grid3::tolerance) const override;
 
     const coordinate::Coordinate<T,3>* getV(const std::size_t i) const override;
     const coordinate::Coordinate<T,3>* getSideV(
@@ -69,6 +73,19 @@ Quadrilateral4<T>::Quadrilateral4(const Id id,
     Identifiable<Id>(id),
     Elem(lay, mat) 
 {
+    for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
+        v_[i] = coords[i];
+    }
+}
+
+template<class T>
+Quadrilateral4<T>::Quadrilateral4(const Id id,
+    const std::vector<const coordinate::Coordinate<T, 3>*>& coords,
+    const Layer* lay,
+    const Model* mat) :
+    Identifiable<Id>(id),
+    Elem(lay, mat) {
+
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
         v_[i] = coords[i];
     }
@@ -155,11 +172,11 @@ std::unique_ptr<ElemR> Quadrilateral4<T>::toUnstructured(
         this->getModel());
 }
 
-} 
+}
 
 typedef element::Quadrilateral4Base         Qua4;
 typedef element::Quadrilateral4<math::Real> QuaR4;
 typedef element::Quadrilateral4<math::Int > QuaI4;
 
-} 
-} 
+}
+}
