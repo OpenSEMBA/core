@@ -40,6 +40,10 @@ public:
         const coordinate::Coordinate<T, 3>* v[8],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
+    Hexahedron8(const Id id,
+        const std::vector<const coordinate::Coordinate<T, 3>*> & v,
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
     Hexahedron8(coordinate::Group<coordinate::Coordinate<T,3> >&,
                 const Id id,
                 const Box<T,3>& box,
@@ -111,6 +115,17 @@ Hexahedron8<T>::Hexahedron8(
 {
     std::array<const coordinate::Coordinate<T, 3>*, 8> vArr;
     std::copy(v, v + 8, vArr.begin());
+    *this = Hexahedron8<T>(id, vArr, lay, mat);
+}
+
+template<class T>
+Hexahedron8<T>::Hexahedron8(const Id id,
+    const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+    const Layer* lay,
+    const Model* mat)
+{
+    std::array<const coordinate::Coordinate<T, 3>*, 8> vArr;
+    std::copy(v.begin(), v.end(), vArr.begin());
     *this = Hexahedron8<T>(id, vArr, lay, mat);
 }
 
@@ -247,12 +262,12 @@ std::unique_ptr<ElemR> Hexahedron8<T>::toUnstructured(const CoordR3Group& cG,
 }
 
 
-} 
+}
 
 typedef element::Hexahedron8Base         Hex8;
 typedef element::Hexahedron8<math::Real> HexR8;
 typedef element::Hexahedron8<math::Int > HexI8;
 
-} 
-} 
+}
+}
 

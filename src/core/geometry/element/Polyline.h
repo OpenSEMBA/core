@@ -18,6 +18,9 @@ template<class T>
 class Polyline : public virtual Line<T>,
                  public virtual PolylineBase {
 public:
+    static const std::size_t sizeOfCoordinates = 0;
+
+
     Polyline(const Id id,
              const std::vector<const coordinate::Coordinate<T,3>*>& v,
              const Layer* lay = nullptr,
@@ -60,9 +63,8 @@ Polyline<T>::Polyline(const Id id,
     const Layer* lay,
     const Model* mat)
     : Identifiable<Id>(id),
-    Elem(lay, mat) {
-    v_ = v;
-}
+    Elem(lay, mat), v_(v) {}
+
 
 template<class T>
 Polyline<T>::Polyline(const Polyline<T>& rhs)

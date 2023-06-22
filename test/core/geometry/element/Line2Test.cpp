@@ -11,7 +11,9 @@ TEST(Line2Test, CanCreate) {
 	geometry::Layer lay{geometry::LayerId(), "My layer"};
 	geometry::element::Model model{MatId()};
 
-	geometry::LinR2 lin{ geometry::ElemId(), {&vertexLeft, &vertexRight}, &lay, &model };
+	const geometry::CoordR3* coordinates[2] = { &vertexLeft, &vertexRight };
+
+	geometry::LinR2 lin { geometry::ElemId(), coordinates , &lay, &model };
 
 	auto newLines = lin.splitByMiddle();
 

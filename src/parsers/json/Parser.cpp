@@ -6,6 +6,7 @@
 #include "core/math/function/BandLimited.h"
 #include "core/model/Model.h"
 #include "core/geometry/element/Line2.h"
+#include "core/geometry/element/Polyline.h"
 #include "core/geometry/element/Triangle3.h"
 #include "core/geometry/element/Quadrilateral4.h"
 #include "core/geometry/element/Tetrahedron4.h"
@@ -46,6 +47,8 @@ CoordR3Group readCoordinates(const json&);
 ElemRGroup readElements(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
 ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
 ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
+std::vector<CoordId> readElemCoordinateIdsWithUnknownSize(std::stringstream & ss);
+std::vector<CoordId> readElemCoordinateIdsWithSize(std::stringstream & ss, std::size_t size);
 
 std::unique_ptr<physicalModel::surface::Multilayer> readMultilayerSurface(const json& layers);
 std::unique_ptr<PM> readPhysicalModel(const json& material);
@@ -96,14 +99,12 @@ element::Group<ElemR> readElemStrAs(
         ElemId elemId;
         MatId matId;
         LayerId layerId;
-        std::vector<CoordId> vId;
 
         std::stringstream ss(it->get<std::string>());
         ss >> elemId >> matId >> layerId;
-        vId.resize(T::sizeOfCoordinates);
-        for (std::size_t j = 0; j < T::sizeOfCoordinates; j++) {
-            ss >> vId[j];
-        }
+
+
+        std::vector<CoordId> vId = readElemCoordinateIds(ss, T::sizeOfCoordinates);
 
         const Layer* layerPtr;
         const physicalModel::PhysicalModel* matPtr;
@@ -126,7 +127,7 @@ element::Group<ElemR> readElemStrAs(
             vPtr[i] = cG.atId(vId[i]);
         }
 
-        res.add(std::make_unique<T>(T(elemId, vPtr.data(), layerPtr, matPtr)));
+        res.add(std::make_unique<T>(T(elemId, vPtr, layerPtr, matPtr)));
     }
 
     return res;
@@ -221,7 +222,7 @@ UnstructuredProblemDescription Parser::read() const
 	return res;
 }
 
-Parser::Parser(const std::string& fn) : semba::parsers::Parser(fn) 
+Parser::Parser(const std::string& fn) : semba::parsers::Parser(fn)
 {}
 
 physicalModel::Bound::Type strToBoundType(const std::string& boundType) {
@@ -252,7 +253,7 @@ physicalModel::Bound::Type strToBoundType(const std::string& boundType) {
     throw std::logic_error("Unrecognized value in Bound ctor.");
 }
 
-void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)  
+void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid)
 {
     if (j.find("boundary") == j.end()) {
         return;
@@ -404,7 +405,7 @@ std::unique_ptr<physicalModel::PhysicalModel> readPhysicalModel(const json& j)
     case PM::Type::vacuum:
         return std::make_unique<physicalModel::Vacuum>(id, name);
     case PM::Type::PML:
-        return std::make_unique<physicalModel::volume::PML>(id, name, 
+        return std::make_unique<physicalModel::volume::PML>(id, name,
 			strToLocalAxes(j.at("localAxes").get<std::string>()));
 
     case PM::Type::classic:
@@ -867,6 +868,12 @@ ElemRGroup readElements(
 		}
 	}
 
+    if (elems.find("polyline") != elems.end()) {
+        for (auto& element : readElemStrAs<PolylinR>(mG, lG, cG, elems.at("polyline").get<json>())) {
+            res.add(std::move(element));
+        }
+    }
+
 	if (elems.find("line") != elems.end()) {
 		for (auto& element : readElemStrAs<LinR2>(mG, lG, cG, elems.at("line").get<json>())) {
 			res.add(std::move(element));
@@ -949,7 +956,42 @@ ElemRGroup readElementsFromFile(
     return res;
 }
 
-std::unique_ptr<physicalModel::surface::Multilayer> 
+std::vector<CoordId> readElemCoordinateIds(std::stringstream & ss, std::size_t size) {
+
+    if (size == 0)
+        return readElemCoordinateIdsWithUnknownSize(ss);
+    else
+        return readElemCoordinateIdsWithSize(ss, size);
+}
+
+std::vector<CoordId> readElemCoordinateIdsWithUnknownSize(std::stringstream& ss) {
+    std::vector<CoordId> coordinateIds;
+
+    int nextValue = ss.peek();
+
+    while (nextValue != EOF) {
+        int id;
+        ss >> id;
+        coordinateIds.push_back(CoordId(id));
+
+        nextValue = ss.peek();
+    }
+
+    return coordinateIds;
+}
+
+std::vector<CoordId> readElemCoordinateIdsWithSize(std::stringstream& ss, std::size_t size) {
+    std::vector<CoordId> coordinateIds;
+
+    coordinateIds.resize(size);
+    for (std::size_t j = 0; j < size; j++) {
+        ss >> coordinateIds[j];
+    }
+
+    return coordinateIds;
+}
+
+std::unique_ptr<physicalModel::surface::Multilayer>
 readMultilayerSurface(const json& mat)
 {
     MatId id = MatId(mat.at("materialId").get<int>());
@@ -1115,7 +1157,7 @@ std::unique_ptr<source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const
 }
 
 std::unique_ptr<source::port::Waveguide> readPortWaveguide(
-    mesh::Unstructured& mesh, 
+    mesh::Unstructured& mesh,
     const json& j
 ) {
 	std::string shape = j.at("shape").get<std::string>();
@@ -1134,7 +1176,7 @@ std::unique_ptr<source::port::Waveguide> readPortWaveguide(
 	}
 }
 
-std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const json& j)
 {
 	return std::make_unique<source::port::TEMCoaxial>(
 		source::port::TEMCoaxial(
@@ -1148,7 +1190,7 @@ std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const j
 	);
 }
 
-std::unique_ptr<source::Generator> readGenerator(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::Generator> readGenerator(mesh::Unstructured& mesh, const json& j)
 {
 	return std::make_unique<source::Generator>(
 		source::Generator(
@@ -1160,7 +1202,7 @@ std::unique_ptr<source::Generator> readGenerator(mesh::Unstructured& mesh, const
 	);
 }
 
-std::unique_ptr<source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json& j) 
+std::unique_ptr<source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const json& j)
 {
 	return std::make_unique<source::OnLine>(
 		source::OnLine(
@@ -1172,7 +1214,7 @@ std::unique_ptr<source::OnLine> readSourceOnLine(mesh::Unstructured& mesh, const
 	);
 }
 
-source::Generator::Type strToGeneratorType(std::string str) 
+source::Generator::Type strToGeneratorType(std::string str)
 {
     str = trim(str);
     if (str.compare("voltage")==0) {
@@ -1186,7 +1228,7 @@ source::Generator::Type strToGeneratorType(std::string str)
     throw std::logic_error("Unrecognized generator type: " + str);
 }
 
-source::Generator::Hardness strToGeneratorHardness(std::string str) 
+source::Generator::Hardness strToGeneratorHardness(std::string str)
 {
     str = trim(str);
     if (str.compare("soft")==0) {
@@ -1198,7 +1240,7 @@ source::Generator::Hardness strToGeneratorHardness(std::string str)
     }
 }
 
-physicalModel::PhysicalModel::Type strToMaterialType(std::string str) 
+physicalModel::PhysicalModel::Type strToMaterialType(std::string str)
 {
     using Type = semba::physicalModel::PhysicalModel::Type;
 
@@ -1295,7 +1337,7 @@ CVecR3 strToCVecR3(std::string str) {
     return res;
 }
 
-source::OnLine::Type strToNodalType(std::string str) 
+source::OnLine::Type strToNodalType(std::string str)
 {
     str = trim(str);
     if (str.compare("electricField")==0) {
@@ -1307,7 +1349,7 @@ source::OnLine::Type strToNodalType(std::string str)
     }
 }
 
-source::OnLine::Hardness strToNodalHardness(std::string str) 
+source::OnLine::Hardness strToNodalHardness(std::string str)
 {
     str = trim(str);
     if (str.compare("soft")==0) {
@@ -1319,7 +1361,7 @@ source::OnLine::Hardness strToNodalHardness(std::string str)
     }
 }
 
-std::unique_ptr<source::Magnitude::Magnitude> readMagnitude(const json& j) 
+std::unique_ptr<source::Magnitude::Magnitude> readMagnitude(const json& j)
 {
     std::string type = j.at("type").get<std::string>();
     if (type.compare("File") == 0) {

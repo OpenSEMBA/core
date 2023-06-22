@@ -20,6 +20,19 @@ Triangle3::Triangle3(const Id id,
     check();
 }
 
+
+Triangle3::Triangle3(const Id id,
+           const std::vector<const CoordR3*>& v,
+           const Layer* lay,
+           const Model* mat)
+:   Identifiable<Id>(id),
+    Elem(lay, mat) {
+    for (std::size_t i = 0; i < geo.np; i++) {
+        v_[i] = v[i];
+    }
+    check();
+}
+
 Triangle3::Triangle3(const Triangle3& rhs)
 :   Identifiable<Id>(rhs),
     Elem(rhs) {

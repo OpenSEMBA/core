@@ -27,6 +27,10 @@ public:
         const coordinate::Coordinate<T, 3>* v[2],
         const Layer* lay = nullptr,
         const Model* mat = nullptr);
+    Line2(const Id id,
+        const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+        const Layer* lay = nullptr,
+        const Model* mat = nullptr);
     Line2(std::array<const coordinate::Coordinate<T, 3>*, 2>);
     Line2(coordinate::Group<coordinate::Coordinate<T,3> >&,
           const Box<T,3>& box);
@@ -92,6 +96,17 @@ Line2<T>::Line2(
 {
     std::array<const coordinate::Coordinate<T, 3>*, 2> vArr;
     std::copy(v, v+2, vArr.begin());
+    *this = Line2<T>(id, vArr, lay, mat);
+}
+
+template<class T>
+Line2<T>::Line2(const Id id,
+    const std::vector<const coordinate::Coordinate<T, 3>*>& v,
+    const Layer* lay,
+    const Model* mat)
+{
+    std::array<const coordinate::Coordinate<T, 3>*, 2> vArr;
+    std::copy(v.begin(), v.end(), vArr.begin());
     *this = Line2<T>(id, vArr, lay, mat);
 }
 
@@ -162,7 +177,7 @@ void Line2<T>::setCoordinates(std::array<const coordinate::Coordinate<T, 3>*, 2>
 template<class T>
 std::unique_ptr<ElemI> Line2<T>::toStructured(
     const CoordI3Group& cG,
-    const Grid3& grid, const math::Real tol) const 
+    const Grid3& grid, const math::Real tol) const
 {
     return std::make_unique<Line2<math::Int>>(this->getId(),
         this->vertexToStructured(cG, grid, tol).data(),
@@ -214,11 +229,11 @@ std::vector<std::unique_ptr<const Line2<T>>> Line2<T>::splitByMiddle() const {
 }
 
 
-} 
+}
 
 typedef element::Line2Base         Lin2;
 typedef element::Line2<math::Real> LinR2;
 typedef element::Line2<math::Int> LinI2;
 
-} 
-} 
+}
+}

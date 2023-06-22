@@ -14,6 +14,10 @@ public:
               const CoordR3* v[3],
               const Layer* lay = nullptr,
               const Model* mat = nullptr);
+    Triangle3(const Id id,
+              const std::vector<const CoordR3*>& v,
+              const Layer* lay = nullptr,
+              const Model* mat = nullptr);
     Triangle3(const Triangle3& rhs);
     virtual ~Triangle3() = default;
 
