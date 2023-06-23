@@ -45,7 +45,7 @@
 		],
 		"elements": {
 			"_polylines_description": "elemId materialId layerId coordId1 coordId2 ... coordIdN",
-			"polylines": [
+			"polyline": [
 				"1 0 1 1 2 3",
 				"2 0 1 4 5 6"
 			]

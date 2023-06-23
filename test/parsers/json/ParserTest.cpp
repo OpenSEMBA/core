@@ -7,6 +7,7 @@
 
 #include "core/math/function/Gaussian.h"
 #include "core/geometry/element/Line2.h"
+#include "core/geometry/element/Polyline.h"
 #include "core/geometry/element/Triangle3.h"
 #include "core/geometry/element/Tetrahedron4.h"
 #include "core/outputRequest/FarField.h"
@@ -224,62 +225,182 @@ TEST_F(ParserJSONParserTest, antennas_detailed)
     EXPECT_EQ(elementsWithPortMaterial.size(), 2);
 }
 
-TEST_F(ParserJSONParserTest, readMaterials) 
-{
-    std::ifstream stream(getFolder() + "materials.smb.json");
-    json j;
-    stream >> j;
-    
-    auto materials{ parsers::JSON::readMaterials(j) };
-
-    EXPECT_EQ(4, materials.size());
-}
-
-TEST_F(ParserJSONParserTest, readJunctionsForTwoWires)
+TEST_F(ParserJSONParserTest, twoWiresDetailed)
 {
     std::ifstream stream(getFolder() + "/wires/two_wires.smb.json");
     json j;
     stream >> j;
     auto& modelJson = j.at("model");
 
-    auto coordinates = parsers::JSON::readCoordinates(modelJson);
+    auto physicalModel{ parsers::JSON::readMaterials(modelJson)};
 
-    auto junctions = parsers::JSON::readJunctions(coordinates, modelJson);
+    auto& unstructuredMesh = parsers::JSON::readUnstructuredMesh(physicalModel, modelJson, getFolder() + "/wires");
+    auto& mesh = *(unstructuredMesh.get());
 
-    ASSERT_EQ(1, junctions.size());
+    EXPECT_EQ(3, physicalModel.size());
+    EXPECT_EQ(1, mesh.layers().size());
+    EXPECT_EQ(6, mesh.coords().size());
+    EXPECT_EQ(2, mesh.elems().size());
+    EXPECT_EQ(1, mesh.junctions().size());
+    ASSERT_EQ(2, mesh.bundles().size());
 
-    const auto& specificJunction = junctions[0];
+    auto& wireMaterialList = physicalModel.getOf<physicalModel::wire::Wire>();
 
-    EXPECT_THAT("j1", ::testing::StrEq(specificJunction.getName()));
-    EXPECT_EQ(1, specificJunction.getUnitedCoordIds().size());
-    EXPECT_THAT(specificJunction.getUnitedCoordIds()[0], ::testing::ElementsAre(
-        junction::CoordIdForJunctions(3),
-        junction::CoordIdForJunctions(4)
+    ASSERT_EQ(1, wireMaterialList.size());
+
+    auto& connectorMaterialList = physicalModel.getOf<physicalModel::multiport::Multiport>();
+
+    ASSERT_EQ(2, connectorMaterialList.size());
+
+    auto& polylinesList = mesh.elems().getOf<PolylinR>();
+
+    ASSERT_EQ(2, polylinesList.size());
+
+    auto& firstPolyline = polylinesList[0];
+    auto& secondPolyline = polylinesList[1];
+
+    EXPECT_EQ(MatId(0), firstPolyline->getMatId());
+    EXPECT_EQ(MatId(0), secondPolyline->getMatId());
+
+    auto layer = mesh.layers().atId(geometry::LayerId(1));
+    EXPECT_EQ(layer, firstPolyline->getLayer());
+    EXPECT_EQ(layer, secondPolyline->getLayer());
+
+    auto& firstCoordinatesSubList = mesh.coords().atIds({ geometry::CoordId(1),geometry::CoordId(2), geometry::CoordId(3) });
+    auto& secondCoordinatesSubList = mesh.coords().atIds({ geometry::CoordId(4),geometry::CoordId(5), geometry::CoordId(6) });
+
+    EXPECT_TRUE(element::Base::areSameCoords(firstCoordinatesSubList, firstPolyline->getCoordinates()));
+    EXPECT_TRUE(element::Base::areSameCoords(secondCoordinatesSubList, secondPolyline->getCoordinates()));
+
+    EXPECT_THAT("j1", ::testing::StrEq(mesh.junctions()[0].getName()));
+
+    const auto & unitedCoordIds = mesh.junctions()[0].getUnitedCoordIds();
+
+    ASSERT_EQ(1, unitedCoordIds.size());
+    EXPECT_THAT(unitedCoordIds[0], ::testing::ElementsAre(
+        firstPolyline->getVertices().back()->getId(),
+        secondPolyline->getVertices().front()->getId()
     ));
+    auto firstCoordinate = mesh.coords().atId(unitedCoordIds[0][0]);
+    auto secondCoordinate = mesh.coords().atId(unitedCoordIds[0][1]);
+
+    EXPECT_EQ(firstCoordinate->pos(), secondCoordinate->pos());
+
+    auto& firstBundle = mesh.bundles()[0];
+    auto& secondBundle = mesh.bundles()[1];
+
+    EXPECT_THAT("wire1", ::testing::StrEq(firstBundle.getName()));
+    EXPECT_THAT("wire2", ::testing::StrEq(secondBundle.getName()));
+    EXPECT_EQ(wireMaterialList[0]->getId(), firstBundle.getMaterialId());
+    EXPECT_EQ(wireMaterialList[0]->getId(), secondBundle.getMaterialId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), firstBundle.getInitialConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), firstBundle.getEndConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), secondBundle.getInitialConnectorId());
+    EXPECT_EQ(connectorMaterialList[0]->getId(), secondBundle.getEndConnectorId());
+    EXPECT_THAT(firstBundle.getElemIds(), ::testing::ElementsAre(firstPolyline->getId()));
+    EXPECT_THAT(secondBundle.getElemIds(), ::testing::ElementsAre(secondPolyline->getId()));
 }
 
-TEST_F(ParserJSONParserTest, readJunctionsForThreeWires)
+
+TEST_F(ParserJSONParserTest, threeWiresDetailed)
 {
     std::ifstream stream(getFolder() + "/wires/three_wires.smb.json");
     json j;
     stream >> j;
     auto& modelJson = j.at("model");
 
-    auto coordinates = parsers::JSON::readCoordinates(modelJson);
+    auto physicalModel{ parsers::JSON::readMaterials(modelJson) };
 
-    auto junctions = parsers::JSON::readJunctions(coordinates, modelJson);
+    auto& unstructuredMesh = parsers::JSON::readUnstructuredMesh(physicalModel, modelJson, getFolder() + "/wires");
+    auto& mesh = *(unstructuredMesh.get());
 
-    ASSERT_EQ(1, junctions.size());
+    EXPECT_EQ(3, physicalModel.size());
+    EXPECT_EQ(1, mesh.layers().size());
+    EXPECT_EQ(8, mesh.coords().size());
+    EXPECT_EQ(3, mesh.elems().size());
+    EXPECT_EQ(1, mesh.junctions().size());
+    ASSERT_EQ(3, mesh.bundles().size());
 
-    const auto& specificJunction = junctions[0];
+    auto& wireMaterialList = physicalModel.getOf<physicalModel::wire::Wire>();
 
-    EXPECT_THAT("j1", ::testing::StrEq(specificJunction.getName()));
-    EXPECT_EQ(1, specificJunction.getUnitedCoordIds().size());
-    EXPECT_THAT(specificJunction.getUnitedCoordIds()[0], ::testing::ElementsAre(
-        junction::CoordIdForJunctions(3),
-        junction::CoordIdForJunctions(4),
-        junction::CoordIdForJunctions(7)
+    ASSERT_EQ(1, wireMaterialList.size());
+
+    auto& connectorMaterialList = physicalModel.getOf<physicalModel::multiport::Multiport>();
+
+    ASSERT_EQ(2, connectorMaterialList.size());
+
+    auto& polylinesList = mesh.elems().getOf<PolylinR>();
+
+    ASSERT_EQ(3, polylinesList.size());
+
+    auto& firstPolyline = polylinesList[0];
+    auto& secondPolyline = polylinesList[1];
+    auto& thirdPolyline = polylinesList[2];
+
+    EXPECT_EQ(MatId(0), firstPolyline->getMatId());
+    EXPECT_EQ(MatId(0), secondPolyline->getMatId());
+    EXPECT_EQ(MatId(0), thirdPolyline->getMatId());
+
+    auto layer = mesh.layers().atId(geometry::LayerId(1));
+    EXPECT_EQ(layer, firstPolyline->getLayer());
+    EXPECT_EQ(layer, secondPolyline->getLayer());
+    EXPECT_EQ(layer, thirdPolyline->getLayer());
+
+    auto& firstCoordinatesSubList = mesh.coords().atIds({ geometry::CoordId(1),geometry::CoordId(2), geometry::CoordId(3) });
+    auto& secondCoordinatesSubList = mesh.coords().atIds({ geometry::CoordId(4),geometry::CoordId(5), geometry::CoordId(6) });
+    auto& thirdCoordinatesSubList = mesh.coords().atIds({ geometry::CoordId(7),geometry::CoordId(8)});
+
+    EXPECT_TRUE(element::Base::areSameCoords(firstCoordinatesSubList, firstPolyline->getCoordinates()));
+    EXPECT_TRUE(element::Base::areSameCoords(secondCoordinatesSubList, secondPolyline->getCoordinates()));
+    EXPECT_TRUE(element::Base::areSameCoords(thirdCoordinatesSubList, thirdPolyline->getCoordinates()));
+
+    EXPECT_THAT("j1", ::testing::StrEq(mesh.junctions()[0].getName()));
+
+    const auto& unitedCoordIds = mesh.junctions()[0].getUnitedCoordIds();
+
+    ASSERT_EQ(1, unitedCoordIds.size());
+    EXPECT_THAT(unitedCoordIds[0], ::testing::ElementsAre(
+        firstPolyline->getVertices().back()->getId(),
+        secondPolyline->getVertices().front()->getId(),
+        thirdPolyline->getVertices().front()->getId()
     ));
+    auto firstCoordinate = mesh.coords().atId(unitedCoordIds[0][0]);
+    auto secondCoordinate = mesh.coords().atId(unitedCoordIds[0][1]);
+    auto thirdCoordinate = mesh.coords().atId(unitedCoordIds[0][2]);
+
+    EXPECT_EQ(firstCoordinate->pos(), secondCoordinate->pos());
+    EXPECT_EQ(firstCoordinate->pos(), thirdCoordinate->pos());
+
+    auto& firstBundle = mesh.bundles()[0];
+    auto& secondBundle = mesh.bundles()[1];
+    auto& thirdBundle = mesh.bundles()[2];
+
+    EXPECT_THAT("wire1", ::testing::StrEq(firstBundle.getName()));
+    EXPECT_THAT("wire2", ::testing::StrEq(secondBundle.getName()));
+    EXPECT_THAT("wire3", ::testing::StrEq(thirdBundle.getName()));
+    EXPECT_EQ(wireMaterialList[0]->getId(), firstBundle.getMaterialId());
+    EXPECT_EQ(wireMaterialList[0]->getId(), secondBundle.getMaterialId());
+    EXPECT_EQ(wireMaterialList[0]->getId(), thirdBundle.getMaterialId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), firstBundle.getInitialConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), firstBundle.getEndConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), secondBundle.getInitialConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), secondBundle.getEndConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), thirdBundle.getInitialConnectorId());
+    EXPECT_EQ(connectorMaterialList[1]->getId(), thirdBundle.getEndConnectorId());
+    EXPECT_THAT(firstBundle.getElemIds(), ::testing::ElementsAre(firstPolyline->getId()));
+    EXPECT_THAT(secondBundle.getElemIds(), ::testing::ElementsAre(secondPolyline->getId()));
+    EXPECT_THAT(thirdBundle.getElemIds(), ::testing::ElementsAre(thirdPolyline->getId()));
+}
+
+TEST_F(ParserJSONParserTest, readMaterials)
+{
+    std::ifstream stream(getFolder() + "materials.smb.json");
+    json j;
+    stream >> j;
+
+    auto materials{ parsers::JSON::readMaterials(j) };
+
+    EXPECT_EQ(4, materials.size());
 }
 
 TEST_F(ParserJSONParserTest, readJunctionsForBundleAndTwoWires)

@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 project(opensemba_core_geometry CXX)
 
 add_library(opensemba_core_geometry STATIC
+    "bundle/Bundle.cpp"
     "coordinate/Conformal.cpp"
     "coordinate/Coordinate.cpp"
     "coordinate/Relative.cpp"
