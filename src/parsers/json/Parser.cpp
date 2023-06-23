@@ -321,11 +321,13 @@ std::unique_ptr<mesh::Unstructured> readUnstructuredMesh(const PMGroup& physical
 {
     LayerGroup layers = readLayers(j);
 	CoordR3Group coords = readCoordinates(j);
-	return std::make_unique<mesh::Unstructured>(
-		coords,
-		readElements(physicalModels, layers, coords, j, folder),
-		layers,
-        readJunctions(coords, j)
+    ElemRGroup elements = readElements(physicalModels, layers, coords, j, folder);
+    return std::make_unique<mesh::Unstructured>(
+        coords,
+        elements,
+        layers,
+        readJunctions(coords, j),
+        readBundles(physicalModels, elements, j)
 	);
 }
 
@@ -792,7 +794,40 @@ bool areValidUnitedCoordIds(const std::vector<int>& unitedCoordIds, const CoordR
     return true;
 }
 
-LayerGroup readLayers(const json& j) 
+
+std::vector<bundle::Bundle> readBundles(const PMGroup& materials, const ElemRGroup& elements, const json& j) {
+    if (j.find("cables") == j.end())
+        return std::vector<bundle::Bundle>();
+
+    auto bundlesToReturn = std::vector<bundle::Bundle>();
+
+    for (auto const& it : j.at("cables")) {
+        auto name = it.at("name").get<std::string>();
+        auto wireMaterialId = bundle::MatIdForBundle(it.at("materialId").get<int>());
+        auto initialConnectorMaterialId = bundle::MatIdForBundle(it.at("initialConnectorId").get<int>());
+        auto endConnectorMaterialId = bundle::MatIdForBundle(it.at("endConnectorId").get<int>());
+        auto elemIdNumbers = it.at("elemIds").get< std::vector<int> >();
+
+        wireMaterialId = materials.findId(wireMaterialId) != materials.end() ? wireMaterialId : bundle::MatIdForBundle(0);
+        initialConnectorMaterialId = materials.findId(initialConnectorMaterialId) != materials.end() ? initialConnectorMaterialId : bundle::MatIdForBundle(0);
+        endConnectorMaterialId = materials.findId(endConnectorMaterialId) != materials.end() ? endConnectorMaterialId : bundle::MatIdForBundle(0);
+
+        auto elemIds = std::vector<bundle::ElemIdForBundle>();
+        for (int number : elemIdNumbers) {
+            auto currentElemId = bundle::ElemIdForBundle(number);
+            if (elements.findId(currentElemId) != elements.end())
+                elemIds.push_back(currentElemId);
+            else
+                elemIds.push_back(bundle::ElemIdForBundle(0));
+        }
+
+        bundlesToReturn.push_back(bundle::Bundle(name, wireMaterialId, initialConnectorMaterialId, endConnectorMaterialId, elemIds));
+    }
+
+    return bundlesToReturn;
+}
+
+LayerGroup readLayers(const json& j)
 {
     if (j.find("layers") == j.end()) {
         throw std::logic_error("layers object was not found.");

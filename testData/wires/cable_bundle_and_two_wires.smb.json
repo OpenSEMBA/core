@@ -63,8 +63,8 @@
 			"8 1.0 0.0 1.0"
 		],
 		"elements": {
-			"_polylines_description": "elemId materialId layerId coordId1 coordId2 ... coordIdN",
-			"polylines": [
+			"_polyline_description": "elemId materialId layerId coordId1 coordId2 ... coordIdN",
+			"polyline": [
 				"1 0 1 1 2",
 				"2 0 1 3 4",
 				"3 0 1 5 6",

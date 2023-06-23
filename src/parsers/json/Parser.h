@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <type_traits>
 
+#include "core/geometry/bundle/Bundle.h"
 #include "core/geometry/mesh/Geometric.h"
 #include "core/geometry/junction/Junction.h"
 #include "core/ProblemDescription.h"
@@ -37,6 +38,7 @@ SourceGroup readSources(mesh::Unstructured& mesh, const json&);
 OutputRequestGroup readProbes(mesh::Unstructured& mesh, const json&);
 CoordR3Group readCoordinates(const json&);
 std::vector<geometry::junction::Junction> readJunctions(const CoordR3Group& cG, const json&);
+std::vector<geometry::bundle::Bundle> readBundles(const PMGroup&, const ElemRGroup&, const json&);
 void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalModelGroup, const Grid3& grid);
 
 
