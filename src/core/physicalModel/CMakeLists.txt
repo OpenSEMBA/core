@@ -20,6 +20,7 @@ add_library(opensemba_core_physicalmodel STATIC
     "surface/SIBC.cpp"
     "surface/SIBCFile.cpp"
     "wire/Extremes.cpp"
+    "wire/MultiWire.cpp"
     "wire/Wire.cpp"
 )
 target_link_libraries(opensemba_core_physicalmodel opensemba_core_math)

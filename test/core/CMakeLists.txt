@@ -34,6 +34,7 @@ add_executable(opensemba_core_tests
     "physicalModel/multiport/RLCTest.cpp"
     "physicalModel/volume/ClassicTest.cpp"
     "physicalModel/wire/ExtremesTest.cpp"
+    "physicalModel/wire/MultiWireTest.cpp"
     "physicalModel/wire/WireTest.cpp"
     "physicalModel/BoundTest.cpp"
     "physicalModel/GroupTest.cpp"
