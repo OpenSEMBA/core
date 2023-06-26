@@ -33,6 +33,10 @@
 				"name": "CableBundleName",
 				"materialType": "Multiwire",
 				"resistanceVector": [ 9.2e-2, 9.0e-2 ],
+				"inductanceMatrix": [
+					[ 1e-9, 1e-10 ],
+					[ 1e-10, 1e-9 ]
+				],
 				"capacitanceMatrix": [
 					[ 1e-9, 1e-10 ],
 					[ 1e-10, 1e-9 ]

@@ -12,6 +12,7 @@
 #include "core/geometry/element/Tetrahedron4.h"
 #include "core/outputRequest/FarField.h"
 #include "core/outputRequest/OnPoint.h"
+#include "core/physicalModel/wire/MultiWire.h"
 #include "core/physicalModel/wire/Wire.h"
 #include "core/physicalModel/multiport/RLC.h"
 #include "core/physicalModel/Predefined.h"
@@ -402,17 +403,29 @@ TEST_F(ParserJSONParserTest, readMaterials)
 
     auto materials{ parsers::JSON::readMaterials(j) };
 
-    EXPECT_EQ(4, materials.size());
+    EXPECT_EQ(5, materials.size());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::PEC>());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::PMC>());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::SMA>());
     ASSERT_EQ(1, materials.sizeOf<physicalModel::volume::Classic>());
+    ASSERT_EQ(1, materials.sizeOf<physicalModel::wire::MultiWire>());
 
     auto classic = materials.getOf<physicalModel::volume::Classic>()[0];
     EXPECT_DOUBLE_EQ(1.0, classic->getRelativePermittivity());
     EXPECT_DOUBLE_EQ(2.0, classic->getRelativePermeability());
     EXPECT_DOUBLE_EQ(3.0, classic->getElectricConductivity());
     EXPECT_DOUBLE_EQ(4.0, classic->getMagneticConductivity());
+
+    auto multiWire = materials.getOf<physicalModel::wire::MultiWire>()[0];
+    EXPECT_THAT(multiWire->getResistanceVector(), ::testing::ElementsAre(1.0, 2.0));
+    EXPECT_THAT(multiWire->getInductanceMatrix(), ::testing::ElementsAre(
+        std::vector<math::Real>{3.0, 4.0},
+        std::vector<math::Real>{5.0, 6.0}
+    ));
+    EXPECT_THAT(multiWire->getCapacitanceMatrix(), ::testing::ElementsAre(
+        std::vector<math::Real>{7.0, 8.0},
+        std::vector<math::Real>{9.0, 10.0}
+    ));
 }
 
 TEST_F(ParserJSONParserTest, readJunctionsForBundleAndTwoWires)

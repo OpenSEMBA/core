@@ -3,6 +3,7 @@
 #include "Bound.h"
 #include "Gap.h"
 #include "Predefined.h"
+#include "wire/MultiWire.h"
 #include "wire/Wire.h"
 #include "multiport/Dispersive.h"
 #include "multiport/Predefined.h"

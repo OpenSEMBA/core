@@ -25,6 +25,7 @@ public:
         isotropicsibc,
         PML,
         wire,
+        multiwire,
         gap,
         multiport,
         priorityMaterial
