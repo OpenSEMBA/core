@@ -53,6 +53,7 @@ std::vector<CoordId> readElemCoordinateIdsWithSize(std::stringstream & ss, std::
 std::unique_ptr<physicalModel::surface::Multilayer> readMultilayerSurface(const json& layers);
 std::unique_ptr<PM> readPhysicalModel(const json& material);
 physicalModel::PhysicalModel::Type strToMaterialType(std::string label);
+std::unique_ptr<PM> readMultiWire(const MatId id, const std::string & name, const json& material);
 physicalModel::multiport::Multiport::Type strToMultiportType(std::string label);
 physicalModel::volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
@@ -452,6 +453,10 @@ std::unique_ptr<physicalModel::PhysicalModel> readPhysicalModel(const json& j)
             throw std::logic_error("Unrecognized wire type" + wireType);
         }
     }
+    case PM::Type::multiwire:
+    {
+        return readMultiWire(id, name, j);
+    }
 
     case PM::Type::anisotropic:
     {
@@ -545,6 +550,36 @@ outputRequest::OutputRequest::Type strToOutputType(std::string str) {
     else {
         throw std::logic_error("Unrecognized output type: " + str);
     }
+}
+
+std::unique_ptr<PM> readMultiWire(const MatId id, const std::string& name, const json& material) {
+    std::vector<math::Real> resistanceVector;
+    std::vector< std::vector<math::Real> > inductanceMatrix;
+    std::vector< std::vector<math::Real> > capacitanceMatrix;
+
+    if (material.find("resistanceVector") != material.end())
+        resistanceVector = material.at("resistanceVector").get< std::vector<math::Real> >();
+    if (material.find("inductanceMatrix") != material.end())
+        inductanceMatrix = material.at("inductanceMatrix").get< std::vector< std::vector<math::Real> > >();
+    if (material.find("capacitanceMatrix") != material.end())
+        capacitanceMatrix = material.at("capacitanceMatrix").get< std::vector< std::vector<math::Real> > >();
+
+    std::size_t dimension = 0;
+    dimension = std::max(dimension, resistanceVector.size());
+    dimension = std::max(dimension, inductanceMatrix.size());
+    dimension = std::max(dimension, capacitanceMatrix.size());
+
+    if (resistanceVector.size() == 0) {
+        resistanceVector.insert(resistanceVector.begin(), dimension, 0.0);
+    }
+    if (inductanceMatrix.size() == 0) {
+        inductanceMatrix.insert(inductanceMatrix.begin(), dimension, std::vector<math::Real>(dimension, 0.0));
+    }
+    if (capacitanceMatrix.size() == 0) {
+        capacitanceMatrix.insert(capacitanceMatrix.begin(), dimension, std::vector<math::Real>(dimension, 0.0));
+    }
+
+    return std::make_unique<physicalModel::wire::MultiWire>(id, name, resistanceVector, inductanceMatrix, capacitanceMatrix);
 }
 
 outputRequest::Domain readDomain(const json& j)
@@ -1300,6 +1335,8 @@ physicalModel::PhysicalModel::Type strToMaterialType(std::string str)
         return Type::isotropicsibc;
     } else if (str.compare("Wire")==0) {
         return Type::wire;
+    } else if (str.compare("Multiwire") == 0) {
+        return Type::multiwire;
     } else if (str.compare("Connector")==0) {
         return Type::multiport;
     } else if (str.find("Thin_gap")==0) {
