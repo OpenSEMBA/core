@@ -14,6 +14,8 @@
 #include "core/outputRequest/OnPoint.h"
 #include "core/physicalModel/wire/Wire.h"
 #include "core/physicalModel/multiport/RLC.h"
+#include "core/physicalModel/Predefined.h"
+#include "core/physicalModel/volume/Classic.h"
 #include "core/source/PlaneWave.h"
 #include "core/source/Generator.h"
 
@@ -401,6 +403,16 @@ TEST_F(ParserJSONParserTest, readMaterials)
     auto materials{ parsers::JSON::readMaterials(j) };
 
     EXPECT_EQ(4, materials.size());
+    EXPECT_EQ(1, materials.sizeOf<physicalModel::PEC>());
+    EXPECT_EQ(1, materials.sizeOf<physicalModel::PMC>());
+    EXPECT_EQ(1, materials.sizeOf<physicalModel::SMA>());
+    ASSERT_EQ(1, materials.sizeOf<physicalModel::volume::Classic>());
+
+    auto classic = materials.getOf<physicalModel::volume::Classic>()[0];
+    EXPECT_DOUBLE_EQ(1.0, classic->getRelativePermittivity());
+    EXPECT_DOUBLE_EQ(2.0, classic->getRelativePermeability());
+    EXPECT_DOUBLE_EQ(3.0, classic->getElectricConductivity());
+    EXPECT_DOUBLE_EQ(4.0, classic->getMagneticConductivity());
 }
 
 TEST_F(ParserJSONParserTest, readJunctionsForBundleAndTwoWires)
