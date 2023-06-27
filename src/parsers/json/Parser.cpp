@@ -57,6 +57,9 @@ std::unique_ptr<PM> readMultiWire(const MatId id, const std::string & name, cons
 physicalModel::multiport::Multiport::Type strToMultiportType(std::string label);
 physicalModel::volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
+std::vector<geometry::junction::Junction> readJunctions(const CoordR3Group& cG, const json&);
+std::vector<geometry::bundle::Bundle> readBundles(const PMGroup&, const ElemRGroup&, const json&);
+
 std::unique_ptr<source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
 std::unique_ptr<source::port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
 std::unique_ptr<source::port::TEM> readPortTEM(mesh::Unstructured& mesh, const json&);
@@ -503,6 +506,8 @@ std::unique_ptr<physicalModel::PhysicalModel> readPhysicalModel(const json& j)
             return std::make_unique<Predefined>(id, name, mpType);
         case Multiport::Type::openCircuit:
 			return  std::make_unique<Predefined>(id, name, mpType);
+        case Multiport::Type::multiWireConnector:
+            return std::make_unique<MultiWirePort>(id, name, j.at("resistanceVector").get<std::vector<math::Real>>());
         case Multiport::Type::dispersive:
             return  std::make_unique<Dispersive>(id, name, j.at("filename").get<std::string>());
         default:
@@ -1364,6 +1369,8 @@ physicalModel::multiport::Multiport::Type strToMultiportType(std::string str) {
         return Multiport::Type::pRLC;
     } else if (str.compare("Conn_sLpRC")==0) {
         return Multiport::Type::sLpRC;
+    } else if (str.compare("MultiwireConnector") == 0) {
+        return Multiport::Type::multiWireConnector;
     } else if (str.compare("Conn_dispersive") == 0) {
         return Multiport::Type::dispersive;
     } else {

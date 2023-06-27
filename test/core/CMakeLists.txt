@@ -31,6 +31,7 @@ add_executable(opensemba_core_tests
     "math/util/RealTest.cpp"
     "math/vector/CartesianVectorTest.cpp"
     "model/ModelTest.cpp"
+    "physicalModel/multiport/MultiWirePortTest.cpp"
     "physicalModel/multiport/RLCTest.cpp"
     "physicalModel/volume/ClassicTest.cpp"
     "physicalModel/wire/ExtremesTest.cpp"
