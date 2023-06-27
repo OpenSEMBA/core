@@ -20,15 +20,15 @@ public:
         cG_.add(std::make_unique<CoordR3>(coordId++, CVecR3(1.0, 0.0, 0.0)));
         
         const CoordR3* vTet[4] = {
-                cG_.getId(CoordId(1)),
-                cG_.getId(CoordId(2)),
-                cG_.getId(CoordId(3)),
-                cG_.getId(CoordId(4))
+                cG_.atId(CoordId(1)),
+                cG_.atId(CoordId(2)),
+                cG_.atId(CoordId(3)),
+                cG_.atId(CoordId(4))
         };
         const CoordR3* vTri[3] = {
-                cG_.getId(CoordId(2)),
-                cG_.getId(CoordId(1)),
-                cG_.getId(CoordId(3))
+                cG_.atId(CoordId(2)),
+                cG_.atId(CoordId(1)),
+                cG_.atId(CoordId(3))
         };
         eG_ = ElemRGroup();
         eG_.add(std::make_unique<Tet4>(ElemId(1), vTet));

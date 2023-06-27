@@ -24,11 +24,11 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 	
 		ElemRGroup elementsGroup;
 		{
-			const CoordR3* c[1] = { coordinatesGroup.getId(CoordId(1)) };
+			const CoordR3* c[1] = { coordinatesGroup.atId(CoordId(1)) };
 			elementsGroup.copyAndAssignId(NodR{ ElemId(1), c });
 		}
 		{
-			const CoordR3* c[1] = { coordinatesGroup.getId(CoordId(2)) };
+			const CoordR3* c[1] = { coordinatesGroup.atId(CoordId(2)) };
 			elementsGroup.copyAndAssignId(NodR{ ElemId(2), c });
 		}
 		UnstructuredMesh m{coordinatesGroup, elementsGroup};
@@ -110,7 +110,7 @@ TEST(ProblemDescriptionTest, CanInitializeSources) {
 
 	EXPECT_EQ(problemDescription.sources.size(), 1);
 
-	auto sourceInGroup = problemDescription.sources.getId(source::Id(1))->castTo<source::PlaneWave>();
+	auto sourceInGroup = problemDescription.sources.atId(source::Id(1))->castTo<source::PlaneWave>();
 	EXPECT_EQ(sourceInGroup->getDirection(), planewave.getDirection());
 	EXPECT_EQ(sourceInGroup->getPolarization(), planewave.getPolarization());
 	
@@ -153,7 +153,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 			)
 	);
 
-	const CoordR3* coordinatesArgumentList[1] = { coordinatesGroup.getId(CoordId(1)) };
+	const CoordR3* coordinatesArgumentList[1] = { coordinatesGroup.atId(CoordId(1)) };
 	ElemRGroup elementsGroup;
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
@@ -161,7 +161,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 		)
 	);
 
-	const CoordR3* coordinatesArgumentList2[1] = { coordinatesGroup.getId(CoordId(2)) };
+	const CoordR3* coordinatesArgumentList2[1] = { coordinatesGroup.atId(CoordId(2)) };
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
 			ElemId(),
@@ -170,7 +170,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 	);
 
 	// Boundaries
-	const CoordR3* coordinatesArgumentBoundaryList[1] = { coordinatesGroup.getId(CoordId(3)) };
+	const CoordR3* coordinatesArgumentBoundaryList[1] = { coordinatesGroup.atId(CoordId(3)) };
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
 			ElemId(),
@@ -197,7 +197,7 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 		(problemDescription.model.mesh.coords().get()[1])->pos()
 	);
 
-	const auto& element = problemDescription.model.mesh.elems().getId(ElemId(3));
+	const auto& element = problemDescription.model.mesh.elems().atId(ElemId(3));
 
 	EXPECT_EQ(
 		element->getMatId(),

@@ -38,7 +38,7 @@ TEST(ModelTest, CanInitializeGrid) {
 		)
 	);
 
-	const CoordR3* coordinatesArgumentList[1] = {coordinatesGroup.getId(coordinate::Id(1))};
+	const CoordR3* coordinatesArgumentList[1] = {coordinatesGroup.atId(coordinate::Id(1))};
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
@@ -55,7 +55,7 @@ TEST(ModelTest, CanInitializeGrid) {
 
 	EXPECT_EQ(
 		math::CVecR3(1.0, 2.0, 3.0), 
-		(model.mesh.coords()).getId(coordinate::Id(2))->pos()
+		(model.mesh.coords()).atId(coordinate::Id(2))->pos()
 	);
 
 	EXPECT_FALSE(model.mesh.elems().empty());
@@ -80,7 +80,7 @@ TEST(ModelTest, CanInitializePhysicalModels) {
 	EXPECT_EQ(1, model.physicalModels.size());
 	EXPECT_EQ(
 		"Material PEC",
-		model.physicalModels.getId(physicalModel::Id(1))->getName()
+		model.physicalModels.atId(physicalModel::Id(1))->getName()
 	);
 }
 
@@ -99,7 +99,7 @@ TEST(ModelTest, CanCopyConstructor) {
 		)
 	);
 
-	const CoordR3* coordinatesArgumentList[1] = { coordinatesGroup.getId(coordinate::Id(1)) };
+	const CoordR3* coordinatesArgumentList[1] = { coordinatesGroup.atId(coordinate::Id(1)) };
 	ElemRGroup elementsGroup = ElemRGroup();
 	elementsGroup.addAndAssignId(
 		std::make_unique<NodR>(
@@ -121,8 +121,8 @@ TEST(ModelTest, CanCopyConstructor) {
 	ModelObject model(mesh, physicalModelsGroup);
 
 	EXPECT_EQ(
-		model.mesh.coords().getId(coordinate::Id(1)),
-		model.mesh.elems().getId(ElemId(1))->getV(0)
+		model.mesh.coords().atId(coordinate::Id(1)),
+		model.mesh.elems().atId(ElemId(1))->getV(0)
 	);
 
 	ModelObject newModel(model);
@@ -139,13 +139,13 @@ TEST(ModelTest, CanCopyConstructor) {
 		newModel.physicalModels.get().front()->getName()
 	);
 
-	auto newCoordinate1 = newModel.mesh.coords().getId(coordinate::Id(1));
+	auto newCoordinate1 = newModel.mesh.coords().atId(coordinate::Id(1));
 	EXPECT_EQ(
 		newCoordinate1,
-		newModel.mesh.elems().getId(ElemId(1))->getV(0)
+		newModel.mesh.elems().atId(ElemId(1))->getV(0)
 	);
 
-	auto coordinate1 = model.mesh.coords().getId(coordinate::Id(1));
+	auto coordinate1 = model.mesh.coords().atId(coordinate::Id(1));
 	EXPECT_NE(coordinate1, newCoordinate1);
 
 	EXPECT_EQ(coordinate1->pos(), newCoordinate1->pos());
@@ -191,7 +191,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnCopy) {
 
 	EXPECT_FALSE(newModel.physicalModels.empty());
 	EXPECT_EQ(
-		newModel.mesh.elems().getId(ElemId(1))->getModel()->getId(),
+		newModel.mesh.elems().atId(ElemId(1))->getModel()->getId(),
 		physicalModel::Id(18)
 	);
 
@@ -235,7 +235,7 @@ TEST(ModelTest, IsReassigningPhysicalGroupToMeshOnConstruct) {
 	EXPECT_FALSE(model.physicalModels.empty());
 	EXPECT_TRUE(physicalModelsGroup.empty());
 	EXPECT_EQ(
-		model.mesh.elems().getId(ElemId(1))->getModel()->getId(),
+		model.mesh.elems().atId(ElemId(1))->getModel()->getId(),
 		physicalModel::Id(18)
 	);
 }

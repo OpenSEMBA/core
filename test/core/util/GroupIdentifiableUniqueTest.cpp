@@ -99,18 +99,18 @@ TEST_F(GroupIdentifiableUniqueTest, AddAndAssignIds)
 	EXPECT_EQ(LayerId(5), nisporaInGroup->getId());
 
 	EXPECT_EQ(6, another.size());
-	EXPECT_EQ("Nispora", another.getId(LayerId(6))->getName());
+	EXPECT_EQ("Nispora", another.atId(LayerId(6))->getName());
 }
 
 TEST_F(GroupIdentifiableUniqueTest, DuplicatedIdShouldTriggerLogicException)
 {
     auto orig(buildGroupOfThreeLayers());
 
-    EXPECT_EQ(orig.getId(LayerId(1))->getName(), "Patata");
+    EXPECT_EQ(orig.atId(LayerId(1))->getName(), "Patata");
 
     orig.add(std::make_unique<Layer>(LayerId(1), "Another Patata"));
 
-    EXPECT_EQ(orig.getId(LayerId(1))->getName(), "Another_Patata");
+    EXPECT_EQ(orig.atId(LayerId(1))->getName(), "Another_Patata");
 
     for (const auto& item : orig) {
         EXPECT_TRUE(item->getName() != "Patata");

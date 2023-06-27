@@ -68,7 +68,7 @@ std::string Layer::spaceToUnderscore(std::string rhs) {
     return str;
 }
 
-const Layer* LayerGroup::getName(const std::string name) const
+const Layer* LayerGroup::atName(const std::string name) const
 {
     for (auto& it{ this->begin() }; it != this->end(); ++it) {
         if (it->get()->getName() == name) {

@@ -15,10 +15,10 @@ namespace element {
 template<typename E = Elem>
 class Group final : public util::GroupIdentifiableUnique<E> {
 public:
-    std::vector<const E*> getCoordId(const CoordId&) const;
-	std::vector<const E*> getMatId(const MatId&) const;
-    std::vector<const E*> getLayerId(const LayerId&) const ;
-    std::vector<const E*> getMatLayerId(const MatId&, const LayerId&) const;
+    std::vector<const E*> atCoordId(const CoordId&) const;
+	std::vector<const E*> atMatId(const MatId&) const;
+    std::vector<const E*> atLayerId(const LayerId&) const ;
+    std::vector<const E*> atMatLayerId(const MatId&, const LayerId&) const;
     
     BoxR3 getBound() const;
     
@@ -31,7 +31,7 @@ public:
 
 
 template<typename E>
-std::vector<const E*> Group<E>::getCoordId(const CoordId& id) const
+std::vector<const E*> Group<E>::atCoordId(const CoordId& id) const
 {
     std::vector<const E*> res;
     for (auto const& item : *this) {
@@ -45,7 +45,7 @@ std::vector<const E*> Group<E>::getCoordId(const CoordId& id) const
 }
 
 template<typename E>
-std::vector<const E*> Group<E>::getMatId(const MatId& id) const
+std::vector<const E*> Group<E>::atMatId(const MatId& id) const
 {
     std::vector<const E*> res;
     for (auto const& item : *this) {
@@ -57,7 +57,7 @@ std::vector<const E*> Group<E>::getMatId(const MatId& id) const
 }
 
 template<typename E>
-std::vector<const E*> Group<E>::getLayerId(const LayerId& id) const
+std::vector<const E*> Group<E>::atLayerId(const LayerId& id) const
 {
     std::vector<const E*> res;
     for (auto const& item : *this) {
@@ -69,7 +69,7 @@ std::vector<const E*> Group<E>::getLayerId(const LayerId& id) const
 }
 
 template<typename E>
-std::vector<const E*> Group<E>::getMatLayerId(const MatId& mId, const LayerId& lId) const
+std::vector<const E*> Group<E>::atMatLayerId(const MatId& mId, const LayerId& lId) const
 {
     std::vector<const E*> res;
     for (auto const& item : *this) {
@@ -109,7 +109,7 @@ void Group<E>::reassignPointers(const coordinate::Group< coordinate::Coordinate<
             Element<T>* elem = item->template castTo<Element<T>>();
             for (std::size_t j = 0; j < elem->numberOfCoordinates(); j++) {
                 CoordId vId = elem->getV(j)->getId();
-                elem->setV(j, vNew.getId(vId));
+                elem->setV(j, vNew.atId(vId));
             }
         }
     }
@@ -120,7 +120,7 @@ void Group<E>::reassignPointers(const LayerGroup& lNew)
 {
     for (auto const& item : *this) {
         if (item->getLayer() != nullptr) {
-            item->setLayer(lNew.getId(item->getLayerId()));
+            item->setLayer(lNew.atId(item->getLayerId()));
         }
     }
 }
@@ -130,7 +130,7 @@ void Group<E>::reassignPointers(const PMGroup& mNew)
 {
     for (auto const& item : *this) {
         if (item->getModel() != nullptr) {
-            item->setModel(mNew.getId(item->getMatId()));
+            item->setModel(mNew.atId(item->getMatId()));
         }
     }
 }

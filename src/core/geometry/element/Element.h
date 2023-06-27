@@ -334,7 +334,7 @@ std::vector<const CoordI3*> Element<T>::vertexToStructured(
         if (!cG.existId(coordId)) {
             throw std::logic_error("Coord not found.");
         }
-        res[i] = cG.getId(coordId);
+        res[i] = cG.atId(coordId);
         if (res[i]->pos() != cell) {
             throw std::logic_error("Coord not coincident.");
         }
@@ -357,7 +357,7 @@ std::vector<const CoordR3*> Element<T>::vertexToUnstructured(
         if (!cG.existId(coordId)) {
             throw std::logic_error("Coord not found");
         }
-        res[i] = cG.getId(coordId);
+        res[i] = cG.atId(coordId);
         const CoordR3* unsCoord = this->getV(i)->toUnstructured(grid);
         if (res[i]->pos() != unsCoord->pos()) {
             throw std::logic_error("Coord not coincident");

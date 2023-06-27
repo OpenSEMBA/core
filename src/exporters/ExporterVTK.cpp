@@ -94,7 +94,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
         for (auto const& lay : mesh->layers()) {
             for (auto const& mat : smb.model.physicalModels) {
                 writeFile_(
-                    mesh->elems().getMatLayerId(mat->getId(), lay->getId()),
+                    mesh->elems().atMatLayerId(mat->getId(), lay->getId()),
                     makeValid_(preName + mat->getName() + "@" + lay->getName()),
                     outFile,
                     part
@@ -105,7 +105,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     else {
         for (auto const& lay : mesh->layers()) {
             writeFile_(
-                mesh->elems().getLayerId(lay->getId()),
+                mesh->elems().atLayerId(lay->getId()),
                 makeValid_(preName + lay->getName()),
                 outFile,
                 part
@@ -115,7 +115,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     // Writes EM Sources.
     for (const auto& source : srcs) {
         writeFile_(
-            mesh->elems().getIds(source->getTarget()),
+            mesh->elems().atIds(source->getTarget()),
             makeValid_(preName + "EMSource_" + source->getName()),
             outFile,
             part
@@ -125,7 +125,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     // Writes output requests.
     for (const auto& oRq : oRqs) {
         writeFile_(
-            mesh->elems().getIds(oRq->getTarget()),
+            mesh->elems().atIds(oRq->getTarget()),
             makeValid_(preName + "OutRq_" + oRq->getName()),
             outFile,
             part
