@@ -99,7 +99,7 @@ ElemView Structured::reassign(const ElemView& inGroup) {
 
     res.reserve(inGroup.size());
     for (const auto& elem : inGroup) {
-        res.push_back(elems_.getId(
+        res.push_back(elems_.atId(
             elem->getId()
         ));
     }

@@ -20,14 +20,14 @@ public:
         cG_.add(std::make_unique<CoordI3>(coordId++, CVecI3(0, 1, 1)));
 
         std::array<const CoordI3*,4> vQua = {
-                cG_.getId(CoordId(1)),
-                cG_.getId(CoordId(2)),
-                cG_.getId(CoordId(3)),
-                cG_.getId(CoordId(4))
+                cG_.atId(CoordId(1)),
+                cG_.atId(CoordId(2)),
+                cG_.atId(CoordId(3)),
+                cG_.atId(CoordId(4))
         };
         std::array<const CoordI3*,2> vLin = {
-                cG_.getId(CoordId(2)),
-                cG_.getId(CoordId(1))
+                cG_.atId(CoordId(2)),
+                cG_.atId(CoordId(1))
         };
 
         eG_.add(std::make_unique<QuaI4>(ElemId(1), vQua, lay));
@@ -61,7 +61,7 @@ TEST_F(MeshStructuredTest, copy_assignment)
     for (auto const& copiedCoordIt : mesh.coords()) {
         auto copiedCoord = copiedCoordIt.get();
         auto id = copiedCoord->getId();
-        EXPECT_EQ(*copiedCoord, *mesh_.coords().getId(id));
+        EXPECT_EQ(*copiedCoord, *mesh_.coords().atId(id));
     }
 
     EXPECT_EQ(1, mesh.layers().size());

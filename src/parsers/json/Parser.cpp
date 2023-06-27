@@ -108,20 +108,20 @@ element::Group<ElemR> readElemStrAs(
         std::vector<const CoordR3*> vPtr;
 
         if (matId != MatId(0)) {
-            matPtr = mG.getId(matId);
+            matPtr = mG.atId(matId);
         }
         else {
             matPtr = nullptr;
         }
         if (layerId != LayerId(0)) {
-            layerPtr = lG.getId(layerId);
+            layerPtr = lG.atId(layerId);
         }
         else {
             layerPtr = nullptr;
         }
         vPtr.resize(vId.size(), nullptr);
         for (size_t i = 0; i < vId.size(); ++i) {
-            vPtr[i] = cG.getId(vId[i]);
+            vPtr[i] = cG.atId(vId[i]);
         }
 
         res.add(std::make_unique<T>(T(elemId, vPtr.data(), layerPtr, matPtr)));
@@ -300,7 +300,7 @@ void readBoundary(mesh::Unstructured& mesh, const json& j, PMGroup& physicalMode
                     ElemId(),
                     boundCoordinatesArray,
                     nullptr,
-                    physicalModelGroup.getId(id)
+                    physicalModelGroup.atId(id)
                 )
             );
         }
@@ -841,8 +841,8 @@ ElemRGroup readElementsFromSTLFile(
     std::string fn = folder + f.at("file").get<std::string>();
     mesh::Unstructured m = parsers::STL::Parser(fn).readAsUnstructuredMesh();
 
-    auto lay = lG.getId( LayerId(f.at("layerId").get<std::size_t>())  );
-    auto mat = mG.getId( MatId(f.at("materialId").get<std::size_t>()) );
+    auto lay = lG.atId( LayerId(f.at("layerId").get<std::size_t>())  );
+    auto mat = mG.atId( MatId(f.at("materialId").get<std::size_t>()) );
     
     std::map<const CoordR3*, const CoordR3*> readedToGlobal;
     for (const auto& c : m.coords()) {

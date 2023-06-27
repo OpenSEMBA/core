@@ -49,10 +49,10 @@ public:
     iterator findId(const Id& id) { return items_.find(id); };
     const_iterator findId(const Id& id) const { return items_.find(id); };
 
-    T* getId(const Id& id);
-    const T* getId(const Id& id) const;
+    T* atId(const Id& id);
+    const T* atId(const Id& id) const;
 
-    std::vector<const T*> getIds(const std::vector<Id>&) const;
+    std::vector<const T*> atIds(const std::vector<Id>&) const;
 
     bool existId(const Id& id) const { return items_.count(id) != 0; }
     
@@ -106,7 +106,7 @@ GroupIdentifiableUnique<T>& GroupIdentifiableUnique<T>::operator=(const GroupIde
 }
 
 template<typename T>
-const T* GroupIdentifiableUnique<T>::getId(const GroupIdentifiableUnique<T>::Id& id) const
+const T* GroupIdentifiableUnique<T>::atId(const GroupIdentifiableUnique<T>::Id& id) const
 {
     auto it = findId(id);
     if (it != this->end()) {
@@ -119,18 +119,18 @@ const T* GroupIdentifiableUnique<T>::getId(const GroupIdentifiableUnique<T>::Id&
 
 
 template<typename T>
-std::vector<const T*> GroupIdentifiableUnique<T>::getIds(
+std::vector<const T*> GroupIdentifiableUnique<T>::atIds(
     const std::vector<GroupIdentifiableUnique<T>::Id>& ids) const
 {
     std::vector<const T*> r;
     for (const auto& id : ids) {
-        r.push_back(this->getId(id));
+        r.push_back(this->atId(id));
     }
     return r;
 }
 
 template<typename T>
-T* GroupIdentifiableUnique<T>::getId(const GroupIdentifiableUnique<T>::Id& id)
+T* GroupIdentifiableUnique<T>::atId(const GroupIdentifiableUnique<T>::Id& id)
 {
     auto it = GroupIdentifiableUnique<T>::findId(id);
     if (it != this->end()) {

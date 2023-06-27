@@ -47,7 +47,7 @@ private:
 
 class LayerGroup final : public util::GroupIdentifiableUnique<Layer>  {
 public:
-    const Layer* getName(const std::string name) const;
+    const Layer* atName(const std::string name) const;
 };
 
 }
