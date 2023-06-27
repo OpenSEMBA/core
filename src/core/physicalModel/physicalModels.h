@@ -6,6 +6,7 @@
 #include "wire/MultiWire.h"
 #include "wire/Wire.h"
 #include "multiport/Dispersive.h"
+#include "multiport/MultiWirePort.h"
 #include "multiport/Predefined.h"
 #include "multiport/RLC.h"
 #include "surface/Multilayer.h"

@@ -22,6 +22,8 @@ public:
         sLpRC = 16,   // L + (R//C).
         sCpLR = 17,   // C + (L//R).
         pRLC = 18,     // R//L//C.
+        // MultiWire Connector
+        multiWireConnector = 20,
         // Dispersive
         dispersive = 100,
         undefined = 0

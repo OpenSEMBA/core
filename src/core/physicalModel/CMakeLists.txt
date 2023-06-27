@@ -9,6 +9,7 @@ add_library(opensemba_core_physicalmodel STATIC
     "Bound.cpp"
     "Gap.cpp"
     "multiport/Multiport.cpp"
+    "multiport/MultiWirePort.cpp"
     "multiport/Predefined.cpp"
     "multiport/Dispersive.cpp"
     "multiport/RLC.cpp"
