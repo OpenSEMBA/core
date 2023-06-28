@@ -1,10 +1,14 @@
 #include <gtest/gtest.h>
 
+#include "core/bundle/Bundle.h"
 #include "core/geometry/Grid.h"
+#include "core/geometry/element/Line2.h"
 #include "core/geometry/mesh/Unstructured.h"
 #include "core/source/PlaneWave.h"
 #include "core/math/function/Gaussian.h"
 #include "core/physicalModel/Predefined.h"
+#include "core/physicalModel/wire/Wire.h"
+#include "core/physicalModel/multiport/Predefined.h"
 #include "core/outputRequest/OnPoint.h"
 #include "core/ProblemDescription.h"
 
@@ -28,16 +32,21 @@ void fillProblemDescription(UnstructuredProblemDescription& pD)
 			elementsGroup.copyAndAssignId(NodR{ ElemId(1), c });
 		}
 		{
-			const CoordR3* c[1] = { coordinatesGroup.atId(CoordId(2)) };
-			elementsGroup.copyAndAssignId(NodR{ ElemId(2), c });
+			const CoordR3* c[2] = { coordinatesGroup.atId(CoordId(2)), coordinatesGroup.atId(CoordId(1))};
+			elementsGroup.copyAndAssignId(LinR2{ ElemId(2), c });
 		}
 		UnstructuredMesh m{coordinatesGroup, elementsGroup};
 
 		// Create PMGroup.
 		PMGroup physicalModelsGroup;
-		physicalModelsGroup.copyAndAssignId(physicalModel::PEC{physicalModel::Id(), "Material PEC"});
+		physicalModelsGroup.copyAndAssignId(physicalModel::wire::Wire{ physicalModel::Id(), "Material Cable", 0.0, 0.0, 0.0 });
+		physicalModelsGroup.copyAndAssignId(physicalModel::multiport::Predefined{ physicalModel::Id(), "Connector Short", physicalModel::multiport::Multiport::Type::shortCircuit });
+
+		// Create Bundles.
+		std::vector<bundle::Bundle> bundles;
+		bundles.push_back(bundle::Bundle(std::string("Cable"), MatId(1), MatId(2), MatId(2), { ElemId(2) }));
 		
-		pD.model = UnstructuredModel{m, physicalModelsGroup};
+		pD.model = UnstructuredModel{m, physicalModelsGroup, bundles};
 	}
 	
 	// Create source
@@ -127,6 +136,22 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 			"Material PEC"
 		)
 	);
+	physicalModelsGroup.addAndAssignId(
+		std::make_unique<physicalModel::wire::Wire>(
+			physicalModel::Id(),
+			"Material Cable",
+			0.0,
+			0.0,
+			0.0
+			)
+	);
+	physicalModelsGroup.addAndAssignId(
+		std::make_unique<physicalModel::multiport::Predefined>(
+			physicalModel::Id(),
+			"Connector Short",
+			physicalModel::multiport::Multiport::Type::shortCircuit
+			)
+	);
 
 	const auto& physicalModelIt = physicalModelsGroup.addAndAssignId(
 		std::make_unique<physicalModel::Bound>(physicalModel::Id(), physicalModel::Bound::Type::pml)
@@ -161,9 +186,9 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 		)
 	);
 
-	const CoordR3* coordinatesArgumentList2[1] = { coordinatesGroup.atId(CoordId(2)) };
+	const CoordR3* coordinatesArgumentList2[2] = { coordinatesGroup.atId(CoordId(1)), coordinatesGroup.atId(CoordId(2))};
 	elementsGroup.addAndAssignId(
-		std::make_unique<NodR>(
+		std::make_unique<LinR2>(
 			ElemId(),
 			coordinatesArgumentList2
 		)
@@ -180,16 +205,23 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 		)
 	);
 
+	// Bundle
+	std::vector<bundle::Bundle> bundles;
+	bundles.push_back(bundle::Bundle(std::string("Cable"), MatId(2), MatId(3), MatId(3), { ElemId(2) }));
+
 	const UnstructuredModel model{
 		mesh::Unstructured(coordinatesGroup, elementsGroup),
-		physicalModelsGroup
+		physicalModelsGroup,
+		bundles
 	};
 
 	problemDescription.model = model;
 
 	ASSERT_FALSE(problemDescription.model.physicalModels.empty());
 	EXPECT_EQ("Material PEC", problemDescription.model.physicalModels.get()[0]->getName());
-	EXPECT_EQ("PML_Bound", problemDescription.model.physicalModels.get()[1]->getName());
+	EXPECT_EQ("Material Cable", problemDescription.model.physicalModels.get()[1]->getName());
+	EXPECT_EQ("Connector Short", problemDescription.model.physicalModels.get()[2]->getName());
+	EXPECT_EQ("PML_Bound", problemDescription.model.physicalModels.get()[3]->getName());
 
 	EXPECT_FALSE(problemDescription.model.mesh.coords().empty());
 	EXPECT_EQ(
@@ -197,16 +229,45 @@ TEST(ProblemDescriptionTest, CanInitializeModel) {
 		(problemDescription.model.mesh.coords().get()[1])->pos()
 	);
 
+	const auto& line = problemDescription.model.mesh.elems().atId(ElemId(2));
 	const auto& element = problemDescription.model.mesh.elems().atId(ElemId(3));
 
 	EXPECT_EQ(
 		element->getMatId(),
-		problemDescription.model.physicalModels.get()[1]->getId()
+		problemDescription.model.physicalModels.get()[3]->getId()
 	);
 
 	EXPECT_EQ(
 		element->getCoordinates()[0]->pos(),
 		math::CVecR3(5.0, 5.0, 5.0)
+	);
+
+
+	EXPECT_EQ(
+		line->getCoordinates()[0]->pos(),
+		math::CVecR3(0.0, 0.0, 0.0)
+	);
+	EXPECT_EQ(
+		line->getCoordinates()[1]->pos(),
+		math::CVecR3(1.0, 2.0, 3.0)
+	);
+
+	const auto& bundle = problemDescription.model.bundles[0];
+	EXPECT_EQ(
+		problemDescription.model.physicalModels.get()[1]->getId(),
+		bundle.getMaterialId()
+	);
+	EXPECT_EQ(
+		problemDescription.model.physicalModels.get()[2]->getId(),
+		bundle.getInitialConnectorId()
+	);
+	EXPECT_EQ(
+		problemDescription.model.physicalModels.get()[2]->getId(),
+		bundle.getEndConnectorId()
+	);
+	EXPECT_EQ(
+		line->getId(),
+		bundle.getElemIds()[0]
 	);
 }
 

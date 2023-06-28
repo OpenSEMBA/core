@@ -6,24 +6,26 @@
 #include "core/util/Class.h"
 
 namespace semba::geometry::junction {
-	typedef geometry::CoordId CoordIdForJunctions;
-	class Junction {
 
-	public:
-		static const std::string INVALID_ATTRIBUTE_MESSAGE;
+using CoordIdForJunctions = geometry::CoordId;
 
-		Junction(std::string & name);
+class Junction {
 
-		std::string const& getName() const;
-		std::string getName();
+public:
+	static const std::string & INVALID_ATTRIBUTE_MESSAGE;
 
-		std::vector<std::vector<CoordIdForJunctions> > getUnitedCoordIds() const;
+	Junction(std::string & name);
 
-		void addCoordinatesToUnite(std::initializer_list<CoordIdForJunctions> coordinates);
-		void addCoordinatesToUnite(const std::vector<int> & coordinates);
+	const std::string & getName() const;
+	
+	std::vector<std::vector<CoordIdForJunctions> > getUnitedCoordIds() const;
 
-	private:
-		std::string name;
-		std::vector<std::vector<CoordIdForJunctions> > unitedCoordIds;
-	};
+	void addCoordinatesToUnite(const std::initializer_list<CoordIdForJunctions> & coordinates);
+	void addCoordinatesToUnite(const std::vector<int> & coordinates);
+
+private:
+	std::string name;
+	std::vector<std::vector<CoordIdForJunctions> > unitedCoordIds;
+};
+
 }

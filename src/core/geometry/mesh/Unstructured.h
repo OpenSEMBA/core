@@ -5,7 +5,6 @@
 #include "core/geometry/coordinate/Group.h"
 #include "core/geometry/element/Group.h"
 #include "core/geometry/junction/Junction.h"
-#include "core/geometry/bundle/Bundle.h"
 #include "core/geometry/Layer.h"
 
 namespace semba {
@@ -20,8 +19,7 @@ public:
     Unstructured(const CoordR3Group& cG,
                  const ElemRGroup& elem,
                  const LayerGroup& = LayerGroup(),
-                 const std::vector<junction::Junction>& junctions = std::vector<junction::Junction>(),
-                 const std::vector<bundle::Bundle> & bundles = std::vector<bundle::Bundle>());
+                 const std::vector<junction::Junction>& junctions = std::vector<junction::Junction>());
     Unstructured(const Unstructured& param);
     Unstructured(Unstructured&&) = default;
     virtual ~Unstructured() = default;
@@ -37,13 +35,11 @@ public:
     ElemRGroup&      elems () { return elems_; }
     LayerGroup& layers() { return layers_; }
     std::vector<junction::Junction>& junctions() { return junctions_; }
-    std::vector<bundle::Bundle>& bundles() { return bundles_; }
 
     const CoordR3Group& coords() const { return coords_; }
     const ElemRGroup&      elems () const { return elems_; }
     const LayerGroup& layers() const { return layers_; }
     const std::vector<junction::Junction>& junctions() const { return junctions_; }
-    const std::vector<bundle::Bundle>& bundles() const { return bundles_; }
 
     Structured* getMeshStructured(
             const Grid3& grid,
@@ -61,7 +57,6 @@ private:
     ElemRGroup elems_;
 	LayerGroup layers_;
     std::vector<junction::Junction> junctions_;
-    std::vector<bundle::Bundle> bundles_;
 };
 
 }

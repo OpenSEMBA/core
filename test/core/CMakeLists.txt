@@ -9,7 +9,7 @@ include(GoogleTest)
 add_executable(opensemba_core_tests
     "util/GroupIdentifiableUniqueTest.cpp"
     "util/ProjectTest.cpp"
-    "geometry/bundle/BundleTest.cpp"
+    "bundle/BundleTest.cpp"
     "geometry/coordinate/CoordinateGroupTest.cpp"
     "geometry/element/Line2Test.cpp"
     "geometry/element/PolylineTest.cpp"
