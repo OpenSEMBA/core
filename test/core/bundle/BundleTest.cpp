@@ -1,10 +1,10 @@
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"	
-#include "gmock/gmock-matchers.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>	
+#include <gmock/gmock-matchers.h>
 
-#include "core/geometry/bundle/Bundle.h"
+#include "core/bundle/Bundle.h"
 
-using namespace semba::geometry;
+using namespace semba;
 
 TEST(BundleTest, CanCreate) {
 	std::string bundleName = "test_bundle";

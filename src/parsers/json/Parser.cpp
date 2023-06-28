@@ -58,7 +58,6 @@ physicalModel::multiport::Multiport::Type strToMultiportType(std::string label);
 physicalModel::volume::Anisotropic::Model strToAnisotropicModel(std::string label);
 
 std::vector<geometry::junction::Junction> readJunctions(const CoordR3Group& cG, const json&);
-std::vector<geometry::bundle::Bundle> readBundles(const PMGroup&, const ElemRGroup&, const json&);
 
 std::unique_ptr<source::PlaneWave> readPlanewave(mesh::Unstructured& mesh, const json&);
 std::unique_ptr<source::port::Waveguide> readPortWaveguide(mesh::Unstructured& mesh, const json&);
@@ -212,6 +211,7 @@ UnstructuredProblemDescription Parser::read() const
 
     auto materialsGroup{ readMaterials(j.at("model")) };
 	auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"), this->filename.getFolder());
+    auto bundles = readBundles(materialsGroup, mesh.get()->elems(), j.at("model"));
 
 	res.sources = readSources(*mesh, j);
 
@@ -219,7 +219,7 @@ UnstructuredProblemDescription Parser::read() const
 
 	readBoundary(*mesh, j, materialsGroup, res.grids);
 
-    res.model = UnstructuredModel{*mesh, materialsGroup};
+    res.model = UnstructuredModel{*mesh, materialsGroup, bundles};
 
     postReadOperations(res);
 
@@ -325,13 +325,11 @@ std::unique_ptr<mesh::Unstructured> readUnstructuredMesh(const PMGroup& physical
 {
     LayerGroup layers = readLayers(j);
 	CoordR3Group coords = readCoordinates(j);
-    ElemRGroup elements = readElements(physicalModels, layers, coords, j, folder);
     return std::make_unique<mesh::Unstructured>(
         coords,
-        elements,
+        readElements(physicalModels, layers, coords, j, folder),
         layers,
-        readJunctions(coords, j),
-        readBundles(physicalModels, elements, j)
+        readJunctions(coords, j)
 	);
 }
 

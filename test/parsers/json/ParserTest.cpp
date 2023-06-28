@@ -240,13 +240,14 @@ TEST_F(ParserJSONParserTest, twoWiresDetailed)
 
     auto& unstructuredMesh = parsers::JSON::readUnstructuredMesh(physicalModel, modelJson, getFolder() + "/wires");
     auto& mesh = *(unstructuredMesh.get());
+    auto& bundles = parsers::JSON::readBundles(physicalModel, mesh.elems(), modelJson);
 
     EXPECT_EQ(3, physicalModel.size());
     EXPECT_EQ(1, mesh.layers().size());
     EXPECT_EQ(6, mesh.coords().size());
     EXPECT_EQ(2, mesh.elems().size());
     EXPECT_EQ(1, mesh.junctions().size());
-    ASSERT_EQ(2, mesh.bundles().size());
+    ASSERT_EQ(2, bundles.size());
 
     auto& wireMaterialList = physicalModel.getOf<physicalModel::wire::Wire>();
 
@@ -290,8 +291,8 @@ TEST_F(ParserJSONParserTest, twoWiresDetailed)
 
     EXPECT_EQ(firstCoordinate->pos(), secondCoordinate->pos());
 
-    auto& firstBundle = mesh.bundles()[0];
-    auto& secondBundle = mesh.bundles()[1];
+    auto& firstBundle = bundles[0];
+    auto& secondBundle = bundles[1];
 
     EXPECT_THAT("wire1", ::testing::StrEq(firstBundle.getName()));
     EXPECT_THAT("wire2", ::testing::StrEq(secondBundle.getName()));
@@ -316,13 +317,14 @@ TEST_F(ParserJSONParserTest, threeWiresDetailed)
 
     auto& unstructuredMesh = parsers::JSON::readUnstructuredMesh(physicalModel, modelJson, getFolder() + "/wires");
     auto& mesh = *(unstructuredMesh.get());
+    auto& bundles = parsers::JSON::readBundles(physicalModel, mesh.elems(), modelJson);
 
     EXPECT_EQ(3, physicalModel.size());
     EXPECT_EQ(1, mesh.layers().size());
     EXPECT_EQ(8, mesh.coords().size());
     EXPECT_EQ(3, mesh.elems().size());
     EXPECT_EQ(1, mesh.junctions().size());
-    ASSERT_EQ(3, mesh.bundles().size());
+    ASSERT_EQ(3, bundles.size());
 
     auto& wireMaterialList = physicalModel.getOf<physicalModel::wire::Wire>();
 
@@ -374,9 +376,9 @@ TEST_F(ParserJSONParserTest, threeWiresDetailed)
     EXPECT_EQ(firstCoordinate->pos(), secondCoordinate->pos());
     EXPECT_EQ(firstCoordinate->pos(), thirdCoordinate->pos());
 
-    auto& firstBundle = mesh.bundles()[0];
-    auto& secondBundle = mesh.bundles()[1];
-    auto& thirdBundle = mesh.bundles()[2];
+    auto& firstBundle = bundles[0];
+    auto& secondBundle = bundles[1];
+    auto& thirdBundle = bundles[2];
 
     EXPECT_THAT("wire1", ::testing::StrEq(firstBundle.getName()));
     EXPECT_THAT("wire2", ::testing::StrEq(secondBundle.getName()));
@@ -407,13 +409,14 @@ TEST_F(ParserJSONParserTest, bundleAndTwoWiresDetailed)
 
     auto& unstructuredMesh = parsers::JSON::readUnstructuredMesh(physicalModel, modelJson, getFolder() + "/wires");
     auto& mesh = *(unstructuredMesh.get());
+    auto& bundles = parsers::JSON::readBundles(physicalModel, mesh.elems(), modelJson);
 
     EXPECT_EQ(5, physicalModel.size());
     EXPECT_EQ(1, mesh.layers().size());
     EXPECT_EQ(8, mesh.coords().size());
     EXPECT_EQ(4, mesh.elems().size());
     EXPECT_EQ(1, mesh.junctions().size());
-    ASSERT_EQ(3, mesh.bundles().size());
+    ASSERT_EQ(3, bundles.size());
 
     auto& wireMaterialList = physicalModel.getOf<physicalModel::wire::Wire>();
 
@@ -481,9 +484,9 @@ TEST_F(ParserJSONParserTest, bundleAndTwoWiresDetailed)
     EXPECT_EQ(firstCoordinate->pos(), thirdCoordinate->pos());
     EXPECT_EQ(firstCoordinate->pos(), fourthCoordinate->pos());
 
-    auto& bundle = mesh.bundles()[0];
-    auto& firstCable = mesh.bundles()[1];
-    auto& secondCable = mesh.bundles()[2];
+    auto& bundle = bundles[0];
+    auto& firstCable = bundles[1];
+    auto& secondCable = bundles[2];
 
     EXPECT_THAT("bundle1", ::testing::StrEq(bundle.getName()));
     EXPECT_THAT("wire2", ::testing::StrEq(firstCable.getName()));

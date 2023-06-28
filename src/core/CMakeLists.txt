@@ -15,6 +15,7 @@ find_package(nlohmann_json CONFIG REQUIRED)
 
 add_library(opensemba_core STATIC
     "ProblemDescription.cpp"
+    "bundle/Bundle.cpp"
 )
     
 target_link_libraries(opensemba_core
