@@ -1,12 +1,12 @@
 #pragma once
 
-#include "core/physicalModel/PhysicalModel.h"
+#include "core/physicalModel/wire/WireBase.h"
 
 namespace semba {
 namespace physicalModel {
 namespace wire {
 
-class Wire : public virtual PhysicalModel {
+class Wire : public WireBase {
 public:
     Wire(const Id id,
          const std::string name,
