@@ -1,10 +1,10 @@
 #pragma once
 
-#include "core/physicalModel/PhysicalModel.h"
+#include "WireBase.h"
 #include <vector>
 
 namespace semba::physicalModel::wire {
-class MultiWire : public virtual PhysicalModel {
+class MultiWire : public WireBase {
 public:
     MultiWire(
         const Id id,

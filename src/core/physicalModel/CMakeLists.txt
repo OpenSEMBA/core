@@ -23,5 +23,6 @@ add_library(opensemba_core_physicalmodel STATIC
     "wire/Extremes.cpp"
     "wire/MultiWire.cpp"
     "wire/Wire.cpp"
+    "wire/WireBase.cpp"
 )
 target_link_libraries(opensemba_core_physicalmodel opensemba_core_math)

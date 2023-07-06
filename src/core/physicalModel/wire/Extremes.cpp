@@ -5,13 +5,15 @@ namespace physicalModel {
 namespace wire {
 
 Extremes::Extremes(const std::string& name,
-                   const Wire& wire,
+                   const WireBase* wire,
                    const multiport::Multiport* extremeL,
                    const multiport::Multiport* extremeR)
-:   Wire(wire)
 {
     setName(name);
-    setId(wire.getId());
+    setId(wire->getId());
+
+    wire_.reset(wire->clone().release()->castTo<WireBase>());
+    
     if (extremeL != nullptr) {
         extreme_[0].reset(extremeL->clone().release()->castTo<multiport::Multiport>());
     }
@@ -22,9 +24,10 @@ Extremes::Extremes(const std::string& name,
 
 Extremes::Extremes(const Extremes& rhs) : 
     Identifiable<Id>(rhs),
-    PhysicalModel(rhs),
-    Wire(rhs)
+    PhysicalModel(rhs)
 {
+    wire_.reset(rhs.wire_->clone().release()->castTo<WireBase>());
+
     if (rhs.extreme_[0] != nullptr) {
         extreme_[0].reset(rhs.extreme_[0]->clone().release()->castTo<multiport::Multiport>());
     }

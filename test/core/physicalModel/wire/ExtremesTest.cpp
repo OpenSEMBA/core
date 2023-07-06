@@ -19,10 +19,14 @@ TEST_F(ExtremesTest, build_from_wire_and_multiport)
     multiport::Predefined mp1(Id(3), "short", multiport::Multiport::Type::shortCircuit);
     multiport::Predefined mp2(Id(4), "open", multiport::Multiport::Type::openCircuit);
     
-    wire::Extremes extremes("extremes", wire, &mp1, &mp2);
+    wire::Extremes extremes("extremes", &wire, &mp1, &mp2);
 
     EXPECT_EQ(Id(2), extremes.getId());
     EXPECT_EQ("extremes", extremes.getName()); 
+
+    EXPECT_EQ(wire.getRadius(), extremes.getWire()->castTo<wire::Wire>()->getRadius());
+    EXPECT_EQ(wire.getSeriesResistance(), extremes.getWire()->castTo<wire::Wire>()->getSeriesResistance());
+    EXPECT_EQ(wire.getSeriesInductance(), extremes.getWire()->castTo<wire::Wire>()->getSeriesInductance());
 
     EXPECT_EQ(mp1.getType(), extremes.getExtreme(0)->getType());
     EXPECT_EQ(mp2.getType(), extremes.getExtreme(1)->getType());
