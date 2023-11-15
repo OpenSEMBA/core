@@ -85,7 +85,13 @@ std::unique_ptr<ElemI> LineConformal::toStructured(
 std::unique_ptr<ElemR> LineConformal::toUnstructured(
     const CoordR3Group& cG,
     const Grid3& grid) const {
-    throw std::logic_error("LineConformal::toUnstructured operation not permitted");
+    //throw std::logic_error("LineConformal::toUnstructured operation not permitted");
+    return std::make_unique<Line2<math::Real>>(
+        this->getId(),
+        this->vertexToUnstructured(cG, grid).data(),
+        this->getLayer(),
+        this->getModel()
+    );
 }
 
 } 
