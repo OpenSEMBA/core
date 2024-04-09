@@ -126,7 +126,7 @@ void ExporterVTK::writeMesh_(const UnstructuredProblemDescription& smb)
     for (const auto& oRq : oRqs) {
         writeFile_(
             mesh->elems().atIds(oRq->getTarget()),
-            makeValid_(preName + "OutRq_" + oRq->getName()),
+            makeValid_(preName + "OutRq_" + oRq->getTypeStrForName() + "_" + oRq->getName()),
             outFile,
             part
         );
@@ -308,4 +308,4 @@ std::string ExporterVTK::makeValid_(const std::string& allocator) {
 }
 
 }
-} 
+}

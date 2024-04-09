@@ -42,5 +42,11 @@ std::string OutputRequest::getTypeStr() const
     }
 }
 
+
+std::string OutputRequest::getTypeStrForName() const
+{
+    return std::string();
+}
+
 } 
-} 
+}

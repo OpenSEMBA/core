@@ -18,5 +18,10 @@ FarField::FarField(const Domain& domain,
     stepPhi = sPhi;
 }
 
+    std::string FarField::getTypeStrForName() const
+    {
+        return std::string("Far_Field");
+    }
+        
 } 
 } 

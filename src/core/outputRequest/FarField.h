@@ -19,10 +19,11 @@ public:
         return std::make_unique<FarField>(*this);
     }
 
+    virtual std::string getTypeStrForName() const override;
+
     math::Real initialTheta, finalTheta, stepTheta;
     math::Real initialPhi, finalPhi, stepPhi;
 };
 
 } 
 } 
-

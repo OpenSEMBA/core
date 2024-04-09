@@ -21,6 +21,8 @@ public:
     math::Constants::CartesianAxis getDir() const;
     math::UInt                     getSkip() const;
 
+    virtual std::string getTypeStrForName() const override;
+
 private:
     math::Constants::CartesianAxis dir_;
     math::UInt                     skip_;
@@ -28,4 +30,3 @@ private:
 
 } 
 } 
-
