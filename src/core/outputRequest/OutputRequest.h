@@ -52,6 +52,8 @@ public:
     void setTarget(const Target& target) { target_ = target; }
 
     std::string getTypeStr() const;
+    virtual std::string getTypeStrForName() const;
+
    
 private:
     std::string name_;
@@ -73,5 +75,4 @@ public:
 
 } 
 } 
-} 
-
+}

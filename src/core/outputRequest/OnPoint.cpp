@@ -12,5 +12,9 @@ namespace outputRequest {
         : OutputRequest(outputType, name, domain, elem)
     {}
 
+    std::string OnPoint::getTypeStrForName() const
+    {
+        return std::string("On_Point");
+    }
 } 
 } 

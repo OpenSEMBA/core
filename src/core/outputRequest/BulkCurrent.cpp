@@ -24,5 +24,12 @@ math::UInt BulkCurrent::getSkip() const {
     return skip_;
 }
 
+
+
+std::string BulkCurrent::getTypeStrForName() const
+{
+    return std::string("Bulk_Current");
+}
+
 } 
 } 

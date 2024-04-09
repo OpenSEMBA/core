@@ -17,6 +17,7 @@ namespace outputRequest {
         std::unique_ptr<OutputRequest> clone() const override {
             return std::make_unique<OnPoint>(*this);
         }
+        virtual std::string getTypeStrForName() const override;
     };
 
 } 
