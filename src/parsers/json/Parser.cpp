@@ -536,7 +536,10 @@ outputRequest::OutputRequest::Type strToOutputType(std::string str) {
         return outputRequest::OutputRequest::Type::magneticFieldNormals;
     }
     else if (str.compare("current") == 0) {
-        return outputRequest::OutputRequest::Type::current;;
+        return outputRequest::OutputRequest::Type::current;
+    }
+    else if (str.compare("voltage") == 0) {
+        return outputRequest::OutputRequest::Type::voltage;
     }
     else if (str.compare("bulkCurrentElectric") == 0) {
         return outputRequest::OutputRequest::Type::bulkCurrentElectric;

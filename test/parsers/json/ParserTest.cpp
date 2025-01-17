@@ -67,6 +67,11 @@ TEST_F(ParserJSONParserTest, b2)
     ASSERT_NO_THROW(Parser{ getFilename("b2") }.read());
 }
 
+TEST_F(ParserJSONParserTest, wire_probes)
+{
+    ASSERT_NO_THROW(Parser{ getFilename("wire_probes") }.read());
+}
+
 TEST_F(ParserJSONParserTest, b2_detailed)
 {
     auto data{ Parser{getFilename("b2") }.read() };
@@ -396,7 +401,6 @@ TEST_F(ParserJSONParserTest, threeWiresDetailed)
     EXPECT_THAT(secondBundle.getElemIds(), ::testing::ElementsAre(secondPolyline->getId()));
     EXPECT_THAT(thirdBundle.getElemIds(), ::testing::ElementsAre(thirdPolyline->getId()));
 }
-
 
 TEST_F(ParserJSONParserTest, bundleAndTwoWiresDetailed)
 {
