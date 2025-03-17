@@ -27,6 +27,14 @@ namespace semba {
                 }
             }
 
+            Waveform::Type Waveform::getEnumValue(const std::string& str) {
+                {
+                    if (str == "A") return Waveform::Type::A;
+                    else if (str == "D") return Waveform::Type::D;
+                    else if (str == "H") return Waveform::Type::H;
+                }
+            }
+
             Real Waveform::operator ()(const Real& t) const {
                 return I0_ * 
                     (std::exp(-alpha_*t) - std::exp(-beta_*t)) *
