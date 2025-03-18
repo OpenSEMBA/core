@@ -21,7 +21,6 @@
 #include "core/physicalModel/volume/Classic.h"
 #include "core/source/PlaneWave.h"
 #include "core/source/Generator.h"
-#include <parsers/json/Parser.cpp>
 
 using namespace semba;
 using namespace semba::parsers::JSON;
