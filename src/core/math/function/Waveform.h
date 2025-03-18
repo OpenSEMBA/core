@@ -12,11 +12,13 @@ namespace semba {
             class Waveform : public Function<Real, Real> {
             public:
                 enum class Type {
-                    A,
-                    D,
-                    H
+                    A='A',
+                    D='D',
+                    H='H',
                 };
                 Waveform(Type type);
+
+                static Waveform::Type getEnumValue(const std::string& str);
                 
                 SEMBA_MATH_FUNCTION_DEFINE_CLONE(Waveform);
 

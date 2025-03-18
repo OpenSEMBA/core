@@ -22,6 +22,7 @@ add_executable(opensemba_core_tests
     "geometry/GridTest.cpp"
     "math/axis/LocalTest.cpp"
     "math/function/GaussianTest.cpp"
+    "math/function/WaveFormTest.cpp"
     "math/function/LinearInterpolationTest.cpp"
     "math/matrix/DynamicTest.cpp"
     "math/matrix/StaticTest.cpp"

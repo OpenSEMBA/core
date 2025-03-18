@@ -4,6 +4,7 @@
 
 #include "core/math/function/Gaussian.h"
 #include "core/math/function/BandLimited.h"
+#include "core/math/function/Waveform.h"
 #include "core/model/Model.h"
 #include "core/geometry/element/Line2.h"
 #include "core/geometry/element/Polyline.h"
@@ -1462,6 +1463,15 @@ std::unique_ptr<source::Magnitude::Magnitude> readMagnitude(const json& j)
 				)
 			)
 		);
+    }
+
+    if (type.compare("Waveform") == 0) {
+        auto waveFormType = function::Waveform::getEnumValue(j.at("waveFormType").get<std::string>());
+        return std::make_unique<source::Magnitude::Magnitude>(
+            source::Magnitude::Magnitude(
+                new function::Waveform(waveFormType)
+            )
+        );
     }
 
     if (type.compare("Band_limited") == 0) {

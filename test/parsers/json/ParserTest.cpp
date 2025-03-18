@@ -6,6 +6,7 @@
 #include "parsers/json/Parser.h"
 
 #include "core/math/function/Gaussian.h"
+#include "core/math/function/Waveform.h"
 #include "core/geometry/element/Line2.h"
 #include "core/geometry/element/Polyline.h"
 #include "core/geometry/element/Triangle3.h"
@@ -545,4 +546,24 @@ TEST_F(ParserJSONParserTest, readMaterials)
 
     auto multiWireConnector = materials.getOf<physicalModel::multiport::MultiWirePort>()[0];
     EXPECT_THAT(multiWireConnector->getResistanceVector(), ::testing::ElementsAre(1.0, 2.0));
+}
+
+TEST_F(ParserJSONParserTest, readWaveFormTypes)
+{
+    std::ifstream stream(getFolder() + "sources.smb.json");
+    json j;
+    stream >> j;
+
+    auto materialsGroup{ readMaterials(j.at("model")) };
+    auto mesh = readUnstructuredMesh(materialsGroup, j.at("model"), getFolder());
+    auto bundles = readBundles(materialsGroup, mesh.get()->elems(), j.at("model"));
+    auto sources{ readSources(*mesh, j) };
+    auto source = sources.get().at(0);
+
+    auto magnitudePointer = source->getMagnitude();
+    auto &magnitude = *magnitudePointer;
+
+    auto expectedWaveFormType = function::Waveform::Type::D;
+    auto expectedMagnitude = source::Magnitude::Magnitude(new function::Waveform(expectedWaveFormType));
+    EXPECT_EQ(magnitude, expectedMagnitude);
 }
