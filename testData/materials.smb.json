@@ -46,6 +46,39 @@
       "materialType": "Connector",
       "connectorType": "MultiwireConnector",
       "resistanceVector": [ 1.0, 2.0 ]
+    },
+    {
+      "materialId": 7,
+      "name": "Terminal001",
+      "materialType": "Connector",
+      "connectorType": "Conn_sRpLC",
+      "resistance": 8.0,
+      "inductance": 2.0,
+      "capacitance": 3.0
+    },
+    {
+      "materialId": 8,
+      "name": "case",
+      "materialType": "Connector",
+      "connectorType": "Conn_pRLC",
+      "resistance": 5.0,
+      "inductance": 4.0,
+      "capacitance": 3.0
+    },
+    {
+      "materialId": 9,
+      "name": "Terminal",
+      "materialType": "Connector",
+      "connectorType": "Conn_sCpLR",
+      "resistance": 0.0,
+      "inductance": 0.0,
+      "capacitance": 1e+22
+    },
+    {
+      "materialId": 10,
+      "name": "Short",
+      "materialType": "Connector",
+      "connectorType": "Conn_short"
     }
   ]
 }

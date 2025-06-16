@@ -519,13 +519,14 @@ TEST_F(ParserJSONParserTest, readMaterials)
 
     auto materials{ parsers::JSON::readMaterials(j) };
 
-    EXPECT_EQ(6, materials.size());
+    EXPECT_EQ(10, materials.size());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::PEC>());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::PMC>());
     EXPECT_EQ(1, materials.sizeOf<physicalModel::SMA>());
     ASSERT_EQ(1, materials.sizeOf<physicalModel::volume::Classic>());
     ASSERT_EQ(1, materials.sizeOf<physicalModel::wire::MultiWire>());
     ASSERT_EQ(1, materials.sizeOf<physicalModel::multiport::Multiport>());
+    ASSERT_EQ(4, materials.sizeOf < physicalModel::multiport::RLC)());
 
     auto classic = materials.getOf<physicalModel::volume::Classic>()[0];
     EXPECT_DOUBLE_EQ(1.0, classic->getRelativePermittivity());
@@ -546,6 +547,11 @@ TEST_F(ParserJSONParserTest, readMaterials)
 
     auto multiWireConnector = materials.getOf<physicalModel::multiport::MultiWirePort>()[0];
     EXPECT_THAT(multiWireConnector->getResistanceVector(), ::testing::ElementsAre(1.0, 2.0));
+
+    auto terminalsCpLR = materials.getOf<physicalModel::multiport::RLC>()[1];
+    EXPECT_EQ(5, terminalsCpLR->getR());
+    EXPECT_EQ(3, terminalsCpLR->getC());
+    EXPECT_EQ(4, terminalsCpLR->getL());
 }
 
 TEST_F(ParserJSONParserTest, readWaveFormTypes)
