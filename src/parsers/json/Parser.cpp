@@ -1369,9 +1369,19 @@ physicalModel::multiport::Multiport::Type strToMultiportType(std::string str) {
         return Multiport::Type::sRLC;
     } else if (str.compare("Conn_pRLC")==0) {
         return Multiport::Type::pRLC;
+    } else if (str.compare("Conn_sRpLC")==0) {
+        return Multiport::Type::sRpLC;
     } else if (str.compare("Conn_sLpRC")==0) {
         return Multiport::Type::sLpRC;
-    } else if (str.compare("MultiwireConnector") == 0) {
+    } else if (str.compare("Conn_sCpLR")==0) {
+        return Multiport::Type::sCpLR;
+    } else if (str.compare("Conn_sRCpL")==0) {
+        return Multiport::Type::sRCpL;
+    } else if (str.compare("Conn_sLCpR")==0) {
+        return Multiport::Type::sLCpR;
+    } else if (str.compare("Conn_sRLpC")==0) {
+        return Multiport::Type::sRLpC;
+    } else if (str.compare("MultiwireConnector")==0) {
         return Multiport::Type::multiWireConnector;
     } else if (str.compare("Conn_dispersive") == 0) {
         return Multiport::Type::dispersive;
