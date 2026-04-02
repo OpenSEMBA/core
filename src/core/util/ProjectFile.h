@@ -411,7 +411,7 @@ inline std::string ProjectFile::getFullPath() const {
     std::string res;
 #ifndef _WIN32
     res = (const char*) realpath(this->getFilename().c_str(), nullptr);
-    if (Project(res).isFolder()) {
+    if (ProjectFile(res).isFolder()) {
         res += "/";
     }
 #else

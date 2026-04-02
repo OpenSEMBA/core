@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <stdexcept>
 
 #include "Volume.h"
 
@@ -140,7 +141,7 @@ Hexahedron8<T>::Hexahedron8(
     Elem(lay, mat) {
 
     if (!box.isVolume()) {
-        throw geometry::Error::Box::NotVolume();
+        throw std::logic_error("Box is not a volume");
     }
     std::vector<math::CartesianVector<T, 3> > pos = box.getPos();
     for (std::size_t i = 0; i < numberOfCoordinates(); i++) {
