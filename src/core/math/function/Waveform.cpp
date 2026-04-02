@@ -29,9 +29,18 @@ namespace semba {
 
             Waveform::Type Waveform::getEnumValue(const std::string& str) {
                 {
-                    if (str == "A") return Waveform::Type::A;
-                    else if (str == "D") return Waveform::Type::D;
-                    else if (str == "H") return Waveform::Type::H;
+                    if (str == "A") {
+                        return Waveform::Type::A;
+                    }
+                    else if (str == "D") {
+                        return Waveform::Type::D;
+                    }
+                    else if (str == "H") {
+                        return Waveform::Type::H;
+                    }
+                    else {
+                        throw std::runtime_error("Invalid Waveform type.");
+                    }
                 }
             }
 
