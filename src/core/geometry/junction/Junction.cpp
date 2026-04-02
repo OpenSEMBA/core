@@ -6,7 +6,7 @@ namespace semba::geometry::junction {
 const std::string& Junction::INVALID_ATTRIBUTE_MESSAGE = "Error: There must be at least 2 coordinates to unite!";
 
 
-Junction::Junction(std::string & name)
+Junction::Junction(const std::string& name)
 {
 	this->name = name;
 }

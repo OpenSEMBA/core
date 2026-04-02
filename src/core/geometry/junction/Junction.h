@@ -14,7 +14,7 @@ class Junction {
 public:
 	static const std::string & INVALID_ATTRIBUTE_MESSAGE;
 
-	Junction(std::string & name);
+	Junction(const std::string& name);
 
 	const std::string & getName() const;
 	

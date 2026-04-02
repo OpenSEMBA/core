@@ -50,6 +50,7 @@ ElemRGroup readElementsFromFile(const PMGroup&, LayerGroup&, CoordR3Group&, cons
 ElemRGroup readElementsFromSTLFile(const PMGroup&, LayerGroup&, CoordR3Group&, const json&, const std::string& folder);
 std::vector<CoordId> readElemCoordinateIdsWithUnknownSize(std::stringstream & ss);
 std::vector<CoordId> readElemCoordinateIdsWithSize(std::stringstream & ss, std::size_t size);
+std::vector<CoordId> readElemCoordinateIds(std::stringstream & ss, std::size_t size);
 
 std::unique_ptr<physicalModel::surface::Multilayer> readMultilayerSurface(const json& layers);
 std::unique_ptr<PM> readPhysicalModel(const json& material);
@@ -796,7 +797,8 @@ std::vector<junction::Junction> readJunctions(const CoordR3Group& cG, const json
     auto junctionsToReturn = std::vector<junction::Junction>();
 
     for (auto const& it : j.at("junctions")) {
-        junctionsToReturn.push_back(junction::Junction(it.at("name").get<std::string>()));
+        auto name = it.at("name").get<std::string>();
+        junctionsToReturn.push_back(junction::Junction(name));
 
         CoordR3* coordinate = nullptr;
 

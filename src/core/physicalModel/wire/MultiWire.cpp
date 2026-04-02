@@ -1,6 +1,5 @@
 #include "MultiWire.h"
 #include <stdexcept>
-#include <format>
  
 
 namespace semba::physicalModel::wire {
